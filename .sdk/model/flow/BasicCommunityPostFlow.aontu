@@ -1,82 +1,32 @@
 # BasicCommunityPostFlow
 
-main: sdk: flow: BasicCommunityPostFlow:
+main: kit: flow: BasicCommunityPostFlow:
 {
+  entity: "community_post",
+  kind: "basic",
   name: "BasicCommunityPostFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_COMMUNITY_POST_ENTID: {
-      community_post01: "COMMUNITY_POST01",
-      community_post02: "COMMUNITY_POST02",
-      community_post03: "COMMUNITY_POST03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      community_post: {
-        COMMUNITY_POST01: {
-          id: "COMMUNITY_POST01",
-          posted_in: {}
-
-          user: {}
-
-          text: "s3",
-          mentions: [],
-          likes: [],
-          upvotes: [],
-          items: [],
-          created: 8
-        }
-
-        COMMUNITY_POST02: {
-          id: "COMMUNITY_POST02",
-          posted_in: {}
-
-          user: {}
-
-          text: "s5d",
-          mentions: [],
-          likes: [],
-          upvotes: [],
-          items: [],
-          created: 98
-        }
-
-        COMMUNITY_POST03: {
-          id: "COMMUNITY_POST03",
-          posted_in: {}
-
-          user: {}
-
-          text: "sb7",
-          mentions: [],
-          likes: [],
-          upvotes: [],
-          items: [],
-          created: 188
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_community_post0",
-      kind: "entity",
-      entity: "community_post",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_COMMUNITY_POST_ENTID.community_post01`"
+      input: {
+        ref: "community_post_ref01",
+        srcdatavar: "community_post_ref01_data",
+        suffix: "_dt0"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_community_post0.match.id`"
+      match: {
+        id: "community_post01"
       }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-community_post_ref01"
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "key$": "BasicCommunityPostFlow"
 }

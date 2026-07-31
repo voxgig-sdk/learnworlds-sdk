@@ -1,0 +1,45 @@
+{
+  "existing": {
+    "user_role": {
+      "USER_ROLE00": {
+        "access_level": "s46",
+        "course_id": "COURSE01",
+        "custom_role": true,
+        "description": "s49",
+        "id": "USER_ROLE00",
+        "revenue_share_percentage": 75,
+        "title": "s4c"
+      },
+      "USER_ROLE01": {
+        "access_level": "s8c",
+        "course_id": "COURSE01",
+        "custom_role": true,
+        "description": "s8f",
+        "id": "USER_ROLE01",
+        "revenue_share_percentage": 145,
+        "title": "s92"
+      },
+      "USER_ROLE02": {
+        "access_level": "sd2",
+        "course_id": "COURSE01",
+        "custom_role": true,
+        "description": "sd5",
+        "id": "USER_ROLE02",
+        "revenue_share_percentage": 215,
+        "title": "sd8"
+      }
+    }
+  },
+  "new": {
+    "user_role": {
+      "user_role_ref01": {
+        "access_level": "s118",
+        "course_id": "COURSE01",
+        "custom_role": true,
+        "description": "s11b",
+        "revenue_share_percentage": 285,
+        "title": "s11e"
+      }
+    }
+  }
+}

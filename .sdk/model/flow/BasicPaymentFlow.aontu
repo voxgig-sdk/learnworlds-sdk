@@ -1,124 +1,44 @@
 # BasicPaymentFlow
 
-main: sdk: flow: BasicPaymentFlow:
+main: kit: flow: BasicPaymentFlow:
 {
+  entity: "payment",
+  kind: "basic",
   name: "BasicPaymentFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_PAYMENT_ENTID: {
-      payment01: "PAYMENT01",
-      payment02: "PAYMENT02",
-      payment03: "PAYMENT03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      payment: {
-        PAYMENT01: {
-          id: "PAYMENT01",
-          transaction_id: "s1",
-          type: "s2",
-          product: {}
-
-          price: 4,
-          discount: 5,
-          refund_at: 6,
-          user_id: "s7",
-          paid_at: 8,
-          invoice: "s9",
-          billing_info: {}
-
-          coupon: "sb",
-          instructors: [],
-          instructors_total_percentage: 13,
-          tax_amount: 14,
-          tax_percentage: 15,
-          affiliate: {}
-
-          period: "s11",
-          payment_plan_current_payment: "s12",
-          payment_plan_total_payments: "s13",
-          gateway: "s14",
-          created: 21
-        }
-
-        PAYMENT02: {
-          id: "PAYMENT02",
-          transaction_id: "sdd",
-          type: "sde",
-          product: {}
-
-          price: 224,
-          discount: 225,
-          refund_at: 226,
-          user_id: "se3",
-          paid_at: 228,
-          invoice: "se5",
-          billing_info: {}
-
-          coupon: "se7",
-          instructors: [],
-          instructors_total_percentage: 233,
-          tax_amount: 234,
-          tax_percentage: 235,
-          affiliate: {}
-
-          period: "sed",
-          payment_plan_current_payment: "see",
-          payment_plan_total_payments: "sef",
-          gateway: "sf0",
-          created: 241
-        }
-
-        PAYMENT03: {
-          id: "PAYMENT03",
-          transaction_id: "s1b9",
-          type: "s1ba",
-          product: {}
-
-          price: 444,
-          discount: 445,
-          refund_at: 446,
-          user_id: "s1bf",
-          paid_at: 448,
-          invoice: "s1c1",
-          billing_info: {}
-
-          coupon: "s1c3",
-          instructors: [],
-          instructors_total_percentage: 453,
-          tax_amount: 454,
-          tax_percentage: 455,
-          affiliate: {}
-
-          period: "s1c9",
-          payment_plan_current_payment: "s1ca",
-          payment_plan_total_payments: "s1cb",
-          gateway: "s1cc",
-          created: 461
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_payment0",
-      kind: "entity",
-      entity: "payment",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_PAYMENT_ENTID.payment01`"
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "payment_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "payment_ref01",
+        srcdatavar: "payment_ref01_data",
+        suffix: "_dt0"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_payment0.match.id`"
+      match: {
+        id: "payment01"
       }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-payment_ref01"
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "key$": "BasicPaymentFlow"
 }

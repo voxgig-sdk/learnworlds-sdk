@@ -4,38 +4,66 @@ import * as Path from 'node:path'
 import {
   cmp, each, names, cmap,
   List, File, Content, Copy, Folder, Fragment, Line, FeatureHook,
+  entityClassName,
 } from '@voxgig/sdkgen'
+
+
+import type {
+  ModelEntity
+} from '@voxgig/apidef'
+
+
+import {
+  KIT,
+  getModelPath
+} from '@voxgig/apidef'
 
 
 import { Package } from './Package_ts'
 import { Config } from './Config_ts'
+import { Gitignore } from './Gitignore_ts'
 import { MainEntity } from './MainEntity_ts'
-import { Test } from './Test_ts'
+import { EntityBase } from './EntityBase_ts'
+import { EntityTypes } from './EntityTypes_ts'
+import { SdkError } from './SdkError_ts'
 
 
 const Main = cmp(async function Main(props: any) {
+
+  // Needs type: target object
   const { target } = props
   const { model } = props.ctx$
 
-  const { entity } = model.main.api
-  const { feature } = model.main.sdk
+  const entity: ModelEntity = getModelPath(model, `main.${KIT}.entity`)
+  const feature = getModelPath(model, `main.${KIT}.feature`)
 
   Package({ target })
 
-  Test({ target })
+  Gitignore({})
+
+  Copy({
+    from: 'tm/' + target.name,
+    replace: {
+      ...props.ctx$.stdrep,
+    }
+  })
 
   Folder({ name: 'src' }, () => {
+
+    SdkError({ target })
 
     File({ name: model.const.Name + 'SDK.' + target.name }, () => {
 
       Line(`// ${model.const.Name} ${target.Name} SDK\n`)
 
-      List({ item: feature }, ({ item }: any) =>
-        Line(`import { ${item.Name + 'Feature'} } ` +
-          `from './feature/${item.name}/${item.Name}Feature'`))
+      List({ item: entity }, ({ item }: any) => {
+        const cls = entityClassName(item, entity)
+        return Line(`import { ${cls} } from './entity/${cls}'`)
+      })
 
-      List({ item: entity }, ({ item }: any) =>
-        Line(`import { ${item.Name}Entity } from './entity/${item.Name}Entity'`))
+      // Re-export the generated typed models so consumers can
+      // `import { Advice, AdviceLoadMatch } from '<pkg>'`.
+      Line(`export type * from './${model.const.Name}Types'\n`)
 
       Fragment(
         {
@@ -46,11 +74,11 @@ const Main = cmp(async function Main(props: any) {
             '#BuildFeatures': ({ indent }: any) => {
               List({ item: feature, line: false }, ({ item }: any) =>
                 Line({ indent },
-                  `addfeature(this._rootctx, new ${item.Name}Feature())`))
+                  `featureAdd(this._rootctx, new ${item.Name}Feature())`))
             },
 
             '#Feature-Hook': ({ name, indent }: any) => Content({ indent }, `
-fres = featurehook(ctx, '${name}')
+fres = featureHook(ctx, '${name}')
 if (fres instanceof Promise) { await fres }
 `),
 
@@ -69,14 +97,17 @@ if (fres instanceof Promise) { await fres }
 
         // Entities
         () => {
-          each(entity, (entity: any) => {
-            const entprops = { target, entity, entitySDK: model.main.api.entity[entity.name] }
+          each(entity, (entity: ModelEntity) => {
+            const entitySDK = getModelPath(model, `main.${KIT}.entity.${entity.name}`)
+            const entprops = { target, entity, entitySDK }
             MainEntity(entprops)
           })
         })
     })
 
     Config({ target })
+    EntityBase({ target })
+    EntityTypes({ target })
 
   })
 })

@@ -1,64 +1,30 @@
 # BasicCourseContentFlow
 
-main: sdk: flow: BasicCourseContentFlow:
+main: kit: flow: BasicCourseContentFlow:
 {
+  entity: "course_content",
+  kind: "basic",
   name: "BasicCourseContentFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_COURSE_CONTENT_ENTID: {
-      course_content01: "COURSE_CONTENT01",
-      course_content02: "COURSE_CONTENT02",
-      course_content03: "COURSE_CONTENT03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE",
-    LEARNWORLDS_TEST_COURSE_ENTID: {
-      course01: "COURSE01"
-    }
-  }
-
-  test: {
-    entity: {
-      course_content: {
-        COURSE_CONTENT01: {
-          id: "COURSE_CONTENT01",
-          title: "s1",
-          sections: [],
-          course_id: "COURSE01"
-        }
-
-        COURSE_CONTENT02: {
-          id: "COURSE_CONTENT02",
-          title: "s1f",
-          sections: []
-        }
-
-        COURSE_CONTENT03: {
-          id: "COURSE_CONTENT03",
-          title: "s3d",
-          sections: []
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_course_content0",
-      kind: "entity",
-      entity: "course_content",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_COURSE_CONTENT_ENTID.course_content01`",
-        course_id: "`dm$=p.LEARNWORLDS_TEST_COURSE_ENTID.course01`"
+      input: {
+        ref: "course_content_ref01"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_course_content0.match.id`",
-        course_id: "`dm$=p.LEARNWORLDS_TEST_COURSE_ENTID.course01`"
-      }
+      op: "create"
     }
-  ]
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "course_content_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCourseContentFlow"
 }

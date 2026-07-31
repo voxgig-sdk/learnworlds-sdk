@@ -22,17 +22,17 @@
   "author": "Learnworlds",
   "license": "$$const.License$$",
   "devDependencies": {
-    "@types/node": ">=24",
-    "patch-package": ">=8",
-    "typescript": ">=5"
+    "@types/node": ">=25.6",
+    "typescript": ">=6.0",
+    "@voxgig/apidef": ">=5.8",
+    "@voxgig/model": ">=8.1",
+    "@voxgig/sdkgen": ">=0.40",
+    "@voxgig/util": ">=0.4",
+    "@voxgig/struct": ">=0.1.0",
+    "jostraca": ">=0.29",
+    "aontu": ">=0.44"
   },
   "dependencies": {
-    "@seneca/provider-project": "^0.0.1",
-    "@voxgig/apidef": ">=2",
-    "@voxgig/model": ">=7",
-    "@voxgig/sdkgen": ">=0",
-    "@voxgig/struct": ">=0",
-    "@voxgig/util": ">=0",
-    "jostraca": ">=0"
+    "@seneca/provider-project": ">=0"
   }
 }

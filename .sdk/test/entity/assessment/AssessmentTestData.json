@@ -1,0 +1,60 @@
+{
+  "existing": {
+    "assessment": {
+      "ASSESSMENT00": {
+        "answer": [],
+        "created": 101,
+        "email": "s66",
+        "general_feedback": "s67",
+        "grade": "s68",
+        "id": "ASSESSMENT00",
+        "modified": 106,
+        "passed": "s6b",
+        "submitted_timestamp": 108,
+        "user_id": "USER01",
+        "form_id": "FORM01"
+      },
+      "ASSESSMENT01": {
+        "answer": [],
+        "created": 201,
+        "email": "sca",
+        "general_feedback": "scb",
+        "grade": "scc",
+        "id": "ASSESSMENT01",
+        "modified": 206,
+        "passed": "scf",
+        "submitted_timestamp": 208,
+        "user_id": "USER01",
+        "form_id": "FORM01"
+      },
+      "ASSESSMENT02": {
+        "answer": [],
+        "created": 301,
+        "email": "s12e",
+        "general_feedback": "s12f",
+        "grade": "s130",
+        "id": "ASSESSMENT02",
+        "modified": 306,
+        "passed": "s133",
+        "submitted_timestamp": 308,
+        "user_id": "USER01",
+        "form_id": "FORM01"
+      }
+    }
+  },
+  "new": {
+    "assessment": {
+      "assessment_ref01": {
+        "answer": [],
+        "created": 401,
+        "email": "s192",
+        "general_feedback": "s193",
+        "grade": "s194",
+        "modified": 406,
+        "passed": "s197",
+        "submitted_timestamp": 408,
+        "user_id": "USER01"
+      }
+    }
+  }
+}

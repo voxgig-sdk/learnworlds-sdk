@@ -1,0 +1,522 @@
+# Guide
+
+guide: {
+  metrics: count: entity: 42
+  metrics: count: path: 72
+  metrics: count: method: 91
+
+  entity: active: {
+    path: "/v2/installments/active": {
+    }
+  }
+
+  entity: affiliate: {
+    path: "/v2/affiliates": {
+      op: list: method: *GET
+    }
+    path: "/v2/affiliates/{id}": {
+      op: create: method: *POST
+    }
+    path: "/v2/affiliates/{id}/customers": {
+      action: "customer": {}
+      op: list: method: *GET
+    }
+    path: "/v2/affiliates/{id}/leads": {
+      action: "lead": {}
+      op: list: method: *GET
+    }
+    path: "/v2/affiliates/{id}/payments": {
+      action: "payment": {}
+      op: list: method: *GET
+    }
+    path: "/v2/affiliates/{id}/payouts/completed": {
+      action: "payout_completed": {}
+      op: list: method: *GET
+    }
+    path: "/v2/affiliates/{id}/payouts/due": {
+      action: "payout_due": {}
+      op: list: method: *GET
+    }
+    path: "/v2/affiliates/{id}/payouts/upcoming": {
+      action: "payout_upcoming": {}
+      op: list: method: *GET
+    }
+  }
+
+  entity: assessment: {
+    path: "/v2/assessments/{id}/responses": {
+      action: "response": {}
+      op: list: method: *GET
+    }
+    path: "/v2/forms/{id}/responses": {
+      rename: param: "id": *"form_id"
+      op: list: method: *GET
+    }
+  }
+
+  entity: bundle: {
+    path: "/v2/bundles": {
+      op: list: method: *GET
+    }
+    path: "/v2/bundles/{id}": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: by_product: {
+    path: "/v2/users/by-product": {
+    }
+  }
+
+  entity: by_segment: {
+    path: "/v2/users/by-segment": {
+    }
+  }
+
+  entity: calendar: {
+    path: "/v2/school/events": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: certificate: {
+    path: "/v2/certificates": {
+      op: list: method: *GET
+    }
+    path: "/v2/certificates/{id}": {
+      op: remove: method: *DELETE
+      op: update: method: *PUT
+    }
+  }
+
+  entity: community: {
+    path: "/v2/community/collections": {
+      action: "collection": {}
+      op: list: method: *GET
+    }
+    path: "/v2/community/posts": {
+      action: "post": {}
+      op: list: method: *GET
+    }
+    path: "/v2/community/spaces": {
+      action: "space": {}
+      op: list: method: *GET
+    }
+    path: "/v2/community/spaces/{id}": {
+      op: remove: method: *DELETE
+    }
+    path: "/v2/community/spaces/{id}/users": {
+      rename: param: "id": *"space_id"
+      op: create: method: *POST
+      op: list: method: *GET
+    }
+    path: "/v2/community/spaces/{id}/users/{uid}": {
+      rename: param: "id": *"space_id"
+      op: remove: method: *DELETE
+    }
+  }
+
+  entity: community_post: {
+    path: "/v2/community/posts/{id}": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: community_space: {
+    path: "/v2/community/spaces": {
+      op: create: method: *POST
+    }
+    path: "/v2/community/spaces/{id}": {
+      op: load: method: *GET
+      op: update: method: *PUT
+    }
+  }
+
+  entity: completed: {
+    path: "/v2/affiliates/{id}/payouts/completed": {
+      rename: param: "id": *"affiliate_id"
+    }
+  }
+
+  entity: coupon: {
+    path: "/v2/promotions/{id}/coupons-bulk": {
+      rename: param: "id": *"promotion_id"
+      op: create: method: *POST
+    }
+    path: "/v2/promotions/{pid}/coupons": {
+      rename: param: "pid": *"promotion_id"
+      op: create: method: *POST
+    }
+    path: "/v2/promotions/{pid}/coupons/{cid}/usage": {
+      action: "usage": {}
+      rename: param: "cid": *"id"
+      rename: param: "pid": *"promotion_id"
+    }
+  }
+
+  entity: coupon_usage: {
+    path: "/v2/promotions/{pid}/coupons/{cid}/usage": {
+      rename: param: "cid": *"id"
+      rename: param: "pid": *"promotion_id"
+      op: list: method: *GET
+    }
+  }
+
+  entity: course: {
+    path: "/v2/courses": {
+      op: create: method: *POST
+      op: list: method: *GET
+    }
+    path: "/v2/courses/{id}": {
+      op: load: method: *GET
+      op: update: method: *PUT
+    }
+    path: "/v2/courses/{id}/analytics": {
+      action: "analytics": {}
+    }
+    path: "/v2/courses/{id}/contents": {
+      action: "content": {}
+    }
+    path: "/v2/courses/{id}/grades": {
+      action: "grade": {}
+      op: list: method: *GET
+    }
+    path: "/v2/courses/{id}/sections": {
+      action: "section": {}
+    }
+    path: "/v2/courses/{id}/users": {
+      action: "user": {}
+      op: list: method: *GET
+    }
+    path: "/v2/users/{id}/courses/{cid}/complete": {
+      action: "complete": {}
+      rename: param: "cid": *"id"
+      rename: param: "id": *"user_id"
+    }
+    path: "/v2/users/{id}/courses/{cid}/progress": {
+      action: "progress": {}
+      rename: param: "cid": *"id"
+      rename: param: "id": *"user_id"
+    }
+    path: "/v2/users/{id}/courses/{cid}/reset": {
+      action: "reset": {}
+      rename: param: "cid": *"id"
+      rename: param: "id": *"user_id"
+    }
+  }
+
+  entity: course_analytics: {
+    path: "/v2/courses/{id}/analytics": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: course_content: {
+    path: "/v2/courses/{id}/contents": {
+      op: list: method: *GET
+    }
+    path: "/v2/courses/{id}/sections": {
+      action: "sections": {}
+      op: create: method: *POST
+    }
+  }
+
+  entity: due: {
+    path: "/v2/affiliates/{id}/payouts/due": {
+      rename: param: "id": *"affiliate_id"
+    }
+  }
+
+  entity: event: {
+    path: "/v2/school/events": {
+    }
+  }
+
+  entity: event_log: {
+    path: "/v2/event-logs": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: form: {
+    path: "/v2/forms/{id}/responses": {
+      action: "response": {}
+    }
+  }
+
+  entity: installment: {
+    path: "/v2/installments/active": {
+      action: "active": {}
+      op: list: method: *GET
+    }
+  }
+
+  entity: lead: {
+    path: "/v2/leads": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: multiple_seat: {
+    path: "/v2/seats": {
+      op: list: method: *GET
+    }
+    path: "/v2/seats/{id}/users/{uid}": {
+      rename: param: "id": *"seat_id"
+      op: create: method: *POST
+      op: remove: method: *DELETE
+    }
+  }
+
+  entity: payment: {
+    path: "/v2/payments": {
+      op: list: method: *GET
+    }
+    path: "/v2/payments/{id}": {
+      op: load: method: *GET
+    }
+    path: "/v2/payments/{id}/invoice-link": {
+      action: "invoice_link": {}
+      op: load: method: *GET
+    }
+  }
+
+  entity: post: {
+    path: "/v2/community/posts/{id}": {
+    }
+  }
+
+  entity: promotion: {
+    path: "/v2/promotions": {
+      op: create: method: *POST
+      op: list: method: *GET
+    }
+    path: "/v2/promotions/{id}": {
+      op: load: method: *GET
+    }
+    path: "/v2/promotions/{id}/coupons-bulk": {
+      action: "coupons_bulk": {}
+    }
+    path: "/v2/promotions/{pid}/coupons": {
+      action: "coupon": {}
+      rename: param: "pid": *"id"
+      op: list: method: *GET
+    }
+  }
+
+  entity: reporting: {
+    path: "/v2/users/{id}/progress": {
+      rename: param: "id": *"user_id"
+      op: list: method: *GET
+    }
+  }
+
+  entity: score: {
+    path: "/v2/assessments/scores/{id}/review": {
+      action: "review": {}
+    }
+  }
+
+  entity: seat: {
+    path: "/v2/seats": {
+      op: create: method: *POST
+    }
+    path: "/v2/seats/{id}": {
+      op: load: method: *GET
+      op: update: method: *PUT
+    }
+    path: "/v2/seats/{id}/users": {
+      action: "user": {}
+    }
+  }
+
+  entity: segment: {
+    path: "/v2/users/segments": {
+    }
+  }
+
+  entity: space: {
+    path: "/v2/community/spaces/{id}": {
+    }
+    path: "/v2/community/spaces/{id}/users": {
+      action: "user": {}
+    }
+  }
+
+  entity: subscription_plan: {
+    path: "/v2/subscription-plans": {
+      op: list: method: *GET
+    }
+    path: "/v2/subscription-plans/{id}": {
+      op: load: method: *GET
+    }
+  }
+
+  entity: unit: {
+    path: "/v2/courses/{id}/units/{uid}/analytics": {
+      action: "analytics": {}
+      rename: param: "id": *"course_id"
+      rename: param: "uid": *"id"
+    }
+  }
+
+  entity: unit_analytics: {
+    path: "/v2/courses/{id}/units/{uid}/analytics": {
+      rename: param: "id": *"course_id"
+      rename: param: "uid": *"id"
+      op: load: method: *GET
+    }
+  }
+
+  entity: upcoming: {
+    path: "/v2/affiliates/{id}/payouts/upcoming": {
+      rename: param: "id": *"affiliate_id"
+    }
+  }
+
+  entity: update_user_progress: {
+    path: "/v2/users/{id}/courses/{cid}/complete": {
+      rename: param: "cid": *"course_id"
+      rename: param: "id": *"user_id"
+      op: create: method: *POST
+    }
+    path: "/v2/users/{id}/courses/{cid}/reset": {
+      rename: param: "cid": *"course_id"
+      rename: param: "id": *"user_id"
+      op: create: method: *POST
+    }
+  }
+
+  entity: user: {
+    path: "/v2/assessments/scores/{id}/review": {
+      rename: param: "id": *"score_id"
+      op: create: method: *POST
+    }
+    path: "/v2/community/spaces/{id}/users/{uid}": {
+      rename: param: "id": *"space_id"
+      rename: param: "uid": *"id"
+    }
+    path: "/v2/seats/{id}/users": {
+      rename: param: "id": *"seat_id"
+      op: list: method: *GET
+    }
+    path: "/v2/seats/{id}/users/{uid}": {
+      rename: param: "id": *"seat_id"
+      rename: param: "uid": *"id"
+    }
+    path: "/v2/user_groups/{id}/users": {
+      rename: param: "id": *"user_group_id"
+      op: list: method: *GET
+    }
+    path: "/v2/user_groups/{id}/users/{uid}": {
+      rename: param: "id": *"user_group_id"
+      rename: param: "uid": *"id"
+      op: create: method: *POST
+      op: remove: method: *DELETE
+    }
+    path: "/v2/users": {
+      op: create: method: *POST
+      op: list: method: *GET
+    }
+    path: "/v2/users/by-product": {
+      action: "by_product": {}
+      op: list: method: *GET
+    }
+    path: "/v2/users/by-segment": {
+      action: "by_segment": {}
+      op: list: method: *GET
+    }
+    path: "/v2/users/segments": {
+      action: "segment": {}
+      op: list: method: *GET
+    }
+    path: "/v2/users/{id}": {
+      op: load: method: *GET
+      op: update: method: *PUT
+    }
+    path: "/v2/users/{id}/courses": {
+      action: "course": {}
+      op: list: method: *GET
+    }
+    path: "/v2/users/{id}/enrollment": {
+      action: "enrollment": {}
+      op: create: method: *POST
+      op: remove: method: *DELETE
+    }
+    path: "/v2/users/{id}/products": {
+      action: "product": {}
+      op: list: method: *GET
+    }
+    path: "/v2/users/{id}/progress": {
+      action: "progress": {}
+    }
+    path: "/v2/users/{id}/seats": {
+      action: "seat": {}
+      op: load: method: *GET
+    }
+    path: "/v2/users/{id}/suspend": {
+      action: "suspend": {}
+      op: update: method: *PUT
+    }
+    path: "/v2/users/{id}/tags": {
+      action: "tag": {}
+      op: update: method: *PUT
+    }
+    path: "/v2/users/{id}/unsuspend": {
+      action: "unsuspend": {}
+      op: update: method: *PUT
+    }
+    path: "/v2/users/{id}/user-groups": {
+      action: "user_group": {}
+    }
+    path: "/v2/users/{id}/user-role": {
+      action: "user_role": {}
+    }
+  }
+
+  entity: user_group: {
+    path: "/v2/user_groups": {
+      op: create: method: *POST
+      op: list: method: *GET
+    }
+    path: "/v2/user_groups/{id}": {
+      op: load: method: *GET
+      op: update: method: *PUT
+    }
+    path: "/v2/user_groups/{id}/users": {
+      action: "user": {}
+    }
+    path: "/v2/users/{id}/user-groups": {
+      op: list: method: *GET
+    }
+    path: "/v2/users/{id}/user-role": {
+      action: "user-role": {}
+      op: update: method: *PUT
+    }
+  }
+
+  entity: user_progress: {
+    path: "/v2/users/{id}/courses/{cid}/progress": {
+      rename: param: "cid": *"course_id"
+      rename: param: "id": *"user_id"
+      op: list: method: *GET
+    }
+  }
+
+  entity: user_role: {
+    path: "/v2/user-roles": {
+      op: list: method: *GET
+    }
+    path: "/v2/users/{id}/user-role": {
+      op: list: method: *GET
+      op: list: transform: res: *("`body.user_role`")|top
+    }
+  }
+
+  entity: user_subscription: {
+    path: "/v2/user-subscriptions": {
+      op: list: method: *GET
+    }
+  }
+
+}

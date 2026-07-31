@@ -1,0 +1,14 @@
+{
+  "existing": {
+    "active": {
+      "ACTIVE00": {},
+      "ACTIVE01": {},
+      "ACTIVE02": {}
+    }
+  },
+  "new": {
+    "active": {
+      "active_ref01": {}
+    }
+  }
+}

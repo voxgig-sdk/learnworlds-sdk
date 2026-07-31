@@ -1,0 +1,9 @@
+# BasicUpcomingFlow
+
+main: kit: flow: BasicUpcomingFlow:
+{
+  entity: "upcoming",
+  kind: "basic",
+  name: "BasicUpcomingFlow",
+  "key$": "BasicUpcomingFlow"
+}

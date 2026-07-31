@@ -1,0 +1,176 @@
+# Entity: course_content
+
+main: kit: entity: course_content: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "access"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "description"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "drip"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$OBJECT`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "learning_unit"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "section"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "title"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "course_content"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                example: "a-test"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v2/courses/{id}/sections"
+          parts: [
+            "v2"
+            "courses"
+            "{id}"
+            "sections"
+          ]
+          select: {
+            "$action": "sections"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/courses/{id}/contents"
+          parts: [
+            "v2"
+            "courses"
+            "{id}"
+            "contents"
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

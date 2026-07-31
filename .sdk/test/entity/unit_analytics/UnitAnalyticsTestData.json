@@ -1,0 +1,52 @@
+{
+  "existing": {
+    "unit_analytics": {
+      "UNIT_ANALYTICS00": {
+        "avg_score_rate": 70,
+        "avg_study_time": 71,
+        "name": "s48",
+        "total_study_time": 73,
+        "type": "s4a",
+        "users_completed": "s4b",
+        "viewer": "s4c",
+        "course_id": "COURSE01",
+        "id": "UNIT_ANALYTICS00"
+      },
+      "UNIT_ANALYTICS01": {
+        "avg_score_rate": 140,
+        "avg_study_time": 141,
+        "name": "s8e",
+        "total_study_time": 143,
+        "type": "s90",
+        "users_completed": "s91",
+        "viewer": "s92",
+        "course_id": "COURSE01",
+        "id": "UNIT_ANALYTICS01"
+      },
+      "UNIT_ANALYTICS02": {
+        "avg_score_rate": 210,
+        "avg_study_time": 211,
+        "name": "sd4",
+        "total_study_time": 213,
+        "type": "sd6",
+        "users_completed": "sd7",
+        "viewer": "sd8",
+        "course_id": "COURSE01",
+        "id": "UNIT_ANALYTICS02"
+      }
+    }
+  },
+  "new": {
+    "unit_analytics": {
+      "unit_analytics_ref01": {
+        "avg_score_rate": 280,
+        "avg_study_time": 281,
+        "name": "s11a",
+        "total_study_time": 283,
+        "type": "s11c",
+        "users_completed": "s11d",
+        "viewer": "s11e"
+      }
+    }
+  }
+}

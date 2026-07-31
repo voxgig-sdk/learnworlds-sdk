@@ -1,0 +1,1555 @@
+# Entity: user
+
+main: kit: entity: user: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "action"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "active"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "answer"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "billing_info"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$OBJECT`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "course"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "created"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "description"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "duration"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "duration_type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "email"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "eu_customer"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$BOOLEAN`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "expire"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$NUMBER`"
+        ]
+      ]
+    }
+    {
+      name: "field"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "general_feedback"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "got_seat_on"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "grade"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NUMBER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "is_admin"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_affiliate"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_instructor"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_reporter"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_suspended"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "justification"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "last_login"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$NUMBER`"
+        ]
+      ]
+    }
+    {
+      name: "modified"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "nps_comment"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "nps_score"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$INTEGER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "passed"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$BOOLEAN`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "password"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "price"
+      req: true
+      type: "`$NUMBER`"
+    }
+    {
+      name: "product_id"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "product_type"
+      req: true
+      type: "`$STRING`"
+    }
+    {
+      name: "referrer_id"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "role"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "send_enrollment_email"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$BOOLEAN`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "send_registration_email"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$BOOLEAN`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "signup_approval_status"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "signup_validation_rule"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "submitted_timestamp"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "subscribed_for_marketing_email"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$BOOLEAN`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "success"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "tag"
+      op: {
+        update: {
+          req: true
+          type: "`$ARRAY`"
+        }
+      }
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "title"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "user_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "username"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "utm"
+      req: false
+      type: "`$OBJECT`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "user"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "score_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: ""
+                orig: ""
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v2/assessments/scores/{id}/review"
+          parts: [
+            "v2"
+            "assessments"
+            "scores"
+            "{score_id}"
+            "review"
+          ]
+          rename: {
+            param: {
+              id: "score_id"
+            }
+          }
+          select: {
+            exist: [
+              ""
+              "authorization"
+              "lw_client"
+              "score_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "uid"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "user_group_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v2/user_groups/{id}/users/{uid}"
+          parts: [
+            "v2"
+            "user_groups"
+            "{user_group_id}"
+            "users"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              id: "user_group_id"
+              uid: "id"
+            }
+          }
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+              "user_group_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v2/users/{id}/enrollment"
+          parts: [
+            "v2"
+            "users"
+            "{id}"
+            "enrollment"
+          ]
+          select: {
+            "$action": "enrollment"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v2/users"
+          parts: [
+            "v2"
+            "users"
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: "testvalue"
+                kind: "query"
+                name: "cf_$field_name"
+                orig: "cf_$field_name"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "true"
+                kind: "query"
+                name: "include_suspended"
+                orig: "include_suspended"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "items_per_page"
+                orig: "items_per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: "1626088013"
+                kind: "query"
+                name: "registration_after"
+                orig: "registration_after"
+                reqd: false
+                type: "`$NUMBER`"
+              }
+              {
+                example: "1626076929"
+                kind: "query"
+                name: "registration_before"
+                orig: "registration_before"
+                reqd: false
+                type: "`$NUMBER`"
+              }
+              {
+                example: "user"
+                kind: "query"
+                name: "role"
+                orig: "role"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "paying"
+                kind: "query"
+                name: "status"
+                orig: "status"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "big learner,other learner"
+                kind: "query"
+                name: "tag"
+                orig: "tag"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/users"
+          parts: [
+            "v2"
+            "users"
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "cf_$field_name"
+              "include_suspended"
+              "items_per_page"
+              "lw_client"
+              "page"
+              "registration_after"
+              "registration_before"
+              "role"
+              "status"
+              "tag"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "product_id"
+                orig: "product_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "product_type"
+                orig: "product_type"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/users/by-product"
+          parts: [
+            "v2"
+            "users"
+            "by-product"
+          ]
+          select: {
+            "$action": "by_product"
+            exist: [
+              "authorization"
+              "lw_client"
+              "page"
+              "product_id"
+              "product_type"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "seat_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/seats/{id}/users"
+          parts: [
+            "v2"
+            "seats"
+            "{seat_id}"
+            "users"
+          ]
+          rename: {
+            param: {
+              id: "seat_id"
+            }
+          }
+          select: {
+            exist: [
+              "authorization"
+              "lw_client"
+              "page"
+              "seat_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "segment_id"
+                orig: "segment_id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/users/by-segment"
+          parts: [
+            "v2"
+            "users"
+            "by-segment"
+          ]
+          select: {
+            "$action": "by_segment"
+            exist: [
+              "authorization"
+              "lw_client"
+              "page"
+              "segment_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/users/{id}/courses"
+          parts: [
+            "v2"
+            "users"
+            "{id}"
+            "courses"
+          ]
+          select: {
+            "$action": "course"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+              "page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "user_group_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/user_groups/{id}/users"
+          parts: [
+            "v2"
+            "user_groups"
+            "{user_group_id}"
+            "users"
+          ]
+          rename: {
+            param: {
+              id: "user_group_id"
+            }
+          }
+          select: {
+            exist: [
+              "authorization"
+              "lw_client"
+              "page"
+              "user_group_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/users/{id}/products"
+          parts: [
+            "v2"
+            "users"
+            "{id}"
+            "products"
+          ]
+          select: {
+            "$action": "product"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/users/segments"
+          parts: [
+            "v2"
+            "users"
+            "segments"
+          ]
+          select: {
+            "$action": "segment"
+            exist: [
+              "authorization"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: "true"
+                kind: "query"
+                name: "include_suspended"
+                orig: "include_suspended"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/users/{id}"
+          parts: [
+            "v2"
+            "users"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "include_suspended"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/users/{id}/seats"
+          parts: [
+            "v2"
+            "users"
+            "{id}"
+            "seats"
+          ]
+          select: {
+            "$action": "seat"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "uid"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "user_group_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/v2/user_groups/{id}/users/{uid}"
+          parts: [
+            "v2"
+            "user_groups"
+            "{user_group_id}"
+            "users"
+            "{id}"
+          ]
+          rename: {
+            param: {
+              id: "user_group_id"
+              uid: "id"
+            }
+          }
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+              "user_group_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/v2/users/{id}/enrollment"
+          parts: [
+            "v2"
+            "users"
+            "{id}"
+            "enrollment"
+          ]
+          select: {
+            "$action": "enrollment"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/users/{id}"
+          parts: [
+            "v2"
+            "users"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/users/{id}/suspend"
+          parts: [
+            "v2"
+            "users"
+            "{id}"
+            "suspend"
+          ]
+          select: {
+            "$action": "suspend"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/users/{id}/tags"
+          parts: [
+            "v2"
+            "users"
+            "{id}"
+            "tags"
+          ]
+          select: {
+            "$action": "tag"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "PUT"
+          orig: "/v2/users/{id}/unsuspend"
+          parts: [
+            "v2"
+            "users"
+            "{id}"
+            "unsuspend"
+          ]
+          select: {
+            "$action": "unsuspend"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "score"
+      ]
+      [
+        "space"
+      ]
+      [
+        "seat"
+      ]
+      [
+        "user_group"
+      ]
+    ]
+  }
+
+
+
+}

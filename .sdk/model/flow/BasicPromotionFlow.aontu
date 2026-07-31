@@ -1,76 +1,52 @@
 # BasicPromotionFlow
 
-main: sdk: flow: BasicPromotionFlow:
+main: kit: flow: BasicPromotionFlow:
 {
+  entity: "promotion",
+  kind: "basic",
   name: "BasicPromotionFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_PROMOTION_ENTID: {
-      promotion01: "PROMOTION01",
-      promotion02: "PROMOTION02",
-      promotion03: "PROMOTION03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      promotion: {
-        PROMOTION01: {
-          id: "PROMOTION01",
-          name: "s1",
-          coupons: [],
-          applies_to_all: [],
-          products: [],
-          type: "s5",
-          value: 6,
-          created: 7,
-          modified: 8
-        }
-
-        PROMOTION02: {
-          id: "PROMOTION02",
-          name: "s5b",
-          coupons: [],
-          applies_to_all: [],
-          products: [],
-          type: "s5f",
-          value: 96,
-          created: 97,
-          modified: 98
-        }
-
-        PROMOTION03: {
-          id: "PROMOTION03",
-          name: "sb5",
-          coupons: [],
-          applies_to_all: [],
-          products: [],
-          type: "sb9",
-          value: 186,
-          created: 187,
-          modified: 188
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_promotion0",
-      kind: "entity",
-      entity: "promotion",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_PROMOTION_ENTID.promotion01`"
+      input: {
+        ref: "promotion_ref01"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_promotion0.match.id`"
-      }
+      op: "create"
     }
-  ]
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "promotion_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "promotion_ref01",
+        srcdatavar: "promotion_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "promotion01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-promotion_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicPromotionFlow"
 }

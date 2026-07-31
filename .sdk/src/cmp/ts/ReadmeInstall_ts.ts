@@ -1,16 +1,29 @@
 
-import { cmp, Content } from '@voxgig/sdkgen'
+import { cmp, Content, installCommand, isPublished, repoInfo } from '@voxgig/sdkgen'
 
 
 const ReadmeInstall = cmp(function ReadmeInstall(props: any) {
-  const { target } = props
+  const { target, ctx$ } = props
+  const { model } = ctx$
 
-  Content('```ts')
-  Content(`
-npm install ${target.module.name}
+  if (isPublished(model, target.name)) {
+    Content('```bash')
+    Content(`
+${installCommand(model, target.name)}
 `)
-  Content('```')
+    Content('```')
+    return
+  }
 
+  // Publish pending: the package is not yet on npm, so install from the
+  // git release tag instead of a `npm install` that would 404.
+  const { releasesUrl } = repoInfo(model)
+  Content(`This package is not yet published to npm. Install it from the GitHub
+release tag (\`${target.name}/vX.Y.Z\`):
+
+- Releases: [${releasesUrl}](${releasesUrl})
+
+`)
 })
 
 

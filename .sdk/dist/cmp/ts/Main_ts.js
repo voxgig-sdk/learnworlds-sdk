@@ -36,32 +36,48 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Main = void 0;
 const Path = __importStar(require("node:path"));
 const sdkgen_1 = require("@voxgig/sdkgen");
+const apidef_1 = require("@voxgig/apidef");
 const Package_ts_1 = require("./Package_ts");
 const Config_ts_1 = require("./Config_ts");
+const Gitignore_ts_1 = require("./Gitignore_ts");
 const MainEntity_ts_1 = require("./MainEntity_ts");
-const Test_ts_1 = require("./Test_ts");
+const EntityBase_ts_1 = require("./EntityBase_ts");
+const EntityTypes_ts_1 = require("./EntityTypes_ts");
+const SdkError_ts_1 = require("./SdkError_ts");
 const Main = (0, sdkgen_1.cmp)(async function Main(props) {
+    // Needs type: target object
     const { target } = props;
     const { model } = props.ctx$;
-    const { entity } = model.main.api;
-    const { feature } = model.main.sdk;
+    const entity = (0, apidef_1.getModelPath)(model, `main.${apidef_1.KIT}.entity`);
+    const feature = (0, apidef_1.getModelPath)(model, `main.${apidef_1.KIT}.feature`);
     (0, Package_ts_1.Package)({ target });
-    (0, Test_ts_1.Test)({ target });
+    (0, Gitignore_ts_1.Gitignore)({});
+    (0, sdkgen_1.Copy)({
+        from: 'tm/' + target.name,
+        replace: {
+            ...props.ctx$.stdrep,
+        }
+    });
     (0, sdkgen_1.Folder)({ name: 'src' }, () => {
+        (0, SdkError_ts_1.SdkError)({ target });
         (0, sdkgen_1.File)({ name: model.const.Name + 'SDK.' + target.name }, () => {
             (0, sdkgen_1.Line)(`// ${model.const.Name} ${target.Name} SDK\n`);
-            (0, sdkgen_1.List)({ item: feature }, ({ item }) => (0, sdkgen_1.Line)(`import { ${item.Name + 'Feature'} } ` +
-                `from './feature/${item.name}/${item.Name}Feature'`));
-            (0, sdkgen_1.List)({ item: entity }, ({ item }) => (0, sdkgen_1.Line)(`import { ${item.Name}Entity } from './entity/${item.Name}Entity'`));
+            (0, sdkgen_1.List)({ item: entity }, ({ item }) => {
+                const cls = (0, sdkgen_1.entityClassName)(item, entity);
+                return (0, sdkgen_1.Line)(`import { ${cls} } from './entity/${cls}'`);
+            });
+            // Re-export the generated typed models so consumers can
+            // `import { Advice, AdviceLoadMatch } from '<pkg>'`.
+            (0, sdkgen_1.Line)(`export type * from './${model.const.Name}Types'\n`);
             (0, sdkgen_1.Fragment)({
                 from: Path.normalize(__dirname + '/../../../src/cmp/ts/fragment/Main.fragment.ts'),
                 replace: {
                     ...props.ctx$.stdrep,
                     '#BuildFeatures': ({ indent }) => {
-                        (0, sdkgen_1.List)({ item: feature, line: false }, ({ item }) => (0, sdkgen_1.Line)({ indent }, `addfeature(this._rootctx, new ${item.Name}Feature())`));
+                        (0, sdkgen_1.List)({ item: feature, line: false }, ({ item }) => (0, sdkgen_1.Line)({ indent }, `featureAdd(this._rootctx, new ${item.Name}Feature())`));
                     },
                     '#Feature-Hook': ({ name, indent }) => (0, sdkgen_1.Content)({ indent }, `
-fres = featurehook(ctx, '${name}')
+fres = featureHook(ctx, '${name}')
 if (fres instanceof Promise) { await fres }
 `),
                     '#TestOptions': ({ indent }) => {
@@ -78,12 +94,15 @@ if (fres instanceof Promise) { await fres }
             // Entities
             () => {
                 (0, sdkgen_1.each)(entity, (entity) => {
-                    const entprops = { target, entity, entitySDK: model.main.api.entity[entity.name] };
+                    const entitySDK = (0, apidef_1.getModelPath)(model, `main.${apidef_1.KIT}.entity.${entity.name}`);
+                    const entprops = { target, entity, entitySDK };
                     (0, MainEntity_ts_1.MainEntity)(entprops);
                 });
             });
         });
         (0, Config_ts_1.Config)({ target });
+        (0, EntityBase_ts_1.EntityBase)({ target });
+        (0, EntityTypes_ts_1.EntityTypes)({ target });
     });
 });
 exports.Main = Main;

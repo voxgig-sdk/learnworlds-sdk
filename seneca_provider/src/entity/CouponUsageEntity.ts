@@ -4,22 +4,21 @@
   
     const cmd: any = {}
   
+    // #LoadOp
   
   
-  cmd.load = {
-    action: async function load_coupon_usage(this: any, entize: any, msg: any) {
+  cmd.list = {
+    action: async function list_coupon_usage(this: any, entize: any, msg: any) {
       const coupon_usageEntity = this.shared.sdk.CouponUsage()
       const q = msg.q || {}
   
-      const resdata = await coupon_usageEntity.load(q)
+      const coupon_usageList = await coupon_usageEntity.list(q)
+      const dataList = coupon_usageList.map((n: any) => n.data())
   
-      let item = entize(resdata)
-      return item
+      let items = dataList.map((data: any) => entize(data))
+      return items
     }
   }
-  
-  
-    // #ListOp
   
     // #CreateOp
   

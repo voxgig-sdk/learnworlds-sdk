@@ -1,0 +1,23 @@
+# BasicUpdateUserProgressFlow
+
+main: kit: flow: BasicUpdateUserProgressFlow:
+{
+  entity: "update_user_progress",
+  kind: "basic",
+  name: "BasicUpdateUserProgressFlow",
+  step: [
+    {
+      input: {
+        ref: "update_user_progress_ref01"
+      }
+
+      match: {
+        course_id: "course01",
+        user_id: "user01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicUpdateUserProgressFlow"
+}

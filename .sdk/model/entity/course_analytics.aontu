@@ -1,0 +1,124 @@
+# Entity: course_analytics
+
+main: kit: entity: course_analytics: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "avg_score_rate"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "avg_time_to_finish"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "certificates_issued"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "learning_unit"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "social_interaction"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "student"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "success_rate"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "total_study_time"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "video"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "video_time"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "video_viewing_time"
+      req: false
+      type: "`$INTEGER`"
+    }
+  ]
+
+  name: "course_analytics"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/courses/{id}/analytics"
+          parts: [
+            "v2"
+            "courses"
+            "{id}"
+            "analytics"
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

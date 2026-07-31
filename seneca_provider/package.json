@@ -16,16 +16,10 @@
   },
   "author": "Learnworlds",
   "license": "MIT",
-  "files":[
-    "README.md",
-    "LICENSE",
-    "dist",
-    "src"
-  ],
+  "dependencies": {},
   "peerDependencies": {
     "@seneca/env": ">=0",
     "@seneca/provider": ">=3",
-    "@voxgig-sdk/learnworlds": ">=0",
     "seneca-entity": ">=28"
   },
   "devDependencies": {

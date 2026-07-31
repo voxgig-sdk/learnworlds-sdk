@@ -1,143 +1,71 @@
 # BasicCourseFlow
 
-main: sdk: flow: BasicCourseFlow:
+main: kit: flow: BasicCourseFlow:
 {
+  entity: "course",
+  kind: "basic",
   name: "BasicCourseFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_COURSE_ENTID: {
-      course01: "COURSE01",
-      course02: "COURSE02",
-      course03: "COURSE03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      course: {
-        COURSE01: {
-          id: "COURSE01",
-          title: "s1",
-          expires: "s2",
-          expirestype: "s3",
-          afterpurchase: {}
-
-          categories: [],
-          description: "s6",
-          label: "s7",
-          author: {}
-
-          courseimage: "s9",
-          original_price: 10,
-          discount_price: 11,
-          final_price: 12,
-          dripfeed: "sd",
-          identifiers: {}
-
-          access: "sf",
-          created: 16,
-          modified: 17
-        }
-
-        COURSE02: {
-          id: "COURSE02",
-          title: "sb5",
-          expires: "sb6",
-          expirestype: "sb7",
-          afterpurchase: {}
-
-          categories: [],
-          description: "sba",
-          label: "sbb",
-          author: {}
-
-          courseimage: "sbd",
-          original_price: 190,
-          discount_price: 191,
-          final_price: 192,
-          dripfeed: "sc1",
-          identifiers: {}
-
-          access: "sc3",
-          created: 196,
-          modified: 197
-        }
-
-        COURSE03: {
-          id: "COURSE03",
-          title: "s169",
-          expires: "s16a",
-          expirestype: "s16b",
-          afterpurchase: {}
-
-          categories: [],
-          description: "s16e",
-          label: "s16f",
-          author: {}
-
-          courseimage: "s171",
-          original_price: 370,
-          discount_price: 371,
-          final_price: 372,
-          dripfeed: "s175",
-          identifiers: {}
-
-          access: "s177",
-          created: 376,
-          modified: 377
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_course0",
-      kind: "entity",
-      entity: "course",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_COURSE_ENTID.course01`"
+      input: {
+        ref: "course_ref01"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_course0.match.id`"
-      }
+      op: "create"
     }
 
     {
-      name: "update_course1",
-      ref: "load_course0",
-      action: "update",
-      reqdata: {
-        title: "s1-`$WHEN`"
-      }
-
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_course0.match.id`",
-        title: "`dm$=s.update_course1.reqdata.title`"
-      }
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "course_ref01"
+          }
+        }
+      ]
     }
 
     {
-      name: "load_course2",
-      kind: "entity",
-      entity: "course",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_COURSE_ENTID.course01`"
+      input: {
+        ref: "course_ref01",
+        srcdatavar: "course_ref01_data",
+        suffix: "_up0",
+        textfield: "access"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_course0.match.id`",
-        title: "`dm$=s.update_course1.reqdata.title`"
-      }
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-course_ref01"
+          }
+        }
+      ]
     }
-  ]
+
+    {
+      input: {
+        ref: "course_ref01",
+        srcdatavar: "course_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "course01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-course_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCourseFlow"
 }

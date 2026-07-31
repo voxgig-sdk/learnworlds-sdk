@@ -1,0 +1,22 @@
+# BasicAssessmentFlow
+
+main: kit: flow: BasicAssessmentFlow:
+{
+  entity: "assessment",
+  kind: "basic",
+  name: "BasicAssessmentFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "assessment_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicAssessmentFlow"
+}

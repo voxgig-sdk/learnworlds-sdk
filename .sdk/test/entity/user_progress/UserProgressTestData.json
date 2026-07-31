@@ -1,0 +1,32 @@
+{
+  "existing": {
+    "user_progress": {
+      "USER_PROGRESS00": {
+        "section_id": "SECTION01",
+        "unit": [],
+        "course_id": "COURSE01",
+        "user_id": "USER01"
+      },
+      "USER_PROGRESS01": {
+        "section_id": "SECTION01",
+        "unit": [],
+        "course_id": "COURSE01",
+        "user_id": "USER01"
+      },
+      "USER_PROGRESS02": {
+        "section_id": "SECTION01",
+        "unit": [],
+        "course_id": "COURSE01",
+        "user_id": "USER01"
+      }
+    }
+  },
+  "new": {
+    "user_progress": {
+      "user_progress_ref01": {
+        "section_id": "SECTION01",
+        "unit": []
+      }
+    }
+  }
+}

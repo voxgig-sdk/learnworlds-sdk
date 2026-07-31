@@ -1,20 +1,12 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class PromotionEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { Promotion, PromotionLoadMatch, PromotionListMatch, PromotionCreateData } from '../LearnworldsTypes';
+declare class PromotionEntity extends LearnworldsEntityBase<Promotion> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): PromotionEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    load(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    create(this: any, reqdata?: any, ctrl?: Control): Promise<any>;
+    make(this: PromotionEntity): PromotionEntity;
+    load(this: any, reqmatch?: PromotionLoadMatch, ctrl?: Control): Promise<Promotion>;
+    list(this: any, reqmatch?: PromotionListMatch, ctrl?: Control): Promise<Promotion[]>;
+    create(this: any, reqdata?: PromotionCreateData, ctrl?: Control): Promise<Promotion>;
 }
 export { PromotionEntity };

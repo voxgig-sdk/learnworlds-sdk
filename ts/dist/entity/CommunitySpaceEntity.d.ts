@@ -1,21 +1,12 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class CommunitySpaceEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { CommunitySpace, CommunitySpaceLoadMatch, CommunitySpaceCreateData, CommunitySpaceUpdateData } from '../LearnworldsTypes';
+declare class CommunitySpaceEntity extends LearnworldsEntityBase<CommunitySpace> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): CommunitySpaceEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    load(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    create(this: any, reqdata?: any, ctrl?: Control): Promise<any>;
-    update(this: any, reqdata?: any, ctrl?: Control): Promise<any>;
+    make(this: CommunitySpaceEntity): CommunitySpaceEntity;
+    load(this: any, reqmatch?: CommunitySpaceLoadMatch, ctrl?: Control): Promise<CommunitySpace>;
+    create(this: any, reqdata?: CommunitySpaceCreateData, ctrl?: Control): Promise<CommunitySpace>;
+    update(this: any, reqdata?: CommunitySpaceUpdateData, ctrl?: Control): Promise<CommunitySpace>;
 }
 export { CommunitySpaceEntity };

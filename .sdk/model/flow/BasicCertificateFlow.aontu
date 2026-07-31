@@ -1,37 +1,41 @@
 # BasicCertificateFlow
 
-main: sdk: flow: BasicCertificateFlow:
+main: kit: flow: BasicCertificateFlow:
 {
+  entity: "certificate",
+  kind: "basic",
   name: "BasicCertificateFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_CERTIFICATE_ENTID: {
-      certificate01: "CERTIFICATE01",
-      certificate02: "CERTIFICATE02",
-      certificate03: "CERTIFICATE03"
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "certificate_ref01"
+          }
+        }
+      ]
     }
 
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      certificate: {
-        CERTIFICATE01: {
-          id: "CERTIFICATE01"
-        }
-
-        CERTIFICATE02: {
-          id: "CERTIFICATE02"
-        }
-
-        CERTIFICATE03: {
-          id: "CERTIFICATE03"
-        }
+    {
+      input: {
+        ref: "certificate_ref01",
+        srcdatavar: "certificate_ref01_data",
+        suffix: "_up0",
+        textfield: "course_id"
       }
-    }
-  }
 
-  step: []
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-certificate_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCertificateFlow"
 }

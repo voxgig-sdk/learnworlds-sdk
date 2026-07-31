@@ -3,32 +3,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Top = void 0;
 const sdkgen_1 = require("@voxgig/sdkgen");
 const Top = (0, sdkgen_1.cmp)(function Top(props) {
-    const { ctx$ } = props;
-    const { model } = ctx$;
-    (0, sdkgen_1.File)({ name: 'README.md' }, () => {
-        (0, sdkgen_1.Content)(`# ${model.Name} SDKs
-
-## API Entities
-
-\`\`\`mermaid 
-flowchart LR
-`);
-        const entityMap = model.main.api.entity;
-        (0, sdkgen_1.each)(entityMap, (entity) => {
-            const ancestors = entity.ancestors || [];
-            if (0 < ancestors.length) {
-                const pname = ancestors[ancestors.length - 1];
-                const parent = entityMap[pname];
-                if (null != parent) {
-                    (0, sdkgen_1.Line)(`  ${parent.Name} --> ${entity.Name}`);
-                }
-            }
-        });
-        (0, sdkgen_1.Content)(`
-\`\`\`
-
-`);
-    });
+    (0, sdkgen_1.ReadmeTop)({});
+    // Agent onboarding guides at the project root: AGENTS.md + a thin CLAUDE.md,
+    // populated with the real target / feature / entity lists. Emitted outside
+    // any target Folder (same placement rule as ReadmeTop / Deploy).
+    (0, sdkgen_1.AgentGuideTop)({});
+    // Root governance files for a publishable, unofficial generated SDK:
+    // an MIT LICENSE (held by Voxgig), a SECURITY.md disclosure policy, and a
+    // seed CHANGELOG. Emitted at repo root, before the per-target folders.
+    (0, sdkgen_1.License)({});
+    (0, sdkgen_1.Security)({});
+    (0, sdkgen_1.Changelog)({});
+    // Root deployment Makefile: per-target `make deploy-<t>` (publish with
+    // credentials injected by the aql key vault) plus an all-targets
+    // `make deploy-dry` rehearsal.
+    (0, sdkgen_1.Deploy)({});
 });
 exports.Top = Top;
 //# sourceMappingURL=Top.js.map

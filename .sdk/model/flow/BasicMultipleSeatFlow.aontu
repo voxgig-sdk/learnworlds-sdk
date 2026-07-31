@@ -1,0 +1,65 @@
+# BasicMultipleSeatFlow
+
+main: kit: flow: BasicMultipleSeatFlow:
+{
+  entity: "multiple_seat",
+  kind: "basic",
+  name: "BasicMultipleSeatFlow",
+  step: [
+    {
+      input: {
+        ref: "multiple_seat_ref01"
+      }
+
+      match: {
+        seat_id: "seat01",
+        uid: "uid01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "multiple_seat_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "multiple_seat_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "multiple_seat01",
+        seat_id: "seat01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "multiple_seat_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicMultipleSeatFlow"
+}

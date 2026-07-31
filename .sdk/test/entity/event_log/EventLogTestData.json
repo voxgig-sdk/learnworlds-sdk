@@ -1,0 +1,42 @@
+{
+  "existing": {
+    "event_log": {
+      "EVENT_LOG00": {
+        "activity": "s3c",
+        "additional_info": "s3d",
+        "created": 62,
+        "description": "s3f",
+        "type": "s40",
+        "user": {}
+      },
+      "EVENT_LOG01": {
+        "activity": "s78",
+        "additional_info": "s79",
+        "created": 122,
+        "description": "s7b",
+        "type": "s7c",
+        "user": {}
+      },
+      "EVENT_LOG02": {
+        "activity": "sb4",
+        "additional_info": "sb5",
+        "created": 182,
+        "description": "sb7",
+        "type": "sb8",
+        "user": {}
+      }
+    }
+  },
+  "new": {
+    "event_log": {
+      "event_log_ref01": {
+        "activity": "sf0",
+        "additional_info": "sf1",
+        "created": 242,
+        "description": "sf3",
+        "type": "sf4",
+        "user": {}
+      }
+    }
+  }
+}

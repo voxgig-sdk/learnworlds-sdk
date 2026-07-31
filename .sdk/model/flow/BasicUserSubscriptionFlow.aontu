@@ -1,37 +1,22 @@
 # BasicUserSubscriptionFlow
 
-main: sdk: flow: BasicUserSubscriptionFlow:
+main: kit: flow: BasicUserSubscriptionFlow:
 {
+  entity: "user_subscription",
+  kind: "basic",
   name: "BasicUserSubscriptionFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_USER_SUBSCRIPTION_ENTID: {
-      user_subscription01: "USER_SUBSCRIPTION01",
-      user_subscription02: "USER_SUBSCRIPTION02",
-      user_subscription03: "USER_SUBSCRIPTION03"
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "user_subscription_ref01"
+          }
+        }
+      ]
     }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      user_subscription: {
-        USER_SUBSCRIPTION01: {
-          id: "USER_SUBSCRIPTION01"
-        }
-
-        USER_SUBSCRIPTION02: {
-          id: "USER_SUBSCRIPTION02"
-        }
-
-        USER_SUBSCRIPTION03: {
-          id: "USER_SUBSCRIPTION03"
-        }
-      }
-    }
-  }
-
-  step: []
+  ],
+  "key$": "BasicUserSubscriptionFlow"
 }

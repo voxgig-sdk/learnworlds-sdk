@@ -1,77 +1,66 @@
 "use strict";
-/* Utility functions.
- *
- * Many of these functions expect the operation context as the first argument, and
- * assume the following top level properties of the context:
- *   * client: SDK client instance
- *   * op: operation definition
- *   * utility: map of these utility functions
- *   * entity?: SDK entity instance
- *   * spec?: request specification
- *   * response?: unprocessed response
- *   * result?: processed result built from response
- *   * config?: SDK builtin configuration
- *
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Utility = void 0;
-const AddfeatureUtility_1 = require("./AddfeatureUtility");
-const AuthUtility_1 = require("./AuthUtility");
-const BodyUtility_1 = require("./BodyUtility");
 const CleanUtility_1 = require("./CleanUtility");
-const ContextUtility_1 = require("./ContextUtility");
 const DoneUtility_1 = require("./DoneUtility");
-const ErrorUtility_1 = require("./ErrorUtility");
-const FeaturehookUtility_1 = require("./FeaturehookUtility");
+const MakeErrorUtility_1 = require("./MakeErrorUtility");
+const FeatureAddUtility_1 = require("./FeatureAddUtility");
+const FeatureHookUtility_1 = require("./FeatureHookUtility");
+const FeatureInitUtility_1 = require("./FeatureInitUtility");
 const FetcherUtility_1 = require("./FetcherUtility");
-const FindparamUtility_1 = require("./FindparamUtility");
-const FullurlUtility_1 = require("./FullurlUtility");
-const HeadersUtility_1 = require("./HeadersUtility");
-const InitfeatureUtility_1 = require("./InitfeatureUtility");
-const MethodUtility_1 = require("./MethodUtility");
-const OperatorUtility_1 = require("./OperatorUtility");
-const OptionsUtility_1 = require("./OptionsUtility");
-const ParamsUtility_1 = require("./ParamsUtility");
-const QueryUtility_1 = require("./QueryUtility");
-const ReqformUtility_1 = require("./ReqformUtility");
-const RequestUtility_1 = require("./RequestUtility");
-const ResbasicUtility_1 = require("./ResbasicUtility");
-const ResbodyUtility_1 = require("./ResbodyUtility");
-const ResformUtility_1 = require("./ResformUtility");
-const ResheadersUtility_1 = require("./ResheadersUtility");
-const ResponseUtility_1 = require("./ResponseUtility");
-const ResultUtility_1 = require("./ResultUtility");
-const SpecUtility_1 = require("./SpecUtility");
+const MakeFetchDefUtility_1 = require("./MakeFetchDefUtility");
+const MakeContextUtility_1 = require("./MakeContextUtility");
+const MakeOptionsUtility_1 = require("./MakeOptionsUtility");
+const MakeRequestUtility_1 = require("./MakeRequestUtility");
+const MakeResponseUtility_1 = require("./MakeResponseUtility");
+const MakeResultUtility_1 = require("./MakeResultUtility");
+const MakePointUtility_1 = require("./MakePointUtility");
+const MakeSpecUtility_1 = require("./MakeSpecUtility");
+const MakeUrlUtility_1 = require("./MakeUrlUtility");
+const ParamUtility_1 = require("./ParamUtility");
+const PrepareAuthUtility_1 = require("./PrepareAuthUtility");
+const PrepareBodyUtility_1 = require("./PrepareBodyUtility");
+const PrepareHeadersUtility_1 = require("./PrepareHeadersUtility");
+const PrepareMethodUtility_1 = require("./PrepareMethodUtility");
+const PrepareParamsUtility_1 = require("./PrepareParamsUtility");
+const PreparePathUtility_1 = require("./PreparePathUtility");
+const PrepareQueryUtility_1 = require("./PrepareQueryUtility");
+const ResultBasicUtility_1 = require("./ResultBasicUtility");
+const ResultBodyUtility_1 = require("./ResultBodyUtility");
+const ResultHeadersUtility_1 = require("./ResultHeadersUtility");
+const TransformRequestUtility_1 = require("./TransformRequestUtility");
+const TransformResponseUtility_1 = require("./TransformResponseUtility");
 const StructUtility_1 = require("./StructUtility");
 class Utility {
-    addfeature = AddfeatureUtility_1.addfeature;
-    auth = AuthUtility_1.auth;
-    body = BodyUtility_1.body;
     clean = CleanUtility_1.clean;
-    contextify = ContextUtility_1.contextify;
     done = DoneUtility_1.done;
-    error = ErrorUtility_1.error;
-    featurehook = FeaturehookUtility_1.featurehook;
+    makeError = MakeErrorUtility_1.makeError;
+    featureAdd = FeatureAddUtility_1.featureAdd;
+    featureHook = FeatureHookUtility_1.featureHook;
+    featureInit = FeatureInitUtility_1.featureInit;
     fetcher = FetcherUtility_1.fetcher;
-    findparam = FindparamUtility_1.findparam;
-    fullurl = FullurlUtility_1.fullurl;
-    headers = HeadersUtility_1.headers;
-    initfeature = InitfeatureUtility_1.initfeature;
-    method = MethodUtility_1.method;
-    operator = OperatorUtility_1.operator;
-    opify = OperatorUtility_1.opify;
-    options = OptionsUtility_1.options;
-    params = ParamsUtility_1.params;
-    query = QueryUtility_1.query;
-    reqform = ReqformUtility_1.reqform;
-    request = RequestUtility_1.request;
-    resbasic = ResbasicUtility_1.resbasic;
-    resbody = ResbodyUtility_1.resbody;
-    resform = ResformUtility_1.resform;
-    resheaders = ResheadersUtility_1.resheaders;
-    response = ResponseUtility_1.response;
-    result = ResultUtility_1.result;
-    spec = SpecUtility_1.spec;
+    makeFetchDef = MakeFetchDefUtility_1.makeFetchDef;
+    makeContext = MakeContextUtility_1.makeContext;
+    makeOptions = MakeOptionsUtility_1.makeOptions;
+    makeRequest = MakeRequestUtility_1.makeRequest;
+    makeResponse = MakeResponseUtility_1.makeResponse;
+    makeResult = MakeResultUtility_1.makeResult;
+    makePoint = MakePointUtility_1.makePoint;
+    makeSpec = MakeSpecUtility_1.makeSpec;
+    makeUrl = MakeUrlUtility_1.makeUrl;
+    param = ParamUtility_1.param;
+    prepareAuth = PrepareAuthUtility_1.prepareAuth;
+    prepareBody = PrepareBodyUtility_1.prepareBody;
+    prepareHeaders = PrepareHeadersUtility_1.prepareHeaders;
+    prepareMethod = PrepareMethodUtility_1.prepareMethod;
+    prepareParams = PrepareParamsUtility_1.prepareParams;
+    preparePath = PreparePathUtility_1.preparePath;
+    prepareQuery = PrepareQueryUtility_1.prepareQuery;
+    resultBasic = ResultBasicUtility_1.resultBasic;
+    resultBody = ResultBodyUtility_1.resultBody;
+    resultHeaders = ResultHeadersUtility_1.resultHeaders;
+    transformRequest = TransformRequestUtility_1.transformRequest;
+    transformResponse = TransformResponseUtility_1.transformResponse;
     struct = new StructUtility_1.StructUtility();
 }
 exports.Utility = Utility;

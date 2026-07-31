@@ -1,0 +1,14 @@
+{
+  "existing": {
+    "space": {
+      "SPACE00": {},
+      "SPACE01": {},
+      "SPACE02": {}
+    }
+  },
+  "new": {
+    "space": {
+      "space_ref01": {}
+    }
+  }
+}

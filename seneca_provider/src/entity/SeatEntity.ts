@@ -19,19 +19,7 @@
   }
   
   
-  
-  cmd.list = {
-    action: async function list_seat(this: any, entize: any, msg: any) {
-      const seatEntity = this.shared.sdk.Seat()
-      const q = msg.q || {}
-  
-      const seatList = await seatEntity.list(q)
-      const dataList = seatList.map((n: any) => n.data())
-  
-      let items = dataList.map((data: any) => entize(data))
-      return items
-    }
-  }
+    // #ListOp
   
   
   // Create operation is implemented by seneca entity save

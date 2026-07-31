@@ -1,20 +1,12 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class CertificateEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { Certificate, CertificateListMatch, CertificateUpdateData, CertificateRemoveMatch } from '../LearnworldsTypes';
+declare class CertificateEntity extends LearnworldsEntityBase<Certificate> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): CertificateEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    update(this: any, reqdata?: any, ctrl?: Control): Promise<any>;
-    remove(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
+    make(this: CertificateEntity): CertificateEntity;
+    list(this: any, reqmatch?: CertificateListMatch, ctrl?: Control): Promise<Certificate[]>;
+    update(this: any, reqdata?: CertificateUpdateData, ctrl?: Control): Promise<Certificate>;
+    remove(this: any, reqmatch?: CertificateRemoveMatch, ctrl?: Control): Promise<Certificate>;
 }
 export { CertificateEntity };

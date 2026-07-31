@@ -1,0 +1,9 @@
+# BasicUnitFlow
+
+main: kit: flow: BasicUnitFlow:
+{
+  entity: "unit",
+  kind: "basic",
+  name: "BasicUnitFlow",
+  "key$": "BasicUnitFlow"
+}

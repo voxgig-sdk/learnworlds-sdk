@@ -1,0 +1,53 @@
+{
+  "existing": {
+    "community_post": {
+      "COMMUNITY_POST00": {
+        "created": 90,
+        "id": "COMMUNITY_POST00",
+        "item": [],
+        "like": [],
+        "mention": [],
+        "posted_in": {},
+        "text": "s60",
+        "upvote": [],
+        "user": {}
+      },
+      "COMMUNITY_POST01": {
+        "created": 180,
+        "id": "COMMUNITY_POST01",
+        "item": [],
+        "like": [],
+        "mention": [],
+        "posted_in": {},
+        "text": "sba",
+        "upvote": [],
+        "user": {}
+      },
+      "COMMUNITY_POST02": {
+        "created": 270,
+        "id": "COMMUNITY_POST02",
+        "item": [],
+        "like": [],
+        "mention": [],
+        "posted_in": {},
+        "text": "s114",
+        "upvote": [],
+        "user": {}
+      }
+    }
+  },
+  "new": {
+    "community_post": {
+      "community_post_ref01": {
+        "created": 360,
+        "item": [],
+        "like": [],
+        "mention": [],
+        "posted_in": {},
+        "text": "s16e",
+        "upvote": [],
+        "user": {}
+      }
+    }
+  }
+}

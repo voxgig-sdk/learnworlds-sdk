@@ -11,7 +11,7 @@ import {
 function clean(ctx: Context, val: any) {
   const options = ctx.options
 
-  const cleankeyre = options.__derived__.clean.keyre
+  const cleankeyre = options?.__derived__?.clean?.keyre
   const hintsize = 4
 
   /*

@@ -1,18 +1,10 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class InstallmentEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { Installment, InstallmentListMatch } from '../LearnworldsTypes';
+declare class InstallmentEntity extends LearnworldsEntityBase<Installment> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): InstallmentEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
+    make(this: InstallmentEntity): InstallmentEntity;
+    list(this: any, reqmatch?: InstallmentListMatch, ctrl?: Control): Promise<Installment[]>;
 }
 export { InstallmentEntity };

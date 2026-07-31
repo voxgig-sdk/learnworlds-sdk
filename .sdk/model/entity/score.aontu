@@ -1,0 +1,10 @@
+# Entity: score
+
+main: kit: entity: score: {
+
+  alias: field: {}
+
+  name: "score"
+
+
+}

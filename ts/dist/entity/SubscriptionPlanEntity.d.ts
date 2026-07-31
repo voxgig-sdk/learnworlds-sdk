@@ -1,19 +1,11 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class SubscriptionPlanEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { SubscriptionPlan, SubscriptionPlanLoadMatch, SubscriptionPlanListMatch } from '../LearnworldsTypes';
+declare class SubscriptionPlanEntity extends LearnworldsEntityBase<SubscriptionPlan> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): SubscriptionPlanEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    load(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
+    make(this: SubscriptionPlanEntity): SubscriptionPlanEntity;
+    load(this: any, reqmatch?: SubscriptionPlanLoadMatch, ctrl?: Control): Promise<SubscriptionPlan>;
+    list(this: any, reqmatch?: SubscriptionPlanListMatch, ctrl?: Control): Promise<SubscriptionPlan[]>;
 }
 export { SubscriptionPlanEntity };

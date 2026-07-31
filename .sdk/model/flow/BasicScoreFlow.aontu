@@ -1,0 +1,9 @@
+# BasicScoreFlow
+
+main: kit: flow: BasicScoreFlow:
+{
+  entity: "score",
+  kind: "basic",
+  name: "BasicScoreFlow",
+  "key$": "BasicScoreFlow"
+}

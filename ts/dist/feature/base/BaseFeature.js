@@ -10,13 +10,15 @@ class BaseFeature {
     PostConstructEntity(_ctx) { }
     SetData(_ctx) { }
     GetData(_ctx) { }
+    SetMatch(_ctx) { }
     GetMatch(_ctx) { }
-    PreOperation(_ctx) { }
+    PrePoint(_ctx) { }
     PreSpec(_ctx) { }
     PreRequest(_ctx) { }
     PreResponse(_ctx) { }
     PreResult(_ctx) { }
-    PostOperation(_ctx) { }
+    PreDone(_ctx) { }
+    PreUnexpected(_ctx) { }
 }
 exports.BaseFeature = BaseFeature;
 //# sourceMappingURL=BaseFeature.js.map

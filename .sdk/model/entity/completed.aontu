@@ -1,0 +1,18 @@
+# Entity: completed
+
+main: kit: entity: completed: {
+
+  alias: field: {}
+
+  name: "completed"
+  relations: {
+    ancestors: [
+      [
+        "affiliate"
+      ]
+    ]
+  }
+
+
+
+}

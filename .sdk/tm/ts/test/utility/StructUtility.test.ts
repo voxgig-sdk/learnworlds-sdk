@@ -1,9 +1,9 @@
-// VERSION: @voxgig/struct 0.0.9
+// VERSION: @voxgig/struct 0.0.10
 // RUN: npm test
 // RUN-SOME: npm run test-some --pattern=getpath
 
 import { test, describe, before } from 'node:test'
-import { equal, deepEqual } from 'node:assert'
+import assert from 'node:assert'
 
 import {
   makeRunner,
@@ -16,6 +16,9 @@ import {
   SDK,
   TEST_JSON_FILE
 } from './index'
+
+
+const { equal, deepEqual } = assert
 
 
 // NOTE: tests are (mostly) in order of increasing dependence.
@@ -49,6 +52,9 @@ describe('struct', async () => {
     equal('function', typeof s.delprop)
     equal('function', typeof s.escre)
     equal('function', typeof s.escurl)
+    equal('function', typeof s.filter)
+
+    equal('function', typeof s.flatten)
     equal('function', typeof s.getelem)
     equal('function', typeof s.getprop)
 
@@ -64,7 +70,7 @@ describe('struct', async () => {
     equal('function', typeof s.isnode)
     equal('function', typeof s.items)
 
-    equal('function', typeof s.joinurl)
+    equal('function', typeof s.join)
     equal('function', typeof s.jsonify)
     equal('function', typeof s.keysof)
     equal('function', typeof s.merge)
@@ -72,6 +78,7 @@ describe('struct', async () => {
     equal('function', typeof s.pathify)
 
     equal('function', typeof s.select)
+    equal('function', typeof s.setpath)
     equal('function', typeof s.size)
     equal('function', typeof s.slice)
     equal('function', typeof s.setprop)
@@ -80,8 +87,9 @@ describe('struct', async () => {
     equal('function', typeof s.stringify)
     equal('function', typeof s.transform)
     equal('function', typeof s.typify)
-    equal('function', typeof s.validate)
+    equal('function', typeof s.typename)
 
+    equal('function', typeof s.validate)
     equal('function', typeof s.walk)
   })
 
@@ -129,10 +137,41 @@ describe('struct', async () => {
 
 
   test('minor-clone', async () => {
+    await runsetflags(spec.minor.clone, { null: false }, struct.clone)
+  })
+
+
+  test('minor-edge-clone', async () => {
     const { clone } = struct
-    await runsetflags(spec.minor.clone, { null: false }, clone)
+
     const f0 = () => null
     deepEqual({ a: f0 }, clone({ a: f0 }))
+
+    const x = { y: 1 }
+    let xc = clone(x)
+    deepEqual(x, xc)
+    assert(x !== xc)
+
+    class A { x = 1 }
+    const a = new A()
+    let ac = clone(a)
+    deepEqual(a, ac)
+    assert(a === ac)
+    equal(a.constructor.name, ac.constructor.name)
+  })
+
+
+  test('minor-filter', async () => {
+    const checkmap: any = {
+      gt3: (n: any) => n[1] > 3,
+      lt3: (n: any) => n[1] < 3,
+    }
+    await runset(spec.minor.filter, (vin: any) => struct.filter(vin.val, checkmap[vin.check]))
+  })
+
+
+  test('minor-flatten', async () => {
+    await runset(spec.minor.flatten, (vin: any) => struct.flatten(vin.val, vin.depth))
   })
 
 
@@ -152,8 +191,27 @@ describe('struct', async () => {
   })
 
 
+  test('minor-edge-stringify', async () => {
+    const { stringify } = struct
+    const a: any = {}
+    a.a = a
+    equal(stringify(a), '__STRINGIFY_FAILED__')
+
+    equal(stringify({ a: [9] }, -1, true),
+      '\x1B[38;5;81m\x1B[38;5;118m{\x1B[38;5;118ma\x1B[38;5;118m:' +
+      '\x1B[38;5;213m[\x1B[38;5;213m9\x1B[38;5;213m]\x1B[38;5;118m}\x1B[0m')
+  })
+
+
   test('minor-jsonify', async () => {
-    await runsetflags(spec.minor.jsonify, { null: false }, struct.jsonify)
+    await runsetflags(spec.minor.jsonify, { null: false },
+      (vin: any) => struct.jsonify(vin.val, vin.flags))
+  })
+
+
+  test('minor-edge-jsonify', async () => {
+    const { jsonify } = struct
+    equal(jsonify(() => 1), 'null')
   })
 
 
@@ -174,10 +232,24 @@ describe('struct', async () => {
   })
 
 
+  test('minor-edge-items', async () => {
+    const { items } = struct
+    const a0: any = [11, 22, 33]
+    a0.x = 1
+    deepEqual(items(a0), [['0', 11], ['1', 22], ['2', 33]])
+  })
+
+
   test('minor-getelem', async () => {
     const { getelem } = struct
     await runsetflags(spec.minor.getelem, { null: false }, (vin: any) =>
       null == vin.alt ? getelem(vin.val, vin.key) : getelem(vin.val, vin.key, vin.alt))
+  })
+
+
+  test('minor-edge-getelem', async () => {
+    const { getelem } = struct
+    equal(getelem([], 1, () => 2), 2)
   })
 
 
@@ -253,14 +325,45 @@ describe('struct', async () => {
     await runset(spec.minor.keysof, struct.keysof)
   })
 
+  test('minor-edge-keysof', async () => {
+    const { keysof } = struct
+    const a0: any = [11, 22, 33]
+    a0.x = 1
+    deepEqual(keysof(a0), [0, 1, 2])
+  })
 
-  test('minor-joinurl', async () => {
-    await runsetflags(spec.minor.joinurl, { null: false }, struct.joinurl)
+
+
+  test('minor-join', async () => {
+    await runsetflags(spec.minor.join, { null: false },
+      (vin: any) => struct.join(vin.val, vin.sep, vin.url))
+  })
+
+
+  test('minor-typename', async () => {
+    await runset(spec.minor.typename, struct.typename)
   })
 
 
   test('minor-typify', async () => {
     await runsetflags(spec.minor.typify, { null: false }, struct.typify)
+  })
+
+
+  test('minor-edge-typify', async () => {
+    const {
+      typify, T_noval, T_scalar, T_function, T_symbol, T_any, T_node, T_instance, T_null
+    } = struct
+    class X { }
+    const x = new X()
+    equal(typify(), T_noval)
+    equal(typify(undefined), T_noval)
+    equal(typify(NaN), T_noval)
+    equal(typify(null), T_scalar | T_null)
+    equal(typify(() => null), T_scalar | T_function)
+    equal(typify(Symbol('S')), T_scalar | T_symbol)
+    equal(typify(BigInt(1)), T_any)
+    equal(typify(x), T_node | T_instance)
   })
 
 
@@ -278,6 +381,20 @@ describe('struct', async () => {
   test('minor-pad', async () => {
     await runsetflags(spec.minor.pad, { null: false },
       (vin: any) => struct.pad(vin.val, vin.pad, vin.char))
+  })
+
+
+  test('minor-setpath', async () => {
+    await runsetflags(spec.minor.setpath, { null: false },
+      (vin: any) => struct.setpath(vin.store, vin.path, vin.val))
+  })
+
+
+  test('minor-edge-setpath', async () => {
+    const { setpath, DELETE } = struct
+    const x = { y: { z: 1, q: 2 } }
+    deepEqual(setpath(x, 'y.q', DELETE), { z: 1 })
+    deepEqual(x, { y: { z: 1 } })
   })
 
 
@@ -349,6 +466,34 @@ describe('struct', async () => {
   })
 
 
+  test('walk-copy', async () => {
+    const { walk, isnode, ismap, islist, size, setprop } = struct
+
+    let cur: any[]
+    function walkcopy(key: any, val: any, _parent: any, path: any) {
+      if (undefined === key) {
+        cur = []
+        cur[0] = ismap(val) ? {} : islist(val) ? [] : val
+        return val
+      }
+
+      let v = val
+      let i = size(path)
+
+      if (isnode(v)) {
+        v = cur[i] = ismap(v) ? {} : []
+      }
+
+      setprop(cur[i - 1], key, v)
+
+      return val
+    }
+
+    await runset(spec.walk.copy, (vin: any) => (walk(vin, walkcopy), cur[0]))
+  })
+
+
+
   // merge tests
   // ===========
 
@@ -371,6 +516,11 @@ describe('struct', async () => {
 
   test('merge-integrity', async () => {
     await runset(spec.merge.integrity, struct.merge)
+  })
+
+
+  test('merge-depth', async () => {
+    await runset(spec.merge.depth, (vin: any) => struct.merge(vin.val, vin.depth))
   })
 
 
@@ -517,6 +667,24 @@ describe('struct', async () => {
   })
 
 
+  test('transform-format', async () => {
+    await runsetflags(spec.transform.format, { null: false }, (vin: any) =>
+      struct.transform(vin.data, vin.spec))
+  })
+
+
+  test('transform-apply', async () => {
+    await runset(spec.transform.apply, (vin: any) =>
+      struct.transform(vin.data, vin.spec))
+  })
+
+  test('transform-edge-apply', async () => {
+    const { transform } = struct
+    equal(2, transform({}, ['`$APPLY`', (v: any) => 1 + v, 1]))
+  })
+
+
+
   test('transform-modify', async () => {
     await runset(spec.transform.modify, (vin: any) =>
       struct.transform(
@@ -568,7 +736,8 @@ describe('struct', async () => {
   // ===============
 
   test('validate-basic', async () => {
-    await runset(spec.validate.basic, (vin: any) => struct.validate(vin.data, vin.spec))
+    await runsetflags(spec.validate.basic, { null: false },
+      (vin: any) => struct.validate(vin.data, vin.spec))
   })
 
 
@@ -596,6 +765,28 @@ describe('struct', async () => {
   test('validate-special', async () => {
     await runset(spec.validate.special, (vin: any) =>
       struct.validate(vin.data, vin.spec, vin.inj))
+  })
+
+
+  test('validate-edge', async () => {
+    const { validate } = struct
+    let errs: any[] = []
+    validate({ x: 1 }, { x: '`$INSTANCE`' }, { errs })
+    equal(errs[0], 'Expected field x to be instance, but found integer: 1.')
+
+    errs = []
+    validate({ x: {} }, { x: '`$INSTANCE`' }, { errs })
+    equal(errs[0], 'Expected field x to be instance, but found map: {}.')
+
+    errs = []
+    validate({ x: [] }, { x: '`$INSTANCE`' }, { errs })
+    equal(errs[0], 'Expected field x to be instance, but found list: [].')
+
+    class C { }
+    const c = new C()
+    errs = []
+    validate({ x: c }, { x: '`$INSTANCE`' }, { errs })
+    equal(errs.length, 0)
   })
 
 
@@ -647,28 +838,33 @@ describe('struct', async () => {
   })
 
 
+  test('select-alts', async () => {
+    await runset(spec.select.alts, (vin: any) => struct.select(vin.obj, vin.query))
+  })
+
+
   // JSON Builder
   // ============
 
   test('json-builder', async () => {
-    const { jsonify, jo, ja } = struct
-    equal(jsonify(jo(
+    const { jsonify, jm, jt } = struct
+    equal(jsonify(jm(
       'a', 1
     )), `{
   "a": 1
 }`)
 
-    equal(jsonify(ja(
+    equal(jsonify(jt(
       'b', 2
     )), `[
   "b",
   2
 ]`)
 
-    equal(jsonify(jo(
+    equal(jsonify(jm(
       'c', 'C',
-      'd', jo('x', true),
-      'e', ja(null, false)
+      'd', jm('x', true),
+      'e', jt(null, false)
     )), `{
   "c": "C",
   "d": {
@@ -680,13 +876,13 @@ describe('struct', async () => {
   ]
 }`)
 
-    equal(jsonify(ja(
-      3.3, jo(
+    equal(jsonify(jt(
+      3.3, jm(
         'f', true,
         'g', false,
         'h', null,
-        'i', ja('y', 0),
-        'j', jo('z', -1),
+        'i', jt('y', 0),
+        'j', jm('z', -1),
         'k')
     )), `[
   3.3,
@@ -705,7 +901,7 @@ describe('struct', async () => {
   }
 ]`)
 
-    equal(jsonify(jo(
+    equal(jsonify(jm(
       true, 1,
       false, 2,
       null, 3,

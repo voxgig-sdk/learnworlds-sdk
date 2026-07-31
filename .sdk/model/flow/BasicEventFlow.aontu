@@ -1,0 +1,9 @@
+# BasicEventFlow
+
+main: kit: flow: BasicEventFlow:
+{
+  entity: "event",
+  kind: "basic",
+  name: "BasicEventFlow",
+  "key$": "BasicEventFlow"
+}

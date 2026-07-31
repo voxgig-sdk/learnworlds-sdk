@@ -1,21 +1,13 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class UserGroupEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { UserGroup, UserGroupLoadMatch, UserGroupListMatch, UserGroupCreateData, UserGroupUpdateData } from '../LearnworldsTypes';
+declare class UserGroupEntity extends LearnworldsEntityBase<UserGroup> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): UserGroupEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    load(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    create(this: any, reqdata?: any, ctrl?: Control): Promise<any>;
-    update(this: any, reqdata?: any, ctrl?: Control): Promise<any>;
+    make(this: UserGroupEntity): UserGroupEntity;
+    load(this: any, reqmatch?: UserGroupLoadMatch, ctrl?: Control): Promise<UserGroup>;
+    list(this: any, reqmatch?: UserGroupListMatch, ctrl?: Control): Promise<UserGroup[]>;
+    create(this: any, reqdata?: UserGroupCreateData, ctrl?: Control): Promise<UserGroup>;
+    update(this: any, reqdata?: UserGroupUpdateData, ctrl?: Control): Promise<UserGroup>;
 }
 export { UserGroupEntity };

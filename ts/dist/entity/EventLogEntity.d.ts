@@ -1,18 +1,10 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class EventLogEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { EventLog, EventLogListMatch } from '../LearnworldsTypes';
+declare class EventLogEntity extends LearnworldsEntityBase<EventLog> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): EventLogEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
+    make(this: EventLogEntity): EventLogEntity;
+    list(this: any, reqmatch?: EventLogListMatch, ctrl?: Control): Promise<EventLog[]>;
 }
 export { EventLogEntity };

@@ -1,0 +1,22 @@
+# BasicCalendarFlow
+
+main: kit: flow: BasicCalendarFlow:
+{
+  entity: "calendar",
+  kind: "basic",
+  name: "BasicCalendarFlow",
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "calendar_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCalendarFlow"
+}

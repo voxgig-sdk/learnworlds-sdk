@@ -1,18 +1,8 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class SpaceEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Space } from '../LearnworldsTypes';
+declare class SpaceEntity extends LearnworldsEntityBase<Space> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): SpaceEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    remove(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
+    make(this: SpaceEntity): SpaceEntity;
 }
 export { SpaceEntity };

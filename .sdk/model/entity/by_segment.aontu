@@ -1,0 +1,10 @@
+# Entity: by_segment
+
+main: kit: entity: by_segment: {
+
+  alias: field: {}
+
+  name: "by_segment"
+
+
+}

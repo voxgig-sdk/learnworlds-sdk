@@ -1,119 +1,22 @@
 # BasicUserRoleFlow
 
-main: sdk: flow: BasicUserRoleFlow:
+main: kit: flow: BasicUserRoleFlow:
 {
+  entity: "user_role",
+  kind: "basic",
   name: "BasicUserRoleFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_USER_ROLE_ENTID: {
-      user_role01: "USER_ROLE01",
-      user_role02: "USER_ROLE02",
-      user_role03: "USER_ROLE03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE",
-    LEARNWORLDS_TEST_USER_ENTID: {
-      user01: "USER01"
-    }
-  }
-
-  test: {
-    entity: {
-      user_role: {
-        USER_ROLE01: {
-          id: "USER_ROLE01",
-          email: "s1",
-          username: "s2",
-          role_id: "s3",
-          user_role: {}
-
-          assigned_courses: [],
-          assigned_seat_offering_ids: [],
-          assigned_user_group_ids: [],
-          assigned_segment_id: "s8",
-          user_id: "USER01"
-        }
-
-        USER_ROLE02: {
-          id: "USER_ROLE02",
-          email: "s5b",
-          username: "s5c",
-          role_id: "s5d",
-          user_role: {}
-
-          assigned_courses: [],
-          assigned_seat_offering_ids: [],
-          assigned_user_group_ids: [],
-          assigned_segment_id: "s62"
-        }
-
-        USER_ROLE03: {
-          id: "USER_ROLE03",
-          email: "sb5",
-          username: "sb6",
-          role_id: "sb7",
-          user_role: {}
-
-          assigned_courses: [],
-          assigned_seat_offering_ids: [],
-          assigned_user_group_ids: [],
-          assigned_segment_id: "sbc"
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_user_role0",
-      kind: "entity",
-      entity: "user_role",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_USER_ROLE_ENTID.user_role01`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`"
-      }
-
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_user_role0.match.id`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`"
-      }
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "user_role_ref01"
+          }
+        }
+      ]
     }
-
-    {
-      name: "update_user_role1",
-      ref: "load_user_role0",
-      action: "update",
-      reqdata: {
-        email: "s1-`$WHEN`"
-      }
-
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_user_role0.match.id`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`",
-        email: "`dm$=s.update_user_role1.reqdata.email`"
-      }
-    }
-
-    {
-      name: "load_user_role2",
-      kind: "entity",
-      entity: "user_role",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_USER_ROLE_ENTID.user_role01`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`"
-      }
-
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_user_role0.match.id`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`",
-        email: "`dm$=s.update_user_role1.reqdata.email`"
-      }
-    }
-  ]
+  ],
+  "key$": "BasicUserRoleFlow"
 }

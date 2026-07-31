@@ -36,22 +36,57 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Config = void 0;
 const Path = __importStar(require("node:path"));
 const sdkgen_1 = require("@voxgig/sdkgen");
+const apidef_1 = require("@voxgig/apidef");
+const utility_ts_1 = require("./utility_ts");
 const Config = (0, sdkgen_1.cmp)(async function Config(props) {
-    const { target, ctx$: { model } } = props;
-    const { main: { sdk: { entity } } } = model;
+    const ctx$ = props.ctx$;
+    const target = props.target;
+    const model = ctx$.model;
+    const entity = (0, apidef_1.getModelPath)(model, `main.${apidef_1.KIT}.entity`);
+    const feature = (0, apidef_1.getModelPath)(model, `main.${apidef_1.KIT}.feature`);
     const ff = Path.normalize(__dirname + '/../../../src/cmp/ts/fragment/');
-    const headers = model?.main?.sdk?.config?.headers || {};
+    const headers = (0, apidef_1.getModelPath)(model, `main.${apidef_1.KIT}.config.headers`) || {};
+    const authActive = (0, sdkgen_1.isAuthActive)(model);
+    // config.auth.prefix override -> spec-derived info.security.prefix -> 'Bearer'
+    const authPrefix = (0, sdkgen_1.resolveAuthPrefix)(model);
+    const authBlock = authActive
+        ? `auth: {
+      prefix: '${authPrefix}',
+    },
+
+    `
+        : '';
     (0, sdkgen_1.File)({ name: 'Config.' + target.ext }, () => {
         (0, sdkgen_1.Fragment)({
             from: ff + 'Config.fragment.ts',
             replace: {
+                "'AUTHBLOCK'": authBlock,
                 "'HEADERS'": (0, sdkgen_1.indent)(JSON.stringify(headers, null, 2), 4).trim(),
+                '// #ImportFeatures': () => (0, sdkgen_1.each)(feature, (f) => {
+                    (0, sdkgen_1.Line)(`import { ${(0, apidef_1.nom)(f, 'Name')}Feature } from ` +
+                        `'./feature/${f.name}/${(0, apidef_1.nom)(f, 'Name')}Feature'`);
+                }),
+                '// #FeatureClasses': () => (0, sdkgen_1.each)(feature, (f) => {
+                    // Trailing comma: the map has one entry per feature, so entries
+                    // must be comma-separated (a single feature hid this until now).
+                    (0, sdkgen_1.Line)(` ${f.name}: ${(0, apidef_1.nom)(f, 'Name')}Feature,`);
+                }),
+                '// #FeatureConfigs': () => (0, sdkgen_1.each)(feature, (f) => {
+                    (0, sdkgen_1.Line)(` ${f.name}: ${(0, utility_ts_1.formatJson)(f.config, { margin: 4 })},`);
+                }),
                 '// #EntityConfigs': () => (0, sdkgen_1.each)(entity, (entity) => {
                     (0, sdkgen_1.Content)(`
       ${entity.name}: {
       },
 `);
-                })
+                }),
+                "'ENTITYMAP'": (0, utility_ts_1.formatJson)(Object.values(entity)
+                    .reduce((a, n) => (a[n.name] = (0, utility_ts_1.clean)({
+                    fields: n.fields,
+                    name: n.name,
+                    op: n.op,
+                    relations: n.relations,
+                }), a), {}), { margin: 2 }).trim(),
             }
         });
     });

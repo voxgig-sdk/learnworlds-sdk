@@ -1,67 +1,27 @@
 # BasicCouponUsageFlow
 
-main: sdk: flow: BasicCouponUsageFlow:
+main: kit: flow: BasicCouponUsageFlow:
 {
+  entity: "coupon_usage",
+  kind: "basic",
   name: "BasicCouponUsageFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_COUPON_USAGE_ENTID: {
-      coupon_usage01: "COUPON_USAGE01",
-      coupon_usage02: "COUPON_USAGE02",
-      coupon_usage03: "COUPON_USAGE03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      coupon_usage: {
-        COUPON_USAGE01: {
-          usage: {}
-
-          payments: [],
-          meta: {}
-
-          id: "COUPON_USAGE01"
-        }
-
-        COUPON_USAGE02: {
-          usage: {}
-
-          payments: [],
-          meta: {}
-
-          id: "COUPON_USAGE02"
-        }
-
-        COUPON_USAGE03: {
-          usage: {}
-
-          payments: [],
-          meta: {}
-
-          id: "COUPON_USAGE03"
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_coupon_usage0",
-      kind: "entity",
-      entity: "coupon_usage",
-      action: "load",
       match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_COUPON_USAGE_ENTID.coupon_usage01`"
+        cid: "cid01",
+        promotion_id: "promotion01"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_coupon_usage0.match.id`"
-      }
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "coupon_usage_ref01"
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "key$": "BasicCouponUsageFlow"
 }

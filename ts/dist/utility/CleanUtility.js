@@ -4,7 +4,7 @@ exports.clean = clean;
 // Clean request data by partially hiding sensitive values.
 function clean(ctx, val) {
     const options = ctx.options;
-    const cleankeyre = options.__derived__.clean.keyre;
+    const cleankeyre = options?.__derived__?.clean?.keyre;
     const hintsize = 4;
     /*
     if (null != cleankeyre) {

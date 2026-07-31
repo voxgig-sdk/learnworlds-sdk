@@ -1,0 +1,10 @@
+# Entity: event
+
+main: kit: entity: event: {
+
+  alias: field: {}
+
+  name: "event"
+
+
+}

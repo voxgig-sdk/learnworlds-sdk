@@ -1,0 +1,69 @@
+{
+  "existing": {
+    "seat": {
+      "SEAT00": {
+        "access": "s82",
+        "available_seat": "s83",
+        "created": 132,
+        "description": "s85",
+        "id": "SEAT00",
+        "max_number_of_user": "s87",
+        "modified": 136,
+        "number_of_seat": "s89",
+        "product": {},
+        "seat_manager": [],
+        "tag": [],
+        "title": "s8d",
+        "total_enrollment": "s8e"
+      },
+      "SEAT01": {
+        "access": "s104",
+        "available_seat": "s105",
+        "created": 262,
+        "description": "s107",
+        "id": "SEAT01",
+        "max_number_of_user": "s109",
+        "modified": 266,
+        "number_of_seat": "s10b",
+        "product": {},
+        "seat_manager": [],
+        "tag": [],
+        "title": "s10f",
+        "total_enrollment": "s110"
+      },
+      "SEAT02": {
+        "access": "s186",
+        "available_seat": "s187",
+        "created": 392,
+        "description": "s189",
+        "id": "SEAT02",
+        "max_number_of_user": "s18b",
+        "modified": 396,
+        "number_of_seat": "s18d",
+        "product": {},
+        "seat_manager": [],
+        "tag": [],
+        "title": "s191",
+        "total_enrollment": "s192"
+      }
+    }
+  },
+  "new": {
+    "seat": {
+      "seat_ref01": {
+        "access": "s208",
+        "available_seat": "s209",
+        "created": 522,
+        "description": "s20b",
+        "max_number_of_user": "s20d",
+        "modified": 526,
+        "number_of_seat": "s20f",
+        "product": {},
+        "seat_manager": [],
+        "tag": [],
+        "title": "s213",
+        "total_enrollment": "s214"
+      }
+    }
+  }
+}

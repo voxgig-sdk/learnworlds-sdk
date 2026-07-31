@@ -1,5 +1,5 @@
 "use strict";
-// VERSION: @voxgig/struct 0.0.8
+// VERSION: @voxgig/struct 0.0.10
 // This test utility runs the JSON-specified tests in build/test/test.json.
 // (or .sdk/test/test.json if used in a @voxgig/sdkgen project)
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -35,7 +35,7 @@ async function makeRunner(testfile, client) {
                     let res = await testpack.subject(...args);
                     res = fixJSON(res, flags);
                     entry.res = res;
-                    checkResult(entry, res, structUtils);
+                    checkResult(entry, args, res, structUtils);
                 }
                 catch (err) {
                     if (err instanceof node_assert_1.AssertionError) {
@@ -90,14 +90,14 @@ function resolveEntry(entry, flags) {
     entry.out = null == entry.out && flags.null ? NULLMARK : entry.out;
     return entry;
 }
-function checkResult(entry, res, structUtils) {
+function checkResult(entry, args, res, structUtils) {
     let matched = false;
     if (entry.err) {
         return (0, node_assert_1.fail)('Expected error did not occur: ' + entry.err +
-            '\n\nENTRY: ' + JSON.stringify(entry, null, 2));
+            '\n\nENTRY: ' + safeStringify(entry));
     }
     if (entry.match) {
-        const result = { in: entry.in, out: entry.res, ctx: entry.ctx };
+        const result = { in: entry.in, args, out: entry.res, ctx: entry.ctx };
         match(entry.match, result, structUtils);
         matched = true;
     }
@@ -109,7 +109,7 @@ function checkResult(entry, res, structUtils) {
     if (matched && (NULLMARK === out || null == out)) {
         return;
     }
-    (0, node_assert_1.deepStrictEqual)(null != res ? JSON.parse(JSON.stringify(res)) : res, entry.out);
+    (0, node_assert_1.deepStrictEqual)(null != res ? JSON.parse(safeStringify(res)) : res, entry.out);
 }
 // Handle errors from test execution
 function handleError(entry, err, structUtils) {
@@ -127,10 +127,10 @@ function handleError(entry, err, structUtils) {
     }
     // Unexpected error (test didn't specify an error expectation)
     else if (err instanceof node_assert_1.AssertionError) {
-        (0, node_assert_1.fail)(err.message + '\n\nENTRY: ' + JSON.stringify(entry, null, 2));
+        (0, node_assert_1.fail)(err.message + '\n\nENTRY: ' + safeStringify(entry));
     }
     else {
-        (0, node_assert_1.fail)(err.stack + '\\nnENTRY: ' + JSON.stringify(entry, null, 2));
+        (0, node_assert_1.fail)(err.stack + '\n\nENTRY: ' + safeStringify(entry));
     }
 }
 function resolveArgs(entry, testpack, utility, structUtils) {
@@ -148,7 +148,7 @@ function resolveArgs(entry, testpack, utility, structUtils) {
         let first = args[0];
         if (structUtils.ismap(first)) {
             first = structUtils.clone(first);
-            first = utility.contextify(first);
+            first = utility.makeContext(first);
             args[0] = first;
             entry.ctx = first;
             first.client = testpack.client;
@@ -215,10 +215,25 @@ function matchval(check, base, structUtils) {
     }
     return pass;
 }
+function safeStringify(val) {
+    const seen = new WeakSet();
+    return JSON.stringify(val, (_k, v) => {
+        if ('object' === typeof v && null !== v) {
+            if (seen.has(v))
+                return '[Circular]';
+            seen.add(v);
+        }
+        if (v instanceof Error) {
+            return { name: v.name, message: v.message };
+        }
+        return v;
+    }, 2);
+}
 function fixJSON(val, flags) {
     if (null == val) {
         return flags?.null ? NULLMARK : val;
     }
+    const seen = new WeakSet();
     const replacer = (_k, v) => {
         if (null == v && flags?.null) {
             return NULLMARK;
@@ -229,6 +244,11 @@ function fixJSON(val, flags) {
                 name: v.name,
                 message: v.message,
             };
+        }
+        if ('object' === typeof v && null !== v) {
+            if (seen.has(v))
+                return '[Circular]';
+            seen.add(v);
         }
         return v;
     };

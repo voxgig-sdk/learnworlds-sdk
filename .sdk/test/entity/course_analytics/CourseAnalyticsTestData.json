@@ -1,0 +1,65 @@
+{
+  "existing": {
+    "course_analytics": {
+      "COURSE_ANALYTICS00": {
+        "avg_score_rate": 110,
+        "avg_time_to_finish": "s6f",
+        "certificates_issued": "s70",
+        "learning_unit": "s71",
+        "social_interaction": "s72",
+        "student": "s73",
+        "success_rate": 116,
+        "total_study_time": "s75",
+        "video": "s76",
+        "video_time": "s77",
+        "video_viewing_time": "s78",
+        "id": "COURSE_ANALYTICS00"
+      },
+      "COURSE_ANALYTICS01": {
+        "avg_score_rate": 220,
+        "avg_time_to_finish": "sdd",
+        "certificates_issued": "sde",
+        "learning_unit": "sdf",
+        "social_interaction": "se0",
+        "student": "se1",
+        "success_rate": 226,
+        "total_study_time": "se3",
+        "video": "se4",
+        "video_time": "se5",
+        "video_viewing_time": "se6",
+        "id": "COURSE_ANALYTICS01"
+      },
+      "COURSE_ANALYTICS02": {
+        "avg_score_rate": 330,
+        "avg_time_to_finish": "s14b",
+        "certificates_issued": "s14c",
+        "learning_unit": "s14d",
+        "social_interaction": "s14e",
+        "student": "s14f",
+        "success_rate": 336,
+        "total_study_time": "s151",
+        "video": "s152",
+        "video_time": "s153",
+        "video_viewing_time": "s154",
+        "id": "COURSE_ANALYTICS02"
+      }
+    }
+  },
+  "new": {
+    "course_analytics": {
+      "course_analytics_ref01": {
+        "avg_score_rate": 440,
+        "avg_time_to_finish": "s1b9",
+        "certificates_issued": "s1ba",
+        "learning_unit": "s1bb",
+        "social_interaction": "s1bc",
+        "student": "s1bd",
+        "success_rate": 446,
+        "total_study_time": "s1bf",
+        "video": "s1c0",
+        "video_time": "s1c1",
+        "video_viewing_time": "s1c2"
+      }
+    }
+  }
+}

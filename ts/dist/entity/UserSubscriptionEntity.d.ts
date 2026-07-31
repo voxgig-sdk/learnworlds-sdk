@@ -1,18 +1,10 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class UserSubscriptionEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { UserSubscription, UserSubscriptionListMatch } from '../LearnworldsTypes';
+declare class UserSubscriptionEntity extends LearnworldsEntityBase<UserSubscription> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): UserSubscriptionEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
+    make(this: UserSubscriptionEntity): UserSubscriptionEntity;
+    list(this: any, reqmatch?: UserSubscriptionListMatch, ctrl?: Control): Promise<UserSubscription[]>;
 }
 export { UserSubscriptionEntity };

@@ -1,113 +1,59 @@
 # BasicCommunitySpaceFlow
 
-main: sdk: flow: BasicCommunitySpaceFlow:
+main: kit: flow: BasicCommunitySpaceFlow:
 {
+  entity: "community_space",
+  kind: "basic",
   name: "BasicCommunitySpaceFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_COMMUNITY_SPACE_ENTID: {
-      community_space01: "COMMUNITY_SPACE01",
-      community_space02: "COMMUNITY_SPACE02",
-      community_space03: "COMMUNITY_SPACE03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      community_space: {
-        COMMUNITY_SPACE01: {
-          id: "COMMUNITY_SPACE01",
-          title: "s1",
-          description: "s2",
-          access: "s3",
-          owner: {}
-
-          usages: [],
-          hidden_from_community: true,
-          is_invitation_required: false,
-          is_members_allowed_to_view_members: true,
-          collectionid: "s9"
-        }
-
-        COMMUNITY_SPACE02: {
-          id: "COMMUNITY_SPACE02",
-          title: "s65",
-          description: "s66",
-          access: "s67",
-          owner: {}
-
-          usages: [],
-          hidden_from_community: true,
-          is_invitation_required: false,
-          is_members_allowed_to_view_members: true,
-          collectionid: "s6d"
-        }
-
-        COMMUNITY_SPACE03: {
-          id: "COMMUNITY_SPACE03",
-          title: "sc9",
-          description: "sca",
-          access: "scb",
-          owner: {}
-
-          usages: [],
-          hidden_from_community: true,
-          is_invitation_required: false,
-          is_members_allowed_to_view_members: true,
-          collectionid: "sd1"
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_community_space0",
-      kind: "entity",
-      entity: "community_space",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_COMMUNITY_SPACE_ENTID.community_space01`"
+      input: {
+        ref: "community_space_ref01"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_community_space0.match.id`"
-      }
+      op: "create"
     }
 
     {
-      name: "update_community_space1",
-      ref: "load_community_space0",
-      action: "update",
-      reqdata: {
-        title: "s1-`$WHEN`"
+      input: {
+        ref: "community_space_ref01",
+        srcdatavar: "community_space_ref01_data",
+        suffix: "_up0",
+        textfield: "collection_id"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_community_space0.match.id`",
-        title: "`dm$=s.update_community_space1.reqdata.title`"
-      }
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-community_space_ref01"
+          }
+        }
+      ]
     }
 
     {
-      name: "load_community_space2",
-      kind: "entity",
-      entity: "community_space",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_COMMUNITY_SPACE_ENTID.community_space01`"
+      input: {
+        ref: "community_space_ref01",
+        srcdatavar: "community_space_ref01_data",
+        suffix: "_dt0"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_community_space0.match.id`",
-        title: "`dm$=s.update_community_space1.reqdata.title`"
+      match: {
+        id: "community_space01"
       }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-community_space_ref01"
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "key$": "BasicCommunitySpaceFlow"
 }

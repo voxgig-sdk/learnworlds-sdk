@@ -1,0 +1,14 @@
+{
+  "existing": {
+    "by_product": {
+      "BY_PRODUCT00": {},
+      "BY_PRODUCT01": {},
+      "BY_PRODUCT02": {}
+    }
+  },
+  "new": {
+    "by_product": {
+      "by_product_ref01": {}
+    }
+  }
+}

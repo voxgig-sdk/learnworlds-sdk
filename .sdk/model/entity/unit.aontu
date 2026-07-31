@@ -1,0 +1,18 @@
+# Entity: unit
+
+main: kit: entity: unit: {
+
+  alias: field: {}
+
+  name: "unit"
+  relations: {
+    ancestors: [
+      [
+        "course"
+      ]
+    ]
+  }
+
+
+
+}

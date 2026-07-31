@@ -4,20 +4,7 @@
   
     const cmd: any = {}
   
-  
-  
-  cmd.load = {
-    action: async function load_user_progress(this: any, entize: any, msg: any) {
-      const user_progressEntity = this.shared.sdk.UserProgress()
-      const q = msg.q || {}
-  
-      const resdata = await user_progressEntity.load(q)
-  
-      let item = entize(resdata)
-      return item
-    }
-  }
-  
+    // #LoadOp
   
   
   cmd.list = {

@@ -1,0 +1,104 @@
+# Entity: user_progress
+
+main: kit: entity: user_progress: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "section_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "unit"
+      req: false
+      type: "`$ARRAY`"
+    }
+  ]
+
+  name: "user_progress"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "course_id"
+                orig: "cid"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "user_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/users/{id}/courses/{cid}/progress"
+          parts: [
+            "v2"
+            "users"
+            "{user_id}"
+            "courses"
+            "{course_id}"
+            "progress"
+          ]
+          rename: {
+            param: {
+              cid: "course_id"
+              id: "user_id"
+            }
+          }
+          select: {
+            exist: [
+              "authorization"
+              "course_id"
+              "lw_client"
+              "user_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "user"
+        "course"
+      ]
+    ]
+  }
+
+
+
+}

@@ -1,0 +1,18 @@
+# Entity: upcoming
+
+main: kit: entity: upcoming: {
+
+  alias: field: {}
+
+  name: "upcoming"
+  relations: {
+    ancestors: [
+      [
+        "affiliate"
+      ]
+    ]
+  }
+
+
+
+}

@@ -1,18 +1,10 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class LeadEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { Lead, LeadListMatch } from '../LearnworldsTypes';
+declare class LeadEntity extends LearnworldsEntityBase<Lead> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): LeadEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
+    make(this: LeadEntity): LeadEntity;
+    list(this: any, reqmatch?: LeadListMatch, ctrl?: Control): Promise<Lead[]>;
 }
 export { LeadEntity };

@@ -1,0 +1,14 @@
+{
+  "existing": {
+    "segment": {
+      "SEGMENT00": {},
+      "SEGMENT01": {},
+      "SEGMENT02": {}
+    }
+  },
+  "new": {
+    "segment": {
+      "segment_ref01": {}
+    }
+  }
+}

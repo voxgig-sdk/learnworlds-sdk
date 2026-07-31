@@ -1,0 +1,848 @@
+# Entity: affiliate
+
+main: kit: entity: affiliate: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "affiliate"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "affiliate_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "amount"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "billing_info"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$OBJECT`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "click"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "code"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "commission"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "commission_percentage"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "completed_by"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "coupon"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$STRING`"
+        ]
+      ]
+    }
+    {
+      name: "created"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "customer"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "date"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "discount"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "due"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "email"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "eu_customer"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$BOOLEAN`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "field"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "gateway"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$STRING`"
+        ]
+      ]
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "instructor"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "instructors_total_percentage"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$NUMBER`"
+        ]
+      ]
+    }
+    {
+      name: "invoice"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$STRING`"
+        ]
+      ]
+    }
+    {
+      name: "is_admin"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_affiliate"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_instructor"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_reporter"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_suspended"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "last_login"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$NUMBER`"
+        ]
+      ]
+    }
+    {
+      name: "lead"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "nps_comment"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "nps_score"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$INTEGER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "paid_at"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NUMBER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "payment"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "payment_method"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "payment_note"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "payment_plan_current_payment"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$INTEGER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "payment_plan_total_payment"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$INTEGER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "payout"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "pending"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "period"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$STRING`"
+        ]
+      ]
+    }
+    {
+      name: "price"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "product"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "referrer_id"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "refund_at"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$NUMBER`"
+        ]
+      ]
+    }
+    {
+      name: "role"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "sale"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "signup_approval_status"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "subscribed_for_marketing_email"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$BOOLEAN`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "tag"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "tax_amount"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "tax_percentage"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "transaction_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "user_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "username"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "utm"
+      req: false
+      type: "`$OBJECT`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "affiliate"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v2/affiliates/{id}"
+          parts: [
+            "v2"
+            "affiliates"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/affiliates/{id}/customers"
+          parts: [
+            "v2"
+            "affiliates"
+            "{id}"
+            "customers"
+          ]
+          select: {
+            "$action": "customer"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+              "page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/affiliates/{id}/leads"
+          parts: [
+            "v2"
+            "affiliates"
+            "{id}"
+            "leads"
+          ]
+          select: {
+            "$action": "lead"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+              "page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/affiliates/{id}/payments"
+          parts: [
+            "v2"
+            "affiliates"
+            "{id}"
+            "payments"
+          ]
+          select: {
+            "$action": "payment"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+              "page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/affiliates/{id}/payouts/completed"
+          parts: [
+            "v2"
+            "affiliates"
+            "{id}"
+            "payouts"
+            "completed"
+          ]
+          select: {
+            "$action": "payout_completed"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/affiliates/{id}/payouts/due"
+          parts: [
+            "v2"
+            "affiliates"
+            "{id}"
+            "payouts"
+            "due"
+          ]
+          select: {
+            "$action": "payout_due"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/affiliates/{id}/payouts/upcoming"
+          parts: [
+            "v2"
+            "affiliates"
+            "{id}"
+            "payouts"
+            "upcoming"
+          ]
+          select: {
+            "$action": "payout_upcoming"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/affiliates"
+          parts: [
+            "v2"
+            "affiliates"
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "lw_client"
+              "page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

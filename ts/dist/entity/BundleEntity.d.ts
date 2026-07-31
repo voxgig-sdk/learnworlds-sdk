@@ -1,19 +1,11 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class BundleEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { Bundle, BundleLoadMatch, BundleListMatch } from '../LearnworldsTypes';
+declare class BundleEntity extends LearnworldsEntityBase<Bundle> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): BundleEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    load(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
+    make(this: BundleEntity): BundleEntity;
+    load(this: any, reqmatch?: BundleLoadMatch, ctrl?: Control): Promise<Bundle>;
+    list(this: any, reqmatch?: BundleListMatch, ctrl?: Control): Promise<Bundle[]>;
 }
 export { BundleEntity };

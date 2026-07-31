@@ -4,22 +4,21 @@
   
     const cmd: any = {}
   
+    // #LoadOp
   
   
-  cmd.load = {
-    action: async function load_course_content(this: any, entize: any, msg: any) {
+  cmd.list = {
+    action: async function list_course_content(this: any, entize: any, msg: any) {
       const course_contentEntity = this.shared.sdk.CourseContent()
       const q = msg.q || {}
   
-      const resdata = await course_contentEntity.load(q)
+      const course_contentList = await course_contentEntity.list(q)
+      const dataList = course_contentList.map((n: any) => n.data())
   
-      let item = entize(resdata)
-      return item
+      let items = dataList.map((data: any) => entize(data))
+      return items
     }
   }
-  
-  
-    // #ListOp
   
   
   // Create operation is implemented by seneca entity save

@@ -1,0 +1,14 @@
+{
+  "existing": {
+    "unit": {
+      "UNIT00": {},
+      "UNIT01": {},
+      "UNIT02": {}
+    }
+  },
+  "new": {
+    "unit": {
+      "unit_ref01": {}
+    }
+  }
+}

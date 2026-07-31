@@ -5,6 +5,9 @@ import type { ProjectNameSDK } from '../../ProjectNameSDK'
 import { BaseFeature } from '../base/BaseFeature'
 
 
+const S_NOT_FOUND = 'Not found'
+
+
 class TestFeature extends BaseFeature {
   version = '0.0.1'
   name = 'test'
@@ -18,27 +21,36 @@ class TestFeature extends BaseFeature {
     this._client = ctx.client
     this._options = options
 
-    // console.log('TEST FEATURE', this._options)
-
-    const { struct } = ctx.utility
-    const { walk, size, setprop, stringify } = struct
+    const struct = ctx.utility.struct
+    const walk = struct.walk
+    const size = struct.size
+    const setprop = struct.setprop
 
     const entity = this._options.entity
 
     this._client._mode = 'test'
 
-    // Set entity ids to correct values
-    walk(entity, (k: any, v: any, parent: any, path: any) => {
+    // Ensure entity ids are correct.
+    walk(entity, (k: any, v: any, _parent: any, path: any) => {
       if (2 === size(path)) {
         setprop(v, 'id', k)
       }
       return v
     })
 
-    ctx.utility.fetcher = (ctx: any, _fullurl: string, _fetchdef: any) => {
-      const { findparam, struct } = ctx.utility
-      const { getprop, clone, merge, keysof, size, select, delprop } = struct
+    const self = this
 
+    function testFetcher(ctx: any, _fullurl: string, _fetchdef: any) {
+      const struct = ctx.utility.struct
+      const param = ctx.utility.param
+
+      const getprop = struct.getprop
+      const clone = struct.clone
+      const merge = struct.merge
+      const getelem = struct.getelem
+      const select = struct.select
+      const delprop = struct.delprop
+      const getdef = struct.getdef
 
       function respond(status: number, data?: any, res?: any) {
         const out = merge([
@@ -46,11 +58,14 @@ class TestFeature extends BaseFeature {
             status,
             statusText: 'OK',
             json: async () => data,
+            body: 'not-used',
           },
-          res || {}
+          getdef(res, {})
         ])
 
-        const headers: any = out.headers || {}
+        const headers: any = getprop(out, 'headers', {})
+
+        // JS specific iterator.
         out.headers = {
           forEach(callback: any) {
             Object.keys(headers).forEach((key) => {
@@ -66,11 +81,164 @@ class TestFeature extends BaseFeature {
       const op = ctx.op
       const entmap = getprop(entity, op.entity, {})
 
-      const qand: any[] = []
-      const q = { '`$AND`': qand }
+      if ('load' === op.name) {
+        const args = self.buildArgs(ctx, op, ctx.reqmatch)
+        const found = select(entmap, args)
+        const ent = getelem(found, 0)
+        if (null == ent) {
+          return respond(404, undefined, { statusText: S_NOT_FOUND })
+        }
+        else {
+          delprop(ent, '$KEY')
+          const out = clone(ent)
+          return respond(200, out)
+        }
+      }
+      else if ('list' === op.name) {
+        const args = self.buildArgs(ctx, op, ctx.reqmatch)
+        const found = select(entmap, args)
+        if (null == found) {
+          return respond(404, undefined, { statusText: S_NOT_FOUND })
+        }
+        else {
+          found.map((ent: any) => delprop(ent, '$KEY'))
+          const out = clone(found)
+          return respond(200, out)
+        }
+      }
+      else if ('update' === op.name) {
+        const args = self.buildArgs(ctx, op, ctx.reqdata)
+        const found = select(entmap, args)
+        const ent = getelem(found, 0)
+        if (null == ent) {
+          return respond(404, undefined, { statusText: S_NOT_FOUND })
+        }
+        else {
+          merge([ent, (ctx.reqdata || {})])
+          delprop(ent, '$KEY')
+          const out = clone(ent)
+          return respond(200, out)
+        }
+      }
+      else if ('remove' === op.name) {
+        const args = self.buildArgs(ctx, op, ctx.reqmatch)
+        const found = select(entmap, args)
+        const ent = getelem(found, 0)
+        // Remove only the first matched entity. If nothing matches,
+        // succeed as a no-op rather than erroring.
+        if (null != ent) {
+          delprop(entmap, getprop(ent, 'id'))
+        }
+        return respond(200)
+      }
+      else if ('create' === op.name) {
+        const args = self.buildArgs(ctx, op, ctx.reqdata)
+        let id = param(ctx, 'id')
+        if (null == id) {
+          id = ((1e4 * Math.random() | 0).toString(16) +
+            (1e4 * Math.random() | 0).toString(16) +
+            (1e4 * Math.random() | 0).toString(16) +
+            (1e4 * Math.random() | 0).toString(16)).padEnd(16, '0')
+        }
 
-      for (let k of keysof(ctx.reqmatch)) {
-        const v = findparam(ctx, k)
+        const ent = clone(ctx.reqdata)
+        setprop(ent, 'id', id)
+        setprop(entmap, id, ent)
+        delprop(ent, '$KEY')
+        const out = clone(ent)
+        return respond(200, out)
+      }
+    }
+
+    // Optional network behaviour simulation over the mock transport. Enable
+    // per test via `SDK.test({ net: { latency, failTimes, ... } })`. When
+    // `net` is absent the mock behaves exactly as before (no wrapping), so
+    // existing generated tests are unaffected.
+    const net = this._options.net
+    ctx.utility.fetcher = (null == net) ? testFetcher : this.makeNetsim(net, testFetcher)
+  }
+
+
+  // Wrap a transport with simulated network conditions: latency (fixed or
+  // {min,max}), a budget of first-N failures (`failTimes` -> `failStatus`),
+  // first-N connection errors (`errorTimes`), or a hard `offline` outage.
+  // Counter-driven, so simulations are deterministic across a test.
+  makeNetsim(this: any, net: any, inner: any) {
+    const self = this
+    self._netcalls = 0
+
+    function pickLatency(): number {
+      const l = net.latency
+      if (null == l) { return 0 }
+      if ('number' === typeof l) { return l < 0 ? 0 : l }
+      const min = l.min | 0
+      const max = null == l.max ? min : l.max | 0
+      return max <= min ? min : min + ((max - min) >> 1)
+    }
+
+    function sleep(ms: number): Promise<void> {
+      if (null == ms || 0 >= ms) { return Promise.resolve() }
+      if ('function' === typeof net.sleep) { return Promise.resolve(net.sleep(ms)) }
+      return new Promise((r) => setTimeout(r, ms))
+    }
+
+    return async function netsimFetcher(ctx: any, url: string, fetchdef: any) {
+      self._netcalls++
+      const call = self._netcalls
+
+      if (true === net.offline) {
+        await sleep(pickLatency())
+        return ctx.error('netsim_offline', 'Simulated network offline (URL was: "' + url + '")')
+      }
+      if (call <= (net.errorTimes | 0)) {
+        await sleep(pickLatency())
+        return ctx.error('netsim_conn', 'Simulated connection error (call ' + call + ')')
+      }
+      if (call <= (net.failTimes | 0)) {
+        await sleep(pickLatency())
+        const status = null == net.failStatus ? 503 : net.failStatus
+        return {
+          status,
+          statusText: 'Simulated Failure',
+          body: 'not-used',
+          json: async () => undefined,
+          headers: { forEach(_cb: any) { }, get(_k: string) { return undefined } },
+        }
+      }
+      await sleep(pickLatency())
+      return inner(ctx, url, fetchdef)
+    }
+  }
+
+
+  buildArgs(ctx: any, op: any, args: any): any {
+    const struct = ctx.utility.struct
+    const param = ctx.utility.param
+
+    const getprop = struct.getprop
+    const keysof = struct.keysof
+    const getpath = struct.getpath
+    const getelem = struct.getelem
+    const select = struct.select
+    const transform = struct.transform
+    const isempty = struct.isempty
+
+    const opname = getprop(op, 'name')
+    const point =
+      getelem(getpath(ctx.config, [
+        'entity', getprop(ctx.entity, 'name'), 'op', opname, 'points']), -1)
+
+    const reqd = transform(
+      select(getpath(point, ['args', 'params']), { reqd: true }),
+      ['`$EACH`', '', '`$KEY.name`']
+    )
+
+    const qand: any[] = []
+    const q = { '`$AND`': qand }
+
+    for (let k of keysof(args)) {
+      if ('id' === k || !isempty(select(reqd, k))) {
+        const v = param(ctx, k)
         const ka = getprop(op.alias, k)
 
         let qor: any = [{ [k]: v }]
@@ -82,73 +250,15 @@ class TestFeature extends BaseFeature {
 
         qand.push(qor)
       }
-
-      if (ctx.ctrl.explain) {
-        ctx.ctrl.explain.test = { query: q }
-      }
-
-      if ('load' === op.name) {
-        const found = select(entmap, q)
-        const ent = found[0]
-        if (null == ent) {
-          return respond(404, undefined, { statusText: 'Not found' })
-        }
-        else {
-          delprop(ent, '$KEY')
-          return respond(200, clone(ent))
-        }
-      }
-      else if ('list' === op.name) {
-        const found = select(entmap, q)
-        if (null == found) {
-          return respond(404, undefined, { statusText: 'Not found' })
-        }
-        else {
-          found.map((ent: any) => delprop(ent, '$KEY'))
-          return respond(200, clone(found))
-        }
-      }
-      else if ('update' === op.name) {
-        const found = select(entmap, q)
-        const ent = found[0]
-        if (null == ent) {
-          return respond(404, undefined, { statusText: 'Not found' })
-        }
-        else {
-          merge([ent, (ctx.reqdata || {})])
-          delprop(ent, '$KEY')
-          return respond(200, clone(ent))
-        }
-      }
-      else if ('remove' === op.name) {
-        const found = select(entmap, q)
-        const ent = found[0]
-        if (null == ent) {
-          return respond(404, undefined, { statusText: 'Not found' })
-        }
-        else {
-          delprop(entmap, getprop(ent, 'id'))
-          return respond(200)
-        }
-      }
-      else if ('create' === op.name) {
-        const id = findparam(ctx, 'id')
-        if (null != id) {
-          const ent = clone(ctx.reqdata)
-          ent.id = id
-          setprop(entmap, 'id', ent)
-          delprop(ent, '$KEY')
-          return respond(200, clone(ent))
-        }
-        else {
-          return respond(400, undefined, { statusText: 'Missing id' })
-        }
-      }
     }
+
+    if (ctx.ctrl.explain) {
+      ctx.ctrl.explain.test = { query: q }
+    }
+
+    return q
   }
 }
-
-
 
 
 export {

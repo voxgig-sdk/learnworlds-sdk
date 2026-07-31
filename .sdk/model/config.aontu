@@ -1,6 +1,6 @@
 # SDK Configuration
 
-main: sdk: config: {
+main: kit: config: {
 
   # Authorization header token value prefix
   auth: prefix: 'Bearer'

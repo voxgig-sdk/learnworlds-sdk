@@ -1,0 +1,10 @@
+# Entity: space
+
+main: kit: entity: space: {
+
+  alias: field: {}
+
+  name: "space"
+
+
+}

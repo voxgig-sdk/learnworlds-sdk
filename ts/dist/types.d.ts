@@ -1,59 +1,11 @@
-import { LearnworldsSDK } from './LearnworldsSDK';
-import { Context } from './utility/ContextUtility';
-type Operation = {
-    kind: string;
-    entity: string;
-    name: string;
-    path: string;
-    pathalt: ({
-        path: string;
-    } & Record<string, boolean>)[];
-    params: string[];
-    alias: Record<string, string>;
-    state: Record<string, any>;
-    reqform: any;
-    resform: any;
-    validate: {
-        params: Record<string, any>;
-    };
-    check: Record<string, any>;
-};
-type Spec = {
-    headers: Record<string, string>;
-    alias: any;
-    base: string;
-    prefix: string;
-    suffix: string;
-    params: Record<string, string>;
-    query: Record<string, string>;
-    step: string;
-    method: string;
-    body: any;
-    path: string;
-    url?: string;
-};
-type Response = {
-    status: number;
-    statusText: string;
-    headers: any;
-    json: Function;
-    err?: Error;
-};
-type Result = {
-    ok: boolean;
-    status: number;
-    statusText: string;
-    headers: Record<string, string>;
-    body?: any;
-    err?: any;
-    resdata?: any;
-    resmatch?: any;
-};
-type Control = {
-    throw?: boolean;
-    err?: any;
-    explain?: any;
-};
+import { LearnworldsEntityBase } from './LearnworldsEntityBase';
+import { Point } from './Point';
+import { Context } from './Context';
+import { Control } from './Control';
+import { Operation } from './Operation';
+import { Response } from './Response';
+import { Result } from './Result';
+import { Spec } from './Spec';
 type FeatureOptions = Record<string, any> | {
     active: boolean;
 };
@@ -62,16 +14,19 @@ interface Feature {
     name: string;
     active: boolean;
     init: (ctx: Context, options: FeatureOptions) => void | Promise<any>;
-    PostConstruct: (this: LearnworldsSDK, ctx: Context) => void | Promise<any>;
-    PostConstructEntity: (this: LearnworldsSDK, ctx: Context) => void | Promise<any>;
-    SetData: (this: LearnworldsSDK, ctx: Context) => void | Promise<any>;
-    GetData: (this: LearnworldsSDK, ctx: Context) => void | Promise<any>;
-    GetMatch: (this: LearnworldsSDK, ctx: Context) => void | Promise<any>;
-    PreOperation: (this: LearnworldsSDK, ctx: Context) => void | Promise<any>;
-    PreSpec: (this: LearnworldsSDK, ctx: Context) => void | Promise<any>;
-    PreRequest: (this: LearnworldsSDK, ctx: Context) => void | Promise<any>;
-    PreResponse: (this: LearnworldsSDK, ctx: Context) => void | Promise<any>;
-    PreResult: (this: LearnworldsSDK, ctx: Context) => void | Promise<any>;
-    PostOperation: (this: LearnworldsSDK, ctx: Context) => void | Promise<any>;
+    PostConstruct: (ctx: Context) => void | Promise<any>;
+    PostConstructEntity: (ctx: Context) => void | Promise<any>;
+    SetData: (ctx: Context) => void | Promise<any>;
+    GetData: (ctx: Context) => void | Promise<any>;
+    GetMatch: (ctx: Context) => void | Promise<any>;
+    PrePoint: (ctx: Context) => void | Promise<any>;
+    PreSpec: (ctx: Context) => void | Promise<any>;
+    PreRequest: (ctx: Context) => void | Promise<any>;
+    PreResponse: (ctx: Context) => void | Promise<any>;
+    PreResult: (ctx: Context) => void | Promise<any>;
+    PreDone: (ctx: Context) => void | Promise<any>;
+    PreUnexpected: (ctx: Context) => void | Promise<any>;
+    SetMatch: (ctx: Context) => void | Promise<any>;
 }
-export type { Context, Operation, Spec, Control, FeatureOptions, Feature, Response, Result, };
+export { Point, Context, Control, Operation, Response, Result, Spec, LearnworldsEntityBase, };
+export type { Feature, FeatureOptions, };

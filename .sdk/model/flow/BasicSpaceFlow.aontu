@@ -1,37 +1,9 @@
 # BasicSpaceFlow
 
-main: sdk: flow: BasicSpaceFlow:
+main: kit: flow: BasicSpaceFlow:
 {
+  entity: "space",
+  kind: "basic",
   name: "BasicSpaceFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_SPACE_ENTID: {
-      space01: "SPACE01",
-      space02: "SPACE02",
-      space03: "SPACE03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      space: {
-        SPACE01: {
-          id: "SPACE01"
-        }
-
-        SPACE02: {
-          id: "SPACE02"
-        }
-
-        SPACE03: {
-          id: "SPACE03"
-        }
-      }
-    }
-  }
-
-  step: []
+  "key$": "BasicSpaceFlow"
 }

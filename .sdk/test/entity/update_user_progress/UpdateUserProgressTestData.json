@@ -1,0 +1,43 @@
+{
+  "existing": {
+    "update_user_progress": {
+      "UPDATE_USER_PROGRESS00": {
+        "async": true,
+        "job_id": "JOB01",
+        "send_course_complete_email": true,
+        "unit": [],
+        "course_id": "COURSE01",
+        "user_id": "USER01",
+        "id": "UPDATE_USER_PROGRESS00"
+      },
+      "UPDATE_USER_PROGRESS01": {
+        "async": true,
+        "job_id": "JOB01",
+        "send_course_complete_email": true,
+        "unit": [],
+        "course_id": "COURSE01",
+        "user_id": "USER01",
+        "id": "UPDATE_USER_PROGRESS01"
+      },
+      "UPDATE_USER_PROGRESS02": {
+        "async": true,
+        "job_id": "JOB01",
+        "send_course_complete_email": true,
+        "unit": [],
+        "course_id": "COURSE01",
+        "user_id": "USER01",
+        "id": "UPDATE_USER_PROGRESS02"
+      }
+    }
+  },
+  "new": {
+    "update_user_progress": {
+      "update_user_progress_ref01": {
+        "async": true,
+        "job_id": "JOB01",
+        "send_course_complete_email": true,
+        "unit": []
+      }
+    }
+  }
+}

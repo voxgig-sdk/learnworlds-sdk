@@ -1,155 +1,105 @@
 # BasicUserFlow
 
-main: sdk: flow: BasicUserFlow:
+main: kit: flow: BasicUserFlow:
 {
+  entity: "user",
+  kind: "basic",
   name: "BasicUserFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_USER_ENTID: {
-      user01: "USER01",
-      user02: "USER02",
-      user03: "USER03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      user: {
-        USER01: {
-          id: "USER01",
-          email: "s1",
-          username: "s2",
-          subscribed_for_marketing_emails: false,
-          eu_customer: true,
-          is_admin: false,
-          is_instructor: true,
-          is_suspended: false,
-          is_reporter: true,
-          role: {}
-
-          is_affiliate: true,
-          referrer_id: "sb",
-          last_login: 12,
-          signup_approval_status: "sd",
-          created: 14,
-          fields: {}
-
-          tags: [],
-          utms: {}
-
-          billing_info: {}
-
-          nps_score: "s13",
-          nps_comment: "s14"
-        }
-
-        USER02: {
-          id: "USER02",
-          email: "sd3",
-          username: "sd4",
-          subscribed_for_marketing_emails: false,
-          eu_customer: true,
-          is_admin: false,
-          is_instructor: true,
-          is_suspended: false,
-          is_reporter: true,
-          role: {}
-
-          is_affiliate: true,
-          referrer_id: "sdd",
-          last_login: 222,
-          signup_approval_status: "sdf",
-          created: 224,
-          fields: {}
-
-          tags: [],
-          utms: {}
-
-          billing_info: {}
-
-          nps_score: "se5",
-          nps_comment: "se6"
-        }
-
-        USER03: {
-          id: "USER03",
-          email: "s1a5",
-          username: "s1a6",
-          subscribed_for_marketing_emails: false,
-          eu_customer: true,
-          is_admin: false,
-          is_instructor: true,
-          is_suspended: false,
-          is_reporter: true,
-          role: {}
-
-          is_affiliate: true,
-          referrer_id: "s1af",
-          last_login: 432,
-          signup_approval_status: "s1b1",
-          created: 434,
-          fields: {}
-
-          tags: [],
-          utms: {}
-
-          billing_info: {}
-
-          nps_score: "s1b7",
-          nps_comment: "s1b8"
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_user0",
-      kind: "entity",
-      entity: "user",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`"
+      input: {
+        ref: "user_ref01"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_user0.match.id`"
+      match: {
+        seat_id: "seat01",
+        user_group_id: "user_group01"
       }
+
+      op: "create"
     }
 
     {
-      name: "update_user1",
-      ref: "load_user0",
-      action: "update",
-      reqdata: {
-        email: "s1-`$WHEN`"
-      }
-
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_user0.match.id`",
-        email: "`dm$=s.update_user1.reqdata.email`"
-      }
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "user_ref01"
+          }
+        }
+      ]
     }
 
     {
-      name: "load_user2",
-      kind: "entity",
-      entity: "user",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`"
+      input: {
+        ref: "user_ref01",
+        srcdatavar: "user_ref01_data",
+        suffix: "_up0",
+        textfield: "action"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_user0.match.id`",
-        email: "`dm$=s.update_user1.reqdata.email`"
-      }
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-user_ref01"
+          }
+        }
+      ]
     }
-  ]
+
+    {
+      input: {
+        ref: "user_ref01",
+        srcdatavar: "user_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "user01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-user_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "user_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "user01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "user_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicUserFlow"
 }

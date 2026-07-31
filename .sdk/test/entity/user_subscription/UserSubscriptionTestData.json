@@ -1,0 +1,50 @@
+{
+  "existing": {
+    "user_subscription": {
+      "USER_SUBSCRIPTION00": {
+        "created": "s50",
+        "email": "s51",
+        "expires_at": "s52",
+        "plan_id": "PLAN01",
+        "provider": "s54",
+        "provider_meta": "s55",
+        "status": "s56",
+        "user_id": "USER01"
+      },
+      "USER_SUBSCRIPTION01": {
+        "created": "sa0",
+        "email": "sa1",
+        "expires_at": "sa2",
+        "plan_id": "PLAN01",
+        "provider": "sa4",
+        "provider_meta": "sa5",
+        "status": "sa6",
+        "user_id": "USER01"
+      },
+      "USER_SUBSCRIPTION02": {
+        "created": "sf0",
+        "email": "sf1",
+        "expires_at": "sf2",
+        "plan_id": "PLAN01",
+        "provider": "sf4",
+        "provider_meta": "sf5",
+        "status": "sf6",
+        "user_id": "USER01"
+      }
+    }
+  },
+  "new": {
+    "user_subscription": {
+      "user_subscription_ref01": {
+        "created": "s140",
+        "email": "s141",
+        "expires_at": "s142",
+        "plan_id": "PLAN01",
+        "provider": "s144",
+        "provider_meta": "s145",
+        "status": "s146",
+        "user_id": "USER01"
+      }
+    }
+  }
+}

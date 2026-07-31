@@ -1,137 +1,59 @@
 # BasicSeatFlow
 
-main: sdk: flow: BasicSeatFlow:
+main: kit: flow: BasicSeatFlow:
 {
+  entity: "seat",
+  kind: "basic",
   name: "BasicSeatFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_SEAT_ENTID: {
-      seat01: "SEAT01",
-      seat02: "SEAT02",
-      seat03: "SEAT03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE",
-    LEARNWORLDS_TEST_USER_ENTID: {
-      user01: "USER01"
-    }
-  }
-
-  test: {
-    entity: {
-      seat: {
-        SEAT01: {
-          id: "SEAT01",
-          title: "s1",
-          description: "s2",
-          products: {}
-
-          number_of_seats: "s4",
-          available_seats: "s5",
-          max_number_of_users: "s6",
-          seat_managers: [],
-          tags: [],
-          total_enrollments: "s9",
-          access: "sa",
-          created: 11,
-          modified: 12,
-          active: false,
-          got_seat_on: 14,
-          user_id: "USER01"
-        }
-
-        SEAT02: {
-          id: "SEAT02",
-          title: "s97",
-          description: "s98",
-          products: {}
-
-          number_of_seats: "s9a",
-          available_seats: "s9b",
-          max_number_of_users: "s9c",
-          seat_managers: [],
-          tags: [],
-          total_enrollments: "s9f",
-          access: "sa0",
-          created: 161,
-          modified: 162,
-          active: false,
-          got_seat_on: 164
-        }
-
-        SEAT03: {
-          id: "SEAT03",
-          title: "s12d",
-          description: "s12e",
-          products: {}
-
-          number_of_seats: "s130",
-          available_seats: "s131",
-          max_number_of_users: "s132",
-          seat_managers: [],
-          tags: [],
-          total_enrollments: "s135",
-          access: "s136",
-          created: 311,
-          modified: 312,
-          active: false,
-          got_seat_on: 314
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_seat0",
-      kind: "entity",
-      entity: "seat",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_SEAT_ENTID.seat01`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`"
+      input: {
+        ref: "seat_ref01"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_seat0.match.id`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`"
-      }
+      op: "create"
     }
 
     {
-      name: "update_seat1",
-      ref: "load_seat0",
-      action: "update",
-      reqdata: {
-        title: "s1-`$WHEN`"
+      input: {
+        ref: "seat_ref01",
+        srcdatavar: "seat_ref01_data",
+        suffix: "_up0",
+        textfield: "access"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_seat0.match.id`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`",
-        title: "`dm$=s.update_seat1.reqdata.title`"
-      }
+      op: "update",
+      spec: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-seat_ref01"
+          }
+        }
+      ]
     }
 
     {
-      name: "load_seat2",
-      kind: "entity",
-      entity: "seat",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_SEAT_ENTID.seat01`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`"
+      input: {
+        ref: "seat_ref01",
+        srcdatavar: "seat_ref01_data",
+        suffix: "_dt0"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_seat0.match.id`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`",
-        title: "`dm$=s.update_seat1.reqdata.title`"
+      match: {
+        id: "seat01"
       }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-seat_ref01"
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "key$": "BasicSeatFlow"
 }

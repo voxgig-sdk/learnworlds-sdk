@@ -6,7 +6,6 @@ const __1 = require("..");
 (0, node_test_1.describe)('exists', async () => {
     (0, node_test_1.test)('test-mode', async () => {
         const testsdk = await __1.LearnworldsSDK.test();
-        // console.log('testsdk', testsdk)
         (0, node_assert_1.equal)(null !== testsdk, true);
     });
 });

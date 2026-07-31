@@ -1,0 +1,26 @@
+# BasicReportingFlow
+
+main: kit: flow: BasicReportingFlow:
+{
+  entity: "reporting",
+  kind: "basic",
+  name: "BasicReportingFlow",
+  step: [
+    {
+      match: {
+        user_id: "user01"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "reporting_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicReportingFlow"
+}

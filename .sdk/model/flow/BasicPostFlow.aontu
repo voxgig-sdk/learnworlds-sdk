@@ -1,0 +1,9 @@
+# BasicPostFlow
+
+main: kit: flow: BasicPostFlow:
+{
+  entity: "post",
+  kind: "basic",
+  name: "BasicPostFlow",
+  "key$": "BasicPostFlow"
+}

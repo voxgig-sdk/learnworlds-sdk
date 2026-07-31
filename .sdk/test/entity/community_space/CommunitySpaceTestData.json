@@ -1,0 +1,57 @@
+{
+  "existing": {
+    "community_space": {
+      "COMMUNITY_SPACE00": {
+        "access": "s64",
+        "collection_id": "COLLECTION01",
+        "description": "s66",
+        "hidden_from_community": false,
+        "id": "COMMUNITY_SPACE00",
+        "is_invitation_required": false,
+        "is_members_allowed_to_view_member": true,
+        "owner": {},
+        "title": "s6c",
+        "usage": []
+      },
+      "COMMUNITY_SPACE01": {
+        "access": "sc8",
+        "collection_id": "COLLECTION01",
+        "description": "sca",
+        "hidden_from_community": false,
+        "id": "COMMUNITY_SPACE01",
+        "is_invitation_required": false,
+        "is_members_allowed_to_view_member": true,
+        "owner": {},
+        "title": "sd0",
+        "usage": []
+      },
+      "COMMUNITY_SPACE02": {
+        "access": "s12c",
+        "collection_id": "COLLECTION01",
+        "description": "s12e",
+        "hidden_from_community": false,
+        "id": "COMMUNITY_SPACE02",
+        "is_invitation_required": false,
+        "is_members_allowed_to_view_member": true,
+        "owner": {},
+        "title": "s134",
+        "usage": []
+      }
+    }
+  },
+  "new": {
+    "community_space": {
+      "community_space_ref01": {
+        "access": "s190",
+        "collection_id": "COLLECTION01",
+        "description": "s192",
+        "hidden_from_community": false,
+        "is_invitation_required": false,
+        "is_members_allowed_to_view_member": true,
+        "owner": {},
+        "title": "s198",
+        "usage": []
+      }
+    }
+  }
+}

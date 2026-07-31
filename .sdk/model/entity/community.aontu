@@ -1,0 +1,624 @@
+# Entity: community
+
+main: kit: entity: community: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "access"
+      req: false
+      type: "`$ANY`"
+    }
+    {
+      name: "collection_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "created"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "data"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "description"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "display_order"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "hidden_from_community"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "is_invitation_required"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "is_members_allowed_to_view_member"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "item"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "like"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "mention"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "modified"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "owner"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "posted_in"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "space_id"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "status"
+      req: false
+      type: "`$ANY`"
+    }
+    {
+      name: "text"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "title"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "uid"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "upvote"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "usage"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "user"
+      req: false
+      type: "`$OBJECT`"
+    }
+    {
+      name: "username"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "community"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "space_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "POST"
+          orig: "/v2/community/spaces/{id}/users"
+          parts: [
+            "v2"
+            "community"
+            "spaces"
+            "{space_id}"
+            "users"
+          ]
+          rename: {
+            param: {
+              id: "space_id"
+            }
+          }
+          select: {
+            exist: [
+              "authorization"
+              "lw_client"
+              "space_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "course_id"
+                orig: "course_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "items_per_page"
+                orig: "items_per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "mention"
+                orig: "mention"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "space_id"
+                orig: "space_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "user_id"
+                orig: "user_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/community/posts"
+          parts: [
+            "v2"
+            "community"
+            "posts"
+          ]
+          select: {
+            "$action": "post"
+            exist: [
+              "authorization"
+              "course_id"
+              "items_per_page"
+              "lw_client"
+              "mention"
+              "page"
+              "space_id"
+              "user_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "access"
+                orig: "access"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "collection_id"
+                orig: "collection_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "items_per_page"
+                orig: "items_per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "usage"
+                orig: "usage"
+                reqd: false
+                type: "`$ARRAY`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/community/spaces"
+          parts: [
+            "v2"
+            "community"
+            "spaces"
+          ]
+          select: {
+            "$action": "space"
+            exist: [
+              "access"
+              "authorization"
+              "collection_id"
+              "items_per_page"
+              "lw_client"
+              "page"
+              "usage"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "space_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "items_per_page"
+                orig: "items_per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/community/spaces/{id}/users"
+          parts: [
+            "v2"
+            "community"
+            "spaces"
+            "{space_id}"
+            "users"
+          ]
+          rename: {
+            param: {
+              id: "space_id"
+            }
+          }
+          select: {
+            exist: [
+              "authorization"
+              "items_per_page"
+              "lw_client"
+              "page"
+              "space_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/community/collections"
+          parts: [
+            "v2"
+            "community"
+            "collections"
+          ]
+          select: {
+            "$action": "collection"
+            exist: [
+              "authorization"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "space_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "uid"
+                orig: "uid"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/v2/community/spaces/{id}/users/{uid}"
+          parts: [
+            "v2"
+            "community"
+            "spaces"
+            "{space_id}"
+            "users"
+            "{uid}"
+          ]
+          rename: {
+            param: {
+              id: "space_id"
+            }
+          }
+          select: {
+            exist: [
+              "authorization"
+              "lw_client"
+              "space_id"
+              "uid"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "DELETE"
+          orig: "/v2/community/spaces/{id}"
+          parts: [
+            "v2"
+            "community"
+            "spaces"
+            "{id}"
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "space"
+      ]
+      [
+        "space"
+        "user"
+      ]
+    ]
+  }
+
+
+
+}

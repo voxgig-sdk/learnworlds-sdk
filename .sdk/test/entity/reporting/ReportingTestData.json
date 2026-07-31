@@ -1,0 +1,57 @@
+{
+  "existing": {
+    "reporting": {
+      "REPORTING00": {
+        "average_score_rate": 90,
+        "completed_at": "s5b",
+        "completed_unit": "s5c",
+        "course_id": "COURSE01",
+        "progress_per_section_unit": [],
+        "progress_rate": 95,
+        "status": "s60",
+        "time_on_course": "s61",
+        "total_unit": "s62",
+        "user_id": "USER01"
+      },
+      "REPORTING01": {
+        "average_score_rate": 180,
+        "completed_at": "sb5",
+        "completed_unit": "sb6",
+        "course_id": "COURSE01",
+        "progress_per_section_unit": [],
+        "progress_rate": 185,
+        "status": "sba",
+        "time_on_course": "sbb",
+        "total_unit": "sbc",
+        "user_id": "USER01"
+      },
+      "REPORTING02": {
+        "average_score_rate": 270,
+        "completed_at": "s10f",
+        "completed_unit": "s110",
+        "course_id": "COURSE01",
+        "progress_per_section_unit": [],
+        "progress_rate": 275,
+        "status": "s114",
+        "time_on_course": "s115",
+        "total_unit": "s116",
+        "user_id": "USER01"
+      }
+    }
+  },
+  "new": {
+    "reporting": {
+      "reporting_ref01": {
+        "average_score_rate": 360,
+        "completed_at": "s169",
+        "completed_unit": "s16a",
+        "course_id": "COURSE01",
+        "progress_per_section_unit": [],
+        "progress_rate": 365,
+        "status": "s16e",
+        "time_on_course": "s16f",
+        "total_unit": "s170"
+      }
+    }
+  }
+}

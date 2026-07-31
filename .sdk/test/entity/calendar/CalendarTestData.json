@@ -1,0 +1,38 @@
+{
+  "existing": {
+    "calendar": {
+      "CALENDAR00": {
+        "booking_detail": "s32",
+        "product_id": "PRODUCT01",
+        "start_date": 52,
+        "title": "s35",
+        "type": "s36"
+      },
+      "CALENDAR01": {
+        "booking_detail": "s64",
+        "product_id": "PRODUCT01",
+        "start_date": 102,
+        "title": "s67",
+        "type": "s68"
+      },
+      "CALENDAR02": {
+        "booking_detail": "s96",
+        "product_id": "PRODUCT01",
+        "start_date": 152,
+        "title": "s99",
+        "type": "s9a"
+      }
+    }
+  },
+  "new": {
+    "calendar": {
+      "calendar_ref01": {
+        "booking_detail": "sc8",
+        "product_id": "PRODUCT01",
+        "start_date": 202,
+        "title": "scb",
+        "type": "scc"
+      }
+    }
+  }
+}

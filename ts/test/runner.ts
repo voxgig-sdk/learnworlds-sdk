@@ -1,4 +1,4 @@
-// VERSION: @voxgig/struct 0.0.8
+// VERSION: @voxgig/struct 0.0.10
 // This test utility runs the JSON-specified tests in build/test/test.json.
 // (or .sdk/test/test.json if used in a @voxgig/sdkgen project)
 
@@ -16,6 +16,7 @@ type RunSet = (testspec: any, testsubject: Function) => Promise<any>
 type RunSetFlags = (testspec: any, flags: Record<string, boolean>, testsubject: Function)
   => Promise<any>
 
+
 type RunPack = {
   spec: Record<string, any>
   runset: RunSet
@@ -23,6 +24,7 @@ type RunPack = {
   subject: Subject
   client: any
 }
+
 
 type TestPack = {
   name?: string
@@ -36,8 +38,9 @@ type Flags = Record<string, boolean>
 
 type Utility = {
   struct: any
-  contextify: (ctxmap: Record<string, any>) => any
+  makeContext: (ctxmap: Record<string, any>, basectx?: any) => any
 }
+
 
 type Client = {
   utility: () => Utility
@@ -80,7 +83,7 @@ async function makeRunner(testfile: string, client: Client) {
           res = fixJSON(res, flags)
           entry.res = res
 
-          checkResult(entry, res, structUtils)
+          checkResult(entry, args, res, structUtils)
         }
         catch (err: any) {
           if (err instanceof AssertionError) {
@@ -110,8 +113,7 @@ async function makeRunner(testfile: string, client: Client) {
 
 function resolveSpec(name: string, testfile: string): Record<string, any> {
   const alltests =
-    JSON.parse(readFileSync(join(
-      __dirname, testfile), 'utf8'))
+    JSON.parse(readFileSync(join(__dirname, testfile), 'utf8'))
 
   let spec = alltests.primary?.[name] || alltests[name] || alltests
   return spec
@@ -163,16 +165,16 @@ function resolveEntry(entry: any, flags: Flags): any {
 }
 
 
-function checkResult(entry: any, res: any, structUtils: Record<string, any>) {
+function checkResult(entry: any, args: any[], res: any, structUtils: Record<string, any>) {
   let matched = false
 
   if (entry.err) {
     return fail('Expected error did not occur: ' + entry.err +
-      '\n\nENTRY: ' + JSON.stringify(entry, null, 2))
+      '\n\nENTRY: ' + safeStringify(entry))
   }
 
   if (entry.match) {
-    const result = { in: entry.in, out: entry.res, ctx: entry.ctx }
+    const result = { in: entry.in, args, out: entry.res, ctx: entry.ctx }
     match(
       entry.match,
       result,
@@ -193,7 +195,7 @@ function checkResult(entry: any, res: any, structUtils: Record<string, any>) {
     return
   }
 
-  deepStrictEqual(null != res ? JSON.parse(JSON.stringify(res)) : res, entry.out)
+  deepStrictEqual(null != res ? JSON.parse(safeStringify(res)) : res, entry.out)
 }
 
 
@@ -221,10 +223,10 @@ function handleError(entry: any, err: any, structUtils: Record<string, any>) {
 
   // Unexpected error (test didn't specify an error expectation)
   else if (err instanceof AssertionError) {
-    fail(err.message + '\n\nENTRY: ' + JSON.stringify(entry, null, 2))
+    fail(err.message + '\n\nENTRY: ' + safeStringify(entry))
   }
   else {
-    fail(err.stack + '\\nnENTRY: ' + JSON.stringify(entry, null, 2))
+    fail(err.stack + '\n\nENTRY: ' + safeStringify(entry))
   }
 }
 
@@ -251,7 +253,7 @@ function resolveArgs(
     let first = args[0]
     if (structUtils.ismap(first)) {
       first = structUtils.clone(first)
-      first = utility.contextify(first)
+      first = utility.makeContext(first)
       args[0] = first
       entry.ctx = first
 
@@ -354,11 +356,27 @@ function matchval(
 }
 
 
+function safeStringify(val: any): string {
+  const seen = new WeakSet()
+  return JSON.stringify(val, (_k, v) => {
+    if ('object' === typeof v && null !== v) {
+      if (seen.has(v)) return '[Circular]'
+      seen.add(v)
+    }
+    if (v instanceof Error) {
+      return { name: v.name, message: v.message }
+    }
+    return v
+  }, 2)
+}
+
+
 function fixJSON(val: any, flags?: Flags): any {
   if (null == val) {
     return flags?.null ? NULLMARK : val
   }
 
+  const seen = new WeakSet()
   const replacer = (_k: string, v: any) => {
     if (null == v && flags?.null) {
       return NULLMARK
@@ -370,6 +388,11 @@ function fixJSON(val: any, flags?: Flags): any {
         name: v.name,
         message: v.message,
       }
+    }
+
+    if ('object' === typeof v && null !== v) {
+      if (seen.has(v)) return '[Circular]'
+      seen.add(v)
     }
 
     return v

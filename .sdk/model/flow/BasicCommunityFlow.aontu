@@ -1,0 +1,63 @@
+# BasicCommunityFlow
+
+main: kit: flow: BasicCommunityFlow:
+{
+  entity: "community",
+  kind: "basic",
+  name: "BasicCommunityFlow",
+  step: [
+    {
+      input: {
+        ref: "community_ref01"
+      }
+
+      match: {
+        space_id: "space01"
+      }
+
+      op: "create"
+    }
+
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "community_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "community_ref01",
+        suffix: "_rm0"
+      }
+
+      match: {
+        id: "community01"
+      }
+
+      op: "remove"
+    }
+
+    {
+      input: {
+        suffix: "_rt0"
+      }
+
+      op: "list",
+      valid: [
+        {
+          apply: "ItemNotExists",
+          def: {
+            ref: "community_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCommunityFlow"
+}

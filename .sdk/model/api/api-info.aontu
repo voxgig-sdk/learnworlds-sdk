@@ -1,0 +1,146 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      auth: false
+      description: `## HTTP Methods
+
+This API uses HTTP verbs (methods) as following:
+
++ \`GET\` - *Read* - used to **read** (or retrieve) a representation of a resource,
++ \`POST\` - *Create* - used to **create** new resources. In particular, it's used to create subordinate resources.
++ \`PUT\` - *Update/Replace* - used for **update** capabilities, PUT-ing to a known resource URI with the request body containing the newly-updated representation of the original resource. On successful request, replaces identified resource with the request body.
++ \`DELETE\` - *Delete* - used to **delete** a resource identified by a URI.
+
+---
+
+## Required Headers for all requests
+
++ Lw-Client: {The school ID}
++ Authorization : Bearer {token}
+
+---
+
+## Rate Limit
+
+A rate limit is the number of API calls an app can make within a given time period. If this limit is exceeded any extra request will fail and the App will respond with a 429 "Too many Requests" error. All API requests are subject to rate limits.
+
+**LearnWorlds has a Rate limit of 30 requests / 10 sec**
+
+---
+
+## Status Codes and Errors
+
+This API uses HTTP status codes to communicate with the API consumer.
+
++ \`200 OK\` - Response to a successful GET, PUT.
++ \`201 Created\` - Response to a POST that the resource is succesfully created.
++ \`204 No Content\` - Response to a successful request that won't be returning a body (like a DELETE request).
++ \`400 Bad Request\` - Bad request
++ \`401 Unauthorized\` - When no or invalid authentication details are provided.
++ \`403 Forbidden\` - When authentication succeeded but authenticated user doesn't have access to the resource.
++ \`404 Not Found\` - When a non-existent resource is requested.
++ \`422 Validation error\` - You should check your input again.
++ \`429 Too many requests\` - The consumer has sent too many requests in a given amount of time (“rate limiting”).
++ \`500 Server error\` - A general server error.
+
+
+### Examples
+
+
+##### Bad Request
+\`\`\`json
+{
+  "errors": [
+      {
+          "code": "400",
+          "context": "access_denied",
+          "message": "The resource owner or authorization server denied the request."
+      }
+  ],
+  "success": false
+}
+\`\`\`
+
+##### Too many Requests
+\`\`\`json
+{
+  "error": "Too many requests"
+}
+\`\`\`
+
+##### Unauthorized
+\`\`\`json
+{
+  "errors": [
+      {
+          "code": "401",
+          "context": null,
+          "message": "Invalid object ID"
+      }
+  ],
+  "success": false
+}
+\`\`\`
+
+##### Resource not found
+
+\`\`\`json
+{
+  "error": "Sorry the resource your trying to access does not exist."
+}
+\`\`\`
+
+
+##### Validation Error
+
+\`\`\`json
+{
+  "error": "You need to provide a valid product_type query parameters value: 'course', 'bundle', 'subscription'"
+}
+\`\`\`
+
+##### Generic Error
+
+\`\`\`json
+{
+  "error": "Server Error" 
+}
+\`\`\`
+
+---
+
+## Representation of Date and DateTime
+
++ All exchange of Date should follow the ISO 8601 standard.
++ All exchange of DateTime should follow the Unix timestamp format.
+
+When you send a Date as input to create a new resource or to filter results, you need to send it as a valid date string with the form "yyyy-mm-dd" (Ex: "2021-05-28").
+
+When you send a DateTime as input to create a new resource or to filter results, you need to send it formatted as a valid Unix timestamp number  (Ex: 1626088013, 1587639230.083278).
+
+---
+
+## Representation of Float Numbers
+
+Float numbers  are represented with **dot** decimal-point character (Ex: 73.45, 1587639230.083278). The dot character is omitted for numbers with zero value(s) after the decimal-point. For instance, the numbers  52.00 or 52.0 will be presented as 52.
+`
+      license: {
+        name: "MIT"
+      }
+      servers: [
+        {
+          description: "Mock"
+          url: "https://stoplight.io/mocks/learnworlds/api:main/2951998"
+        }
+      ]
+      summary: "The public API of LearnWorlds"
+      title: "API"
+      version: "2"
+      website: "https://stoplight.io"
+    }
+  }
+}
+

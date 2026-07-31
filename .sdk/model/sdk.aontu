@@ -1,8 +1,4 @@
 
-# Generation guide.
-@"guide.aontu"
-
-
 # Model definitions.
 @"@voxgig/apidef/model/apidef.aontu"
 @"@voxgig/sdkgen/model/sdkgen.aontu"
@@ -14,21 +10,21 @@ origin: 'voxgig-sdk'
 def: 'learnworlds-2.yaml'
 
 
-# API Definition
-@"api/api-def.aontu"
-
-
-# API Entities
-@"api/api-entity-index.aontu"
+# API Information
+@"api/api-info.aontu"
 
 
 # SDK Configuration.
 @"config.aontu"
 
 
+# SDK Entities
+@"entity/entity-index.aontu"
+
+
 # SDK Features.
 @"feature/feature-index.aontu"
- 
+
 
 # SDK Targets.
 @"target/target-index.aontu"
@@ -36,4 +32,3 @@ def: 'learnworlds-2.yaml'
 
 # Operation workflows.
 @"flow/flow-index.aontu"
-

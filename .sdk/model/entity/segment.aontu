@@ -1,0 +1,10 @@
+# Entity: segment
+
+main: kit: entity: segment: {
+
+  alias: field: {}
+
+  name: "segment"
+
+
+}

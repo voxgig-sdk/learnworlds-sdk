@@ -1,0 +1,33 @@
+# BasicUnitAnalyticsFlow
+
+main: kit: flow: BasicUnitAnalyticsFlow:
+{
+  entity: "unit_analytics",
+  kind: "basic",
+  name: "BasicUnitAnalyticsFlow",
+  step: [
+    {
+      input: {
+        ref: "unit_analytics_ref01",
+        srcdatavar: "unit_analytics_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        course_id: "course01",
+        id: "unit_analytics01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-unit_analytics_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicUnitAnalyticsFlow"
+}

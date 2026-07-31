@@ -1,0 +1,45 @@
+{
+  "existing": {
+    "course_content": {
+      "COURSE_CONTENT00": {
+        "access": "s46",
+        "description": "s47",
+        "drip": "s48",
+        "id": "COURSE_CONTENT00",
+        "learning_unit": [],
+        "section": [],
+        "title": "s4c"
+      },
+      "COURSE_CONTENT01": {
+        "access": "s8c",
+        "description": "s8d",
+        "drip": "s8e",
+        "id": "COURSE_CONTENT01",
+        "learning_unit": [],
+        "section": [],
+        "title": "s92"
+      },
+      "COURSE_CONTENT02": {
+        "access": "sd2",
+        "description": "sd3",
+        "drip": "sd4",
+        "id": "COURSE_CONTENT02",
+        "learning_unit": [],
+        "section": [],
+        "title": "sd8"
+      }
+    }
+  },
+  "new": {
+    "course_content": {
+      "course_content_ref01": {
+        "access": "s118",
+        "description": "s119",
+        "drip": "s11a",
+        "learning_unit": [],
+        "section": [],
+        "title": "s11e"
+      }
+    }
+  }
+}

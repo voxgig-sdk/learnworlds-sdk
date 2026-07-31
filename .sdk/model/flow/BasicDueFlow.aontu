@@ -1,0 +1,9 @@
+# BasicDueFlow
+
+main: kit: flow: BasicDueFlow:
+{
+  entity: "due",
+  kind: "basic",
+  name: "BasicDueFlow",
+  "key$": "BasicDueFlow"
+}

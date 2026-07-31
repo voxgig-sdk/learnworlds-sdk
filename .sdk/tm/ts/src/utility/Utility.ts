@@ -1,82 +1,69 @@
 
-/* Utility functions.
- *
- * Many of these functions expect the operation context as the first argument, and
- * assume the following top level properties of the context:
- *   * client: SDK client instance
- *   * op: operation definition
- *   * utility: map of these utility functions
- *   * entity?: SDK entity instance
- *   * spec?: request specification
- *   * response?: unprocessed response
- *   * result?: processed result built from response
- *   * config?: SDK builtin configuration
- *
- */
 
-
-
-import { addfeature } from './AddfeatureUtility'
-import { auth } from './AuthUtility'
-import { body } from './BodyUtility'
 import { clean } from './CleanUtility'
-import { contextify } from './ContextUtility'
 import { done } from './DoneUtility'
-import { error } from './ErrorUtility'
-import { featurehook } from './FeaturehookUtility'
+import { makeError } from './MakeErrorUtility'
+import { featureAdd } from './FeatureAddUtility'
+import { featureHook } from './FeatureHookUtility'
+import { featureInit } from './FeatureInitUtility'
 import { fetcher } from './FetcherUtility'
-import { findparam } from './FindparamUtility'
-import { fullurl } from './FullurlUtility'
-import { headers } from './HeadersUtility'
-import { initfeature } from './InitfeatureUtility'
-import { method } from './MethodUtility'
-import { operator, opify } from './OperatorUtility'
-import { options } from './OptionsUtility'
-import { params } from './ParamsUtility'
-import { query } from './QueryUtility'
-import { reqform } from './ReqformUtility'
-import { request } from './RequestUtility'
-import { resbasic } from './ResbasicUtility'
-import { resbody } from './ResbodyUtility'
-import { resform } from './ResformUtility'
-import { resheaders } from './ResheadersUtility'
-import { response } from './ResponseUtility'
-import { result } from './ResultUtility'
-import { spec } from './SpecUtility'
+import { makeFetchDef } from './MakeFetchDefUtility'
+import { makeContext } from './MakeContextUtility'
+import { makeOptions } from './MakeOptionsUtility'
+import { makeRequest } from './MakeRequestUtility'
+import { makeResponse } from './MakeResponseUtility'
+import { makeResult } from './MakeResultUtility'
+import { makePoint } from './MakePointUtility'
+import { makeSpec } from './MakeSpecUtility'
+import { makeUrl } from './MakeUrlUtility'
+import { param } from './ParamUtility'
+import { prepareAuth } from './PrepareAuthUtility'
+import { prepareBody } from './PrepareBodyUtility'
+import { prepareHeaders } from './PrepareHeadersUtility'
+import { prepareMethod } from './PrepareMethodUtility'
+import { prepareParams } from './PrepareParamsUtility'
+import { preparePath } from './PreparePathUtility'
+import { prepareQuery } from './PrepareQueryUtility'
+import { resultBasic } from './ResultBasicUtility'
+import { resultBody } from './ResultBodyUtility'
+import { resultHeaders } from './ResultHeadersUtility'
+import { transformRequest } from './TransformRequestUtility'
+import { transformResponse } from './TransformResponseUtility'
 
 import { StructUtility } from './StructUtility'
 
 
 class Utility {
 
-  addfeature = addfeature
-  auth = auth
-  body = body
   clean = clean
-  contextify = contextify
   done = done
-  error = error
-  featurehook = featurehook
+  makeError = makeError
+  featureAdd = featureAdd
+  featureHook = featureHook
+  featureInit = featureInit
   fetcher = fetcher
-  findparam = findparam
-  fullurl = fullurl
-  headers = headers
-  initfeature = initfeature
-  method = method
-  operator = operator
-  opify = opify
-  options = options
-  params = params
-  query = query
-  reqform = reqform
-  request = request
-  resbasic = resbasic
-  resbody = resbody
-  resform = resform
-  resheaders = resheaders
-  response = response
-  result = result
-  spec = spec
+  makeFetchDef = makeFetchDef
+  makeContext = makeContext
+  makeOptions = makeOptions
+  makeRequest = makeRequest
+  makeResponse = makeResponse
+  makeResult = makeResult
+  makePoint = makePoint
+  makeSpec = makeSpec
+  makeUrl = makeUrl
+  param = param
+  prepareAuth = prepareAuth
+  prepareBody = prepareBody
+  prepareHeaders = prepareHeaders
+  prepareMethod = prepareMethod
+  prepareParams = prepareParams
+  preparePath = preparePath
+  prepareQuery = prepareQuery
+  resultBasic = resultBasic
+  resultBody = resultBody
+  resultHeaders = resultHeaders
+  transformRequest = transformRequest
+  transformResponse = transformResponse
 
   struct = new StructUtility()
 }

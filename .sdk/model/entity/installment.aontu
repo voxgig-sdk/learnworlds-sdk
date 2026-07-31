@@ -1,0 +1,216 @@
+# Entity: installment
+
+main: kit: entity: installment: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "amount"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "current_period_end"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "current_period_start"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "email"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "ends_at"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NUMBER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "first_amount"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "first_installment_date"
+      req: false
+      type: [
+        "`$ONE`"
+        [
+          "`$NUMBER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "first_installment_type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "first_installmentl_day"
+      req: false
+      type: "`$INTEGER`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "installment_interval_type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "is_cancelable"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "name"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "payments_count"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "payments_payed"
+      req: false
+      type: "`$NUMBER`"
+    }
+    {
+      name: "plan_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "product_id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "product_type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "status"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "type"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "user_id"
+      req: false
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "installment"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "product_id"
+                orig: "product_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "product_type"
+                orig: "product_type"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "user_id"
+                orig: "user_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          method: "GET"
+          orig: "/v2/installments/active"
+          parts: [
+            "v2"
+            "installments"
+            "active"
+          ]
+          select: {
+            "$action": "active"
+            exist: [
+              "authorization"
+              "lw_client"
+              "page"
+              "product_id"
+              "product_type"
+              "user_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

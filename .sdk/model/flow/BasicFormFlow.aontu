@@ -1,0 +1,9 @@
+# BasicFormFlow
+
+main: kit: flow: BasicFormFlow:
+{
+  entity: "form",
+  kind: "basic",
+  name: "BasicFormFlow",
+  "key$": "BasicFormFlow"
+}

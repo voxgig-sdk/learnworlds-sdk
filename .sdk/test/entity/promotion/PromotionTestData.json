@@ -1,0 +1,77 @@
+{
+  "existing": {
+    "promotion": {
+      "PROMOTION00": {
+        "applies_to_all": [],
+        "bulk": false,
+        "code": "s98",
+        "coupon": [],
+        "created": 154,
+        "expire": "s9b",
+        "id": "PROMOTION00",
+        "modified": 157,
+        "name": "s9e",
+        "prefix": "s9f",
+        "product": [],
+        "quantity": "sa1",
+        "times_used": "sa2",
+        "type": "sa3",
+        "value": 164
+      },
+      "PROMOTION01": {
+        "applies_to_all": [],
+        "bulk": false,
+        "code": "s12e",
+        "coupon": [],
+        "created": 304,
+        "expire": "s131",
+        "id": "PROMOTION01",
+        "modified": 307,
+        "name": "s134",
+        "prefix": "s135",
+        "product": [],
+        "quantity": "s137",
+        "times_used": "s138",
+        "type": "s139",
+        "value": 314
+      },
+      "PROMOTION02": {
+        "applies_to_all": [],
+        "bulk": false,
+        "code": "s1c4",
+        "coupon": [],
+        "created": 454,
+        "expire": "s1c7",
+        "id": "PROMOTION02",
+        "modified": 457,
+        "name": "s1ca",
+        "prefix": "s1cb",
+        "product": [],
+        "quantity": "s1cd",
+        "times_used": "s1ce",
+        "type": "s1cf",
+        "value": 464
+      }
+    }
+  },
+  "new": {
+    "promotion": {
+      "promotion_ref01": {
+        "applies_to_all": [],
+        "bulk": false,
+        "code": "s25a",
+        "coupon": [],
+        "created": 604,
+        "expire": "s25d",
+        "modified": 607,
+        "name": "s260",
+        "prefix": "s261",
+        "product": [],
+        "quantity": "s263",
+        "times_used": "s264",
+        "type": "s265",
+        "value": 614
+      }
+    }
+  }
+}

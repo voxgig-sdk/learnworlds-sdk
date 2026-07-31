@@ -1,88 +1,44 @@
 # BasicBundleFlow
 
-main: sdk: flow: BasicBundleFlow:
+main: kit: flow: BasicBundleFlow:
 {
+  entity: "bundle",
+  kind: "basic",
   name: "BasicBundleFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_BUNDLE_ENTID: {
-      bundle01: "BUNDLE01",
-      bundle02: "BUNDLE02",
-      bundle03: "BUNDLE03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      bundle: {
-        BUNDLE01: {
-          id: "BUNDLE01",
-          title: "s1",
-          products: {}
-
-          image: "s3",
-          description: "s4",
-          access: "s5",
-          created: 6,
-          modified: 7,
-          afterpurchase: {}
-
-          price: 9,
-          paymentplans: []
-        }
-
-        BUNDLE02: {
-          id: "BUNDLE02",
-          title: "s6f",
-          products: {}
-
-          image: "s71",
-          description: "s72",
-          access: "s73",
-          created: 116,
-          modified: 117,
-          afterpurchase: {}
-
-          price: 119,
-          paymentplans: []
-        }
-
-        BUNDLE03: {
-          id: "BUNDLE03",
-          title: "sdd",
-          products: {}
-
-          image: "sdf",
-          description: "se0",
-          access: "se1",
-          created: 226,
-          modified: 227,
-          afterpurchase: {}
-
-          price: 229,
-          paymentplans: []
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_bundle0",
-      kind: "entity",
-      entity: "bundle",
-      action: "load",
-      match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_BUNDLE_ENTID.bundle01`"
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "bundle_ref01"
+          }
+        }
+      ]
+    }
+
+    {
+      input: {
+        ref: "bundle_ref01",
+        srcdatavar: "bundle_ref01_data",
+        suffix: "_dt0"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_bundle0.match.id`"
+      match: {
+        id: "bundle01"
       }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-bundle_ref01"
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "key$": "BasicBundleFlow"
 }

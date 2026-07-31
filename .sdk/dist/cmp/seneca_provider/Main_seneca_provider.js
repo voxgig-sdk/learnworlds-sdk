@@ -42,7 +42,7 @@ const Main = (0, sdkgen_1.cmp)(async function Main(props) {
     const { target } = props;
     const { model } = props.ctx$;
     const { entity } = model.main.api;
-    const { feature } = model.main.sdk;
+    const { feature } = model.main.kit;
     (0, Package_seneca_provider_1.Package)({ target });
     (0, sdkgen_1.Folder)({ name: 'src' }, () => {
         (0, sdkgen_1.File)({ name: model.const.Name + 'Provider.' + target.ext }, () => {

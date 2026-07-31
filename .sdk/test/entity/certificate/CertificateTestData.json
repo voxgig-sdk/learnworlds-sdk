@@ -1,0 +1,69 @@
+{
+  "existing": {
+    "certificate": {
+      "CERTIFICATE00": {
+        "attempt": "s82",
+        "course_id": "COURSE01",
+        "external_url": "s84",
+        "form": "s85",
+        "id": "CERTIFICATE00",
+        "issued": 135,
+        "provider": "s88",
+        "score": "s89",
+        "short_url": "s8a",
+        "status": "s8b",
+        "title": "s8c",
+        "type": "s8d",
+        "user": {}
+      },
+      "CERTIFICATE01": {
+        "attempt": "s104",
+        "course_id": "COURSE01",
+        "external_url": "s106",
+        "form": "s107",
+        "id": "CERTIFICATE01",
+        "issued": 265,
+        "provider": "s10a",
+        "score": "s10b",
+        "short_url": "s10c",
+        "status": "s10d",
+        "title": "s10e",
+        "type": "s10f",
+        "user": {}
+      },
+      "CERTIFICATE02": {
+        "attempt": "s186",
+        "course_id": "COURSE01",
+        "external_url": "s188",
+        "form": "s189",
+        "id": "CERTIFICATE02",
+        "issued": 395,
+        "provider": "s18c",
+        "score": "s18d",
+        "short_url": "s18e",
+        "status": "s18f",
+        "title": "s190",
+        "type": "s191",
+        "user": {}
+      }
+    }
+  },
+  "new": {
+    "certificate": {
+      "certificate_ref01": {
+        "attempt": "s208",
+        "course_id": "COURSE01",
+        "external_url": "s20a",
+        "form": "s20b",
+        "issued": 525,
+        "provider": "s20e",
+        "score": "s20f",
+        "short_url": "s210",
+        "status": "s211",
+        "title": "s212",
+        "type": "s213",
+        "user": {}
+      }
+    }
+  }
+}

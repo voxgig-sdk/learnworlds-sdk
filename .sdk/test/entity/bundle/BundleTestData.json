@@ -1,0 +1,61 @@
+{
+  "existing": {
+    "bundle": {
+      "BUNDLE00": {
+        "access": "s6e",
+        "after_purchase": {},
+        "created": 112,
+        "description": "s71",
+        "id": "BUNDLE00",
+        "image": "s73",
+        "modified": 116,
+        "payment_plan": [],
+        "price": 118,
+        "product": {},
+        "title": "s78"
+      },
+      "BUNDLE01": {
+        "access": "sdc",
+        "after_purchase": {},
+        "created": 222,
+        "description": "sdf",
+        "id": "BUNDLE01",
+        "image": "se1",
+        "modified": 226,
+        "payment_plan": [],
+        "price": 228,
+        "product": {},
+        "title": "se6"
+      },
+      "BUNDLE02": {
+        "access": "s14a",
+        "after_purchase": {},
+        "created": 332,
+        "description": "s14d",
+        "id": "BUNDLE02",
+        "image": "s14f",
+        "modified": 336,
+        "payment_plan": [],
+        "price": 338,
+        "product": {},
+        "title": "s154"
+      }
+    }
+  },
+  "new": {
+    "bundle": {
+      "bundle_ref01": {
+        "access": "s1b8",
+        "after_purchase": {},
+        "created": 442,
+        "description": "s1bb",
+        "image": "s1bd",
+        "modified": 446,
+        "payment_plan": [],
+        "price": 448,
+        "product": {},
+        "title": "s1c2"
+      }
+    }
+  }
+}

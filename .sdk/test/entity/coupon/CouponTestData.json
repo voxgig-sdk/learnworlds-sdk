@@ -1,0 +1,48 @@
+{
+  "existing": {
+    "coupon": {
+      "COUPON00": {
+        "bulk": true,
+        "code": "s3d",
+        "expire": "s3e",
+        "prefix": "s3f",
+        "quantity": "s40",
+        "times_used": "s41",
+        "promotion_id": "PROMOTION01",
+        "id": "COUPON00"
+      },
+      "COUPON01": {
+        "bulk": true,
+        "code": "s79",
+        "expire": "s7a",
+        "prefix": "s7b",
+        "quantity": "s7c",
+        "times_used": "s7d",
+        "promotion_id": "PROMOTION01",
+        "id": "COUPON01"
+      },
+      "COUPON02": {
+        "bulk": true,
+        "code": "sb5",
+        "expire": "sb6",
+        "prefix": "sb7",
+        "quantity": "sb8",
+        "times_used": "sb9",
+        "promotion_id": "PROMOTION01",
+        "id": "COUPON02"
+      }
+    }
+  },
+  "new": {
+    "coupon": {
+      "coupon_ref01": {
+        "bulk": true,
+        "code": "sf1",
+        "expire": "sf2",
+        "prefix": "sf3",
+        "quantity": "sf4",
+        "times_used": "sf5"
+      }
+    }
+  }
+}

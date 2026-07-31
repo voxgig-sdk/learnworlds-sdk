@@ -1,0 +1,9 @@
+# BasicSegmentFlow
+
+main: kit: flow: BasicSegmentFlow:
+{
+  entity: "segment",
+  kind: "basic",
+  name: "BasicSegmentFlow",
+  "key$": "BasicSegmentFlow"
+}

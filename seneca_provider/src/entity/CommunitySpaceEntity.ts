@@ -19,19 +19,7 @@
   }
   
   
-  
-  cmd.list = {
-    action: async function list_community_space(this: any, entize: any, msg: any) {
-      const community_spaceEntity = this.shared.sdk.CommunitySpace()
-      const q = msg.q || {}
-  
-      const community_spaceList = await community_spaceEntity.list(q)
-      const dataList = community_spaceList.map((n: any) => n.data())
-  
-      let items = dataList.map((data: any) => entize(data))
-      return items
-    }
-  }
+    // #ListOp
   
   
   // Create operation is implemented by seneca entity save

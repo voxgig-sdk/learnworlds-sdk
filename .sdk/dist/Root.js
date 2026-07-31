@@ -1,11 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Root = void 0;
+exports.Root = exports.KIT = void 0;
 const sdkgen_1 = require("@voxgig/sdkgen");
+const apidef_1 = require("@voxgig/apidef");
+Object.defineProperty(exports, "KIT", { enumerable: true, get: function () { return apidef_1.KIT; } });
 const struct_1 = require("@voxgig/struct");
 const jostraca_1 = require("jostraca");
-const { buildPoints, SerialPoint, } = jostraca_1.PointUtil;
 const Top_1 = require("./Top");
+const BuildSDK_1 = require("./BuildSDK");
+const { buildPoints, SerialPoint, } = jostraca_1.PointUtil;
 const Root = (0, sdkgen_1.cmp)(function Root(props) {
     const { model, ctx$ } = props;
     ctx$.util = ctx$.util || {};
@@ -15,9 +18,9 @@ const Root = (0, sdkgen_1.cmp)(function Root(props) {
     (0, sdkgen_1.names)(model.const, model.name);
     model.const.year = new Date().getFullYear();
     ctx$.model = model;
-    const target = model.main.sdk.target || {};
-    const feature = model.main.sdk.feature || {};
-    const entity = model.main.api.entity || {};
+    const target = model.main[apidef_1.KIT].target || {};
+    const feature = model.main[apidef_1.KIT].feature || {};
+    const entity = model.main[apidef_1.KIT].entity || {};
     ctx$.log.debug({
         point: 'cmp-root', target, entity, feature, note: [
             '\ntarget: \n' + Object.keys(target).map(s => '  ' + s).join('\n'),
@@ -29,25 +32,58 @@ const Root = (0, sdkgen_1.cmp)(function Root(props) {
     // console.log('MODEL name', model.name, model.Name)
     // Standard Replacements
     ctx$.stdrep = {};
-    (0, sdkgen_1.names)(ctx$.stdrep, model.Name, 'ProjectName');
+    (0, sdkgen_1.names)(ctx$.stdrep, model.Name, 'Project' + 'Name');
     // console.log('STDREP', stdrep)
     (0, sdkgen_1.Project)({}, () => {
         // TODO: jostraca should accept no props
         (0, Top_1.Top)({});
+        (0, BuildSDK_1.BuildSDK)({});
         (0, sdkgen_1.each)(target, (target) => {
             (0, sdkgen_1.names)(target, target.name);
             (0, sdkgen_1.Folder)({ name: target.name }, () => {
-                (0, sdkgen_1.each)(entity, (entity) => {
-                    (0, sdkgen_1.names)(entity, entity.name);
-                    (0, sdkgen_1.Entity)({ target, entity });
-                });
-                // each(feature).filter((feature: any) => feature.active).map((feature: any) => {
-                (0, sdkgen_1.each)(feature).filter((feature) => feature.active).map((feature) => {
-                    (0, sdkgen_1.names)(feature, feature.name);
-                    (0, sdkgen_1.Feature)({ target, feature });
-                });
+                // Per-generation-phase activation. A target's aontu model carries
+                // a `phase` map mirroring the feature pattern:
+                //
+                //   phase: {
+                //     entity:     { active: false }
+                //     feature:    { active: false }
+                //     readme:     { active: false }
+                //     agentguide: { active: false }
+                //     test:       { active: false }
+                //   }
+                //
+                // Defaults are inclusive — when a phase entry is absent (or
+                // active is not explicitly false), the phase runs. Existing
+                // standard targets don't declare `phase` and keep current
+                // behaviour. A CLI-style target switches all five off and
+                // only emits Main.
+                const phase = target.phase || {};
+                const phaseActive = (name) => false !== (phase[name] && phase[name].active);
+                if (phaseActive('entity')) {
+                    (0, sdkgen_1.each)(entity, (entity) => {
+                        (0, sdkgen_1.names)(entity, entity.name);
+                        (0, sdkgen_1.Entity)({ target, entity });
+                    });
+                }
+                if (phaseActive('feature')) {
+                    (0, sdkgen_1.each)(feature).filter((feature) => feature.active).map((feature) => {
+                        (0, sdkgen_1.names)(feature, feature.name);
+                        (0, sdkgen_1.Feature)({ target, feature });
+                    });
+                }
                 (0, sdkgen_1.Main)({ target });
-                (0, sdkgen_1.Readme)({ target });
+                if (phaseActive('readme')) {
+                    (0, sdkgen_1.Readme)({ target });
+                }
+                // Per-target agent guides: <lang>/AGENTS.md + CLAUDE.md, and (driven
+                // internally by AgentGuide) a guide per active feature under
+                // <lang>/src/feature/<name>/. Placement mirrors Readme.
+                if (phaseActive('agentguide')) {
+                    (0, sdkgen_1.AgentGuide)({ target });
+                }
+                if (phaseActive('test')) {
+                    (0, sdkgen_1.Test)({ target });
+                }
             });
         });
     });

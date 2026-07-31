@@ -1,0 +1,32 @@
+# BasicCourseAnalyticsFlow
+
+main: kit: flow: BasicCourseAnalyticsFlow:
+{
+  entity: "course_analytics",
+  kind: "basic",
+  name: "BasicCourseAnalyticsFlow",
+  step: [
+    {
+      input: {
+        ref: "course_analytics_ref01",
+        srcdatavar: "course_analytics_ref01_data",
+        suffix: "_dt0"
+      }
+
+      match: {
+        id: "course_analytics01"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-course_analytics_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCourseAnalyticsFlow"
+}

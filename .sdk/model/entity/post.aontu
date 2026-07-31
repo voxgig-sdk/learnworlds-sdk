@@ -1,0 +1,10 @@
+# Entity: post
+
+main: kit: entity: post: {
+
+  alias: field: {}
+
+  name: "post"
+
+
+}

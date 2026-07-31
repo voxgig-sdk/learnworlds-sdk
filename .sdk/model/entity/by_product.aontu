@@ -1,0 +1,10 @@
+# Entity: by_product
+
+main: kit: entity: by_product: {
+
+  alias: field: {}
+
+  name: "by_product"
+
+
+}

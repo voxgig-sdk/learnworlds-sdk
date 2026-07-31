@@ -1,0 +1,14 @@
+{
+  "existing": {
+    "score": {
+      "SCORE00": {},
+      "SCORE01": {},
+      "SCORE02": {}
+    }
+  },
+  "new": {
+    "score": {
+      "score_ref01": {}
+    }
+  }
+}

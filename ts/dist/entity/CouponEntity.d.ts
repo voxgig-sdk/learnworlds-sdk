@@ -1,19 +1,10 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class CouponEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { Coupon, CouponCreateData } from '../LearnworldsTypes';
+declare class CouponEntity extends LearnworldsEntityBase<Coupon> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): CouponEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    create(this: any, reqdata?: any, ctrl?: Control): Promise<any>;
+    make(this: CouponEntity): CouponEntity;
+    create(this: any, reqdata?: CouponCreateData, ctrl?: Control): Promise<Coupon>;
 }
 export { CouponEntity };

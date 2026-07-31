@@ -1,19 +1,11 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class PaymentEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { Payment, PaymentLoadMatch, PaymentListMatch } from '../LearnworldsTypes';
+declare class PaymentEntity extends LearnworldsEntityBase<Payment> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): PaymentEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    load(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
+    make(this: PaymentEntity): PaymentEntity;
+    load(this: any, reqmatch?: PaymentLoadMatch, ctrl?: Control): Promise<Payment>;
+    list(this: any, reqmatch?: PaymentListMatch, ctrl?: Control): Promise<Payment[]>;
 }
 export { PaymentEntity };

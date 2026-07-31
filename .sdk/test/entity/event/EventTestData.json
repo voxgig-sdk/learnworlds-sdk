@@ -1,0 +1,14 @@
+{
+  "existing": {
+    "event": {
+      "EVENT00": {},
+      "EVENT01": {},
+      "EVENT02": {}
+    }
+  },
+  "new": {
+    "event": {
+      "event_ref01": {}
+    }
+  }
+}

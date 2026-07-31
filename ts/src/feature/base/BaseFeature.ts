@@ -16,14 +16,17 @@ class BaseFeature implements Feature {
 
   PostConstructEntity(this: any, _ctx: any) { }
 
+
   SetData(this: any, _ctx: any) { }
 
   GetData(this: any, _ctx: any) { }
 
+  SetMatch(this: any, _ctx: any) { }
+
   GetMatch(this: any, _ctx: any) { }
 
 
-  PreOperation(this: any, _ctx: any) { }
+  PrePoint(this: any, _ctx: any) { }
 
   PreSpec(this: any, _ctx: any) { }
 
@@ -33,7 +36,9 @@ class BaseFeature implements Feature {
 
   PreResult(this: any, _ctx: any) { }
 
-  PostOperation(this: any, _ctx: any) { }
+  PreDone(this: any, _ctx: any) { }
+
+  PreUnexpected(this: any, _ctx: any) { }
 
 }
 

@@ -8,5 +8,7 @@ declare class TestFeature extends BaseFeature {
     _client?: LearnworldsSDK;
     _options?: any;
     init(ctx: Context, options: FeatureOptions): void | Promise<any>;
+    makeNetsim(this: any, net: any, inner: any): (ctx: any, url: string, fetchdef: any) => Promise<any>;
+    buildArgs(ctx: any, op: any, args: any): any;
 }
 export { TestFeature };

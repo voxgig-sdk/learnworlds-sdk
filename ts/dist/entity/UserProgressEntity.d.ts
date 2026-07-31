@@ -1,19 +1,10 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class UserProgressEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { UserProgress, UserProgressListMatch } from '../LearnworldsTypes';
+declare class UserProgressEntity extends LearnworldsEntityBase<UserProgress> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): UserProgressEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    load(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
+    make(this: UserProgressEntity): UserProgressEntity;
+    list(this: any, reqmatch?: UserProgressListMatch, ctrl?: Control): Promise<UserProgress[]>;
 }
 export { UserProgressEntity };

@@ -1,0 +1,18 @@
+# Entity: due
+
+main: kit: entity: due: {
+
+  alias: field: {}
+
+  name: "due"
+  relations: {
+    ancestors: [
+      [
+        "affiliate"
+      ]
+    ]
+  }
+
+
+
+}

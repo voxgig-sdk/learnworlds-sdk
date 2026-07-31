@@ -1,20 +1,10 @@
-import { inspect } from 'node:util';
-import { LearnworldsSDK } from '../LearnworldsSDK';
-import type { Context, Control } from '../types';
-declare class UserRoleEntity {
-    #private;
-    _entctx: Context;
+import { LearnworldsEntityBase } from '../LearnworldsEntityBase';
+import type { LearnworldsSDK } from '../LearnworldsSDK';
+import type { Control } from '../types';
+import type { UserRole, UserRoleListMatch } from '../LearnworldsTypes';
+declare class UserRoleEntity extends LearnworldsEntityBase<UserRole> {
     constructor(client: LearnworldsSDK, entopts: any);
-    entopts(): any;
-    client(): LearnworldsSDK;
-    make(): UserRoleEntity;
-    data(this: any, data?: any): any;
-    match(match?: any): any;
-    toJSON(): any;
-    toString(): string;
-    [inspect.custom](): string;
-    load(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    list(this: any, reqmatch?: any, ctrl?: Control): Promise<any>;
-    update(this: any, reqdata?: any, ctrl?: Control): Promise<any>;
+    make(this: UserRoleEntity): UserRoleEntity;
+    list(this: any, reqmatch?: UserRoleListMatch, ctrl?: Control): Promise<UserRole[]>;
 }
 export { UserRoleEntity };

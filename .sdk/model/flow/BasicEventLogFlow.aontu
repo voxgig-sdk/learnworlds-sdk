@@ -1,37 +1,22 @@
 # BasicEventLogFlow
 
-main: sdk: flow: BasicEventLogFlow:
+main: kit: flow: BasicEventLogFlow:
 {
+  entity: "event_log",
+  kind: "basic",
   name: "BasicEventLogFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_EVENT_LOG_ENTID: {
-      event_log01: "EVENT_LOG01",
-      event_log02: "EVENT_LOG02",
-      event_log03: "EVENT_LOG03"
+  step: [
+    {
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "event_log_ref01"
+          }
+        }
+      ]
     }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE"
-  }
-
-  test: {
-    entity: {
-      event_log: {
-        EVENT_LOG01: {
-          id: "EVENT_LOG01"
-        }
-
-        EVENT_LOG02: {
-          id: "EVENT_LOG02"
-        }
-
-        EVENT_LOG03: {
-          id: "EVENT_LOG03"
-        }
-      }
-    }
-  }
-
-  step: []
+  ],
+  "key$": "BasicEventLogFlow"
 }

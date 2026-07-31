@@ -1,283 +1,175 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CourseContentEntity = void 0;
-const node_util_1 = require("node:util");
-class CourseContentEntity {
-    #client;
-    #entopts;
-    #utility;
-    #data;
-    #match;
-    _entctx;
+const LearnworldsEntityBase_1 = require("../LearnworldsEntityBase");
+// TODO: needs Entity superclass
+class CourseContentEntity extends LearnworldsEntityBase_1.LearnworldsEntityBase {
     constructor(client, entopts) {
-        // super()
-        entopts = entopts || {};
-        entopts.active = false !== entopts.active;
-        this.#client = client;
-        this.#entopts = entopts;
-        this.#utility = client.utility();
-        this.#data = {};
-        this.#match = {};
-        const contextify = this.#utility.contextify;
-        this._entctx = contextify({
-            entity: this,
-            entopts,
-        }, client._rootctx);
-        const featurehook = this.#utility.featurehook;
-        featurehook(this._entctx, 'PostConstructEntity');
-    }
-    entopts() {
-        return { ...this.#entopts };
-    }
-    client() {
-        return this.#client;
+        super(client, entopts);
+        this.name = 'course_content';
+        this.name_ = 'course_content';
+        this.Name = 'CourseContent';
     }
     make() {
-        return new CourseContentEntity(this.#client, this.entopts());
+        return new CourseContentEntity(this._client, this.entopts());
     }
-    data(data) {
-        const featurehook = this.#utility.featurehook;
-        if (null != data) {
-            featurehook(this._entctx, 'SetData');
-            this.#data = { ...data };
-        }
-        let out = { ...this.#data };
-        featurehook(this._entctx, 'GetData');
-        return out;
-    }
-    match(match) {
-        const featurehook = this.#utility.featurehook;
-        if (null != match) {
-            featurehook(this._entctx, 'SetMatch');
-            this.#match = { ...match };
-        }
-        let out = { ...this.#match };
-        featurehook(this._entctx, 'GetMatch');
-        return out;
-    }
-    toJSON() {
-        return { ...(this.#data || {}), _entity: 'CourseContent' };
-    }
-    toString() {
-        return 'CourseContent ' + this.#utility.struct.jsonify(this.#data);
-    }
-    [node_util_1.inspect.custom]() {
-        return this.toString();
-    }
-    async load(reqmatch, ctrl) {
-        const entity = this;
-        const client = this.#client;
-        const utility = this.#utility;
-        const { contextify, done, error, featurehook, operator, opify, request, response, result, spec, } = utility;
+    async list(reqmatch, ctrl) {
+        const utility = this._utility;
+        const { makeContext, done, error, featureHook, makePoint, makeRequest, makeResponse, makeResult, makeSpec, } = utility;
         let fres = undefined;
-        const op = opify({
-            entity: 'course_content',
-            name: 'load',
-            path: '/v2/courses/{course_id}/contents',
-            pathalt: [{ "path": "/v2/courses/{course_id}/contents", "course_id": true }],
-            params: [
-                "course_id"
-            ],
-            alias: {},
-            state: {},
-            reqform: "`body`",
-            resform: "`body`",
-            validate: { "params": { "course_id": "`$STRING`", "Authorization": "`$STRING`", "Lw-Client": "`$STRING`" } },
-        });
-        let ctx = contextify({
-            current: new WeakMap(),
+        let ctx = makeContext({
+            opname: 'list',
             ctrl,
-            op,
-            match: this.#match,
-            data: this.#data,
+            match: this._match,
+            data: this._data,
             reqmatch
         }, this._entctx);
         try {
-            fres = featurehook(ctx, 'PreOperation');
+            fres = featureHook(ctx, 'PrePoint');
             if (fres instanceof Promise) {
                 await fres;
             }
-            ctx.out.operator = operator(ctx);
-            if (ctx.out.operator instanceof Error) {
-                return error(ctx, ctx.out.operator);
+            ctx.out.point = makePoint(ctx);
+            if (ctx.out.point instanceof Error) {
+                return error(ctx, ctx.out.point);
             }
-            fres = featurehook(ctx, 'PreSpec');
+            fres = featureHook(ctx, 'PreSpec');
             if (fres instanceof Promise) {
                 await fres;
             }
-            ctx.out.spec = spec(ctx);
+            ctx.out.spec = makeSpec(ctx);
             if (ctx.out.spec instanceof Error) {
                 return error(ctx, ctx.out.spec);
             }
-            fres = featurehook(ctx, 'PreRequest');
+            fres = featureHook(ctx, 'PreRequest');
             if (fres instanceof Promise) {
                 await fres;
             }
-            ctx.out.request = await request(ctx);
+            ctx.out.request = await makeRequest(ctx);
             if (ctx.out.request instanceof Error) {
                 return error(ctx, ctx.out.request);
             }
-            fres = featurehook(ctx, 'PreResponse');
+            fres = featureHook(ctx, 'PreResponse');
             if (fres instanceof Promise) {
                 await fres;
             }
-            ctx.out.response = await response(ctx);
+            ctx.out.response = await makeResponse(ctx);
             if (ctx.out.response instanceof Error) {
                 return error(ctx, ctx.out.response);
             }
-            fres = featurehook(ctx, 'PreResult');
+            fres = featureHook(ctx, 'PreResult');
             if (fres instanceof Promise) {
                 await fres;
             }
-            ctx.out.result = await result(ctx);
+            ctx.out.result = await makeResult(ctx);
             if (ctx.out.result instanceof Error) {
                 return error(ctx, ctx.out.result);
             }
-            fres = featurehook(ctx, 'PostOperation');
+            fres = featureHook(ctx, 'PreDone');
             if (fres instanceof Promise) {
                 await fres;
             }
             if (null != ctx.result) {
                 if (null != ctx.result.resmatch) {
-                    this.#match = ctx.result.resmatch;
-                }
-                if (null != ctx.result.resdata) {
-                    this.#data = ctx.result.resdata;
+                    this._match = ctx.result.resmatch;
                 }
             }
             return done(ctx);
         }
         catch (err) {
-            err = this.#unexpected(ctx, err);
+            fres = featureHook(ctx, 'PreUnexpected');
+            if (fres instanceof Promise) {
+                await fres;
+            }
+            err = this._unexpected(ctx, err);
             if (err) {
                 throw err;
             }
             else {
+                // Off-happy-path (throw disabled): typed as any so the method's
+                // Promise<CourseContent[]> return stays clean under strict null checks.
                 return undefined;
             }
         }
     }
     async create(reqdata, ctrl) {
-        let entity = this;
-        let client = this.#client;
-        const utility = this.#utility;
-        const { contextify, done, error, featurehook, operator, opify, request, response, result, spec, } = utility;
+        const utility = this._utility;
+        const { makeContext, done, error, featureHook, makePoint, makeRequest, makeResponse, makeResult, makeSpec, } = utility;
         let fres = undefined;
-        let op = opify({
-            entity: 'course_content',
-            name: 'create',
-            path: '/v2/courses/{course_id}/sections',
-            pathalt: [{ "path": "/v2/courses/{course_id}/sections", "course_id": true }],
-            params: [
-                "course_id"
-            ],
-            alias: {},
-            state: {},
-            reqform: "`reqdata`",
-            resform: "`body`",
-            validate: { "params": { "course_id": "`$STRING`", "Authorization": "`$STRING`", "Lw-Client": "`$STRING`" } },
-        });
-        let ctx = contextify({
-            current: new WeakMap(),
+        let ctx = makeContext({
+            opname: 'create',
             ctrl,
-            op,
-            match: this.#match,
-            data: this.#data,
+            match: this._match,
+            data: this._data,
             reqdata
         }, this._entctx);
         try {
-            fres = featurehook(ctx, 'PreOperation');
+            fres = featureHook(ctx, 'PrePoint');
             if (fres instanceof Promise) {
                 await fres;
             }
-            ctx.out.operator = operator(ctx);
-            if (ctx.out.operator instanceof Error) {
-                return error(ctx, ctx.out.operator);
+            ctx.out.point = makePoint(ctx);
+            if (ctx.out.point instanceof Error) {
+                return error(ctx, ctx.out.point);
             }
-            fres = featurehook(ctx, 'PreSpec');
+            fres = featureHook(ctx, 'PreSpec');
             if (fres instanceof Promise) {
                 await fres;
             }
-            ctx.out.spec = spec(ctx);
+            ctx.out.spec = makeSpec(ctx);
             if (ctx.out.spec instanceof Error) {
                 return error(ctx, ctx.out.spec);
             }
-            fres = featurehook(ctx, 'PreRequest');
+            fres = featureHook(ctx, 'PreRequest');
             if (fres instanceof Promise) {
                 await fres;
             }
-            ctx.out.request = await request(ctx);
+            ctx.out.request = await makeRequest(ctx);
             if (ctx.out.request instanceof Error) {
                 return error(ctx, ctx.out.request);
             }
-            fres = featurehook(ctx, 'PreResponse');
+            fres = featureHook(ctx, 'PreResponse');
             if (fres instanceof Promise) {
                 await fres;
             }
-            ctx.out.response = await response(ctx);
+            ctx.out.response = await makeResponse(ctx);
             if (ctx.out.response instanceof Error) {
                 return error(ctx, ctx.out.response);
             }
-            fres = featurehook(ctx, 'PreResult');
+            fres = featureHook(ctx, 'PreResult');
             if (fres instanceof Promise) {
                 await fres;
             }
-            ctx.out.result = await result(ctx);
+            ctx.out.result = await makeResult(ctx);
             if (ctx.out.result instanceof Error) {
                 return error(ctx, ctx.out.result);
             }
-            fres = featurehook(ctx, 'PostOperation');
+            fres = featureHook(ctx, 'PreDone');
             if (fres instanceof Promise) {
                 await fres;
             }
             if (null != ctx.result) {
                 if (null != ctx.result.resdata) {
-                    this.#data = ctx.result.resdata;
+                    this._data = ctx.result.resdata;
                 }
             }
             return done(ctx);
         }
         catch (err) {
-            err = this.#unexpected(ctx, err);
+            fres = featureHook(ctx, 'PreUnexpected');
+            if (fres instanceof Promise) {
+                await fres;
+            }
+            err = this._unexpected(ctx, err);
             if (err) {
                 throw err;
             }
             else {
+                // Off-happy-path (throw disabled): typed as any so the method's
+                // Promise<CourseContent> return stays clean under strict null checks.
                 return undefined;
             }
         }
-    }
-    #unexpected(ctx, err) {
-        const ctrl = ctx.ctrl;
-        ctrl.err = err;
-        if (ctrl.explain) {
-            const { clean, struct } = this.#utility;
-            const { delprop, clone } = struct;
-            ctx.ctrl.explain = clean(ctx, ctx.ctrl.explain);
-            delprop(ctx.ctrl.explain.result, 'err');
-            if (null != ctx.result && null != ctx.result.err) {
-                ctrl.explain.err = clean(ctx, {
-                    ...clone({ err: ctx.result.err }).err,
-                    message: ctx.result.err.message,
-                    stack: ctx.result.err.stack,
-                });
-            }
-            const cleanerr = clean(ctx, {
-                ...clone({ err }).err,
-                message: err.message,
-                stack: err.stack,
-            });
-            if (null == ctrl.explain.err) {
-                ctrl.explain.err = cleanerr;
-            }
-            else if (ctrl.explain.err.message != cleanerr.message) {
-                ctrl.explain.unexpected = cleanerr;
-            }
-        }
-        if (false === ctrl.throw) {
-            return undefined;
-        }
-        return err;
     }
 }
 exports.CourseContentEntity = CourseContentEntity;

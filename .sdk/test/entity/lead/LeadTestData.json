@@ -1,0 +1,66 @@
+{
+  "existing": {
+    "lead": {
+      "LEAD00": {
+        "created": 120,
+        "email": "s79",
+        "eu_customer": "s7a",
+        "first_name": "s7b",
+        "last_name": "s7c",
+        "page_submitted": "s7d",
+        "submission": [],
+        "subscribed_for_marketing_email": "s7f",
+        "tag": [],
+        "user_id": "USER01",
+        "user_registered_at": "s82",
+        "utm": {}
+      },
+      "LEAD01": {
+        "created": 240,
+        "email": "sf1",
+        "eu_customer": "sf2",
+        "first_name": "sf3",
+        "last_name": "sf4",
+        "page_submitted": "sf5",
+        "submission": [],
+        "subscribed_for_marketing_email": "sf7",
+        "tag": [],
+        "user_id": "USER01",
+        "user_registered_at": "sfa",
+        "utm": {}
+      },
+      "LEAD02": {
+        "created": 360,
+        "email": "s169",
+        "eu_customer": "s16a",
+        "first_name": "s16b",
+        "last_name": "s16c",
+        "page_submitted": "s16d",
+        "submission": [],
+        "subscribed_for_marketing_email": "s16f",
+        "tag": [],
+        "user_id": "USER01",
+        "user_registered_at": "s172",
+        "utm": {}
+      }
+    }
+  },
+  "new": {
+    "lead": {
+      "lead_ref01": {
+        "created": 480,
+        "email": "s1e1",
+        "eu_customer": "s1e2",
+        "first_name": "s1e3",
+        "last_name": "s1e4",
+        "page_submitted": "s1e5",
+        "submission": [],
+        "subscribed_for_marketing_email": "s1e7",
+        "tag": [],
+        "user_id": "USER01",
+        "user_registered_at": "s1ea",
+        "utm": {}
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 
 
-main: sdk: target: seneca_provider: {
+main: kit: target: seneca_provider: {
   
   title: 'Seneca Provider'
   ext: ts
@@ -30,7 +30,19 @@ main: sdk: target: seneca_provider: {
 }
 
 
-main: sdk: feature: &: target: seneca_provider: deps: &: {
+main: kit: feature: &: target: seneca_provider: deps: &: {
   # TODO: fix aontu disjunctions!
   kind: *'prod' | string # 'peer' |'dev'
+}
+
+
+# Per-generation-phase activation (see Root.ts phaseActive). This custom
+# target implements only the main + entity phases; the standard
+# feature/readme/agentguide/test phases have no seneca_provider
+# components.
+main: kit: target: seneca_provider: phase: {
+  feature:    { active: false }
+  readme:     { active: false }
+  agentguide: { active: false }
+  test:       { active: false }
 }

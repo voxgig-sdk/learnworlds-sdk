@@ -1,82 +1,27 @@
 # BasicUserProgressFlow
 
-main: sdk: flow: BasicUserProgressFlow:
+main: kit: flow: BasicUserProgressFlow:
 {
+  entity: "user_progress",
+  kind: "basic",
   name: "BasicUserProgressFlow",
-  active: true,
-  param: {
-    LEARNWORLDS_TEST_USER_PROGRESS_ENTID: {
-      user_progress01: "USER_PROGRESS01",
-      user_progress02: "USER_PROGRESS02",
-      user_progress03: "USER_PROGRESS03"
-    }
-
-    LEARNWORLDS_TEST_LIVE: "FALSE",
-    LEARNWORLDS_TEST_EXPLAIN: "FALSE",
-    LEARNWORLDS_TEST_USER_ENTID: {
-      user01: "USER01"
-    }
-  }
-
-  test: {
-    entity: {
-      user_progress: {
-        USER_PROGRESS01: {
-          status: "s0",
-          progress_rate: 1,
-          average_score_rate: 2,
-          time_on_course: "s3",
-          total_units: "s4",
-          completed_units: "s5",
-          completed_at: 6,
-          progress_per_section_unit: [],
-          id: "USER_PROGRESS01",
-          user_id: "USER01"
-        }
-
-        USER_PROGRESS02: {
-          status: "s50",
-          progress_rate: 81,
-          average_score_rate: 82,
-          time_on_course: "s53",
-          total_units: "s54",
-          completed_units: "s55",
-          completed_at: 86,
-          progress_per_section_unit: [],
-          id: "USER_PROGRESS02"
-        }
-
-        USER_PROGRESS03: {
-          status: "sa0",
-          progress_rate: 161,
-          average_score_rate: 162,
-          time_on_course: "sa3",
-          total_units: "sa4",
-          completed_units: "sa5",
-          completed_at: 166,
-          progress_per_section_unit: [],
-          id: "USER_PROGRESS03"
-        }
-      }
-    }
-  }
-
   step: [
     {
-      name: "load_user_progress0",
-      kind: "entity",
-      entity: "user_progress",
-      action: "load",
       match: {
-        id: "`dm$=p.LEARNWORLDS_TEST_USER_PROGRESS_ENTID.user_progress01`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`"
+        course_id: "course01",
+        user_id: "user01"
       }
 
-      valid: {
-        "`$OPEN`": true,
-        id: "`dm$=s.load_user_progress0.match.id`",
-        user_id: "`dm$=p.LEARNWORLDS_TEST_USER_ENTID.user01`"
-      }
+      op: "list",
+      valid: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "user_progress_ref01"
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "key$": "BasicUserProgressFlow"
 }

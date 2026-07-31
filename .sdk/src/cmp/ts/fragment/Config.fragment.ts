@@ -1,22 +1,51 @@
 
-const Config = {
+import { BaseFeature } from './feature/base/BaseFeature'
+// #ImportFeatures
 
-  options: {
-    base: 'https://stoplight.io/mocks/learnworlds/api:main/2951998',
 
-    auth: {
-      prefix: 'Bearer',
-    },
+const FEATURE_CLASS: Record<string, typeof BaseFeature> = {
+  // #FeatureClasses
+}
 
-    headers: 'HEADERS',
+
+class Config {
+
+  makeFeature(this: any, fn: string) {
+    const fc = FEATURE_CLASS[fn]
+    const fi = new fc()
+    // TODO: errors etc
+    return fi
+  }
+
+
+  main = {
+    name: 'ProjectName',
+  }
+
+
+  feature = {
+    // #FeatureConfigs
+  }
+
+
+  options = {
+    base: '$$main.kit.info.servers.0.url$$',
+
+    'AUTHBLOCK'headers: 'HEADERS',
 
     entity: {
       // #EntityConfigs
     }
   }
+
+
+  entity = 'ENTITYMAP'
 }
 
+
+const config = new Config()
 
 export {
-  Config
+  config
 }
+

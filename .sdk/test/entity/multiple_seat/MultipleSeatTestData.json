@@ -1,0 +1,83 @@
+{
+  "existing": {
+    "multiple_seat": {
+      "MULTIPLE_SEAT00": {
+        "access": "s96",
+        "add_to_active_seat": false,
+        "available_seat": "s98",
+        "created": 153,
+        "description": "s9a",
+        "id": "MULTIPLE_SEAT00",
+        "max_number_of_user": "s9c",
+        "modified": 157,
+        "number_of_seat": "s9e",
+        "product": {},
+        "seat_manager": [],
+        "success": false,
+        "tag": [],
+        "title": "sa3",
+        "total_enrollment": "sa4",
+        "seat_id": "SEAT01",
+        "uid": "UID01"
+      },
+      "MULTIPLE_SEAT01": {
+        "access": "s12c",
+        "add_to_active_seat": false,
+        "available_seat": "s12e",
+        "created": 303,
+        "description": "s130",
+        "id": "MULTIPLE_SEAT01",
+        "max_number_of_user": "s132",
+        "modified": 307,
+        "number_of_seat": "s134",
+        "product": {},
+        "seat_manager": [],
+        "success": false,
+        "tag": [],
+        "title": "s139",
+        "total_enrollment": "s13a",
+        "seat_id": "SEAT01",
+        "uid": "UID01"
+      },
+      "MULTIPLE_SEAT02": {
+        "access": "s1c2",
+        "add_to_active_seat": false,
+        "available_seat": "s1c4",
+        "created": 453,
+        "description": "s1c6",
+        "id": "MULTIPLE_SEAT02",
+        "max_number_of_user": "s1c8",
+        "modified": 457,
+        "number_of_seat": "s1ca",
+        "product": {},
+        "seat_manager": [],
+        "success": false,
+        "tag": [],
+        "title": "s1cf",
+        "total_enrollment": "s1d0",
+        "seat_id": "SEAT01",
+        "uid": "UID01"
+      }
+    }
+  },
+  "new": {
+    "multiple_seat": {
+      "multiple_seat_ref01": {
+        "access": "s258",
+        "add_to_active_seat": false,
+        "available_seat": "s25a",
+        "created": 603,
+        "description": "s25c",
+        "max_number_of_user": "s25e",
+        "modified": 607,
+        "number_of_seat": "s260",
+        "product": {},
+        "seat_manager": [],
+        "success": false,
+        "tag": [],
+        "title": "s265",
+        "total_enrollment": "s266"
+      }
+    }
+  }
+}

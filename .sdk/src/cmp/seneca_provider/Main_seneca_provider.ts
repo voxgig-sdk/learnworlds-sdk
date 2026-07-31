@@ -16,7 +16,7 @@ const Main = cmp(async function Main(props: any) {
   const { model } = props.ctx$
 
   const { entity } = model.main.api
-  const { feature } = model.main.sdk
+  const { feature } = model.main.kit
 
   Package({ target })
 

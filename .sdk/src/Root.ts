@@ -12,13 +12,24 @@ import {
   Entity,
   Feature,
   Readme,
+  AgentGuide,
+  Test,
 
 } from '@voxgig/sdkgen'
+
+import {
+  KIT
+} from '@voxgig/apidef'
 
 
 import { transform, select, ismap } from '@voxgig/struct'
 
 import { PointUtil, Content } from 'jostraca'
+
+
+import { Top } from './Top'
+import { BuildSDK } from './BuildSDK'
+
 
 const {
   buildPoints,
@@ -26,7 +37,6 @@ const {
 } = PointUtil
 
 
-import { Top } from './Top'
 
 
 const Root = cmp(function Root(props: any) {
@@ -42,9 +52,9 @@ const Root = cmp(function Root(props: any) {
 
   ctx$.model = model
 
-  const target = model.main.sdk.target || {}
-  const feature = model.main.sdk.feature || {}
-  const entity = model.main.api.entity || {}
+  const target = model.main[KIT].target || {}
+  const feature = model.main[KIT].feature || {}
+  const entity = model.main[KIT].entity || {}
 
   ctx$.log.debug({
     point: 'cmp-root', target, entity, feature, note: [
@@ -59,7 +69,7 @@ const Root = cmp(function Root(props: any) {
 
   // Standard Replacements
   ctx$.stdrep = {}
-  names(ctx$.stdrep, model.Name, 'ProjectName')
+  names(ctx$.stdrep, model.Name, 'Project' + 'Name')
   // console.log('STDREP', stdrep)
 
   Project({}, () => {
@@ -67,26 +77,63 @@ const Root = cmp(function Root(props: any) {
     // TODO: jostraca should accept no props
     Top({})
 
+    BuildSDK({})
+
     each(target, (target: any) => {
       names(target, target.name)
 
       Folder({ name: target.name }, () => {
 
-        each(entity, (entity: any) => {
-          names(entity, entity.name)
-          Entity({ target, entity })
-        })
+        // Per-generation-phase activation. A target's aontu model carries
+        // a `phase` map mirroring the feature pattern:
+        //
+        //   phase: {
+        //     entity:     { active: false }
+        //     feature:    { active: false }
+        //     readme:     { active: false }
+        //     agentguide: { active: false }
+        //     test:       { active: false }
+        //   }
+        //
+        // Defaults are inclusive — when a phase entry is absent (or
+        // active is not explicitly false), the phase runs. Existing
+        // standard targets don't declare `phase` and keep current
+        // behaviour. A CLI-style target switches all five off and
+        // only emits Main.
+        const phase = target.phase || {}
+        const phaseActive = (name: string): boolean =>
+          false !== (phase[name] && phase[name].active)
 
-        // each(feature).filter((feature: any) => feature.active).map((feature: any) => {
-        each(feature).filter((feature: any) => feature.active).map((feature: any) => {
-          names(feature, feature.name)
-          Feature({ target, feature })
-        })
+        if (phaseActive('entity')) {
+          each(entity, (entity: any) => {
+            names(entity, entity.name)
+            Entity({ target, entity })
+          })
+        }
+
+        if (phaseActive('feature')) {
+          each(feature).filter((feature: any) => feature.active).map((feature: any) => {
+            names(feature, feature.name)
+            Feature({ target, feature })
+          })
+        }
 
         Main({ target })
 
-        Readme({ target })
+        if (phaseActive('readme')) {
+          Readme({ target })
+        }
 
+        // Per-target agent guides: <lang>/AGENTS.md + CLAUDE.md, and (driven
+        // internally by AgentGuide) a guide per active feature under
+        // <lang>/src/feature/<name>/. Placement mirrors Readme.
+        if (phaseActive('agentguide')) {
+          AgentGuide({ target })
+        }
+
+        if (phaseActive('test')) {
+          Test({ target })
+        }
       })
     })
 
@@ -228,6 +275,7 @@ function makeFlowStep(
 
 
 export {
-  Root
+  KIT,
+  Root,
 }
 

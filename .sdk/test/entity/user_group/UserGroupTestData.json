@@ -1,0 +1,77 @@
+{
+  "existing": {
+    "user_group": {
+      "USER_GROUP00": {
+        "assigned_course": [],
+        "assigned_seat_offering_id": "ASSIGNED_SEAT_OFFERING01",
+        "assigned_segment_id": "ASSIGNED_SEGMENT01",
+        "assigned_user_group_id": "ASSIGNED_USER_GROUP01",
+        "created": 154,
+        "description": "s9b",
+        "enroll_users_on_course": true,
+        "group_manager": [],
+        "id": "USER_GROUP00",
+        "max_number_of_user": "s9f",
+        "modified": 160,
+        "product": {},
+        "role_id": "ROLE01",
+        "tag": [],
+        "title": "sa4"
+      },
+      "USER_GROUP01": {
+        "assigned_course": [],
+        "assigned_seat_offering_id": "ASSIGNED_SEAT_OFFERING01",
+        "assigned_segment_id": "ASSIGNED_SEGMENT01",
+        "assigned_user_group_id": "ASSIGNED_USER_GROUP01",
+        "created": 304,
+        "description": "s131",
+        "enroll_users_on_course": true,
+        "group_manager": [],
+        "id": "USER_GROUP01",
+        "max_number_of_user": "s135",
+        "modified": 310,
+        "product": {},
+        "role_id": "ROLE01",
+        "tag": [],
+        "title": "s13a"
+      },
+      "USER_GROUP02": {
+        "assigned_course": [],
+        "assigned_seat_offering_id": "ASSIGNED_SEAT_OFFERING01",
+        "assigned_segment_id": "ASSIGNED_SEGMENT01",
+        "assigned_user_group_id": "ASSIGNED_USER_GROUP01",
+        "created": 454,
+        "description": "s1c7",
+        "enroll_users_on_course": true,
+        "group_manager": [],
+        "id": "USER_GROUP02",
+        "max_number_of_user": "s1cb",
+        "modified": 460,
+        "product": {},
+        "role_id": "ROLE01",
+        "tag": [],
+        "title": "s1d0"
+      }
+    }
+  },
+  "new": {
+    "user_group": {
+      "user_group_ref01": {
+        "assigned_course": [],
+        "assigned_seat_offering_id": "ASSIGNED_SEAT_OFFERING01",
+        "assigned_segment_id": "ASSIGNED_SEGMENT01",
+        "assigned_user_group_id": "ASSIGNED_USER_GROUP01",
+        "created": 604,
+        "description": "s25d",
+        "enroll_users_on_course": true,
+        "group_manager": [],
+        "max_number_of_user": "s261",
+        "modified": 610,
+        "product": {},
+        "role_id": "ROLE01",
+        "tag": [],
+        "title": "s266"
+      }
+    }
+  }
+}

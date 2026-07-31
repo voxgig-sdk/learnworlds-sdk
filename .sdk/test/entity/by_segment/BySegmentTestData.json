@@ -1,0 +1,14 @@
+{
+  "existing": {
+    "by_segment": {
+      "BY_SEGMENT00": {},
+      "BY_SEGMENT01": {},
+      "BY_SEGMENT02": {}
+    }
+  },
+  "new": {
+    "by_segment": {
+      "by_segment_ref01": {}
+    }
+  }
+}

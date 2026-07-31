@@ -4,20 +4,7 @@
   
     const cmd: any = {}
   
-  
-  
-  cmd.load = {
-    action: async function load_user_role(this: any, entize: any, msg: any) {
-      const user_roleEntity = this.shared.sdk.UserRole()
-      const q = msg.q || {}
-  
-      const resdata = await user_roleEntity.load(q)
-  
-      let item = entize(resdata)
-      return item
-    }
-  }
-  
+    // #LoadOp
   
   
   cmd.list = {
@@ -35,27 +22,7 @@
   
     // #CreateOp
   
-  
-  cmd.save = {
-    action: async function update_user_role(this: any, entize: any, msg: any) {
-      const user_roleEntity = this.shared.sdk.UserRole()
-      let reqdata = msg.ent.data$()
-  
-      const update = null !== reqdata.id
-      const resdata = await (update ?
-        user_roleEntity.update(reqdata) :
-        user_roleEntity.create(reqdata))
-  
-      let item = null
-  
-      if (resdata) {
-        item = entize(resdata)
-      }
-  
-      return item
-    }
-  }
-  
+    // #UpdateOp
   
     // #RemoveOp
   
