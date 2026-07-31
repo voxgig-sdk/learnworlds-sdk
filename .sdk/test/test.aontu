@@ -1,0 +1,44 @@
+# Copyright (c) 2025 Voxgig Ltd. MIT License.
+
+# Tests are defined as sets of expected inputs and outputs
+# The test runner script for each language loads the generated test.json
+# file and runs the actual tests.
+
+# Each language must pass these exact same tests, ensuring uniform
+# behaviour over all languages.
+
+
+# Tests for the core "struct" data structure utilities.
+struct: minor: @"struct/minor.aontu"
+struct: getpath: @"struct/getpath.aontu"
+struct: inject: @"struct/inject.aontu"
+struct: merge: @"struct/merge.aontu"
+struct: transform: @"struct/transform.aontu"
+struct: walk: @"struct/walk.aontu"
+struct: validate: @"struct/validate.aontu"
+struct: select: @"struct/select.aontu"
+
+
+# Tests for the primary SDK utilities.
+primary: auth: @"primary/auth.aontu"
+primary: body: @"primary/body.aontu"
+primary: contextify: @"primary/contextify.aontu"
+primary: done: @"primary/done.aontu"
+primary: error: @"primary/error.aontu"
+primary: findparam: @"primary/findparam.aontu"
+primary: fullurl: @"primary/fullurl.aontu"
+primary: headers: @"primary/headers.aontu"
+primary: resform: @"primary/resform.aontu"
+primary: method: @"primary/method.aontu"
+primary: operator: @"primary/operator.aontu"
+primary: options: @"primary/options.aontu"
+primary: reqform: @"primary/reqform.aontu"
+primary: params: @"primary/params.aontu"
+primary: query: @"primary/query.aontu"
+primary: request: @"primary/request.aontu"
+primary: resbasic: @"primary/resbasic.aontu"
+primary: resbody: @"primary/resbody.aontu"
+primary: resheaders: @"primary/resheaders.aontu"
+primary: response: @"primary/response.aontu"
+primary: spec: @"primary/spec.aontu"
+
