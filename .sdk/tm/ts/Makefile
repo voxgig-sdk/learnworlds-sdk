@@ -17,10 +17,10 @@ clean:
 
 # --- Release: publish to npm ----------------------------------------------
 # Compile, then publish this package to npm and tag ts/vX.Y.Z. Run headless
-# under the aql key vault, which injects the npm auth token + the GitHub token
+# under the boru key vault, which injects the npm auth token + the GitHub token
 # (never on disk or argv):
-#   aql vault exec --for=npm=<alias> --for=github=<alias> -- make publish
-# aql `--dry-run` injects a filler token we detect to rehearse (build only, no
+#   boru vault exec --for=npm=<alias> --for=github=<alias> -- make publish
+# boru `--dry-run` injects a filler token we detect to rehearse (build only, no
 # publish/tag). set -e + tag-last: a failed publish never leaves a tag behind.
 SHELL := /bin/bash
 VERSION := $(shell node -p "require('./package.json').version")
@@ -32,7 +32,7 @@ publish: test
 	@set -e; \
 	token="$${GITHUB_TOKEN:-$$GH_TOKEN}"; \
 	if [ "$$token" = "$(AQL_DRY_RUN_FILLER)" ]; then \
-	  echo "[dry-run] aql filler token detected: would publish to npm and tag $(TAG); nothing pushed."; \
+	  echo "[dry-run] boru filler token detected: would publish to npm and tag $(TAG); nothing pushed."; \
 	  exit 0; \
 	fi; \
 	npm publish --access public --registry https://registry.npmjs.org; \
