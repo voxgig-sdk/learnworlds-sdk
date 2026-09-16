@@ -5,7 +5,7 @@
         "async": true,
         "job_id": "JOB01",
         "send_course_complete_email": true,
-        "unit": [],
+        "units": [],
         "course_id": "COURSE01",
         "user_id": "USER01",
         "id": "UPDATE_USER_PROGRESS00"
@@ -14,7 +14,7 @@
         "async": true,
         "job_id": "JOB01",
         "send_course_complete_email": true,
-        "unit": [],
+        "units": [],
         "course_id": "COURSE01",
         "user_id": "USER01",
         "id": "UPDATE_USER_PROGRESS01"
@@ -23,7 +23,7 @@
         "async": true,
         "job_id": "JOB01",
         "send_course_complete_email": true,
-        "unit": [],
+        "units": [],
         "course_id": "COURSE01",
         "user_id": "USER01",
         "id": "UPDATE_USER_PROGRESS02"
@@ -36,7 +36,208 @@
         "async": true,
         "job_id": "JOB01",
         "send_course_complete_email": true,
-        "unit": []
+        "units": []
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/users/{id}/courses/{cid}/complete": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "post-v2-users-id-courses-cid-complete",
+        "parameters": [
+          {
+            "description": "User Id or email (encoded string)",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course title Id",
+            "in": "path",
+            "name": "cid",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "Example": {
+                  "value": {
+                    "send_course_complete_email": false,
+                    "units": []
+                  }
+                }
+              },
+              "schema": {
+                "properties": {
+                  "send_course_complete_email": {
+                    "description": "\t\nIndication about whether the user will receive the completion emails; true if she should receive the emails, false if she should not.",
+                    "type": "boolean"
+                  },
+                  "units": {
+                    "description": "Unique identifiers of the learning activities that should be marked as complete; empty if the progress of the whole course should be marked as complete.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "send_course_complete_email",
+                  "units"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "async": true,
+                      "job_id": "63f337a50e27fef8cf00ff34"
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "async": {
+                      "description": "Indication about whether the request will be executed asynchronously; true if it’s an asynchronous task, false if it is not.",
+                      "type": "boolean"
+                    },
+                    "job_id": {
+                      "description": "Unique identifier of the asynchronous task; empty if the task is not asynchronous.”\n\nEnsure that the documentation link is accordingly updated",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "POST /v2/users/{id}/courses/{cid}/reset": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "post-v2-users-id-courses-cid-reset",
+        "parameters": [
+          {
+            "description": "User Id or email (encoded string)",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course title Id",
+            "in": "path",
+            "name": "cid",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "units": {
+                    "description": "Unique identifiers of the learning activities the progress of which needs to be reset; empty if the progress of the whole course should be reset.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "units"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "async": {
+                      "description": "Indication about whether the request will be executed asynchronously; true if it’s an asynchronous task, false if it is not.",
+                      "type": "boolean"
+                    },
+                    "job_id": {
+                      "description": "Unique identifier of the asynchronous task; empty if the task is not asynchronous.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

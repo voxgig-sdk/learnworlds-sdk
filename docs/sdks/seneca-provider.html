@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Seneca Provider | API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/learnworlds-sdk">voxgig-sdk/learnworlds-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">API</a></details>
+<details><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/active.html">Active</a>
+<a href="../api/affiliate.html">Affiliate</a>
+<a href="../api/assessment.html">Assessment</a>
+<a href="../api/bundle.html">Bundle</a>
+<a href="../api/by_product.html">ByProduct</a>
+<a href="../api/by_segment.html">BySegment</a>
+<a href="../api/calendar.html">Calendar</a>
+<a href="../api/certificate.html">Certificate</a>
+<a href="../api/community.html">Community</a>
+<a href="../api/community_post.html">CommunityPost</a>
+<a href="../api/community_space.html">CommunitySpace</a>
+<a href="../api/completed.html">Completed</a>
+<a href="../api/coupon.html">Coupon</a>
+<a href="../api/coupon_usage.html">CouponUsage</a>
+<a href="../api/course.html">Course</a>
+<a href="../api/course_analytics.html">CourseAnalytics</a>
+<a href="../api/course_content.html">CourseContent</a>
+<a href="../api/due.html">Due</a>
+<a href="../api/event.html">Event</a>
+<a href="../api/event_log.html">EventLog</a>
+<a href="../api/form.html">Form</a>
+<a href="../api/installment.html">Installment</a>
+<a href="../api/lead.html">Lead</a>
+<a href="../api/multiple_seat.html">MultipleSeat</a>
+<a href="../api/payment.html">Payment</a>
+<a href="../api/post.html">Post</a>
+<a href="../api/promotion.html">Promotion</a>
+<a href="../api/reporting.html">Reporting</a>
+<a href="../api/score.html">Score</a>
+<a href="../api/seat.html">Seat</a>
+<a href="../api/segment.html">Segment</a>
+<a href="../api/space.html">Space</a>
+<a href="../api/subscription_plan.html">SubscriptionPlan</a>
+<a href="../api/unit.html">Unit</a>
+<a href="../api/unit_analytics.html">UnitAnalytics</a>
+<a href="../api/upcoming.html">Upcoming</a>
+<a href="../api/update_user_progress.html">UpdateUserProgress</a>
+<a href="../api/user.html">User</a>
+<a href="../api/user_group.html">UserGroup</a>
+<a href="../api/user_progress.html">UserProgress</a>
+<a href="../api/user_role.html">UserRole</a>
+<a href="../api/user_subscription.html">UserSubscription</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details open><summary>SDKs</summary><a aria-current="page" href="../sdks/seneca-provider.html">Seneca Provider</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>SDKs</div><h1 id="seneca-provider">Seneca Provider</h1>
+<p>Seneca Provider</p>
+<h2 id="install">Install</h2>
+<p>Not published. Build from the seneca-provider directory.</p>
+<h2 id="package">Package</h2>
+<p><code>voxgig-sdk-learnworlds</code></p>
+<h2 id="api-reference">API reference</h2>
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Operations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../api/active.html">Active</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/affiliate.html">Affiliate</a></td>
+<td><code>create</code>, <code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/assessment.html">Assessment</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/bundle.html">Bundle</a></td>
+<td><code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/by_product.html">ByProduct</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/by_segment.html">BySegment</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/calendar.html">Calendar</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/certificate.html">Certificate</a></td>
+<td><code>list</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/community.html">Community</a></td>
+<td><code>create</code>, <code>list</code>, <code>remove</code></td>
+</tr>
+<tr>
+<td><a href="../api/community_post.html">CommunityPost</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/community_space.html">CommunitySpace</a></td>
+<td><code>create</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/completed.html">Completed</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/coupon.html">Coupon</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/coupon_usage.html">CouponUsage</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/course.html">Course</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/course_analytics.html">CourseAnalytics</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/course_content.html">CourseContent</a></td>
+<td><code>create</code>, <code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/due.html">Due</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/event.html">Event</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/event_log.html">EventLog</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/form.html">Form</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/installment.html">Installment</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/lead.html">Lead</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/multiple_seat.html">MultipleSeat</a></td>
+<td><code>create</code>, <code>list</code>, <code>remove</code></td>
+</tr>
+<tr>
+<td><a href="../api/payment.html">Payment</a></td>
+<td><code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/post.html">Post</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/promotion.html">Promotion</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/reporting.html">Reporting</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/score.html">Score</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/seat.html">Seat</a></td>
+<td><code>create</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/segment.html">Segment</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/space.html">Space</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/subscription_plan.html">SubscriptionPlan</a></td>
+<td><code>list</code>, <code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/unit.html">Unit</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/unit_analytics.html">UnitAnalytics</a></td>
+<td><code>load</code></td>
+</tr>
+<tr>
+<td><a href="../api/upcoming.html">Upcoming</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../api/update_user_progress.html">UpdateUserProgress</a></td>
+<td><code>create</code></td>
+</tr>
+<tr>
+<td><a href="../api/user.html">User</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>remove</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/user_group.html">UserGroup</a></td>
+<td><code>create</code>, <code>list</code>, <code>load</code>, <code>update</code></td>
+</tr>
+<tr>
+<td><a href="../api/user_progress.html">UserProgress</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/user_role.html">UserRole</a></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><a href="../api/user_subscription.html">UserSubscription</a></td>
+<td><code>list</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="configuration">Configuration</h2>
+<p>Set the server URL and credentials for your environment. Enable only the features your application needs.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><a href="../features/debug.html">Request/response capture ring buffer for debugging</a></li>
+<li><a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a></li>
+<li><a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a></li>
+<li><a href="../features/paging.html">Pagination signals for list operations</a></li>
+<li><a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a></li>
+<li><a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a></li>
+<li><a href="../features/test.html">In-memory mock transport for testing without a live server</a></li>
+<li><a href="../features/timeout.html">Per-request timeout with transport abort</a></li>
+</ul>
+<h2 id="client-defaults">Client defaults</h2>
+<pre><code class="language-json">{
+  &quot;base&quot;: &quot;https://stoplight.io/mocks/learnworlds/api:main/2951998&quot;,
+  &quot;headers&quot;: {
+    &quot;content-type&quot;: &quot;application/json&quot;
+  },
+  &quot;entity&quot;: {
+    &quot;active&quot;: {},
+    &quot;affiliate&quot;: {},
+    &quot;assessment&quot;: {},
+    &quot;bundle&quot;: {},
+    &quot;by_product&quot;: {},
+    &quot;by_segment&quot;: {},
+    &quot;calendar&quot;: {},
+    &quot;certificate&quot;: {},
+    &quot;community&quot;: {},
+    &quot;community_post&quot;: {},
+    &quot;community_space&quot;: {},
+    &quot;completed&quot;: {},
+    &quot;coupon&quot;: {},
+    &quot;coupon_usage&quot;: {},
+    &quot;course&quot;: {},
+    &quot;course_analytics&quot;: {},
+    &quot;course_content&quot;: {},
+    &quot;due&quot;: {},
+    &quot;event&quot;: {},
+    &quot;event_log&quot;: {},
+    &quot;form&quot;: {},
+    &quot;installment&quot;: {},
+    &quot;lead&quot;: {},
+    &quot;multiple_seat&quot;: {},
+    &quot;payment&quot;: {},
+    &quot;post&quot;: {},
+    &quot;promotion&quot;: {},
+    &quot;reporting&quot;: {},
+    &quot;score&quot;: {},
+    &quot;seat&quot;: {},
+    &quot;segment&quot;: {},
+    &quot;space&quot;: {},
+    &quot;subscription_plan&quot;: {},
+    &quot;unit&quot;: {},
+    &quot;unit_analytics&quot;: {},
+    &quot;upcoming&quot;: {},
+    &quot;update_user_progress&quot;: {},
+    &quot;user&quot;: {},
+    &quot;user_group&quot;: {},
+    &quot;user_progress&quot;: {},
+    &quot;user_role&quot;: {},
+    &quot;user_subscription&quot;: {}
+  }
+}
+</code></pre>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

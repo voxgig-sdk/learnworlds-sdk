@@ -1,0 +1,218 @@
+# Entity: update_user_progress
+
+main: kit: entity: update_user_progress: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "async"
+      req: false
+      short: "Indication about whether the request will be executed asynchronously; true if it’s an asynchronous task, false if it is not."
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "job_id"
+      req: false
+      short: "Unique identifier of the asynchronous task; empty if the task is not asynchronous.” Ensure that the documentation link is accordingly updated"
+      type: "`$STRING`"
+    }
+    {
+      name: "send_course_complete_email"
+      req: true
+      short: "Indication about whether the user will receive the completion emails; true if she should receive the emails, false if she should not."
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "units"
+      req: true
+      short: "Unique identifiers of the learning activities that should be marked as complete; empty if the progress of the whole course should be marked as complete."
+      type: "`$ARRAY`"
+    }
+  ]
+
+  name: "update_user_progress"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "course_id"
+                orig: "cid"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "user_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "POST /v2/users/{id}/courses/{cid}/complete"
+            json: "{\"operationId\":\"post-v2-users-id-courses-cid-complete\",\"parameters\":[{\"description\":\"User Id or email (encoded string)\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Course title Id\",\"in\":\"path\",\"name\":\"cid\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"send_course_complete_email\":false,\"units\":[]}}},\"schema\":{\"properties\":{\"send_course_complete_email\":{\"description\":\"\\t\\nIndication about whether the user will receive the completion emails; true if she should receive the emails, false if she should not.\",\"type\":\"boolean\"},\"units\":{\"description\":\"Unique identifiers of the learning activities that should be marked as complete; empty if the progress of the whole course should be marked as complete.\",\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"required\":[\"send_course_complete_email\",\"units\"],\"type\":\"object\"}}}},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"async\":true,\"job_id\":\"63f337a50e27fef8cf00ff34\"}}},\"schema\":{\"properties\":{\"async\":{\"description\":\"Indication about whether the request will be executed asynchronously; true if it’s an asynchronous task, false if it is not.\",\"type\":\"boolean\"},\"job_id\":{\"description\":\"Unique identifier of the asynchronous task; empty if the task is not asynchronous.”\\n\\nEnsure that the documentation link is accordingly updated\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "POST"
+          orig: "/v2/users/{id}/courses/{cid}/complete"
+          rename: {
+            param: {
+              cid: "course_id"
+              id: "user_id"
+            }
+          }
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "user_id"
+            }
+            {
+              lit: "courses"
+            }
+            {
+              var: "course_id"
+            }
+            {
+              lit: "complete"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "course_id"
+              "lw_client"
+              "user_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "course_id"
+                orig: "cid"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "user_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "POST /v2/users/{id}/courses/{cid}/reset"
+            json: "{\"operationId\":\"post-v2-users-id-courses-cid-reset\",\"parameters\":[{\"description\":\"User Id or email (encoded string)\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Course title Id\",\"in\":\"path\",\"name\":\"cid\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"units\":{\"description\":\"Unique identifiers of the learning activities the progress of which needs to be reset; empty if the progress of the whole course should be reset.\",\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"required\":[\"units\"],\"type\":\"object\"}}}},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"async\":{\"description\":\"Indication about whether the request will be executed asynchronously; true if it’s an asynchronous task, false if it is not.\",\"type\":\"boolean\"},\"job_id\":{\"description\":\"Unique identifier of the asynchronous task; empty if the task is not asynchronous.\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "POST"
+          orig: "/v2/users/{id}/courses/{cid}/reset"
+          rename: {
+            param: {
+              cid: "course_id"
+              id: "user_id"
+            }
+          }
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "user_id"
+            }
+            {
+              lit: "courses"
+            }
+            {
+              var: "course_id"
+            }
+            {
+              lit: "reset"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "course_id"
+              "lw_client"
+              "user_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "user"
+        "course"
+      ]
+    ]
+  }
+
+
+
+}

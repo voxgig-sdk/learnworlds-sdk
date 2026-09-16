@@ -30,6 +30,12 @@ import {
   cmp,
   each,
   isAuthActive,
+  serverVarEnv,
+  serverVariables,
+  isHttpBasicAuth,
+  entityDataIdField, envName, envToken,
+  jsKey,
+  jsProp
 } from '@voxgig/sdkgen'
 
 
@@ -60,16 +66,37 @@ const TestEntity = cmp(function TestEntity(props: any) {
   const target = props.target
   const entity: ModelEntity = props.entity
 
-  const PROJENVNAME = nom(model.const, 'NAME').replace(/[^A-Z_]/g, '_')
-  const ENTENVNAME = nom(entity, 'NAME').replace(/[^A-Z_]/g, '_')
+  const PROJENVNAME = envName(model)
+  const ENTENVNAME = envToken(entity.name)
   const authActive = isAuthActive(model)
+  const authBasic = authActive && isHttpBasicAuth(model)
   const apikeyEnvEntry = authActive
-    ? `\n    '${PROJENVNAME}_APIKEY': 'NONE',`
+    ? `\n    '${PROJENVNAME}_APIKEY': '',${authBasic ? `\n    '${PROJENVNAME}_SECRET': '',` : ''}`
     : ''
   const apikeyLiveField = authActive
     ? `
-        apikey: env.${PROJENVNAME}_APIKEY,`
+        apikey: env.${PROJENVNAME}_APIKEY,${authBasic ? `
+        secret: env.${PROJENVNAME}_SECRET,` : ''}`
     : ''
+
+  // A templated server URL (OpenAPI server variables) makes a LIVE client
+  // impossible to construct without values: makeOptions raises rather than
+  // request a URL with a literal `{account_id}` in it. So the live suite
+  // takes them from the environment the same way it takes the apikey.
+  //
+  // Keys are quoted and the env read is bracketed via jsKey/jsProp: a server
+  // variable name is spec-derived and need not be a JS identifier — the URL
+  // grammar admits a leading digit ({2fa}), and a declared-but-unreferenced
+  // variable ({edge-zone}) is not constrained at all. Bare `name:` and
+  // `env.PROJ_SERVER_EDGE-ZONE` are both syntax errors.
+  const svars = serverVariables(model)
+  const serverEnvEntry = svars
+    .map((v: any) => `\n    '${serverVarEnv(PROJENVNAME, v.name)}': ${JSON.stringify(v.dflt)},`).join('')
+  const serverLiveField = 0 === svars.length ? '' : `
+        server: {${svars
+      .map((v: any) => `
+          ${jsKey(v.name)}: ${jsProp('env', serverVarEnv(PROJENVNAME, v.name))},`).join('')}
+        },`
 
   // TODO: should be a utility function
   const ff = projectPath('src/cmp/ts/fragment/')
@@ -142,28 +169,36 @@ function basicSetup(extra?: any) {
       }]
     })
 
-  // Detect whether the user provided a real ENTID JSON via env var. The
-  // basic flow consumes synthetic IDs from the fixture file; without an
-  // override those synthetic IDs reach the live API and 4xx. Surface this
-  // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['${PROJENVNAME}_TEST_${ENTENVNAME}_ENTID']
-  const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
-
   const env = envOverride({
     '${PROJENVNAME}_TEST_${ENTENVNAME}_ENTID': idmap,
     '${PROJENVNAME}_TEST_LIVE': 'FALSE',
-    '${PROJENVNAME}_TEST_EXPLAIN': 'FALSE',${apikeyEnvEntry}
+    '${PROJENVNAME}_TEST_EXPLAIN': 'FALSE',${apikeyEnvEntry}${serverEnvEntry}
   })
 
   idmap = env['${PROJENVNAME}_TEST_${ENTENVNAME}_ENTID']
 
   const live = 'TRUE' === env.${PROJENVNAME}_TEST_LIVE
 
+  const transport = createLiveTransport()
   if (live) {
+    const rawIds = process.env['${PROJENVNAME}_TEST_${ENTENVNAME}_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new ${model.Name}SDK(merge([
-      {${apikeyLiveField}
+      // FIRST, so the generated fields below win: sdk-test-control.json's
+      // test.client.options adds to the live client, it does not redirect it.
+      liveClientOptions(),
+      {${apikeyLiveField}${serverLiveField}
       },
-      extra
+      // 'extra || {}', not a bare 'extra': struct.merge returns UNDEFINED when the
+      // last entry is undefined, and basicSetup is normally called with no
+      // argument at all - so a bare 'extra' silently discarded the apikey
+      // and server values above and handed the SDK undefined. Harmless
+      // while there was nothing in that object; not harmless now.
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -176,7 +211,7 @@ function basicSetup(extra?: any) {
     data: entityData,
     explain: 'TRUE' === env.${PROJENVNAME}_TEST_EXPLAIN,
     live,
-    syntheticOnly: live && !idmapOverridden,
+    transport,
     now: Date.now(),
   }
 
@@ -204,16 +239,13 @@ function basicSetup(extra?: any) {
           Content(`
     const live = 'TRUE' === process.env.${PROJENVNAME}_TEST_LIVE
     for (const op of ${flowOpsLiteral}) {
-      if (maybeSkipControl(t, 'entityOp', '${entity.name}.' + op, live)) return
+      if (!live && maybeSkipControl(t, 'entityOp', '${entity.name}.' + op, live)) return
     }
 
+    ${Object.values(model.main.kit.entity || {}).some((e: any) => Object.values(e.op || {}).some((o: any) => (o.points || []).some((p: any) => p.contract && JSON.parse(p.contract.json).live))) ? `if (live) { t.skip('Covered by live operation scenarios'); return }` : ''}
     const setup = basicSetup()
-    // The basic flow consumes synthetic IDs and field values from the
-    // fixture (entity TestData.json). Those don't exist on the live API.
-    // Skip live runs unless the user provided a real ENTID env override.
-    if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set ${PROJENVNAME}_TEST_${ENTENVNAME}_ENTID JSON to run live')
-      return
+    if (setup.live) {
+      return runLiveEntity(setup, ${JSON.stringify(entity)}, ${JSON.stringify(basicflow)}, '${nom(entity, 'Name')}')
     }
     const client = setup.client
     const struct = setup.struct
@@ -299,7 +331,7 @@ const generateCreate: OpGen = (ctx, step, index) => {
   const hasEntIdC = null != entity.id
 
   Content(`
-    ${datavar} = await ${entvar}.create(${datavar})
+    ${datavar} = (await ${entvar}.create(${datavar})).data()
 `)
   if (hasEntIdC) {
     Content(`    assert(null != ${datavar}.id)
@@ -314,6 +346,7 @@ const generateCreate: OpGen = (ctx, step, index) => {
 
 const generateList: OpGen = (ctx, step, index) => {
   const { entity, flow } = ctx
+  const hasDataId = null != entityDataIdField(entity)
   const ref = step.input.ref ?? entity.name + '_ref01'
   const entvar = step.input.entvar ?? ref + '_ent'
   const matchvar = step.input.matchvar ?? (ref + '_match' + (step.input.suffix ?? ''))
@@ -339,7 +372,7 @@ const generateList: OpGen = (ctx, step, index) => {
   })
 
   Content(`
-    const ${listvar} = await ${entvar}.list(${matchvar})
+    const ${listvar} = (await ${entvar}.list(${matchvar})).map((e: any) => e.data())
 `)
   const allSteps = flow.step
   for (let vI = 0; vI < step.valid.length; vI++) {
@@ -348,12 +381,18 @@ const generateList: OpGen = (ctx, step, index) => {
     const hasRefData = validRef && allSteps.some(s => 'create' === s.op &&
       ((s.input.ref ?? entity.name + '_ref01') === validRef))
 
-    if ('ItemExists' === validator.apply && hasRefData) {
+    // Guard on a DATA id field (entityDataIdField), NOT entity.id (the load-MATCH
+    // key): an entity can have a match id in its path while its RESPONSE record
+    // has no `id` field (e.g. Multichannel's Template — data fields meta/status/…,
+    // no id). Then `${validRef}_data.id` is undefined and select(list, { id:
+    // undefined }) spuriously matches id-less records, so ItemExists/ItemNotExists
+    // are meaningless. Emit them only when `.id` is a real data field.
+    if ('ItemExists' === validator.apply && hasRefData && hasDataId) {
       Content(`
     assert(!isempty(select(${listvar}, { id: ${validRef}_data.id })))
 `)
     }
-    else if ('ItemNotExists' === validator.apply && hasRefData) {
+    else if ('ItemNotExists' === validator.apply && hasRefData && hasDataId) {
       Content(`
     assert(isempty(select(${listvar}, { id: ${validRef}_data.id })))
 `)
@@ -412,7 +451,7 @@ const generateUpdate: OpGen = (ctx, step, index) => {
   }
 
   Content(`
-    const ${resdatavar} = await ${entvar}.update(${datavar})
+    const ${resdatavar} = (await ${entvar}.update(${datavar})).data()
 `)
   if (hasEntIdU) {
     Content(`    assert(${resdatavar}.id === ${datavar}.id)
@@ -500,13 +539,13 @@ const generateLoad: OpGen = (ctx, step, index) => {
   if (hasEntId) {
     Content(`    const ${matchvar}: any = {}
     ${matchvar}.id = ${srcdatavar}.id
-    const ${datavar} = await ${entvar}.load(${matchvar})
+    const ${datavar} = (await ${entvar}.load(${matchvar})).data()
     assert(${datavar}.id === ${srcdatavar}.id)
 `)
   }
   else {
     Content(`    const ${matchvar}: any = {}
-    const ${datavar} = await ${entvar}.load(${matchvar})
+    const ${datavar} = (await ${entvar}.load(${matchvar})).data()
     assert(null != ${datavar})
 `)
   }
@@ -524,6 +563,14 @@ const generateRemove: OpGen = (ctx, step, index) => {
   const needsEnt = !priorSteps.some(s =>
     ['create', 'list', 'load', 'update', 'remove'].includes(s.op))
 
+  // "Remove what you created" needs the created record's id. An entity with
+  // no DATA id field (entityDataIdField null — e.g. Multichannel's Template)
+  // returns records without `.id`, so `${srcdatavar}.id` is absent (a py
+  // KeyError; a silent nil elsewhere). Skip the flow-remove step for those —
+  // the remove op is still exercised by the direct() test.
+  if (null == entityDataIdField(entity)) {
+    return
+  }
   Content(`
     // REMOVE
 `)

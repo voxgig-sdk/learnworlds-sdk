@@ -37,14 +37,15 @@ class InstallmentEntity extends LearnworldsEntityBase<Installment> {
 
 
 
-  async list(this: any, reqmatch?: InstallmentListMatch, ctrl?: Control): Promise<Installment[]> {
+  async list(this: any, reqmatch?: InstallmentListMatch, ctrl?: Control): Promise<InstallmentEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,

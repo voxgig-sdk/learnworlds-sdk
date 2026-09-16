@@ -3,19 +3,19 @@
     "user_progress": {
       "USER_PROGRESS00": {
         "section_id": "SECTION01",
-        "unit": [],
+        "units": [],
         "course_id": "COURSE01",
         "user_id": "USER01"
       },
       "USER_PROGRESS01": {
         "section_id": "SECTION01",
-        "unit": [],
+        "units": [],
         "course_id": "COURSE01",
         "user_id": "USER01"
       },
       "USER_PROGRESS02": {
         "section_id": "SECTION01",
-        "unit": [],
+        "units": [],
         "course_id": "COURSE01",
         "user_id": "USER01"
       }
@@ -25,7 +25,249 @@
     "user_progress": {
       "user_progress_ref01": {
         "section_id": "SECTION01",
-        "unit": []
+        "units": []
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/users/{id}/courses/{cid}/progress": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-users-id-courses-cid-progress",
+        "parameters": [
+          {
+            "description": "User Id or email (encoded string)",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Course title Id",
+            "in": "path",
+            "name": "cid",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {},
+                "schema": {
+                  "examples": [
+                    {
+                      "average_score_rate": 80,
+                      "completed_at": 1510243831,
+                      "completed_units": 1,
+                      "progress_per_section_unit": [
+                        {
+                          "section_id": "my-course_first_section",
+                          "units": [
+                            {
+                              "score_on_unit": null,
+                              "time_on_unit": 210,
+                              "unit_duration": 773,
+                              "unit_id": "5cdaa5856c72ec302c5698c3",
+                              "unit_name": "Von D - Burn Baphomet",
+                              "unit_progress_rate": 25,
+                              "unit_section_name": "first section",
+                              "unit_status": "not_completed",
+                              "unit_type": "youtube"
+                            },
+                            {
+                              "score_on_unit": 100,
+                              "time_on_unit": 555,
+                              "unit_duration": 555,
+                              "unit_id": "5cdac4bf6c72ec7ea8384e02",
+                              "unit_name": "best practices scorm",
+                              "unit_progress_rate": 100,
+                              "unit_section_name": "first section",
+                              "unit_status": "completed",
+                              "unit_type": "scorm"
+                            },
+                            {
+                              "score_on_unit": null,
+                              "time_on_unit": 0,
+                              "unit_duration": 281,
+                              "unit_id": "5cdac50d6c72ec7ea40dce52",
+                              "unit_name": "test",
+                              "unit_progress_rate": 0,
+                              "unit_section_name": "first section",
+                              "unit_status": "not_completed",
+                              "unit_type": "audio"
+                            }
+                          ]
+                        },
+                        {
+                          "section_id": "my-course_second_section",
+                          "units": [
+                            {
+                              "score_on_unit": null,
+                              "time_on_unit": 223,
+                              "unit_duration": 833,
+                              "unit_id": "5f9a93b068fd38656d62b404",
+                              "unit_name": "my ebook",
+                              "unit_progress_rate": 35,
+                              "unit_section_name": "second section",
+                              "unit_status": "not_completed",
+                              "unit_type": "ebook"
+                            }
+                          ]
+                        }
+                      ],
+                      "progress_rate": 100,
+                      "status": "completed",
+                      "time_on_course": 12310,
+                      "total_units": 4
+                    }
+                  ],
+                  "properties": {
+                    "average_score_rate": {
+                      "description": "Average score percentage",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "completed_at": {
+                      "description": "Completion date in UNIX timestamp format. If status is not_started or not_completed the null value will be returned",
+                      "example": 1510243831,
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "completed_units": {
+                      "description": "Total number of completed course learning activities by the user ",
+                      "type": "integer"
+                    },
+                    "progress_per_section_unit": {
+                      "description": "User progress data per section/learning activity",
+                      "items": {
+                        "properties": {
+                          "section_id": {
+                            "description": "Unique identifier of the section",
+                            "type": "string"
+                          },
+                          "units": {
+                            "description": "User progress data per unit",
+                            "items": {
+                              "properties": {
+                                "score_on_unit": {
+                                  "description": "User score on learning activity",
+                                  "maximum": 100,
+                                  "minimum": 1,
+                                  "type": [
+                                    "null",
+                                    "integer"
+                                  ]
+                                },
+                                "time_on_unit": {
+                                  "description": "Time spend by user on learning activity in seconds",
+                                  "type": "integer"
+                                },
+                                "unit_duration": {
+                                  "description": "Duration of the learning activity in seconds",
+                                  "type": [
+                                    "null",
+                                    "integer"
+                                  ]
+                                },
+                                "unit_id": {
+                                  "description": "Unique identifier of the learning activity",
+                                  "type": "string"
+                                },
+                                "unit_name": {
+                                  "description": "Name of the learning activity",
+                                  "type": "string"
+                                },
+                                "unit_progress_rate": {
+                                  "description": "Progress rate of user on learning activity",
+                                  "maximum": 100,
+                                  "minimum": 0,
+                                  "type": "integer"
+                                },
+                                "unit_section_name": {
+                                  "description": "Name of the section where the learning activity belongs",
+                                  "type": "string"
+                                },
+                                "unit_status": {
+                                  "description": "Status of the learning activity",
+                                  "enum": [
+                                    "completed",
+                                    "not_completed"
+                                  ],
+                                  "type": "string"
+                                },
+                                "unit_type": {
+                                  "description": "Type of the learning activity",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "progress_rate": {
+                      "description": "Progress rate (%)",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "status": {
+                      "description": "Status of user progress",
+                      "enum": [
+                        "not_started",
+                        "completed",
+                        "not_completed"
+                      ],
+                      "type": "string"
+                    },
+                    "time_on_course": {
+                      "description": "Time spent on the course in seconds",
+                      "type": "integer"
+                    },
+                    "total_units": {
+                      "description": "Total number of course learning activities ",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

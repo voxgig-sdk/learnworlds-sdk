@@ -2,41 +2,41 @@
   "existing": {
     "assessment": {
       "ASSESSMENT00": {
-        "answer": [],
+        "answers": [],
         "created": 101,
         "email": "s66",
-        "general_feedback": "s67",
+        "generalFeedback": "s67",
         "grade": "s68",
         "id": "ASSESSMENT00",
         "modified": 106,
         "passed": "s6b",
-        "submitted_timestamp": 108,
+        "submittedTimestamp": 108,
         "user_id": "USER01",
         "form_id": "FORM01"
       },
       "ASSESSMENT01": {
-        "answer": [],
+        "answers": [],
         "created": 201,
         "email": "sca",
-        "general_feedback": "scb",
+        "generalFeedback": "scb",
         "grade": "scc",
         "id": "ASSESSMENT01",
         "modified": 206,
         "passed": "scf",
-        "submitted_timestamp": 208,
+        "submittedTimestamp": 208,
         "user_id": "USER01",
         "form_id": "FORM01"
       },
       "ASSESSMENT02": {
-        "answer": [],
+        "answers": [],
         "created": 301,
         "email": "s12e",
-        "general_feedback": "s12f",
+        "generalFeedback": "s12f",
         "grade": "s130",
         "id": "ASSESSMENT02",
         "modified": 306,
         "passed": "s133",
-        "submitted_timestamp": 308,
+        "submittedTimestamp": 308,
         "user_id": "USER01",
         "form_id": "FORM01"
       }
@@ -45,15 +45,721 @@
   "new": {
     "assessment": {
       "assessment_ref01": {
-        "answer": [],
+        "answers": [],
         "created": 401,
         "email": "s192",
-        "general_feedback": "s193",
+        "generalFeedback": "s193",
         "grade": "s194",
         "modified": 406,
         "passed": "s197",
-        "submitted_timestamp": 408,
+        "submittedTimestamp": 408,
         "user_id": "USER01"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/forms/{id}/responses": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-form-responses",
+        "parameters": [
+          {
+            "description": "Unique identifier of the form",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Filter by user ids. For several id values, a comma separated string can be provided",
+            "in": "query",
+            "name": "users",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the items per page number",
+            "in": "query",
+            "name": "items_per_page",
+            "schema": {
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "data": [
+                        {
+                          "answers": [
+                            {
+                              "answer": "Paphos",
+                              "answerData": null,
+                              "blockId": "mc1663256077565_327",
+                              "blockMaxScore": 1,
+                              "blockType": "mc",
+                              "description": "Which of the following is a planet?",
+                              "feedback": null,
+                              "points": 0
+                            },
+                            {
+                              "answer": "smallAnswer.avi",
+                              "answerData": {
+                                "downloads": [
+                                  {
+                                    "avStatus": "safe",
+                                    "title": "smallAnswer.avi",
+                                    "url": "https://learnworldsdev.blob.core.windows.net/dev-private/assessmentFileUpload/549d7ee2e4b4c8b511000000/5540eccd65b629a7e9f7157cc8914468.avi?sv=2014-02-14&st=2022-09-15T13%3A30%3A11Z&se=2022-09-16T01%3A31%3A11Z&sr=b&sp=r&rscd=&sig=JKdA4IRXCJ6AQmwx3PXWFMXRedXLDCRNLq7Xh%2BdTwko%3D"
+                                  }
+                                ]
+                              },
+                              "blockId": "fileUpload1663256473148_342",
+                              "blockMaxScore": 1,
+                              "blockType": "fileUpload",
+                              "description": "Please upload your drawings",
+                              "feedback": null,
+                              "points": 1
+                            }
+                          ],
+                          "created": 1663245704.014824,
+                          "email": "info@learnworlds.com",
+                          "generalFeedback": null,
+                          "grade": 50,
+                          "id": "63231d88da4ed9ba7d0198f4",
+                          "modified": 1663246805.183458,
+                          "passed": true,
+                          "submittedTimestamp": 1663246805.047033,
+                          "user_id": "549d7ee2e4b4c8b511000000"
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 20,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "examples": [
+                          {
+                            "answers": [
+                              {
+                                "answer": "Paphos",
+                                "answerData": null,
+                                "blockId": "mc1663256077565_327",
+                                "blockMaxScore": 1,
+                                "blockType": "mc",
+                                "description": "Which of the following is a planet?",
+                                "feedback": null,
+                                "points": 0
+                              },
+                              {
+                                "answer": "smallAnswer.avi",
+                                "answerData": {
+                                  "downloads": [
+                                    {
+                                      "avStatus": "safe",
+                                      "title": "smallAnswer.avi",
+                                      "url": "https://learnworldsdev.blob.core.windows.net/dev-private/assessmentFileUpload/549d7ee2e4b4c8b511000000/5540eccd65b629a7e9f7157cc8914468.avi?sv=2014-02-14&st=2022-09-15T13%3A30%3A11Z&se=2022-09-16T01%3A31%3A11Z&sr=b&sp=r&rscd=&sig=JKdA4IRXCJ6AQmwx3PXWFMXRedXLDCRNLq7Xh%2BdTwko%3D"
+                                    }
+                                  ]
+                                },
+                                "blockId": "fileUpload1663256473148_342",
+                                "blockMaxScore": 1,
+                                "blockType": "fileUpload",
+                                "description": "Please upload your drawings",
+                                "feedback": null,
+                                "points": 1
+                              }
+                            ],
+                            "created": 1663245704.014824,
+                            "email": "info@learnworlds.com",
+                            "generalFeedback": null,
+                            "grade": 50,
+                            "id": "63231d88da4ed9ba7d0198f4",
+                            "modified": 1663246805.183458,
+                            "passed": true,
+                            "submittedTimestamp": 1663246805.047033,
+                            "user_id": "549d7ee2e4b4c8b511000000"
+                          }
+                        ],
+                        "properties": {
+                          "answers": {
+                            "description": "Related answers data",
+                            "items": {
+                              "properties": {
+                                "answer": {
+                                  "description": "The text content of the user's answer for this question block",
+                                  "type": "string"
+                                },
+                                "answerData": {
+                                  "items": {
+                                    "properties": {
+                                      "downloads": {
+                                        "items": {
+                                          "properties": {
+                                            "avStatus": {
+                                              "description": "Antivirus status of the download",
+                                              "enum": [
+                                                "safe",
+                                                "unsafe",
+                                                "scan_failed",
+                                                "awating_scan"
+                                              ],
+                                              "example": "safe",
+                                              "type": "string"
+                                            },
+                                            "title": {
+                                              "description": "Title of the download",
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "description": "Url of the download",
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object"
+                                        },
+                                        "type": "array"
+                                      }
+                                    },
+                                    "type": "object"
+                                  },
+                                  "type": [
+                                    "array",
+                                    "null"
+                                  ]
+                                },
+                                "blockId": {
+                                  "description": "Unique identifier of the question block inside the assessment",
+                                  "type": "string"
+                                },
+                                "blockMaxScore": {
+                                  "description": "The maximum points an answer can gather for this question block",
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "blockType": {
+                                  "description": "The type of the question block inside the assessment",
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "description": "The text content of the question block",
+                                  "type": "string"
+                                },
+                                "feedback": {
+                                  "description": "Feedback for an answer",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "points": {
+                                  "description": "The points for the user's answer for this question block",
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array",
+                            "uniqueItems": true
+                          },
+                          "created": {
+                            "description": "Date the submission was created (started), in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "email": {
+                            "description": "Email account of the user who submitted the responses",
+                            "type": "string"
+                          },
+                          "generalFeedback": {
+                            "description": "General feedback for a submission",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "grade": {
+                            "description": "The grade that corresponds to the responses provided by the user",
+                            "maximum": 100,
+                            "minimum": 0,
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "id": {
+                            "description": "Unique identifier of the submission of responses by the user specified by the user id",
+                            "type": "string"
+                          },
+                          "modified": {
+                            "description": "Date the submission was modified for the last time, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "passed": {
+                            "description": "Indication about whether or not the assessment result was passed or failed",
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "submittedTimestamp": {
+                            "description": "Date the submission was finished (submitted), in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "user_id": {
+                            "description": "Unique identifier of the user who submitted the responses",
+                            "type": "string"
+                          }
+                        },
+                        "title": "UserResponse",
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/assessments/{id}/responses": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-questionnaire-unit-responses",
+        "parameters": [
+          {
+            "description": "Unique identifier of the assessment learning activity",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Filter by user ids. For several id values, a comma separated string can be provided",
+            "in": "query",
+            "name": "users",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the items per page number",
+            "in": "query",
+            "name": "items_per_page",
+            "schema": {
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "data": [
+                        {
+                          "answers": [
+                            {
+                              "answer": "Paphos",
+                              "answerData": null,
+                              "blockId": "mc1663256077565_327",
+                              "blockMaxScore": 1,
+                              "blockType": "mc",
+                              "description": "Which of the following is a planet?",
+                              "feedback": null,
+                              "points": 0
+                            },
+                            {
+                              "answer": "smallAnswer.avi",
+                              "answerData": {
+                                "downloads": [
+                                  {
+                                    "avStatus": "safe",
+                                    "title": "smallAnswer.avi",
+                                    "url": "https://learnworldsdev.blob.core.windows.net/dev-private/assessmentFileUpload/549d7ee2e4b4c8b511000000/5540eccd65b629a7e9f7157cc8914468.avi?sv=2014-02-14&st=2022-09-15T13%3A30%3A11Z&se=2022-09-16T01%3A31%3A11Z&sr=b&sp=r&rscd=&sig=JKdA4IRXCJ6AQmwx3PXWFMXRedXLDCRNLq7Xh%2BdTwko%3D"
+                                  }
+                                ]
+                              },
+                              "blockId": "fileUpload1663256473148_342",
+                              "blockMaxScore": 1,
+                              "blockType": "fileUpload",
+                              "description": "Please upload your drawings",
+                              "feedback": null,
+                              "points": 1
+                            }
+                          ],
+                          "created": 1663245704.014824,
+                          "email": "info@learnworlds.com",
+                          "generalFeedback": null,
+                          "grade": 50,
+                          "id": "63231d88da4ed9ba7d0198f4",
+                          "modified": 1663246805.183458,
+                          "passed": true,
+                          "submittedTimestamp": 1663246805.047033,
+                          "user_id": "549d7ee2e4b4c8b511000000"
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 20,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "examples": [
+                          {
+                            "answers": [
+                              {
+                                "answer": "Paphos",
+                                "answerData": null,
+                                "blockId": "mc1663256077565_327",
+                                "blockMaxScore": 1,
+                                "blockType": "mc",
+                                "description": "Which of the following is a planet?",
+                                "feedback": null,
+                                "points": 0
+                              },
+                              {
+                                "answer": "smallAnswer.avi",
+                                "answerData": {
+                                  "downloads": [
+                                    {
+                                      "avStatus": "safe",
+                                      "title": "smallAnswer.avi",
+                                      "url": "https://learnworldsdev.blob.core.windows.net/dev-private/assessmentFileUpload/549d7ee2e4b4c8b511000000/5540eccd65b629a7e9f7157cc8914468.avi?sv=2014-02-14&st=2022-09-15T13%3A30%3A11Z&se=2022-09-16T01%3A31%3A11Z&sr=b&sp=r&rscd=&sig=JKdA4IRXCJ6AQmwx3PXWFMXRedXLDCRNLq7Xh%2BdTwko%3D"
+                                    }
+                                  ]
+                                },
+                                "blockId": "fileUpload1663256473148_342",
+                                "blockMaxScore": 1,
+                                "blockType": "fileUpload",
+                                "description": "Please upload your drawings",
+                                "feedback": null,
+                                "points": 1
+                              }
+                            ],
+                            "created": 1663245704.014824,
+                            "email": "info@learnworlds.com",
+                            "generalFeedback": null,
+                            "grade": 50,
+                            "id": "63231d88da4ed9ba7d0198f4",
+                            "modified": 1663246805.183458,
+                            "passed": true,
+                            "submittedTimestamp": 1663246805.047033,
+                            "user_id": "549d7ee2e4b4c8b511000000"
+                          }
+                        ],
+                        "properties": {
+                          "answers": {
+                            "description": "Related answers data",
+                            "items": {
+                              "properties": {
+                                "answer": {
+                                  "description": "The text content of the user's answer for this question block",
+                                  "type": "string"
+                                },
+                                "answerData": {
+                                  "items": {
+                                    "properties": {
+                                      "downloads": {
+                                        "items": {
+                                          "properties": {
+                                            "avStatus": {
+                                              "description": "Antivirus status of the download",
+                                              "enum": [
+                                                "safe",
+                                                "unsafe",
+                                                "scan_failed",
+                                                "awating_scan"
+                                              ],
+                                              "example": "safe",
+                                              "type": "string"
+                                            },
+                                            "title": {
+                                              "description": "Title of the download",
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "description": "Url of the download",
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object"
+                                        },
+                                        "type": "array"
+                                      }
+                                    },
+                                    "type": "object"
+                                  },
+                                  "type": [
+                                    "array",
+                                    "null"
+                                  ]
+                                },
+                                "blockId": {
+                                  "description": "Unique identifier of the question block inside the assessment",
+                                  "type": "string"
+                                },
+                                "blockMaxScore": {
+                                  "description": "The maximum points an answer can gather for this question block",
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "blockType": {
+                                  "description": "The type of the question block inside the assessment",
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "description": "The text content of the question block",
+                                  "type": "string"
+                                },
+                                "feedback": {
+                                  "description": "Feedback for an answer",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "points": {
+                                  "description": "The points for the user's answer for this question block",
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array",
+                            "uniqueItems": true
+                          },
+                          "created": {
+                            "description": "Date the submission was created (started), in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "email": {
+                            "description": "Email account of the user who submitted the responses",
+                            "type": "string"
+                          },
+                          "generalFeedback": {
+                            "description": "General feedback for a submission",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "grade": {
+                            "description": "The grade that corresponds to the responses provided by the user",
+                            "maximum": 100,
+                            "minimum": 0,
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "id": {
+                            "description": "Unique identifier of the submission of responses by the user specified by the user id",
+                            "type": "string"
+                          },
+                          "modified": {
+                            "description": "Date the submission was modified for the last time, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "passed": {
+                            "description": "Indication about whether or not the assessment result was passed or failed",
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "submittedTimestamp": {
+                            "description": "Date the submission was finished (submitted), in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "user_id": {
+                            "description": "Unique identifier of the user who submitted the responses",
+                            "type": "string"
+                          }
+                        },
+                        "title": "UserResponse",
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

@@ -1,0 +1,166 @@
+# Entity: unit_analytics
+
+main: kit: entity: unit_analytics: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      format: "float"
+      name: "avg_score_rate"
+      req: false
+      short: "Average score (%)"
+      type: "`$NUMBER`"
+    }
+    {
+      format: "float"
+      name: "avg_study_time"
+      req: false
+      short: "Average study time in seconds"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "name"
+      req: false
+      short: "Name of the learning activity"
+      type: "`$STRING`"
+    }
+    {
+      format: "float"
+      name: "total_study_time"
+      req: false
+      short: "Total study time in seconds"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "type"
+      req: false
+      short: "Type of the learning activity"
+      type: "`$STRING`"
+    }
+    {
+      name: "users_completed"
+      req: false
+      short: "Number of users that have completed this learning activity"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "viewers"
+      req: false
+      short: "Number of users that have viewed this learning activity"
+      type: "`$INTEGER`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "unit_analytics"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "course_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "id"
+                orig: "uid"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/courses/{id}/units/{uid}/analytics"
+            json: "{\"operationId\":\"get-courses-cid-unit-uid-analytics\",\"parameters\":[{\"description\":\"Course title Id\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Learning activity id\",\"in\":\"path\",\"name\":\"uid\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"avg_score_rate\":0,\"avg_study_time\":6502,\"name\":\"youtube video\",\"total_study_time\":9295,\"type\":\"youtube\",\"users_completed\":0,\"viewers\":2}}},\"schema\":{\"description\":\"\",\"examples\":[{\"avg_score_rate\":0,\"avg_study_time\":6502,\"name\":\"youtube video\",\"total_study_time\":9295,\"type\":\"youtube\",\"users_completed\":0,\"viewers\":2}],\"properties\":{\"avg_score_rate\":{\"description\":\"Average score (%)\",\"format\":\"float\",\"type\":\"number\"},\"avg_study_time\":{\"description\":\"Average study time in seconds\",\"format\":\"float\",\"type\":\"number\"},\"name\":{\"description\":\"Name of the learning activity\",\"type\":\"string\"},\"total_study_time\":{\"description\":\"Total study time in seconds\",\"format\":\"float\",\"type\":\"number\"},\"type\":{\"description\":\"Type of the learning activity\",\"type\":\"string\"},\"users_completed\":{\"description\":\"Number of users that have completed this learning activity\",\"type\":\"integer\"},\"viewers\":{\"description\":\"Number of users that have viewed this learning activity\",\"type\":\"integer\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/courses/{id}/units/{uid}/analytics"
+          rename: {
+            param: {
+              id: "course_id"
+              uid: "id"
+            }
+          }
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "courses"
+            }
+            {
+              var: "course_id"
+            }
+            {
+              lit: "units"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "analytics"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "course_id"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "course"
+      ]
+    ]
+  }
+
+
+
+}

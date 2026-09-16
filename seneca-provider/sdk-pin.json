@@ -1,0 +1,8 @@
+{
+  "note": "GENERATED. The SDK this provider is generated from. `make sdk-src` fetches it; `make regen` regenerates this repo from it. Edit the SDK project model, not this file.",
+  "repo": "https://github.com/voxgig-sdk/learnworlds-sdk",
+  "tag": "v0.0.1",
+  "dir": ".sdksrc/learnworlds-sdk",
+  "package": "@voxgig-sdk/learnworlds",
+  "version": "0.0.1"
+}

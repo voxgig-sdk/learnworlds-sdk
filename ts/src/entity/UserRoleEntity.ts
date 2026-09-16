@@ -37,14 +37,15 @@ class UserRoleEntity extends LearnworldsEntityBase<UserRole> {
 
 
 
-  async list(this: any, reqmatch?: UserRoleListMatch, ctrl?: Control): Promise<UserRole[]> {
+  async list(this: any, reqmatch?: UserRoleListMatch, ctrl?: Control): Promise<UserRoleEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,

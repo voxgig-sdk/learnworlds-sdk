@@ -11,6 +11,9 @@ import {
   repoInfo,
   PUBLISHER,
   PUBLISHER_URL,
+  packageVersion,
+  authorInfo,
+  targetFeatures, envName,
 } from '@voxgig/sdkgen'
 
 
@@ -28,7 +31,15 @@ const Package = cmp(async function Package(props: any) {
 
   const model: Model = ctx$.model
 
-  const feature = getModelPath(model, `main.${KIT}.feature`)
+  // WHO WROTE THIS PACKAGE. Per target, falling back to the model-wide value
+  // and then to the publisher — so a manifest cannot go on naming Voxgig
+  // while the model names someone else, which is exactly what the hardcoded
+  // constant here did.
+  const author = authorInfo(model, target.name)
+
+  // Gated by applicability: a feature that does not apply to this
+  // target must not inject its deps into the generated manifest.
+  const feature = targetFeatures(model, target)
 
   const only = (kind: string, deps: any) =>
     omap(deps, ([k, v]: any) => [v.active && kind === v.kind ? k : undefined, v.version])
@@ -53,8 +64,8 @@ const Package = cmp(async function Package(props: any) {
   const { repoUrl, issuesUrl } = repoInfo(model)
 
   const pkg = {
-    name: packageName(model, 'npm'),
-    version: `0.0.1`,
+    name: packageName(model, target.name),
+    version: packageVersion(model, target.name),
     description: pkgDescription(model, target.name),
     keywords: keywords(model),
     homepage: `${repoUrl}#readme`,
@@ -63,7 +74,26 @@ const Package = cmp(async function Package(props: any) {
     main: `dist/${SdkName}SDK.js`,
     type: 'commonjs',
     types: `dist/${SdkName}SDK.d.ts`,
+
+    // What actually ships. Without `files`, `npm publish` packs everything
+    // not gitignored — the test suite, dist-test/, the Makefile, the agent
+    // guides — into the published tarball. `src` IS included: the emitted
+    // .js.map files point back at it, so shipping it is what makes stack
+    // traces in a consumer resolve to SDK source. README/LICENSE/package.json
+    // are always included by npm and need no entry.
+    files: ['dist', 'src'],
     scripts: {
+      ...(Object.values(model.main.kit.entity || {}).some((e: any) => Object.values(e.op || {}).some((o: any) => (o.points || []).some((p: any) => p.contract && JSON.parse(p.contract.json).live))) ? {
+        'test:live': `npm run build && ${envName(model)}_TEST_LIVE=TRUE node --test dist-test/live.test.js`,
+      } : {}),
+
+      // `test` and `test-coverage` run the COMPILED suite in dist-test/, which
+      // a fresh clone does not have — the glob then matches nothing and the
+      // run reports "tests 0, pass 0, fail 0" and exits 0. A green suite that
+      // asserted nothing is worse than a red one, so build first. npm runs a
+      // `pre<script>` automatically, which keeps the test commands readable
+      // and cannot be forgotten by a caller invoking `npm test` directly.
+      'pretest': 'npm run build',
       'test': 'node --enable-source-maps --test-concurrency=1 --test \'dist-test/**/*.test.js\'',
       'test-some': 'node --enable-source-maps --experimental-test-isolation=none ' +
         '--test-name-pattern=\"$TEST_PATTERN\" --test \'dist-test/**/*.test.js\'',
@@ -76,6 +106,7 @@ const Package = cmp(async function Package(props: any) {
       // regressions. Thresholds are a conservative floor (well under a
       // healthy SDK's ~92% lines) so they hold across API shapes; raise them
       // for a stricter local policy.
+      'pretest-coverage': 'npm run build',
       'test-coverage': 'node --test-concurrency=1 --experimental-test-coverage ' +
         '--test-coverage-exclude=\'**/dist-test/**\' ' +
         '--test-coverage-lines=85 --test-coverage-branches=68 --test-coverage-functions=88 ' +
@@ -89,7 +120,7 @@ const Package = cmp(async function Package(props: any) {
       "clean": "rm -rf node_modules yarn.lock package-lock.json dist dist-test",
       "reset": "npm run clean && npm i && npm run build && npm test",
     },
-    author: { name: PUBLISHER, url: PUBLISHER_URL },
+    author,
 
     // TODO: needs to be config
     license: 'MIT',
@@ -100,7 +131,9 @@ const Package = cmp(async function Package(props: any) {
   }
 
   File({ name: 'package.json' }, () => {
-    Content(JSON.stringify(pkg, null, 2))
+    // Trailing newline: POSIX wants one, and without it every diff of a
+    // regenerated package.json reports "\ No newline at end of file".
+    Content(JSON.stringify(pkg, null, 2) + '\n')
   })
 })
 

@@ -37,14 +37,15 @@ class LeadEntity extends LearnworldsEntityBase<Lead> {
 
 
 
-  async list(this: any, reqmatch?: LeadListMatch, ctrl?: Control): Promise<Lead[]> {
+  async list(this: any, reqmatch?: LeadListMatch, ctrl?: Control): Promise<LeadEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,

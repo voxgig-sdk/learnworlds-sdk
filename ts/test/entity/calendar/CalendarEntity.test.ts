@@ -1,19 +1,21 @@
 
-const envlocal = __dirname + '/../../../.env.local'
-require('dotenv').config({ quiet: true, path: [envlocal] })
 
 import Path from 'node:path'
 import * as Fs from 'node:fs'
 
 import { test, describe, afterEach } from 'node:test'
 import assert from 'node:assert'
+import { createLiveTransport } from '../../live-runner'
+import { runLiveEntity } from '../../live-entity'
 
 
 import { LearnworldsSDK, BaseFeature, stdutil } from '../../..'
 
 import {
   envOverride,
+  liveClientOptions,
   liveDelay,
+  loadEnvLocal,
   makeCtrl,
   makeMatch,
   makeReqdata,
@@ -21,6 +23,13 @@ import {
   makeValid,
   maybeSkipControl,
 } from '../../utility'
+
+
+// AFTER the imports on purpose: TypeScript hoists `import` above any
+// statement in the emitted CommonJS, so a loader placed above them would
+// run only after every imported module had already been evaluated - and
+// anything reading process.env at module scope would miss these values.
+loadEnvLocal(__dirname + '/../../../.env.local')
 
 
 describe('CalendarEntity', async () => {
@@ -40,16 +49,13 @@ describe('CalendarEntity', async () => {
 
     const live = 'TRUE' === process.env.LEARNWORLDS_TEST_LIVE
     for (const op of ['list']) {
-      if (maybeSkipControl(t, 'entityOp', 'calendar.' + op, live)) return
+      if (!live && maybeSkipControl(t, 'entityOp', 'calendar.' + op, live)) return
     }
 
+    
     const setup = basicSetup()
-    // The basic flow consumes synthetic IDs and field values from the
-    // fixture (entity TestData.json). Those don't exist on the live API.
-    // Skip live runs unless the user provided a real ENTID env override.
-    if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set LEARNWORLDS_TEST_CALENDAR_ENTID JSON to run live')
-      return
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":[{"active":true,"name":"bookingDetails","req":false,"short":"Booking details of the event.","type":["`$ONE`",["`$NULL`","`$OBJECT`"]],"index$":0},{"active":true,"name":"productId","req":false,"short":"Unique identifier of the product","type":"`$STRING`","index$":1},{"active":true,"name":"startDate","req":false,"short":"Start date of the event, in UNIX timestamp format","type":"`$NUMBER`","index$":2},{"active":true,"name":"title","req":false,"short":"Title of the event","type":"`$STRING`","index$":3},{"active":true,"name":"type","req":false,"short":"Type of the event","type":"`$STRING`","index$":4}],"name":"calendar","op":{"list":{"input":"data","name":"list","points":[{"active":true,"args":{"header":[{"active":true,"kind":"header","name":"authorization","orig":"authorization","reqd":true,"type":"`$STRING`"},{"active":true,"kind":"header","name":"lw_client","orig":"lw_client","reqd":true,"type":"`$STRING`"}],"query":[{"active":true,"kind":"query","name":"event_type","orig":"event_type","reqd":false,"type":"`$STRING`","index$":0}]},"contract":{"id":"GET /v2/school/events","json":"{\"operationId\":\"get-courses-name-live-sessions\",\"parameters\":[{\"description\":\"Filter by event type\",\"in\":\"query\",\"name\":\"event_type\",\"schema\":{\"enum\":[\"dripFeed\",\"fileAssignment\",\"liveSession\"],\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"data\":[{\"bookingDetails\":null,\"productId\":\"learn-how-to-walk\",\"startDate\":1632949200,\"title\":\"Learn how to walk section\",\"type\":\"dripFeed\"}]}},\"Example With Booking Details\":{\"value\":{\"data\":[{\"bookingDetails\":{\"hostUserId\":\"5be0561d43c90b171a8b4567\",\"learnerUserId\":\"6256cff2ef8b8f563e01956e\",\"providerData\":{\"durationInMinutes\":30,\"eventTypeId\":\"8dfd6800-9b06-4d9f-ad3e-052f3792ba57\",\"joinUrl\":null,\"location\":\"my office\",\"locationType\":\"physical\",\"scheduledEventId\":\"f5675834-57e6-4a16-ae57-167f68127dcd\"},\"providerName\":\"calendly\",\"status\":\"scheduled\",\"type\":\"oneOnOne\"},\"productId\":\"coachingCourse\",\"startDate\":1659088800,\"title\":\"Coaching session oneOnOne\",\"type\":\"liveSession\"}]}}},\"schema\":{\"properties\":{\"data\":{\"items\":{\"description\":\"\",\"examples\":[{\"bookingDetails\":null,\"productId\":\"learn-how-to-walk\",\"startDate\":1632949200,\"title\":\"Learn how to walk section\",\"type\":\"dripFeed\"}],\"properties\":{\"bookingDetails\":{\"description\":\"Booking details of the event. In case of non oneOnOne or group sessions, the bookingDetails is null\",\"properties\":{\"hostUserId\":{\"description\":\"Unique identifier of the user who hosts the session\",\"type\":\"string\"},\"learnerUserId\":{\"description\":\"Unique identifier of the learner\",\"type\":\"string\"},\"providerData\":{\"description\":\"Provider related data\",\"type\":\"object\"},\"providerName\":{\"example\":\"calendly\",\"type\":\"string\"},\"status\":{\"description\":\"The status of the session\",\"enum\":[\"scheduled\"],\"example\":\"scheduled\",\"type\":\"string\"},\"type\":{\"enum\":[\"oneOnOne\",\"group\"],\"example\":\"oneOnOne\",\"type\":\"string\"}},\"type\":[\"null\",\"object\"]},\"productId\":{\"description\":\"Unique identifier of the product\",\"type\":\"string\"},\"startDate\":{\"description\":\"Start date of the event, in UNIX timestamp format\",\"type\":\"number\"},\"title\":{\"description\":\"Title of the event\",\"type\":\"string\"},\"type\":{\"description\":\"Type of the event\",\"enum\":[\"dripFeed\",\"fileAssignment\",\"liveSession\"],\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}","source":"openapi3","version":1},"kind":"http","method":"GET","orig":"/v2/school/events","segments":[{"lit":"v2"},{"lit":"school"},{"lit":"events"}],"select":{"exist":["authorization","event_type","lw_client"]},"transform":{"req":"`reqdata`","res":"`body.data`"},"index$":0}],"key$":"list"}},"relations":{"ancestors":[]},"key$":"calendar","name__orig":"calendar","Name":"Calendar","name_":"calendar","name-":"calendar","NAME":"CALENDAR","index$":6}, {"active":true,"entity":"calendar","key$":"BasicCalendarFlow","kind":"basic","name":"BasicCalendarFlow","param":{},"step":[{"active":true,"data":{},"input":{},"match":{},"op":"list","spec":[],"valid":[{"apply":"ItemExists","def":{"ref":"calendar_ref01"}}]}]}, 'Calendar')
     }
     const client = setup.client
     const struct = setup.struct
@@ -63,7 +69,7 @@ describe('CalendarEntity', async () => {
     const calendar_ref01_ent = client.Calendar()
     const calendar_ref01_match: any = {}
 
-    const calendar_ref01_list = await calendar_ref01_ent.list(calendar_ref01_match)
+    const calendar_ref01_list = (await calendar_ref01_ent.list(calendar_ref01_match)).map((e: any) => e.data())
 
 
   })
@@ -102,13 +108,6 @@ function basicSetup(extra?: any) {
       }]
     })
 
-  // Detect whether the user provided a real ENTID JSON via env var. The
-  // basic flow consumes synthetic IDs from the fixture file; without an
-  // override those synthetic IDs reach the live API and 4xx. Surface this
-  // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['LEARNWORLDS_TEST_CALENDAR_ENTID']
-  const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
-
   const env = envOverride({
     'LEARNWORLDS_TEST_CALENDAR_ENTID': idmap,
     'LEARNWORLDS_TEST_LIVE': 'FALSE',
@@ -119,11 +118,26 @@ function basicSetup(extra?: any) {
 
   const live = 'TRUE' === env.LEARNWORLDS_TEST_LIVE
 
+  const transport = createLiveTransport()
   if (live) {
+    const rawIds = process.env['LEARNWORLDS_TEST_CALENDAR_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new LearnworldsSDK(merge([
+      // FIRST, so the generated fields below win: sdk-test-control.json's
+      // test.client.options adds to the live client, it does not redirect it.
+      liveClientOptions(),
       {
       },
-      extra
+      // 'extra || {}', not a bare 'extra': struct.merge returns UNDEFINED when the
+      // last entry is undefined, and basicSetup is normally called with no
+      // argument at all - so a bare 'extra' silently discarded the apikey
+      // and server values above and handed the SDK undefined. Harmless
+      // while there was nothing in that object; not harmless now.
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -136,7 +150,7 @@ function basicSetup(extra?: any) {
     data: entityData,
     explain: 'TRUE' === env.LEARNWORLDS_TEST_EXPLAIN,
     live,
-    syntheticOnly: live && !idmapOverridden,
+    transport,
     now: Date.now(),
   }
 

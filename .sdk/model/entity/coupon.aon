@@ -1,0 +1,245 @@
+# Entity: coupon
+
+main: kit: entity: coupon: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "bulk"
+      req: false
+      short: "Indication about whether there's a bulk set of codes created for this coupon."
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "code"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      short: "Coupon code"
+      type: "`$STRING`"
+    }
+    {
+      format: "date"
+      name: "expires"
+      req: false
+      short: "Coupon expiration date, in YYYY-MM-DD format"
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$STRING`"
+        ]
+      ]
+    }
+    {
+      name: "prefix"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      req: false
+      short: "Coupon prefix"
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "quantity"
+      op: {
+        create: {
+          req: true
+          type: "`$NUMBER`"
+        }
+      }
+      req: false
+      short: "Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)"
+      type: [
+        "`$ONE`"
+        [
+          "`$NUMBER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "times_used"
+      req: false
+      short: "Coupon number of times used."
+      type: "`$INTEGER`"
+    }
+  ]
+
+  name: "coupon"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                example: "application/json"
+                kind: "header"
+                name: "content_type"
+                orig: "content_type"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "promotion_id"
+                orig: "pid"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "POST /v2/promotions/{pid}/coupons"
+            json: "{\"operationId\":\"post-promotions-pid-coupons\",\"parameters\":[{\"description\":\"Promotion Id\",\"in\":\"path\",\"name\":\"pid\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"application/json\",\"in\":\"header\",\"name\":\"Content-Type\",\"required\":true,\"schema\":{\"example\":\"application/json\",\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"code\":\"coup-ZFPVOG\",\"expires\":\"2020-10-28\",\"quantity\":4}}},\"schema\":{\"description\":\"\",\"properties\":{\"code\":{\"description\":\"Coupon code\",\"type\":\"string\"},\"expires\":{\"description\":\"Coupon expiration date in yyyy-mm-dd format\",\"format\":\"date\",\"type\":\"string\"},\"quantity\":{\"description\":\"Coupon quantity greater than 0\",\"type\":\"integer\"}},\"required\":[\"code\"],\"type\":\"object\"}}}},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"bulk\":false,\"code\":\"coup-ZFPVOG\",\"expires\":\"2020-10-28\",\"prefix\":null,\"quantity\":4,\"times_used\":0}}},\"schema\":{\"description\":\"\",\"examples\":[{\"bulk\":true,\"code\":\"coup-ZFPVOG\",\"expires\":\"2020-10-28\",\"prefix\":\"coup\",\"quantity\":1,\"times_used\":12}],\"properties\":{\"bulk\":{\"description\":\"Indication about whether there's a bulk set of codes created for this coupon.\",\"type\":\"boolean\"},\"code\":{\"description\":\"Coupon code\",\"type\":\"string\"},\"expires\":{\"description\":\"Coupon expiration date, in YYYY-MM-DD format\",\"example\":\"2021-06-17\",\"format\":\"date\",\"type\":[\"null\",\"string\"]},\"prefix\":{\"description\":\"Coupon prefix\",\"type\":[\"string\",\"null\"]},\"quantity\":{\"description\":\"Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)\",\"type\":[\"number\",\"null\"]},\"times_used\":{\"description\":\"Coupon number of times used.\",\"type\":\"integer\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "POST"
+          orig: "/v2/promotions/{pid}/coupons"
+          rename: {
+            param: {
+              pid: "promotion_id"
+            }
+          }
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "promotions"
+            }
+            {
+              var: "promotion_id"
+            }
+            {
+              lit: "coupons"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "content_type"
+              "lw_client"
+              "promotion_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "promotion_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "POST /v2/promotions/{id}/coupons-bulk"
+            json: "{\"operationId\":\"post-promotions-:id-coupons-bulk\",\"parameters\":[{\"description\":\"Promotion id\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"expires\":\"2023-09-08\",\"prefix\":\"bulk_prono\",\"quantity\":3}}},\"schema\":{\"description\":\"\",\"properties\":{\"expires\":{\"description\":\"Coupon expiration date, in YYYY-MM-DD format\",\"type\":[\"string\",\"null\"]},\"prefix\":{\"description\":\"Coupon prefix\",\"type\":\"string\"},\"quantity\":{\"description\":\"Coupon quantity greater than 0\",\"type\":\"number\"}},\"required\":[\"prefix\",\"quantity\"],\"type\":\"object\"}}},\"description\":\"\"},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":[{\"bulk\":true,\"code\":\"bulk_prono-DOALLL\",\"expires\":\"2023-09-08\",\"prefix\":\"bulk_prono\",\"quantity\":1,\"times_used\":0},{\"bulk\":true,\"code\":\"bulk_prono-AYQOFJ\",\"expires\":\"2023-09-08\",\"prefix\":\"bulk_prono\",\"quantity\":1,\"times_used\":0},{\"bulk\":true,\"code\":\"bulk_prono-YSBKSU\",\"expires\":\"2023-09-08\",\"prefix\":\"bulk_prono\",\"quantity\":1,\"times_used\":0}]}},\"schema\":{\"items\":{\"description\":\"\",\"examples\":[{\"bulk\":true,\"code\":\"coup-ZFPVOG\",\"expires\":\"2020-10-28\",\"prefix\":\"coup\",\"quantity\":1,\"times_used\":12}],\"properties\":{\"bulk\":{\"description\":\"Indication about whether there's a bulk set of codes created for this coupon.\",\"type\":\"boolean\"},\"code\":{\"description\":\"Coupon code\",\"type\":\"string\"},\"expires\":{\"description\":\"Coupon expiration date, in YYYY-MM-DD format\",\"example\":\"2021-06-17\",\"format\":\"date\",\"type\":[\"null\",\"string\"]},\"prefix\":{\"description\":\"Coupon prefix\",\"type\":[\"string\",\"null\"]},\"quantity\":{\"description\":\"Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)\",\"type\":[\"number\",\"null\"]},\"times_used\":{\"description\":\"Coupon number of times used.\",\"type\":\"integer\"}},\"type\":\"object\"},\"type\":\"array\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "POST"
+          orig: "/v2/promotions/{id}/coupons-bulk"
+          rename: {
+            param: {
+              id: "promotion_id"
+            }
+          }
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "promotions"
+            }
+            {
+              var: "promotion_id"
+            }
+            {
+              lit: "coupons-bulk"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "lw_client"
+              "promotion_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "promotion"
+      ]
+    ]
+  }
+
+
+
+}

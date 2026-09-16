@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Community | API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/learnworlds-sdk">voxgig-sdk/learnworlds-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">API</a></details>
+<details open><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/active.html">Active</a>
+<a href="../api/affiliate.html">Affiliate</a>
+<a href="../api/assessment.html">Assessment</a>
+<a href="../api/bundle.html">Bundle</a>
+<a href="../api/by_product.html">ByProduct</a>
+<a href="../api/by_segment.html">BySegment</a>
+<a href="../api/calendar.html">Calendar</a>
+<a href="../api/certificate.html">Certificate</a>
+<a aria-current="page" href="../api/community.html">Community</a><div class="nav-sections"><a class="nav-section" href="#post-v2communityspacesidusers">POST /v2/community/spaces/{id}/users</a>
+<a class="nav-section" href="#get-v2communityposts">GET /v2/community/posts</a>
+<a class="nav-section" href="#get-v2communityspaces">GET /v2/community/spaces</a>
+<a class="nav-section" href="#get-v2communityspacesidusers">GET /v2/community/spaces/{id}/users</a>
+<a class="nav-section" href="#get-v2communitycollections">GET /v2/community/collections</a>
+<a class="nav-section" href="#delete-v2communityspacesidusersuid">DELETE /v2/community/spaces/{id}/users/{uid}</a>
+<a class="nav-section" href="#delete-v2communityspacesid">DELETE /v2/community/spaces/{id}</a></div>
+<a href="../api/community_post.html">CommunityPost</a>
+<a href="../api/community_space.html">CommunitySpace</a>
+<a href="../api/completed.html">Completed</a>
+<a href="../api/coupon.html">Coupon</a>
+<a href="../api/coupon_usage.html">CouponUsage</a>
+<a href="../api/course.html">Course</a>
+<a href="../api/course_analytics.html">CourseAnalytics</a>
+<a href="../api/course_content.html">CourseContent</a>
+<a href="../api/due.html">Due</a>
+<a href="../api/event.html">Event</a>
+<a href="../api/event_log.html">EventLog</a>
+<a href="../api/form.html">Form</a>
+<a href="../api/installment.html">Installment</a>
+<a href="../api/lead.html">Lead</a>
+<a href="../api/multiple_seat.html">MultipleSeat</a>
+<a href="../api/payment.html">Payment</a>
+<a href="../api/post.html">Post</a>
+<a href="../api/promotion.html">Promotion</a>
+<a href="../api/reporting.html">Reporting</a>
+<a href="../api/score.html">Score</a>
+<a href="../api/seat.html">Seat</a>
+<a href="../api/segment.html">Segment</a>
+<a href="../api/space.html">Space</a>
+<a href="../api/subscription_plan.html">SubscriptionPlan</a>
+<a href="../api/unit.html">Unit</a>
+<a href="../api/unit_analytics.html">UnitAnalytics</a>
+<a href="../api/upcoming.html">Upcoming</a>
+<a href="../api/update_user_progress.html">UpdateUserProgress</a>
+<a href="../api/user.html">User</a>
+<a href="../api/user_group.html">UserGroup</a>
+<a href="../api/user_progress.html">UserProgress</a>
+<a href="../api/user_role.html">UserRole</a>
+<a href="../api/user_subscription.html">UserSubscription</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="../sdks/seneca-provider.html">Seneca Provider</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="community">Community</h1>
+<h2 id="operations">Operations</h2>
+<p>Every route this entity exposes. Each route links to its own reference on this page.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>SDK operation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-v2communityspacesidusers"><code>/v2/community/spaces/{id}/users</code></a></td>
+<td><code>create</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2communityposts"><code>/v2/community/posts</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2communityspaces"><code>/v2/community/spaces</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2communityspacesidusers"><code>/v2/community/spaces/{id}/users</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2communitycollections"><code>/v2/community/collections</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-v2communityspacesidusersuid"><code>/v2/community/spaces/{id}/users/{uid}</code></a></td>
+<td><code>remove</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-v2communityspacesid"><code>/v2/community/spaces/{id}</code></a></td>
+<td><code>remove</code></td>
+<td>No content</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>access</code></td>
+<td><code>any</code></td>
+<td>No</td>
+<td>Access type of the space</td>
+</tr>
+<tr>
+<td><code>collectionId</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the collection under which the space is displayed</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the post was made, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Description of the space</td>
+</tr>
+<tr>
+<td><code>display_order</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td>Display order of the collection as it appears in the community sidebar</td>
+</tr>
+<tr>
+<td><code>hidden_from_community</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the space is visible in the community</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the post</td>
+</tr>
+<tr>
+<td><code>invitation</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication whether the user was sent an invitation.</td>
+</tr>
+<tr>
+<td><code>is_invitation_required</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether users are sent an invitation to join or are directly added to space</td>
+</tr>
+<tr>
+<td><code>is_members_allowed_to_view_members</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether users can view other users in space</td>
+</tr>
+<tr>
+<td><code>items</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>List of post content items outside of text content</td>
+</tr>
+<tr>
+<td><code>likes</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>List of users who have liked the post</td>
+</tr>
+<tr>
+<td><code>mentions</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>User mentions of the post</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the collection was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the collection</td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Information about the space owner</td>
+</tr>
+<tr>
+<td><code>posted_in</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Information about where the post was made</td>
+</tr>
+<tr>
+<td><code>space_ids</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>List of spaces in this collection</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>any</code></td>
+<td>No</td>
+<td>The status of the user - <code>joined</code>, the user has joined the space - <code>invited</code>, the user has been sent an invitation to gain access to the space - <code>deleted</code>, the user has been removed from the space - <code>left</code>, the user has left the space</td>
+</tr>
+<tr>
+<td><code>text</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Text content of the post</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the space</td>
+</tr>
+<tr>
+<td><code>uids</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>Unique identifiers or emails of the users to be invited/added</td>
+</tr>
+<tr>
+<td><code>upvotes</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>List of users who have upvoted the post</td>
+</tr>
+<tr>
+<td><code>usages</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>List of space usages in the platform</td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Information about the post author</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The username of the user</td>
+</tr>
+<tr>
+<td><code>users</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>List of users that were added or invited to space</td>
+</tr>
+</tbody>
+</table>
+<h2 id="create">create</h2>
+<h3 id="post-v2communityspacesidusers" class="operation" data-method="post"><code>POST</code> /v2/community/spaces/{id}/users</h3>
+<p>Operation ID: <code>post-v2-community-spaces-id-users-userId</code>.</p>
+<h4 id="parameters">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the community space |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |</p>
+<h4 id="request-body">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uids</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>Unique identifiers or emails of the users to be invited/added</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses">Responses</h4>
+<h5 id="200-ok" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data.invitation</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication whether the user was sent an invitation.</td>
+</tr>
+<tr>
+<td><code>data.users</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>List of users that were added or invited to space</td>
+</tr>
+<tr>
+<td><code>data.users.id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>data.users.status</code></td>
+<td><code>enum: joined, invited</code></td>
+<td>No</td>
+<td>Status of the user - <code>joined</code>, the user has joined the space - <code>invited</code>, the user has been sent an invitation to gain access to the space</td>
+</tr>
+<tr>
+<td><code>data.users.username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+</tbody>
+</table>
+<h2 id="list">list</h2>
+<h3 id="get-v2communityposts" class="operation" data-method="get"><code>GET</code> /v2/community/posts</h3>
+<p>Operation ID: <code>get-v2-community-posts</code>.</p>
+<h4 id="parameters-1">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>user_id</code> | <code>query</code> | <code>string</code> | No | Filter by the post author. Can be a unique identifier or email |
+| <code>space_id</code> | <code>query</code> | <code>string</code> | No | Filter by the unique identifier of the space in which the post was made |
+| <code>course_id</code> | <code>query</code> | <code>string</code> | No | Filter by the unique identifier of the course discussion the post was made |
+| <code>mentions</code> | <code>query</code> | <code>string</code> | No | Filter by the unique identifier of the user a post mentions |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |
+| <code>items_per_page</code> | <code>query</code> | <code>integer</code> | No | Filter by the items per page number |</p>
+<h4 id="responses-1">Responses</h4>
+<h5 id="200-ok-1" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the post was made, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the post</td>
+</tr>
+<tr>
+<td><code>data[].items</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>List of post content items outside of text content</td>
+</tr>
+<tr>
+<td><code>data[].items[].data</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Content item information</td>
+</tr>
+<tr>
+<td><code>data[].items[].type</code></td>
+<td><code>enum: poll, image, file, video</code></td>
+<td>No</td>
+<td>Type of content item of the post</td>
+</tr>
+<tr>
+<td><code>data[].likes</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>List of users who have liked the post</td>
+</tr>
+<tr>
+<td><code>data[].mentions</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>User mentions of the post</td>
+</tr>
+<tr>
+<td><code>data[].posted_in</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Information about where the post was made</td>
+</tr>
+<tr>
+<td><code>data[].posted_in.id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of where the post was made</td>
+</tr>
+<tr>
+<td><code>data[].posted_in.type</code></td>
+<td><code>enum: space, course</code></td>
+<td>No</td>
+<td>Type of where the post was made, either course or space</td>
+</tr>
+<tr>
+<td><code>data[].text</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Text content of the post</td>
+</tr>
+<tr>
+<td><code>data[].upvotes</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>List of users who have upvoted the post</td>
+</tr>
+<tr>
+<td><code>data[].user</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Information about the post author</td>
+</tr>
+<tr>
+<td><code>data[].user.id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the post author</td>
+</tr>
+<tr>
+<td><code>data[].user.username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the post author</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2communityspaces" class="operation" data-method="get"><code>GET</code> /v2/community/spaces</h3>
+<p>Operation ID: <code>get-v2-community-spaces</code>.</p>
+<h4 id="parameters-2">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>access</code> | <code>query</code> | <code>enum: public, private, standalone</code> | No | Filter by space access. This can be public, private or standalone. |
+| <code>collectionId</code> | <code>query</code> | <code>string</code> | No | Filter by the unique identifier of the collection the spaces are displayed |
+| <code>usages</code> | <code>query</code> | <code>array of any</code> | No | Filter by the course usage of the space. Should be an array of courseTitleIds |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |
+| <code>items_per_page</code> | <code>query</code> | <code>integer</code> | No | Filter by the items per page number |</p>
+<h4 id="responses-2">Responses</h4>
+<h5 id="200-ok-2" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].access</code></td>
+<td><code>enum: public, private, standalone</code></td>
+<td>No</td>
+<td>Access type of the space</td>
+</tr>
+<tr>
+<td><code>data[].collectionId</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the collection under which the space is displayed</td>
+</tr>
+<tr>
+<td><code>data[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Description of the space</td>
+</tr>
+<tr>
+<td><code>data[].hidden_from_community</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the space is visible in the community</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the space</td>
+</tr>
+<tr>
+<td><code>data[].is_invitation_required</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether users are sent an invitation to join or are directly added to space</td>
+</tr>
+<tr>
+<td><code>data[].is_members_allowed_to_view_members</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether users can view other users in space</td>
+</tr>
+<tr>
+<td><code>data[].owner</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Information about the space owner</td>
+</tr>
+<tr>
+<td><code>data[].owner.id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The id of the creator of the space</td>
+</tr>
+<tr>
+<td><code>data[].owner.username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The username of the creator of the space</td>
+</tr>
+<tr>
+<td><code>data[].title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the space</td>
+</tr>
+<tr>
+<td><code>data[].usages</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>List of space usages in the platform</td>
+</tr>
+<tr>
+<td><code>data[].usages[].courseId</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course the space is used</td>
+</tr>
+<tr>
+<td><code>data[].usages[].type</code></td>
+<td><code>enum: ebook</code></td>
+<td>No</td>
+<td>Type of usage location</td>
+</tr>
+<tr>
+<td><code>data[].usages[].unitId</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the unit the space is used</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2communityspacesidusers" class="operation" data-method="get"><code>GET</code> /v2/community/spaces/{id}/users</h3>
+<p>Operation ID: <code>get-v2-community-spaces-id-users</code>.</p>
+<h4 id="parameters-3">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the community space |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |
+| <code>items_per_page</code> | <code>query</code> | <code>integer</code> | No | Filter by the items per page number |</p>
+<h4 id="responses-3">Responses</h4>
+<h5 id="200-ok-3" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>data[].status</code></td>
+<td><code>enum: joined, invited, deleted, left</code></td>
+<td>No</td>
+<td>The status of the user - <code>joined</code>, the user has joined the space - <code>invited</code>, the user has been sent an invitation to gain access to the space - <code>deleted</code>, the user has been removed from the space - <code>left</code>, the user has left the space</td>
+</tr>
+<tr>
+<td><code>data[].username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The username of the user</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2communitycollections" class="operation" data-method="get"><code>GET</code> /v2/community/collections</h3>
+<p>Operation ID: <code>get-v2-community-collections</code>.</p>
+<h4 id="parameters-4">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |</p>
+<h4 id="responses-4">Responses</h4>
+<h5 id="200-ok-4" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the collection was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Description of the collection</td>
+</tr>
+<tr>
+<td><code>data[].display_order</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td>Display order of the collection as it appears in the community sidebar</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the collection</td>
+</tr>
+<tr>
+<td><code>data[].modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the collection was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the collection</td>
+</tr>
+<tr>
+<td><code>data[].space_ids</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>List of spaces in this collection</td>
+</tr>
+</tbody>
+</table>
+<h2 id="remove">remove</h2>
+<h3 id="delete-v2communityspacesidusersuid" class="operation" data-method="delete"><code>DELETE</code> /v2/community/spaces/{id}/users/{uid}</h3>
+<p>Operation ID: <code>delete-v2-community-spaces-id-users-userId</code>.</p>
+<h4 id="parameters-5">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the community space |
+| <code>uid</code> | <code>path</code> | <code>string</code> | Yes | Uniquer identifier of the user |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |</p>
+<h4 id="responses-5">Responses</h4>
+<h5 id="200-ok-5" class="status" data-status="2xx">200: OK</h5>
+<h3 id="delete-v2communityspacesid" class="operation" data-method="delete"><code>DELETE</code> /v2/community/spaces/{id}</h3>
+<p>Operation ID: <code>delete-v2-community-spaces-id</code>.</p>
+<h4 id="parameters-6">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the community space |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |</p>
+<h4 id="responses-6">Responses</h4>
+<h5 id="204-no-content" class="status" data-status="2xx">204: No content</h5>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

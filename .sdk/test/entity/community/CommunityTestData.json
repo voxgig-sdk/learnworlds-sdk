@@ -2,119 +2,1129 @@
   "existing": {
     "community": {
       "COMMUNITY00": {
-        "access": "s104",
-        "collection_id": "COLLECTION01",
-        "created": 262,
-        "data": {},
-        "description": "s108",
-        "display_order": "s109",
-        "hidden_from_community": true,
+        "access": "s10e",
+        "collectionId": "s10f",
+        "created": 272,
+        "description": "s111",
+        "display_order": 274,
+        "hidden_from_community": false,
         "id": "COMMUNITY00",
+        "invitation": false,
         "is_invitation_required": true,
-        "is_members_allowed_to_view_member": false,
-        "item": [],
-        "like": [],
-        "mention": [],
-        "modified": 273,
-        "name": "s112",
+        "is_members_allowed_to_view_members": false,
+        "items": [],
+        "likes": [],
+        "mentions": [],
+        "modified": 283,
+        "name": "s11c",
         "owner": {},
         "posted_in": {},
-        "space_id": "SPACE01",
-        "status": "s116",
-        "text": "s117",
-        "title": "s118",
-        "uid": [],
-        "upvote": [],
-        "usage": [],
+        "space_ids": [],
+        "status": "s120",
+        "text": "s121",
+        "title": "s122",
+        "uids": [],
+        "upvotes": [],
+        "usages": [],
         "user": {},
-        "username": "s11d"
+        "username": "s127",
+        "users": {},
+        "space_id": "SPACE01",
+        "uid": "UID01"
       },
       "COMMUNITY01": {
-        "access": "s208",
-        "collection_id": "COLLECTION01",
-        "created": 522,
-        "data": {},
-        "description": "s20c",
-        "display_order": "s20d",
-        "hidden_from_community": true,
+        "access": "s21c",
+        "collectionId": "s21d",
+        "created": 542,
+        "description": "s21f",
+        "display_order": 544,
+        "hidden_from_community": false,
         "id": "COMMUNITY01",
+        "invitation": false,
         "is_invitation_required": true,
-        "is_members_allowed_to_view_member": false,
-        "item": [],
-        "like": [],
-        "mention": [],
-        "modified": 533,
-        "name": "s216",
+        "is_members_allowed_to_view_members": false,
+        "items": [],
+        "likes": [],
+        "mentions": [],
+        "modified": 553,
+        "name": "s22a",
         "owner": {},
         "posted_in": {},
-        "space_id": "SPACE01",
-        "status": "s21a",
-        "text": "s21b",
-        "title": "s21c",
-        "uid": [],
-        "upvote": [],
-        "usage": [],
+        "space_ids": [],
+        "status": "s22e",
+        "text": "s22f",
+        "title": "s230",
+        "uids": [],
+        "upvotes": [],
+        "usages": [],
         "user": {},
-        "username": "s221"
+        "username": "s235",
+        "users": {},
+        "space_id": "SPACE01",
+        "uid": "UID01"
       },
       "COMMUNITY02": {
-        "access": "s30c",
-        "collection_id": "COLLECTION01",
-        "created": 782,
-        "data": {},
-        "description": "s310",
-        "display_order": "s311",
-        "hidden_from_community": true,
+        "access": "s32a",
+        "collectionId": "s32b",
+        "created": 812,
+        "description": "s32d",
+        "display_order": 814,
+        "hidden_from_community": false,
         "id": "COMMUNITY02",
+        "invitation": false,
         "is_invitation_required": true,
-        "is_members_allowed_to_view_member": false,
-        "item": [],
-        "like": [],
-        "mention": [],
-        "modified": 793,
-        "name": "s31a",
+        "is_members_allowed_to_view_members": false,
+        "items": [],
+        "likes": [],
+        "mentions": [],
+        "modified": 823,
+        "name": "s338",
         "owner": {},
         "posted_in": {},
-        "space_id": "SPACE01",
-        "status": "s31e",
-        "text": "s31f",
-        "title": "s320",
-        "uid": [],
-        "upvote": [],
-        "usage": [],
+        "space_ids": [],
+        "status": "s33c",
+        "text": "s33d",
+        "title": "s33e",
+        "uids": [],
+        "upvotes": [],
+        "usages": [],
         "user": {},
-        "username": "s325"
+        "username": "s343",
+        "users": {},
+        "space_id": "SPACE01",
+        "uid": "UID01"
       }
     }
   },
   "new": {
     "community": {
       "community_ref01": {
-        "access": "s410",
-        "collection_id": "COLLECTION01",
-        "created": 1042,
-        "data": {},
-        "description": "s414",
-        "display_order": "s415",
-        "hidden_from_community": true,
+        "access": "s438",
+        "collectionId": "s439",
+        "created": 1082,
+        "description": "s43b",
+        "display_order": 1084,
+        "hidden_from_community": false,
+        "invitation": false,
         "is_invitation_required": true,
-        "is_members_allowed_to_view_member": false,
-        "item": [],
-        "like": [],
-        "mention": [],
-        "modified": 1053,
-        "name": "s41e",
+        "is_members_allowed_to_view_members": false,
+        "items": [],
+        "likes": [],
+        "mentions": [],
+        "modified": 1093,
+        "name": "s446",
         "owner": {},
         "posted_in": {},
-        "space_id": "SPACE01",
-        "status": "s422",
-        "text": "s423",
-        "title": "s424",
-        "uid": [],
-        "upvote": [],
-        "usage": [],
+        "space_ids": [],
+        "status": "s44a",
+        "text": "s44b",
+        "title": "s44c",
+        "uids": [],
+        "upvotes": [],
+        "usages": [],
         "user": {},
-        "username": "s429"
+        "username": "s451",
+        "users": {}
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/community/spaces/{id}/users": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "post-v2-community-spaces-id-users-userId",
+        "parameters": [
+          {
+            "description": "Unique identifier of the community space",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "uids": [
+                      "what@learnworlds.com",
+                      "65cb880ba18654f0740d5bd4"
+                    ]
+                  }
+                }
+              },
+              "schema": {
+                "properties": {
+                  "uids": {
+                    "description": "Unique identifiers or emails of the users to be invited/added",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "data": {
+                        "invitation": false,
+                        "user": [
+                          {
+                            "id": "65cb880ba18654f0740d5bd4",
+                            "status": "normal",
+                            "username": "user"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "invitation": {
+                          "description": "Indication whether the user was sent an invitation.",
+                          "type": "boolean"
+                        },
+                        "users": {
+                          "description": "List of users that were added or invited to space",
+                          "properties": {
+                            "id": {
+                              "description": "Unique identifier of the user",
+                              "type": "string"
+                            },
+                            "status": {
+                              "description": "Status of the user\n- `joined`, the user has joined the space\n- `invited`, the user has been sent an invitation to gain access to the space",
+                              "enum": [
+                                "joined",
+                                "invited"
+                              ]
+                            },
+                            "username": {
+                              "description": "Username of the user",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/community/posts": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-v2-community-posts",
+        "parameters": [
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the post author. Can be a unique identifier or email",
+            "in": "query",
+            "name": "user_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the unique identifier of the space in which the post was made",
+            "in": "query",
+            "name": "space_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the unique identifier of the course discussion the post was made",
+            "in": "query",
+            "name": "course_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the unique identifier of the user a post mentions",
+            "in": "query",
+            "name": "mentions",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Filter by the items per page number",
+            "in": "query",
+            "name": "items_per_page",
+            "schema": {
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "examples": [
+                          {
+                            "id": "65ce2ecc9066630b4e0913f4",
+                            "items": [
+                              {
+                                "data": {
+                                  "options": [
+                                    {
+                                      "id": "ch_1",
+                                      "results": {
+                                        "per": "100.00",
+                                        "val": 1
+                                      },
+                                      "text": "Blue"
+                                    },
+                                    {
+                                      "id": "ch_2",
+                                      "results": {
+                                        "per": "0.00",
+                                        "val": 0
+                                      },
+                                      "text": "Green"
+                                    }
+                                  ],
+                                  "text": null,
+                                  "totalVotes": 1,
+                                  "type": "poll"
+                                },
+                                "type": "poll"
+                              },
+                              {
+                                "location": "social/2-the-sea-1198167.jpg",
+                                "size": 602033,
+                                "title": "the-sea-1198167.jpg",
+                                "type": "image"
+                              },
+                              {
+                                "avStatus": "safe",
+                                "location": "socialAttachments/3-sample.pdf",
+                                "size": 501341,
+                                "title": "sample.pdf",
+                                "type": "file"
+                              },
+                              {
+                                "location": "socialAttachments/video (240p).mp4",
+                                "size": 248505,
+                                "title": "video (240p).mp4",
+                                "type": "video"
+                              }
+                            ],
+                            "likes": [
+                              {
+                                "id": "5be0561d43c90b171a8b4567",
+                                "username": "admin"
+                              }
+                            ],
+                            "mentions": [
+                              {
+                                "id": "625419b5e593d74a874fb573",
+                                "username": "Andreas"
+                              }
+                            ],
+                            "posted_in": {
+                              "id": "61bb42d5e07e202700000001",
+                              "type": "space"
+                            },
+                            "text": "<p>What color is the sea? <a href=\"/profile?id=625419b5e593d74a874fb573\" class=\"social-mention\">@Andreas</a></p>",
+                            "upvotes": [
+                              {
+                                "id": "5be0561d43c90b171a8b4567",
+                                "username": "admin"
+                              }
+                            ],
+                            "user": {
+                              "id": "5be0561d43c90b171a8b4567",
+                              "username": "admin"
+                            }
+                          }
+                        ],
+                        "properties": {
+                          "created": {
+                            "description": "Date the post was made, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "id": {
+                            "description": "Unique identifier of the post",
+                            "type": "string"
+                          },
+                          "items": {
+                            "description": "List of post content items outside of text content",
+                            "items": {
+                              "properties": {
+                                "data": {
+                                  "description": "Content item information",
+                                  "type": "object"
+                                },
+                                "type": {
+                                  "description": "Type of content item of the post",
+                                  "enum": [
+                                    "poll",
+                                    "image",
+                                    "file",
+                                    "video"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "likes": {
+                            "description": "List of users who have liked the post",
+                            "items": {
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "mentions": {
+                            "description": "User mentions of the post",
+                            "items": {
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "posted_in": {
+                            "description": "Information about where the post was made",
+                            "properties": {
+                              "id": {
+                                "description": "Unique identifier of where the post was made",
+                                "type": "string"
+                              },
+                              "type": {
+                                "description": "Type of where the post was made, either course or space",
+                                "enum": [
+                                  "space",
+                                  "course"
+                                ]
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "text": {
+                            "description": "Text content of the post",
+                            "type": "string"
+                          },
+                          "upvotes": {
+                            "description": "List of users who have upvoted the post",
+                            "items": {
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "user": {
+                            "description": "Information about the post author",
+                            "properties": {
+                              "id": {
+                                "description": "Unique identifier of the post author",
+                                "type": "string"
+                              },
+                              "username": {
+                                "description": "Username of the post author",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "title": "CommunityPost",
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/community/spaces": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-v2-community-spaces",
+        "parameters": [
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by space access. This can be public, private or standalone.",
+            "in": "query",
+            "name": "access",
+            "schema": {
+              "enum": [
+                "public",
+                "private",
+                "standalone"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the unique identifier of the collection the spaces are displayed",
+            "in": "query",
+            "name": "collectionId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the course usage of the space. Should be an array of courseTitleIds",
+            "in": "query",
+            "name": "usages",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Filter by the items per page number",
+            "in": "query",
+            "name": "items_per_page",
+            "schema": {
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {},
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "examples": [
+                          {
+                            "access": "public",
+                            "collectionId": "61bb42d5e07e202700000002",
+                            "description": "",
+                            "hidden_from_community": false,
+                            "id": "6515547042ec743dcc078988",
+                            "is_invitation_required": true,
+                            "is_members_allowed_to_view_members": true,
+                            "owner": {
+                              "id": "5be0561d43c90b171a8b4567",
+                              "username": "admin"
+                            },
+                            "title": "Space",
+                            "usages": [
+                              {
+                                "componentId": "component_1701798094804_337",
+                                "courseId": "a-course",
+                                "type": "ebook",
+                                "unitId": "656f0d27f9f5416317015124"
+                              }
+                            ]
+                          }
+                        ],
+                        "properties": {
+                          "access": {
+                            "description": "Access type of the space\n",
+                            "enum": [
+                              "public",
+                              "private",
+                              "standalone"
+                            ]
+                          },
+                          "collectionId": {
+                            "description": "Unique identifier of the collection under which the space is displayed",
+                            "type": "string"
+                          },
+                          "description": {
+                            "description": "Description of the space",
+                            "type": "string"
+                          },
+                          "hidden_from_community": {
+                            "description": "Indication about whether the space is visible in the community",
+                            "type": "boolean"
+                          },
+                          "id": {
+                            "description": "Unique identifier of the space",
+                            "type": "string"
+                          },
+                          "is_invitation_required": {
+                            "description": "Indication about whether users are sent an invitation to join or are directly added to space\n",
+                            "type": "boolean"
+                          },
+                          "is_members_allowed_to_view_members": {
+                            "description": "Indication about whether users can view other users in space",
+                            "type": "boolean"
+                          },
+                          "owner": {
+                            "description": "Information about the space owner",
+                            "properties": {
+                              "id": {
+                                "description": "The id of the creator of the space\n",
+                                "type": "string"
+                              },
+                              "username": {
+                                "description": "The username of the creator of the space\n",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "title": {
+                            "description": "Name of the space",
+                            "type": "string"
+                          },
+                          "usages": {
+                            "description": "List of space usages in the platform",
+                            "items": {
+                              "properties": {
+                                "courseId": {
+                                  "description": "Unique identifier of the course the space is used",
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "description": "Type of usage location",
+                                  "enum": [
+                                    "ebook"
+                                  ]
+                                },
+                                "unitId": {
+                                  "description": "Unique identifier of the unit the space is used",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "title": "CommunitySpace",
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/community/spaces/{id}/users": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-v2-community-spaces-id-users",
+        "parameters": [
+          {
+            "description": "Unique identifier of the community space",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Filter by the items per page number",
+            "in": "query",
+            "name": "items_per_page",
+            "schema": {
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "data": [
+                        {
+                          "id": "61a8eb584bb22f3d4870c1e3",
+                          "status": "joined",
+                          "username": "teacher"
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 20,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "description": "The unique identifier of the user",
+                            "type": "string"
+                          },
+                          "status": {
+                            "description": "The status of the user\n- `joined`, the user has joined the space\n- `invited`, the user has been sent an invitation to gain access to the space\n- `deleted`, the user has been removed from the space\n- `left`, the user has left the space",
+                            "enum": [
+                              "joined",
+                              "invited",
+                              "deleted",
+                              "left"
+                            ]
+                          },
+                          "username": {
+                            "description": "The username of the user",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/community/collections": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-v2-community-collections",
+        "parameters": [
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {},
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "examples": [
+                          {
+                            "created": 1708002143.052642,
+                            "description": "The collection",
+                            "display_order": 1,
+                            "id": "65ce0b5fa5bdd651810d9a74",
+                            "modified": 1708002178.387277,
+                            "name": "Collection 1",
+                            "space_ids": [
+                              "65ce0b7e5a68506c2e069ca4",
+                              "65a001089df6912dcc0f3464"
+                            ]
+                          }
+                        ],
+                        "properties": {
+                          "created": {
+                            "description": "Date the collection was created, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "description": {
+                            "description": "Description of the collection",
+                            "type": "string"
+                          },
+                          "display_order": {
+                            "description": "Display order of the collection as it\nappears in the community sidebar",
+                            "type": "integer"
+                          },
+                          "id": {
+                            "description": "Unique identifier of the collection",
+                            "type": "string"
+                          },
+                          "modified": {
+                            "description": "Date the collection was modified for the last time, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "name": {
+                            "description": "Name of the collection",
+                            "type": "string"
+                          },
+                          "space_ids": {
+                            "description": "List of spaces in this collection",
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "title": "CommunityCollection",
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "DELETE /v2/community/spaces/{id}/users/{uid}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "delete-v2-community-spaces-id-users-userId",
+        "parameters": [
+          {
+            "description": "Unique identifier of the community space",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Uniquer identifier of the user",
+            "in": "path",
+            "name": "uid",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {},
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "DELETE /v2/community/spaces/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "delete-v2-community-spaces-id",
+        "parameters": [
+          {
+            "description": "Unique identifier of the community space",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "204": {
+            "content": {},
+            "description": "No content"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

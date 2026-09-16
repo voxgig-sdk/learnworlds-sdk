@@ -1,0 +1,170 @@
+# Entity: event_log
+
+main: kit: entity: event_log: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "activity"
+      req: false
+      short: "Name of the activity"
+      type: "`$STRING`"
+    }
+    {
+      name: "additional_info"
+      req: false
+      short: "Additional info related to the activity."
+      type: [
+        "`$ONE`"
+        [
+          "`$OBJECT`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      format: "float"
+      name: "created"
+      req: false
+      short: "Date the event log was created, in UNIX timestamp format"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "description"
+      req: false
+      short: "Description of the activity"
+      type: "`$STRING`"
+    }
+    {
+      name: "type"
+      req: false
+      short: "Type of the activity"
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "user"
+      req: false
+      short: "User details related to event log"
+      type: "`$OBJECT`"
+    }
+  ]
+
+  name: "event_log"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "activity"
+                orig: "activity"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "1626088013"
+                kind: "query"
+                name: "created_after"
+                orig: "created_after"
+                reqd: false
+                type: "`$NUMBER`"
+              }
+              {
+                example: "1626076929"
+                kind: "query"
+                name: "created_before"
+                orig: "created_before"
+                reqd: false
+                type: "`$NUMBER`"
+              }
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: "desc"
+                kind: "query"
+                name: "sort"
+                orig: "sort"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "user_id"
+                orig: "user_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/event-logs"
+            json: "{\"operationId\":\"get-event-logs\",\"parameters\":[{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter by user id or email (encoded string)\",\"in\":\"query\",\"name\":\"user_id\",\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter by activity name. If no activity is selected all will be applied.\",\"in\":\"query\",\"name\":\"activity\",\"schema\":{\"enum\":[\"register\",\"login\",\"logout\",\"purchase\",\"manual_enrollment\",\"drip_feed_section_unlocked\",\"subscription_signup\",\"subscription_trial\",\"subscription_trial_expired\",\"subscription_changed\",\"subscription_renewal\",\"subscription_cancelled\",\"subscription_scheduled_cancellation\",\"subscription_reactivated\",\"failed_purchase\",\"new_affiliate\",\"new_affiliate_manual\",\"affiliate_deactivated\",\"affiliate_payout\",\"follow\",\"post\",\"post_comment\",\"post_like\",\"award_certificate\",\"visit_course\",\"complete_course\",\"installment_paid\",\"payment_plan_completed\",\"payment_plan_canceled\",\"payment_failed\",\"sca_related_events\",\"session_scheduled\",\"session_attended\",\"session_manually_attended\",\"group_session_scheduled\",\"group_session_attended\",\"group_session_manually_attended\"],\"type\":\"string\"}},{\"description\":\"Filter by event log creation after the given datetime (expected in UNIX timestamp format)\",\"in\":\"query\",\"name\":\"created_after\",\"schema\":{\"example\":\"1626088013\",\"type\":\"number\"}},{\"description\":\"Filter by event log creation before the given datetime (expected in UNIX timestamp format)\",\"in\":\"query\",\"name\":\"created_before\",\"schema\":{\"example\":\"1626076929\",\"type\":\"number\"}},{\"description\":\"Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned\",\"in\":\"query\",\"name\":\"page\",\"required\":false,\"schema\":{\"default\":1,\"type\":\"integer\"}},{\"description\":\"Sort by creation timestamp in ascending or descending order. \",\"in\":\"query\",\"name\":\"sort\",\"schema\":{\"default\":\"desc\",\"enum\":[\"asc\",\"desc\"],\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"data\":[{\"activity\":\"login\",\"additional_info\":{\"agent\":{\"browser\":\"Chrome\",\"city\":\"-\",\"country\":\"-\",\"device\":\"WebKit\",\"ip\":\"10.0.2.2\",\"languages\":\"el, en, en-au\",\"location\":{\"lat\":0,\"lng\":0},\"platform\":\"Ubuntu\",\"referrer\":\"http://client.learnworlds.com/?msg=signup\",\"region\":\"-\",\"robot\":null,\"userAgent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/65.0.3325.181 Chrome/65.0.3325.181 Safari/537.36\"}},\"created\":1509958141.27462,\"description\":\"Logged in\",\"type\":\"user\",\"user\":{\"id\":\"5a706c7143c90b6f298b456c\",\"username\":\"testuser\"}}],\"meta\":{\"itemsPerPage\":20,\"page\":1,\"totalItems\":1,\"totalPages\":1}}}},\"schema\":{\"properties\":{\"data\":{\"items\":{\"examples\":[{\"activity\":\"login\",\"additional_info\":{\"agent\":{\"browser\":\"Chrome\",\"city\":\"-\",\"country\":\"-\",\"device\":\"WebKit\",\"ip\":\"10.0.2.2\",\"languages\":\"el, en, en-au\",\"location\":{\"lat\":0,\"lng\":0},\"platform\":\"Ubuntu\",\"referrer\":\"http://client.learnworlds.com/?msg=signup\",\"region\":\"-\",\"robot\":null,\"userAgent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/65.0.3325.181 Chrome/65.0.3325.181 Safari/537.36\"}},\"created\":1509958141.27462,\"description\":\"Logged in\",\"type\":\"user\",\"user\":{\"id\":\"5a706c7143c90b6f298b456c\",\"username\":\"testuser\"}}],\"properties\":{\"activity\":{\"description\":\"Name of the activity\",\"enum\":[\"register\",\"login\",\"logout\",\"purchase\",\"manual_enrollment\",\"drip_feed_section_unlocked\",\"subscription_signup\",\"subscription_trial\",\"subscription_trial_expired\",\"subscription_changed\",\"subscription_renewal\",\"subscription_cancelled\",\"subscription_scheduled_cancellation\",\"subscription_reactivated\",\"failed_purchase\",\"new_affiliate\",\"new_affiliate_manual\",\"affiliate_deactivated\",\"affiliate_payout\",\"follow\",\"post\",\"post_comment\",\"post_like\",\"award_certificate\",\"visit_course\",\"complete_course\",\"installment_paid,\",\"payment_plan_completed,\",\"payment_plan_canceled,\",\"payment_failed\",\"sca_related_events\",\"session_scheduled\",\"session_attended\",\"session_manually_attended\",\"group_session_scheduled\",\"group_session_attended\",\"group_session_manually_attended\"],\"type\":\"string\"},\"additional_info\":{\"description\":\"Additional info related to the activity.\",\"type\":[\"object\",\"null\"]},\"created\":{\"description\":\"Date the event log was created, in UNIX timestamp format\",\"format\":\"float\",\"type\":\"number\"},\"description\":{\"description\":\"Description of the activity\",\"type\":\"string\"},\"type\":{\"description\":\"Type of the activity\",\"enum\":[\"award\",\"purchase\",\"social\",\"user\"],\"type\":[\"string\",\"null\"]},\"user\":{\"description\":\"User details related to event log\",\"properties\":{\"id\":{\"description\":\"Unique identifier of the user\",\"type\":\"string\"},\"username\":{\"description\":\"Username of the user\",\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"},\"type\":\"array\"},\"meta\":{\"description\":\"\",\"examples\":[{\"itemsPerPage\":20,\"page\":1,\"totalItems\":1,\"totalPages\":1}],\"properties\":{\"itemsPerPage\":{\"description\":\"Limit in the number of items per page\",\"type\":\"number\"},\"page\":{\"description\":\"Current page number\",\"type\":\"number\"},\"totalItems\":{\"description\":\"Total number of items in this page\",\"type\":\"number\"},\"totalPages\":{\"description\":\"Total number of pages\",\"type\":\"number\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/event-logs"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "event-logs"
+            }
+          ]
+          select: {
+            exist: [
+              "activity"
+              "authorization"
+              "created_after"
+              "created_before"
+              "lw_client"
+              "page"
+              "sort"
+              "user_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

@@ -1,0 +1,246 @@
+# Entity: subscription_plan
+
+main: kit: entity: subscription_plan: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "access"
+      req: false
+      short: "Access type of the subscription"
+      type: "`$STRING`"
+    }
+    {
+      name: "afterPurchase"
+      req: false
+      short: "After purchase navigation settings for this subscription plan"
+      type: "`$OBJECT`"
+    }
+    {
+      format: "float"
+      name: "created"
+      req: false
+      short: "Date the subscription plan was created, in UNIX timestamp format"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "description"
+      req: false
+      short: "Description of the subscription"
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "id"
+      req: false
+      short: "Unique identifier of the subscription plan"
+      type: "`$STRING`"
+    }
+    {
+      name: "image"
+      req: false
+      short: "Subscription plan image (full URL)"
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "interval"
+      req: false
+      short: "Billing interval value"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "interval_type"
+      req: false
+      short: "Billing interval type"
+      type: "`$STRING`"
+    }
+    {
+      format: "float"
+      name: "modified"
+      req: false
+      short: "Date the subscription plan was modified for the last time, in UNIX timestamp format"
+      type: "`$NUMBER`"
+    }
+    {
+      format: "float"
+      name: "price"
+      req: false
+      short: "Price of the subscription plan"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "products"
+      req: false
+      short: "Products in the subsription"
+      type: "`$OBJECT`"
+    }
+    {
+      name: "stripePlanId"
+      req: false
+      short: "Stripe's plan Id"
+      type: "`$STRING`"
+    }
+    {
+      name: "title"
+      req: false
+      short: "Title of the subscription plan"
+      type: "`$STRING`"
+    }
+    {
+      name: "trial_period_days"
+      req: false
+      short: "Number of days the trial subscription plan lasts"
+      type: "`$INTEGER`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "subscription_plan"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/subscription-plans"
+            json: "{\"operationId\":\"get-subscription-plans\",\"parameters\":[{\"description\":\"Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned\",\"in\":\"query\",\"name\":\"page\",\"required\":false,\"schema\":{\"default\":1,\"type\":\"integer\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"data\":[{\"access\":\"private\",\"afterPurchase\":{\"settings\":{\"page\":\"about\",\"url\":null},\"type\":\"afterlogin\"},\"created\":1602244399.894355,\"description\":\"This is my api keys plan description\",\"id\":\"this-is-my-api-keys-plan\",\"image\":\"https://lwfilesdev.mycourse.app/dev-public/ce4c32bf2a60638146e18cecf8f9749d.jpeg\",\"interval\":1,\"interval_type\":\"month\",\"modified\":1620636583.900941,\"price\":100,\"products\":{\"courses\":[\"10-secrets-of-sleep-walking\"]},\"stripePlanId\":\"this-is-my-api-keys-plan\",\"title\":\"This is my api keys plan\",\"trial_period_days\":0}],\"meta\":{\"itemsPerPage\":50,\"page\":1,\"totalItems\":1,\"totalPages\":1}}}},\"schema\":{\"properties\":{\"data\":{\"items\":{\"description\":\"\",\"examples\":[{\"access\":\"private\",\"afterPurchase\":{\"settings\":{\"page\":\"about\",\"url\":null},\"type\":\"afterlogin\"},\"created\":1602244399.894355,\"description\":\"This is my api keys plan description\",\"id\":\"this-is-my-api-keys-plan\",\"image\":\"https://lwfilesdev.mycourse.app/dev-public/ce4c32bf2a60638146e18cecf8f9749d.jpeg\",\"interval\":1,\"interval_type\":\"month\",\"modified\":1620636583.900941,\"price\":100,\"products\":{\"courses\":[\"10-secrets-of-sleep-walking\"]},\"stripePlanId\":\"this-is-my-api-keys-plan\",\"title\":\"This is my api keys plan\",\"trial_period_days\":0}],\"properties\":{\"access\":{\"description\":\"Access type of the subscription\",\"enum\":[\"private\",\"public\",\"soon\",\"view-locked\"],\"type\":\"string\"},\"afterPurchase\":{\"description\":\"After purchase navigation settings for this subscription plan\",\"properties\":{\"settings\":{\"description\":\"After purchase navigation URL for this subscription: leading to a school page or a given URL\",\"properties\":{\"page\":{\"description\":\"Navigation to a specific school page\",\"type\":[\"string\",\"null\"]},\"url\":{\"description\":\"Navigation to a specific URL\",\"type\":[\"string\",\"null\"]}},\"type\":\"object\"},\"type\":{\"description\":\"Type of the after purchase navigation\",\"type\":\"string\"}},\"type\":\"object\"},\"created\":{\"description\":\"Date the subscription plan was created, in UNIX timestamp format\",\"format\":\"float\",\"type\":\"number\"},\"description\":{\"description\":\"Description of the subscription\",\"type\":[\"string\",\"null\"]},\"id\":{\"description\":\"Unique identifier of the subscription plan\",\"type\":\"string\"},\"image\":{\"description\":\"Subscription plan image (full URL)\",\"type\":[\"string\",\"null\"]},\"interval\":{\"description\":\"Billing interval value\",\"type\":\"integer\"},\"interval_type\":{\"description\":\"Billing interval type\",\"enum\":[\"day\",\"week\",\"month\"],\"type\":\"string\"},\"modified\":{\"description\":\"Date the subscription plan was modified for the last time, in UNIX timestamp format\",\"format\":\"float\",\"type\":\"number\"},\"price\":{\"description\":\"Price of the subscription plan\",\"format\":\"float\",\"type\":\"number\"},\"products\":{\"description\":\"Products in the subsription\",\"properties\":{\"courses\":{\"description\":\"Unique identifier of each course\",\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"type\":\"object\"},\"stripePlanId\":{\"description\":\"Stripe's plan Id\",\"type\":\"string\"},\"title\":{\"description\":\"Title of the subscription plan\",\"type\":\"string\"},\"trial_period_days\":{\"description\":\"Number of days the trial subscription plan lasts\",\"type\":\"integer\"}},\"title\":\"\",\"type\":\"object\"},\"type\":\"array\"},\"meta\":{\"description\":\"\",\"examples\":[{\"itemsPerPage\":20,\"page\":1,\"totalItems\":1,\"totalPages\":1}],\"properties\":{\"itemsPerPage\":{\"description\":\"Limit in the number of items per page\",\"type\":\"number\"},\"page\":{\"description\":\"Current page number\",\"type\":\"number\"},\"totalItems\":{\"description\":\"Total number of items in this page\",\"type\":\"number\"},\"totalPages\":{\"description\":\"Total number of pages\",\"type\":\"number\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/subscription-plans"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "subscription-plans"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "lw_client"
+              "page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/subscription-plans/{id}"
+            json: "{\"operationId\":\"get-subscription-plans-id\",\"parameters\":[{\"description\":\"Subscription plan Id\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"access\":\"private\",\"afterPurchase\":{\"settings\":{\"page\":\"about\",\"url\":null},\"type\":\"afterlogin\"},\"created\":1602244399.894355,\"description\":\"This is my api keys plan description\",\"id\":\"this-is-my-api-keys-plan\",\"image\":\"https://lwfilesdev.mycourse.app/dev-public/ce4c32bf2a60638146e18cecf8f9749d.jpeg\",\"interval\":1,\"interval_type\":\"month\",\"modified\":1620636583.900941,\"price\":100,\"products\":{\"courses\":[\"10-secrets-of-sleep-walking\"]},\"stripePlanId\":\"this-is-my-api-keys-plan\",\"title\":\"This is my api keys plan\",\"trial_period_days\":0}}},\"schema\":{\"description\":\"\",\"examples\":[{\"access\":\"private\",\"afterPurchase\":{\"settings\":{\"page\":\"about\",\"url\":null},\"type\":\"afterlogin\"},\"created\":1602244399.894355,\"description\":\"This is my api keys plan description\",\"id\":\"this-is-my-api-keys-plan\",\"image\":\"https://lwfilesdev.mycourse.app/dev-public/ce4c32bf2a60638146e18cecf8f9749d.jpeg\",\"interval\":1,\"interval_type\":\"month\",\"modified\":1620636583.900941,\"price\":100,\"products\":{\"courses\":[\"10-secrets-of-sleep-walking\"]},\"stripePlanId\":\"this-is-my-api-keys-plan\",\"title\":\"This is my api keys plan\",\"trial_period_days\":0}],\"properties\":{\"access\":{\"description\":\"Access type of the subscription\",\"enum\":[\"private\",\"public\",\"soon\",\"view-locked\"],\"type\":\"string\"},\"afterPurchase\":{\"description\":\"After purchase navigation settings for this subscription plan\",\"properties\":{\"settings\":{\"description\":\"After purchase navigation URL for this subscription: leading to a school page or a given URL\",\"properties\":{\"page\":{\"description\":\"Navigation to a specific school page\",\"type\":[\"string\",\"null\"]},\"url\":{\"description\":\"Navigation to a specific URL\",\"type\":[\"string\",\"null\"]}},\"type\":\"object\"},\"type\":{\"description\":\"Type of the after purchase navigation\",\"type\":\"string\"}},\"type\":\"object\"},\"created\":{\"description\":\"Date the subscription plan was created, in UNIX timestamp format\",\"format\":\"float\",\"type\":\"number\"},\"description\":{\"description\":\"Description of the subscription\",\"type\":[\"string\",\"null\"]},\"id\":{\"description\":\"Unique identifier of the subscription plan\",\"type\":\"string\"},\"image\":{\"description\":\"Subscription plan image (full URL)\",\"type\":[\"string\",\"null\"]},\"interval\":{\"description\":\"Billing interval value\",\"type\":\"integer\"},\"interval_type\":{\"description\":\"Billing interval type\",\"enum\":[\"day\",\"week\",\"month\"],\"type\":\"string\"},\"modified\":{\"description\":\"Date the subscription plan was modified for the last time, in UNIX timestamp format\",\"format\":\"float\",\"type\":\"number\"},\"price\":{\"description\":\"Price of the subscription plan\",\"format\":\"float\",\"type\":\"number\"},\"products\":{\"description\":\"Products in the subsription\",\"properties\":{\"courses\":{\"description\":\"Unique identifier of each course\",\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"type\":\"object\"},\"stripePlanId\":{\"description\":\"Stripe's plan Id\",\"type\":\"string\"},\"title\":{\"description\":\"Title of the subscription plan\",\"type\":\"string\"},\"trial_period_days\":{\"description\":\"Number of days the trial subscription plan lasts\",\"type\":\"integer\"}},\"title\":\"\",\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/subscription-plans/{id}"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "subscription-plans"
+            }
+            {
+              var: "id"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

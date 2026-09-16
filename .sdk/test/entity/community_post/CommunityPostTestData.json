@@ -4,34 +4,34 @@
       "COMMUNITY_POST00": {
         "created": 90,
         "id": "COMMUNITY_POST00",
-        "item": [],
-        "like": [],
-        "mention": [],
+        "items": [],
+        "likes": [],
+        "mentions": [],
         "posted_in": {},
         "text": "s60",
-        "upvote": [],
+        "upvotes": [],
         "user": {}
       },
       "COMMUNITY_POST01": {
         "created": 180,
         "id": "COMMUNITY_POST01",
-        "item": [],
-        "like": [],
-        "mention": [],
+        "items": [],
+        "likes": [],
+        "mentions": [],
         "posted_in": {},
         "text": "sba",
-        "upvote": [],
+        "upvotes": [],
         "user": {}
       },
       "COMMUNITY_POST02": {
         "created": 270,
         "id": "COMMUNITY_POST02",
-        "item": [],
-        "like": [],
-        "mention": [],
+        "items": [],
+        "likes": [],
+        "mentions": [],
         "posted_in": {},
         "text": "s114",
-        "upvote": [],
+        "upvotes": [],
         "user": {}
       }
     }
@@ -40,13 +40,235 @@
     "community_post": {
       "community_post_ref01": {
         "created": 360,
-        "item": [],
-        "like": [],
-        "mention": [],
+        "items": [],
+        "likes": [],
+        "mentions": [],
         "posted_in": {},
         "text": "s16e",
-        "upvote": [],
+        "upvotes": [],
         "user": {}
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/community/posts/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-v2-community-posts-id",
+        "parameters": [
+          {
+            "description": "Unique identifier of the community post",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "examples": [
+                    {
+                      "id": "65ce2ecc9066630b4e0913f4",
+                      "items": [
+                        {
+                          "data": {
+                            "options": [
+                              {
+                                "id": "ch_1",
+                                "results": {
+                                  "per": "100.00",
+                                  "val": 1
+                                },
+                                "text": "Blue"
+                              },
+                              {
+                                "id": "ch_2",
+                                "results": {
+                                  "per": "0.00",
+                                  "val": 0
+                                },
+                                "text": "Green"
+                              }
+                            ],
+                            "text": null,
+                            "totalVotes": 1,
+                            "type": "poll"
+                          },
+                          "type": "poll"
+                        },
+                        {
+                          "location": "social/2-the-sea-1198167.jpg",
+                          "size": 602033,
+                          "title": "the-sea-1198167.jpg",
+                          "type": "image"
+                        },
+                        {
+                          "avStatus": "safe",
+                          "location": "socialAttachments/3-sample.pdf",
+                          "size": 501341,
+                          "title": "sample.pdf",
+                          "type": "file"
+                        },
+                        {
+                          "location": "socialAttachments/video (240p).mp4",
+                          "size": 248505,
+                          "title": "video (240p).mp4",
+                          "type": "video"
+                        }
+                      ],
+                      "likes": [
+                        {
+                          "id": "5be0561d43c90b171a8b4567",
+                          "username": "admin"
+                        }
+                      ],
+                      "mentions": [
+                        {
+                          "id": "625419b5e593d74a874fb573",
+                          "username": "Andreas"
+                        }
+                      ],
+                      "posted_in": {
+                        "id": "61bb42d5e07e202700000001",
+                        "type": "space"
+                      },
+                      "text": "<p>What color is the sea? <a href=\"/profile?id=625419b5e593d74a874fb573\" class=\"social-mention\">@Andreas</a></p>",
+                      "upvotes": [
+                        {
+                          "id": "5be0561d43c90b171a8b4567",
+                          "username": "admin"
+                        }
+                      ],
+                      "user": {
+                        "id": "5be0561d43c90b171a8b4567",
+                        "username": "admin"
+                      }
+                    }
+                  ],
+                  "properties": {
+                    "created": {
+                      "description": "Date the post was made, in UNIX timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "id": {
+                      "description": "Unique identifier of the post",
+                      "type": "string"
+                    },
+                    "items": {
+                      "description": "List of post content items outside of text content",
+                      "items": {
+                        "properties": {
+                          "data": {
+                            "description": "Content item information",
+                            "type": "object"
+                          },
+                          "type": {
+                            "description": "Type of content item of the post",
+                            "enum": [
+                              "poll",
+                              "image",
+                              "file",
+                              "video"
+                            ]
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "likes": {
+                      "description": "List of users who have liked the post",
+                      "items": {
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "mentions": {
+                      "description": "User mentions of the post",
+                      "items": {
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "posted_in": {
+                      "description": "Information about where the post was made",
+                      "properties": {
+                        "id": {
+                          "description": "Unique identifier of where the post was made",
+                          "type": "string"
+                        },
+                        "type": {
+                          "description": "Type of where the post was made, either course or space",
+                          "enum": [
+                            "space",
+                            "course"
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "text": {
+                      "description": "Text content of the post",
+                      "type": "string"
+                    },
+                    "upvotes": {
+                      "description": "List of users who have upvoted the post",
+                      "items": {
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "user": {
+                      "description": "Information about the post author",
+                      "properties": {
+                        "id": {
+                          "description": "Unique identifier of the post author",
+                          "type": "string"
+                        },
+                        "username": {
+                          "description": "Username of the post author",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "title": "CommunityPost",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK",
+            "headers": {}
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

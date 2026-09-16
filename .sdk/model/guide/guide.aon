@@ -1,0 +1,10 @@
+# Guide
+
+@"@voxgig/apidef/model/guide.aon"
+
+@"base-guide.aon"
+
+
+# guide: entity: user_response: { # name:cmp
+#   path: '/v2/forms/{form_id}/responses': active: false
+# }

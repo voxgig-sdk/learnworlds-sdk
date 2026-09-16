@@ -2,50 +2,169 @@
   "existing": {
     "unit_analytics": {
       "UNIT_ANALYTICS00": {
-        "avg_score_rate": 70,
-        "avg_study_time": 71,
-        "name": "s48",
-        "total_study_time": 73,
-        "type": "s4a",
-        "users_completed": "s4b",
-        "viewer": "s4c",
-        "course_id": "COURSE01",
-        "id": "UNIT_ANALYTICS00"
+        "avg_score_rate": 80,
+        "avg_study_time": 81,
+        "id": "UNIT_ANALYTICS00",
+        "name": "s53",
+        "total_study_time": 84,
+        "type": "s55",
+        "users_completed": 86,
+        "viewers": 87,
+        "course_id": "COURSE01"
       },
       "UNIT_ANALYTICS01": {
-        "avg_score_rate": 140,
-        "avg_study_time": 141,
-        "name": "s8e",
-        "total_study_time": 143,
-        "type": "s90",
-        "users_completed": "s91",
-        "viewer": "s92",
-        "course_id": "COURSE01",
-        "id": "UNIT_ANALYTICS01"
+        "avg_score_rate": 160,
+        "avg_study_time": 161,
+        "id": "UNIT_ANALYTICS01",
+        "name": "sa3",
+        "total_study_time": 164,
+        "type": "sa5",
+        "users_completed": 166,
+        "viewers": 167,
+        "course_id": "COURSE01"
       },
       "UNIT_ANALYTICS02": {
-        "avg_score_rate": 210,
-        "avg_study_time": 211,
-        "name": "sd4",
-        "total_study_time": 213,
-        "type": "sd6",
-        "users_completed": "sd7",
-        "viewer": "sd8",
-        "course_id": "COURSE01",
-        "id": "UNIT_ANALYTICS02"
+        "avg_score_rate": 240,
+        "avg_study_time": 241,
+        "id": "UNIT_ANALYTICS02",
+        "name": "sf3",
+        "total_study_time": 244,
+        "type": "sf5",
+        "users_completed": 246,
+        "viewers": 247,
+        "course_id": "COURSE01"
       }
     }
   },
   "new": {
     "unit_analytics": {
       "unit_analytics_ref01": {
-        "avg_score_rate": 280,
-        "avg_study_time": 281,
-        "name": "s11a",
-        "total_study_time": 283,
-        "type": "s11c",
-        "users_completed": "s11d",
-        "viewer": "s11e"
+        "avg_score_rate": 320,
+        "avg_study_time": 321,
+        "name": "s143",
+        "total_study_time": 324,
+        "type": "s145",
+        "users_completed": 326,
+        "viewers": 327
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/courses/{id}/units/{uid}/analytics": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-courses-cid-unit-uid-analytics",
+        "parameters": [
+          {
+            "description": "Course title Id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Learning activity id",
+            "in": "path",
+            "name": "uid",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "avg_score_rate": 0,
+                      "avg_study_time": 6502,
+                      "name": "youtube video",
+                      "total_study_time": 9295,
+                      "type": "youtube",
+                      "users_completed": 0,
+                      "viewers": 2
+                    }
+                  }
+                },
+                "schema": {
+                  "description": "",
+                  "examples": [
+                    {
+                      "avg_score_rate": 0,
+                      "avg_study_time": 6502,
+                      "name": "youtube video",
+                      "total_study_time": 9295,
+                      "type": "youtube",
+                      "users_completed": 0,
+                      "viewers": 2
+                    }
+                  ],
+                  "properties": {
+                    "avg_score_rate": {
+                      "description": "Average score (%)",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "avg_study_time": {
+                      "description": "Average study time in seconds",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "name": {
+                      "description": "Name of the learning activity",
+                      "type": "string"
+                    },
+                    "total_study_time": {
+                      "description": "Total study time in seconds",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "type": {
+                      "description": "Type of the learning activity",
+                      "type": "string"
+                    },
+                    "users_completed": {
+                      "description": "Number of users that have completed this learning activity",
+                      "type": "integer"
+                    },
+                    "viewers": {
+                      "description": "Number of users that have viewed this learning activity",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

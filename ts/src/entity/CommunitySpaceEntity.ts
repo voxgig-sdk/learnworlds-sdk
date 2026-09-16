@@ -38,14 +38,15 @@ class CommunitySpaceEntity extends LearnworldsEntityBase<CommunitySpace> {
 
 
 
-  async load(this: any, reqmatch?: CommunitySpaceLoadMatch, ctrl?: Control): Promise<CommunitySpace> {
+  async load(this: any, reqmatch?: CommunitySpaceLoadMatch, ctrl?: Control): Promise<CommunitySpaceEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -129,7 +130,15 @@ class CommunitySpaceEntity extends LearnworldsEntityBase<CommunitySpace> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
 
@@ -152,13 +161,14 @@ class CommunitySpaceEntity extends LearnworldsEntityBase<CommunitySpace> {
 
 
 
-  async create(this: any, reqdata?: CommunitySpaceCreateData, ctrl?: Control): Promise<CommunitySpace> {
+  async create(this: any, reqdata?: CommunitySpaceCreateData, ctrl?: Control): Promise<CommunitySpaceEntity> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -238,7 +248,15 @@ class CommunitySpaceEntity extends LearnworldsEntityBase<CommunitySpace> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
 
@@ -260,14 +278,15 @@ class CommunitySpaceEntity extends LearnworldsEntityBase<CommunitySpace> {
 
 
 
-  async update(this: any, reqdata?: CommunitySpaceUpdateData, ctrl?: Control): Promise<CommunitySpace> {
+  async update(this: any, reqdata?: CommunitySpaceUpdateData, ctrl?: Control): Promise<CommunitySpaceEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -352,7 +371,15 @@ class CommunitySpaceEntity extends LearnworldsEntityBase<CommunitySpace> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
 

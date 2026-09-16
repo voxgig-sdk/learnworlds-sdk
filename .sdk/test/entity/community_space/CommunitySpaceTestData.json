@@ -3,39 +3,39 @@
     "community_space": {
       "COMMUNITY_SPACE00": {
         "access": "s64",
-        "collection_id": "COLLECTION01",
+        "collectionId": "s65",
         "description": "s66",
         "hidden_from_community": false,
         "id": "COMMUNITY_SPACE00",
         "is_invitation_required": false,
-        "is_members_allowed_to_view_member": true,
+        "is_members_allowed_to_view_members": true,
         "owner": {},
         "title": "s6c",
-        "usage": []
+        "usages": []
       },
       "COMMUNITY_SPACE01": {
         "access": "sc8",
-        "collection_id": "COLLECTION01",
+        "collectionId": "sc9",
         "description": "sca",
         "hidden_from_community": false,
         "id": "COMMUNITY_SPACE01",
         "is_invitation_required": false,
-        "is_members_allowed_to_view_member": true,
+        "is_members_allowed_to_view_members": true,
         "owner": {},
         "title": "sd0",
-        "usage": []
+        "usages": []
       },
       "COMMUNITY_SPACE02": {
         "access": "s12c",
-        "collection_id": "COLLECTION01",
+        "collectionId": "s12d",
         "description": "s12e",
         "hidden_from_community": false,
         "id": "COMMUNITY_SPACE02",
         "is_invitation_required": false,
-        "is_members_allowed_to_view_member": true,
+        "is_members_allowed_to_view_members": true,
         "owner": {},
         "title": "s134",
-        "usage": []
+        "usages": []
       }
     }
   },
@@ -43,14 +43,560 @@
     "community_space": {
       "community_space_ref01": {
         "access": "s190",
-        "collection_id": "COLLECTION01",
+        "collectionId": "s191",
         "description": "s192",
         "hidden_from_community": false,
         "is_invitation_required": false,
-        "is_members_allowed_to_view_member": true,
+        "is_members_allowed_to_view_members": true,
         "owner": {},
         "title": "s198",
-        "usage": []
+        "usages": []
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/community/spaces": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "post-v2-community-spaces",
+        "parameters": [
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "access": "public",
+                    "collectionId": "61bb42d5e07e202700000002",
+                    "description": "My description",
+                    "hidden_from_community": false,
+                    "is_invitation_required": true,
+                    "is_members_allowed_to_view_members": true,
+                    "ownerId": "admin@learnworlds.com",
+                    "title": "New space"
+                  }
+                }
+              },
+              "schema": {
+                "properties": {
+                  "access": {
+                    "description": "Access type of the space",
+                    "enum": [
+                      "public",
+                      "private",
+                      "standalone"
+                    ]
+                  },
+                  "collectionId": {
+                    "description": "Unique identifier of the collection in which the space will be displayed. In case of `public` or `private` access the field is required, while in case of `standalone` an error will be returned",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "Description of the space",
+                    "type": "string"
+                  },
+                  "hidden_from_community": {
+                    "description": "Indication whether the space is hidden from community",
+                    "type": "boolean"
+                  },
+                  "is_invitation_required": {
+                    "description": "Indication whether users are sent an invitation to join or are directly added to space. It is applicable only for spaces with private access.\n",
+                    "type": "boolean"
+                  },
+                  "is_members_allowed_to_view_members": {
+                    "description": "Indication whether users can view other users in space. It is applicable only for spaces with private access.\n",
+                    "type": "boolean"
+                  },
+                  "title": {
+                    "description": "Title of the space",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "access"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "examples": [
+                    {
+                      "access": "public",
+                      "collectionId": "61bb42d5e07e202700000002",
+                      "description": "",
+                      "hidden_from_community": false,
+                      "id": "6515547042ec743dcc078988",
+                      "is_invitation_required": true,
+                      "is_members_allowed_to_view_members": true,
+                      "owner": {
+                        "id": "5be0561d43c90b171a8b4567",
+                        "username": "admin"
+                      },
+                      "title": "Space",
+                      "usages": [
+                        {
+                          "componentId": "component_1701798094804_337",
+                          "courseId": "a-course",
+                          "type": "ebook",
+                          "unitId": "656f0d27f9f5416317015124"
+                        }
+                      ]
+                    }
+                  ],
+                  "properties": {
+                    "access": {
+                      "description": "Access type of the space\n",
+                      "enum": [
+                        "public",
+                        "private",
+                        "standalone"
+                      ]
+                    },
+                    "collectionId": {
+                      "description": "Unique identifier of the collection under which the space is displayed",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "Description of the space",
+                      "type": "string"
+                    },
+                    "hidden_from_community": {
+                      "description": "Indication about whether the space is visible in the community",
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "description": "Unique identifier of the space",
+                      "type": "string"
+                    },
+                    "is_invitation_required": {
+                      "description": "Indication about whether users are sent an invitation to join or are directly added to space\n",
+                      "type": "boolean"
+                    },
+                    "is_members_allowed_to_view_members": {
+                      "description": "Indication about whether users can view other users in space",
+                      "type": "boolean"
+                    },
+                    "owner": {
+                      "description": "Information about the space owner",
+                      "properties": {
+                        "id": {
+                          "description": "The id of the creator of the space\n",
+                          "type": "string"
+                        },
+                        "username": {
+                          "description": "The username of the creator of the space\n",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "title": {
+                      "description": "Name of the space",
+                      "type": "string"
+                    },
+                    "usages": {
+                      "description": "List of space usages in the platform",
+                      "items": {
+                        "properties": {
+                          "courseId": {
+                            "description": "Unique identifier of the course the space is used",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "Type of usage location",
+                            "enum": [
+                              "ebook"
+                            ]
+                          },
+                          "unitId": {
+                            "description": "Unique identifier of the unit the space is used",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "title": "CommunitySpace",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/community/spaces/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-v2-community-spaces-id",
+        "parameters": [
+          {
+            "description": "Unique identifier of the community space",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "examples": [
+                    {
+                      "access": "public",
+                      "collectionId": "61bb42d5e07e202700000002",
+                      "description": "",
+                      "hidden_from_community": false,
+                      "id": "6515547042ec743dcc078988",
+                      "is_invitation_required": true,
+                      "is_members_allowed_to_view_members": true,
+                      "owner": {
+                        "id": "5be0561d43c90b171a8b4567",
+                        "username": "admin"
+                      },
+                      "title": "Space",
+                      "usages": [
+                        {
+                          "componentId": "component_1701798094804_337",
+                          "courseId": "a-course",
+                          "type": "ebook",
+                          "unitId": "656f0d27f9f5416317015124"
+                        }
+                      ]
+                    }
+                  ],
+                  "properties": {
+                    "access": {
+                      "description": "Access type of the space\n",
+                      "enum": [
+                        "public",
+                        "private",
+                        "standalone"
+                      ]
+                    },
+                    "collectionId": {
+                      "description": "Unique identifier of the collection under which the space is displayed",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "Description of the space",
+                      "type": "string"
+                    },
+                    "hidden_from_community": {
+                      "description": "Indication about whether the space is visible in the community",
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "description": "Unique identifier of the space",
+                      "type": "string"
+                    },
+                    "is_invitation_required": {
+                      "description": "Indication about whether users are sent an invitation to join or are directly added to space\n",
+                      "type": "boolean"
+                    },
+                    "is_members_allowed_to_view_members": {
+                      "description": "Indication about whether users can view other users in space",
+                      "type": "boolean"
+                    },
+                    "owner": {
+                      "description": "Information about the space owner",
+                      "properties": {
+                        "id": {
+                          "description": "The id of the creator of the space\n",
+                          "type": "string"
+                        },
+                        "username": {
+                          "description": "The username of the creator of the space\n",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "title": {
+                      "description": "Name of the space",
+                      "type": "string"
+                    },
+                    "usages": {
+                      "description": "List of space usages in the platform",
+                      "items": {
+                        "properties": {
+                          "courseId": {
+                            "description": "Unique identifier of the course the space is used",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "Type of usage location",
+                            "enum": [
+                              "ebook"
+                            ]
+                          },
+                          "unitId": {
+                            "description": "Unique identifier of the unit the space is used",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "title": "CommunitySpace",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "PUT /v2/community/spaces/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "put-v2-community-spaces-id",
+        "parameters": [
+          {
+            "description": "Unique identifier of the community space",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "description": "Description updated",
+                    "hidden_from_community": false,
+                    "is_invitation_required": false,
+                    "is_members_allowed_to_view_members": true,
+                    "title": "Space updated"
+                  }
+                }
+              },
+              "schema": {
+                "properties": {
+                  "description": {
+                    "description": "Description of the space",
+                    "type": "string"
+                  },
+                  "hidden_from_community": {
+                    "description": "Indication whether the space is hidden from community",
+                    "type": "boolean"
+                  },
+                  "is_invitation_required": {
+                    "description": "Indication whether users are sent an invitation to join or are directly added to space\n",
+                    "type": "boolean"
+                  },
+                  "is_members_allowed_to_view_members": {
+                    "description": "Indication whether users can view other users in space\n",
+                    "type": "boolean"
+                  },
+                  "title": {
+                    "description": "Title of the space",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "examples": [
+                    {
+                      "access": "public",
+                      "collectionId": "61bb42d5e07e202700000002",
+                      "description": "",
+                      "hidden_from_community": false,
+                      "id": "6515547042ec743dcc078988",
+                      "is_invitation_required": true,
+                      "is_members_allowed_to_view_members": true,
+                      "owner": {
+                        "id": "5be0561d43c90b171a8b4567",
+                        "username": "admin"
+                      },
+                      "title": "Space",
+                      "usages": [
+                        {
+                          "componentId": "component_1701798094804_337",
+                          "courseId": "a-course",
+                          "type": "ebook",
+                          "unitId": "656f0d27f9f5416317015124"
+                        }
+                      ]
+                    }
+                  ],
+                  "properties": {
+                    "access": {
+                      "description": "Access type of the space\n",
+                      "enum": [
+                        "public",
+                        "private",
+                        "standalone"
+                      ]
+                    },
+                    "collectionId": {
+                      "description": "Unique identifier of the collection under which the space is displayed",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "Description of the space",
+                      "type": "string"
+                    },
+                    "hidden_from_community": {
+                      "description": "Indication about whether the space is visible in the community",
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "description": "Unique identifier of the space",
+                      "type": "string"
+                    },
+                    "is_invitation_required": {
+                      "description": "Indication about whether users are sent an invitation to join or are directly added to space\n",
+                      "type": "boolean"
+                    },
+                    "is_members_allowed_to_view_members": {
+                      "description": "Indication about whether users can view other users in space",
+                      "type": "boolean"
+                    },
+                    "owner": {
+                      "description": "Information about the space owner",
+                      "properties": {
+                        "id": {
+                          "description": "The id of the creator of the space\n",
+                          "type": "string"
+                        },
+                        "username": {
+                          "description": "The username of the creator of the space\n",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "title": {
+                      "description": "Name of the space",
+                      "type": "string"
+                    },
+                    "usages": {
+                      "description": "List of space usages in the platform",
+                      "items": {
+                        "properties": {
+                          "courseId": {
+                            "description": "Unique identifier of the course the space is used",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "Type of usage location",
+                            "enum": [
+                              "ebook"
+                            ]
+                          },
+                          "unitId": {
+                            "description": "Unique identifier of the unit the space is used",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "title": "CommunitySpace",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

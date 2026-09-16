@@ -37,14 +37,15 @@ class EventLogEntity extends LearnworldsEntityBase<EventLog> {
 
 
 
-  async list(this: any, reqmatch?: EventLogListMatch, ctrl?: Control): Promise<EventLog[]> {
+  async list(this: any, reqmatch?: EventLogListMatch, ctrl?: Control): Promise<EventLogEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,

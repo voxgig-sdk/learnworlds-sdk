@@ -37,14 +37,15 @@ class ReportingEntity extends LearnworldsEntityBase<Reporting> {
 
 
 
-  async list(this: any, reqmatch?: ReportingListMatch, ctrl?: Control): Promise<Reporting[]> {
+  async list(this: any, reqmatch?: ReportingListMatch, ctrl?: Control): Promise<ReportingEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,

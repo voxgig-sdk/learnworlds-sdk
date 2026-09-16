@@ -3,51 +3,51 @@
     "subscription_plan": {
       "SUBSCRIPTION_PLAN00": {
         "access": "s8c",
-        "after_purchase": {},
+        "afterPurchase": {},
         "created": 142,
         "description": "s8f",
         "id": "SUBSCRIPTION_PLAN00",
         "image": "s91",
-        "interval": "s92",
+        "interval": 146,
         "interval_type": "s93",
         "modified": 148,
         "price": 149,
-        "product": {},
-        "stripe_plan_id": "STRIPE_PLAN01",
+        "products": {},
+        "stripePlanId": "s97",
         "title": "s98",
-        "trial_period_day": "s99"
+        "trial_period_days": 153
       },
       "SUBSCRIPTION_PLAN01": {
         "access": "s118",
-        "after_purchase": {},
+        "afterPurchase": {},
         "created": 282,
         "description": "s11b",
         "id": "SUBSCRIPTION_PLAN01",
         "image": "s11d",
-        "interval": "s11e",
+        "interval": 286,
         "interval_type": "s11f",
         "modified": 288,
         "price": 289,
-        "product": {},
-        "stripe_plan_id": "STRIPE_PLAN01",
+        "products": {},
+        "stripePlanId": "s123",
         "title": "s124",
-        "trial_period_day": "s125"
+        "trial_period_days": 293
       },
       "SUBSCRIPTION_PLAN02": {
         "access": "s1a4",
-        "after_purchase": {},
+        "afterPurchase": {},
         "created": 422,
         "description": "s1a7",
         "id": "SUBSCRIPTION_PLAN02",
         "image": "s1a9",
-        "interval": "s1aa",
+        "interval": 426,
         "interval_type": "s1ab",
         "modified": 428,
         "price": 429,
-        "product": {},
-        "stripe_plan_id": "STRIPE_PLAN01",
+        "products": {},
+        "stripePlanId": "s1af",
         "title": "s1b0",
-        "trial_period_day": "s1b1"
+        "trial_period_days": 433
       }
     }
   },
@@ -55,18 +55,515 @@
     "subscription_plan": {
       "subscription_plan_ref01": {
         "access": "s230",
-        "after_purchase": {},
+        "afterPurchase": {},
         "created": 562,
         "description": "s233",
         "image": "s235",
-        "interval": "s236",
+        "interval": 566,
         "interval_type": "s237",
         "modified": 568,
         "price": 569,
-        "product": {},
-        "stripe_plan_id": "STRIPE_PLAN01",
+        "products": {},
+        "stripePlanId": "s23b",
         "title": "s23c",
-        "trial_period_day": "s23d"
+        "trial_period_days": 573
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/subscription-plans": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-subscription-plans",
+        "parameters": [
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "access": "private",
+                          "afterPurchase": {
+                            "settings": {
+                              "page": "about",
+                              "url": null
+                            },
+                            "type": "afterlogin"
+                          },
+                          "created": 1602244399.894355,
+                          "description": "This is my api keys plan description",
+                          "id": "this-is-my-api-keys-plan",
+                          "image": "https://lwfilesdev.mycourse.app/dev-public/ce4c32bf2a60638146e18cecf8f9749d.jpeg",
+                          "interval": 1,
+                          "interval_type": "month",
+                          "modified": 1620636583.900941,
+                          "price": 100,
+                          "products": {
+                            "courses": [
+                              "10-secrets-of-sleep-walking"
+                            ]
+                          },
+                          "stripePlanId": "this-is-my-api-keys-plan",
+                          "title": "This is my api keys plan",
+                          "trial_period_days": 0
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 50,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "access": "private",
+                            "afterPurchase": {
+                              "settings": {
+                                "page": "about",
+                                "url": null
+                              },
+                              "type": "afterlogin"
+                            },
+                            "created": 1602244399.894355,
+                            "description": "This is my api keys plan description",
+                            "id": "this-is-my-api-keys-plan",
+                            "image": "https://lwfilesdev.mycourse.app/dev-public/ce4c32bf2a60638146e18cecf8f9749d.jpeg",
+                            "interval": 1,
+                            "interval_type": "month",
+                            "modified": 1620636583.900941,
+                            "price": 100,
+                            "products": {
+                              "courses": [
+                                "10-secrets-of-sleep-walking"
+                              ]
+                            },
+                            "stripePlanId": "this-is-my-api-keys-plan",
+                            "title": "This is my api keys plan",
+                            "trial_period_days": 0
+                          }
+                        ],
+                        "properties": {
+                          "access": {
+                            "description": "Access type of the subscription",
+                            "enum": [
+                              "private",
+                              "public",
+                              "soon",
+                              "view-locked"
+                            ],
+                            "type": "string"
+                          },
+                          "afterPurchase": {
+                            "description": "After purchase navigation settings for this subscription plan",
+                            "properties": {
+                              "settings": {
+                                "description": "After purchase navigation URL for this subscription: leading to a school page or a given URL",
+                                "properties": {
+                                  "page": {
+                                    "description": "Navigation to a specific school page",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "url": {
+                                    "description": "Navigation to a specific URL",
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": {
+                                "description": "Type of the after purchase navigation",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "created": {
+                            "description": "Date the subscription plan was created, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "description": {
+                            "description": "Description of the subscription",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "id": {
+                            "description": "Unique identifier of the subscription plan",
+                            "type": "string"
+                          },
+                          "image": {
+                            "description": "Subscription plan image (full URL)",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "interval": {
+                            "description": "Billing interval value",
+                            "type": "integer"
+                          },
+                          "interval_type": {
+                            "description": "Billing interval type",
+                            "enum": [
+                              "day",
+                              "week",
+                              "month"
+                            ],
+                            "type": "string"
+                          },
+                          "modified": {
+                            "description": "Date the subscription plan was modified for the last time, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "price": {
+                            "description": "Price of the subscription plan",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "products": {
+                            "description": "Products in the subsription",
+                            "properties": {
+                              "courses": {
+                                "description": "Unique identifier of each course",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "stripePlanId": {
+                            "description": "Stripe's plan Id",
+                            "type": "string"
+                          },
+                          "title": {
+                            "description": "Title of the subscription plan",
+                            "type": "string"
+                          },
+                          "trial_period_days": {
+                            "description": "Number of days the trial subscription plan lasts",
+                            "type": "integer"
+                          }
+                        },
+                        "title": "",
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/subscription-plans/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-subscription-plans-id",
+        "parameters": [
+          {
+            "description": "Subscription plan Id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "access": "private",
+                      "afterPurchase": {
+                        "settings": {
+                          "page": "about",
+                          "url": null
+                        },
+                        "type": "afterlogin"
+                      },
+                      "created": 1602244399.894355,
+                      "description": "This is my api keys plan description",
+                      "id": "this-is-my-api-keys-plan",
+                      "image": "https://lwfilesdev.mycourse.app/dev-public/ce4c32bf2a60638146e18cecf8f9749d.jpeg",
+                      "interval": 1,
+                      "interval_type": "month",
+                      "modified": 1620636583.900941,
+                      "price": 100,
+                      "products": {
+                        "courses": [
+                          "10-secrets-of-sleep-walking"
+                        ]
+                      },
+                      "stripePlanId": "this-is-my-api-keys-plan",
+                      "title": "This is my api keys plan",
+                      "trial_period_days": 0
+                    }
+                  }
+                },
+                "schema": {
+                  "description": "",
+                  "examples": [
+                    {
+                      "access": "private",
+                      "afterPurchase": {
+                        "settings": {
+                          "page": "about",
+                          "url": null
+                        },
+                        "type": "afterlogin"
+                      },
+                      "created": 1602244399.894355,
+                      "description": "This is my api keys plan description",
+                      "id": "this-is-my-api-keys-plan",
+                      "image": "https://lwfilesdev.mycourse.app/dev-public/ce4c32bf2a60638146e18cecf8f9749d.jpeg",
+                      "interval": 1,
+                      "interval_type": "month",
+                      "modified": 1620636583.900941,
+                      "price": 100,
+                      "products": {
+                        "courses": [
+                          "10-secrets-of-sleep-walking"
+                        ]
+                      },
+                      "stripePlanId": "this-is-my-api-keys-plan",
+                      "title": "This is my api keys plan",
+                      "trial_period_days": 0
+                    }
+                  ],
+                  "properties": {
+                    "access": {
+                      "description": "Access type of the subscription",
+                      "enum": [
+                        "private",
+                        "public",
+                        "soon",
+                        "view-locked"
+                      ],
+                      "type": "string"
+                    },
+                    "afterPurchase": {
+                      "description": "After purchase navigation settings for this subscription plan",
+                      "properties": {
+                        "settings": {
+                          "description": "After purchase navigation URL for this subscription: leading to a school page or a given URL",
+                          "properties": {
+                            "page": {
+                              "description": "Navigation to a specific school page",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "url": {
+                              "description": "Navigation to a specific URL",
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": {
+                          "description": "Type of the after purchase navigation",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "created": {
+                      "description": "Date the subscription plan was created, in UNIX timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "description": {
+                      "description": "Description of the subscription",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "description": "Unique identifier of the subscription plan",
+                      "type": "string"
+                    },
+                    "image": {
+                      "description": "Subscription plan image (full URL)",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "interval": {
+                      "description": "Billing interval value",
+                      "type": "integer"
+                    },
+                    "interval_type": {
+                      "description": "Billing interval type",
+                      "enum": [
+                        "day",
+                        "week",
+                        "month"
+                      ],
+                      "type": "string"
+                    },
+                    "modified": {
+                      "description": "Date the subscription plan was modified for the last time, in UNIX timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "price": {
+                      "description": "Price of the subscription plan",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "products": {
+                      "description": "Products in the subsription",
+                      "properties": {
+                        "courses": {
+                          "description": "Unique identifier of each course",
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "stripePlanId": {
+                      "description": "Stripe's plan Id",
+                      "type": "string"
+                    },
+                    "title": {
+                      "description": "Title of the subscription plan",
+                      "type": "string"
+                    },
+                    "trial_period_days": {
+                      "description": "Number of days the trial subscription plan lasts",
+                      "type": "integer"
+                    }
+                  },
+                  "title": "",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

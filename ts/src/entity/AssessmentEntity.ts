@@ -37,14 +37,15 @@ class AssessmentEntity extends LearnworldsEntityBase<Assessment> {
 
 
 
-  async list(this: any, reqmatch?: AssessmentListMatch, ctrl?: Control): Promise<Assessment[]> {
+  async list(this: any, reqmatch?: AssessmentListMatch, ctrl?: Control): Promise<AssessmentEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,

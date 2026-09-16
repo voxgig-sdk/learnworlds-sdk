@@ -4,6 +4,11 @@ import { getprop } from './utility/StructUtility'
 
 class Point {
   args: { params: any[] }
+  // Transport this point speaks: 'http' (default) or 'graphql'. GraphQL
+  // points carry their operation document in `graphql` and address the
+  // single endpoint, so method is always POST and parts is empty.
+  kind: string
+  graphql?: any
   rename: { params: Record<string, string> }
   method: string
   orig: string
@@ -17,13 +22,17 @@ class Point {
 
   constructor(altmap: Record<string, any>) {
     this.args = getprop(altmap, 'args', { params: [] })
+    this.kind = getprop(altmap, 'kind', 'http')
+    this.graphql = getprop(altmap, 'graphql')
     this.rename = getprop(altmap, 'rename', { params: {} })
     this.method = getprop(altmap, 'method', '')
     this.orig = getprop(altmap, 'orig', '')
     this.parts = getprop(altmap, 'parts', [])
     this.params = getprop(altmap, 'params', [])
     this.select = getprop(altmap, 'select')
-    this.active = getprop(altmap, 'active', false)
+    // Absent in config means ACTIVE: emission drops `active: true` as a default
+    // (sdkgen L0), so only an explicit `active: false` turns a point off.
+    this.active = getprop(altmap, 'active', true)
     this.relations = getprop(altmap, 'relations', [])
     this.alias = getprop(altmap, 'alias', {})
     this.transform = getprop(altmap, 'transform', { req: undefined, res: undefined })

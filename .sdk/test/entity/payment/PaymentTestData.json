@@ -10,12 +10,12 @@
         "expires_at": 245,
         "gateway": "sf6",
         "id": "PAYMENT00",
-        "instructor": [],
+        "instructors": [],
         "instructors_total_percentage": "sf9",
         "invoice": "sfa",
         "paid_at": "sfb",
         "payment_plan_current_payment": "sfc",
-        "payment_plan_total_payment": "sfd",
+        "payment_plan_total_payments": "sfd",
         "period": "sfe",
         "price": 255,
         "product": {},
@@ -36,12 +36,12 @@
         "expires_at": 485,
         "gateway": "s1e6",
         "id": "PAYMENT01",
-        "instructor": [],
+        "instructors": [],
         "instructors_total_percentage": "s1e9",
         "invoice": "s1ea",
         "paid_at": "s1eb",
         "payment_plan_current_payment": "s1ec",
-        "payment_plan_total_payment": "s1ed",
+        "payment_plan_total_payments": "s1ed",
         "period": "s1ee",
         "price": 495,
         "product": {},
@@ -62,12 +62,12 @@
         "expires_at": 725,
         "gateway": "s2d6",
         "id": "PAYMENT02",
-        "instructor": [],
+        "instructors": [],
         "instructors_total_percentage": "s2d9",
         "invoice": "s2da",
         "paid_at": "s2db",
         "payment_plan_current_payment": "s2dc",
-        "payment_plan_total_payment": "s2dd",
+        "payment_plan_total_payments": "s2dd",
         "period": "s2de",
         "price": 735,
         "product": {},
@@ -91,12 +91,12 @@
         "discount": 964,
         "expires_at": 965,
         "gateway": "s3c6",
-        "instructor": [],
+        "instructors": [],
         "instructors_total_percentage": "s3c9",
         "invoice": "s3ca",
         "paid_at": "s3cb",
         "payment_plan_current_payment": "s3cc",
-        "payment_plan_total_payment": "s3cd",
+        "payment_plan_total_payments": "s3cd",
         "period": "s3ce",
         "price": 975,
         "product": {},
@@ -107,6 +107,1000 @@
         "type": "s3d5",
         "url": "s3d6",
         "user_id": "USER01"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/payments": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-transactions",
+        "parameters": [
+          {
+            "description": "Filter by product type",
+            "in": "query",
+            "name": "product_type",
+            "schema": {
+              "enum": [
+                "course",
+                "bundle",
+                "subscription"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by user id or email (encoded string)",
+            "in": "query",
+            "name": "user_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by affiliate id or email (encoded string)",
+            "in": "query",
+            "name": "affiliate_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by product id",
+            "in": "query",
+            "name": "product_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Filter by the items per page number",
+            "in": "query",
+            "name": "items_per_page",
+            "schema": {
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Filter by payment creation before the given datetime (expected in UNIX timestamp format)",
+            "in": "query",
+            "name": "created_before",
+            "schema": {
+              "example": 1626852950,
+              "type": "number"
+            }
+          },
+          {
+            "description": "Filter by payment creation after the given datetime (expected in UNIX timestamp format)",
+            "in": "query",
+            "name": "created_after",
+            "schema": {
+              "example": 1626854780,
+              "type": "number"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "affiliate": {
+                            "code": "BOwVnd",
+                            "commission_amount": 10,
+                            "commission_percentage": 10,
+                            "id": "5a6f1e5a43c90b15208b4571",
+                            "payment_status": "paid",
+                            "username": "jondoe"
+                          },
+                          "billing_info": {
+                            "bf_address": "Baker Street 221B",
+                            "bf_city": "London",
+                            "bf_country": "UK",
+                            "bf_name": "Sherlock Holmes",
+                            "bf_postalcode": "NW1",
+                            "bf_taxid": null
+                          },
+                          "coupon": null,
+                          "created": 1626852950,
+                          "discount": 0,
+                          "gateway": "stripe",
+                          "id": "60fa9afd0436534ae177b072",
+                          "instructors": [
+                            {
+                              "id": "5a323b4f43c90b78098b456b",
+                              "percentage": 0.2
+                            },
+                            {
+                              "id": "5acc9b3743c90b1b098b4568",
+                              "percentage": 0.1
+                            }
+                          ],
+                          "instructors_total_percentage": 0.3,
+                          "invoice": null,
+                          "paid_at": 1626852950,
+                          "payment_plan_current_payment": null,
+                          "payment_plan_total_payments": null,
+                          "period": null,
+                          "price": 100,
+                          "product": {
+                            "description": "A Great Guide to master your nightmares",
+                            "discount_price": 0,
+                            "final_price": 32,
+                            "id": "the-complete-nightmare-guide",
+                            "image": "https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg",
+                            "name": "The complete nightmare Guide",
+                            "original_price": 32,
+                            "trial_days": 0,
+                            "type": "course"
+                          },
+                          "refund_at": null,
+                          "tax_amount": 0,
+                          "tax_percentage": 0,
+                          "transaction_id": "Added by admin",
+                          "type": "one-off",
+                          "user_id": "5ea18eee1d2c27438d61abe2"
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 50,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "affiliate": {
+                              "code": "BOwVnd",
+                              "commission_amount": 10,
+                              "commission_percentage": 10,
+                              "id": "5a6f1e5a43c90b15208b4571",
+                              "payment_status": "paid",
+                              "username": "jondoe"
+                            },
+                            "billing_info": {
+                              "bf_address": "Baker Street 221B",
+                              "bf_city": "London",
+                              "bf_country": "UK",
+                              "bf_name": "Sherlock Holmes",
+                              "bf_postalcode": "NW1",
+                              "bf_taxid": null
+                            },
+                            "coupon": null,
+                            "created": 1626852950,
+                            "discount": 0,
+                            "gateway": "stripe",
+                            "id": "60fa9afd0436534ae177b072",
+                            "instructors": [
+                              {
+                                "id": "5a323b4f43c90b78098b456b",
+                                "percentage": 0.2
+                              },
+                              {
+                                "id": "5acc9b3743c90b1b098b4568",
+                                "percentage": 0.1
+                              }
+                            ],
+                            "instructors_total_percentage": 0.3,
+                            "invoice": null,
+                            "paid_at": 1626852950,
+                            "payment_plan_current_payment": null,
+                            "payment_plan_total_payments": null,
+                            "period": null,
+                            "price": 100,
+                            "product": {
+                              "description": "A Great Guide to master your nightmares",
+                              "discount_price": 0,
+                              "final_price": 32,
+                              "id": "the-complete-nightmare-guide",
+                              "image": "https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg",
+                              "name": "The complete nightmare Guide",
+                              "original_price": 32,
+                              "trial_days": 0,
+                              "type": "course"
+                            },
+                            "refund_at": null,
+                            "tax_amount": 0,
+                            "tax_percentage": 0,
+                            "transaction_id": "Added by admin",
+                            "type": "one-off",
+                            "user_id": "5ea18eee1d2c27438d61abe2"
+                          }
+                        ],
+                        "properties": {
+                          "affiliate": {
+                            "description": "Related affiliate data",
+                            "properties": {
+                              "code": {
+                                "description": "Affiliate code",
+                                "type": "string"
+                              },
+                              "commission_amount": {
+                                "description": "Αffiliate commission amount",
+                                "format": "float",
+                                "type": "number"
+                              },
+                              "commission_percentage": {
+                                "description": "Affiliate commission (%)",
+                                "format": "float",
+                                "type": "number"
+                              },
+                              "id": {
+                                "description": "Unique identifier of the affiliate",
+                                "type": "string"
+                              },
+                              "payment_status": {
+                                "description": "Status of the affiliation pay",
+                                "enum": [
+                                  "new",
+                                  "approved",
+                                  "mature",
+                                  "paid",
+                                  "rejected"
+                                ],
+                                "type": "string"
+                              },
+                              "username": {
+                                "description": "Affiliate username",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "billing_info": {
+                            "description": "Billing info of the payment",
+                            "type": [
+                              "null",
+                              "object"
+                            ]
+                          },
+                          "coupon": {
+                            "description": "Coupon code",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "created": {
+                            "description": "Datetime of the payment was created, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "discount": {
+                            "description": "Discount of the payment",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "gateway": {
+                            "description": "Payment gateway name",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "id": {
+                            "description": "Unique identifier of the payment",
+                            "type": "string"
+                          },
+                          "instructors": {
+                            "description": "Related instructor data",
+                            "items": {
+                              "properties": {
+                                "id": {
+                                  "description": "Unique identifiers of the instructor",
+                                  "type": "string"
+                                },
+                                "percentage": {
+                                  "description": "Percentage of the revenue for the instructor",
+                                  "format": "float",
+                                  "type": [
+                                    "null",
+                                    "number"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "instructors_total_percentage": {
+                            "description": "Total percentage of the revenue for the instructor",
+                            "format": "float",
+                            "type": [
+                              "null",
+                              "number"
+                            ]
+                          },
+                          "invoice": {
+                            "description": "Invoice identifier",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "paid_at": {
+                            "description": "Payment date, in UNIX timestamp format",
+                            "format": "float",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "payment_plan_current_payment": {
+                            "description": "Current payment number of payment plan",
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "payment_plan_total_payments": {
+                            "description": "Total payments number of payment plan",
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "period": {
+                            "description": "Payment plan period",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "price": {
+                            "description": "Price of the payment",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "product": {
+                            "description": "Related product data",
+                            "properties": {
+                              "description": {
+                                "description": "Description of the product",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "discount_price": {
+                                "description": "Discount price of the product",
+                                "format": "float",
+                                "type": "number"
+                              },
+                              "final_price": {
+                                "description": "Final price of the product",
+                                "format": "float",
+                                "type": "number"
+                              },
+                              "id": {
+                                "description": "Unique identifier of the product",
+                                "type": "string"
+                              },
+                              "image": {
+                                "description": "Image url of the product",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "name": {
+                                "description": "Name of the product",
+                                "type": "string"
+                              },
+                              "original_price": {
+                                "description": "Original price of the product",
+                                "format": "float",
+                                "type": "number"
+                              },
+                              "trial_days": {
+                                "description": "Specified trial days of the product",
+                                "type": "integer"
+                              },
+                              "type": {
+                                "description": "Type of the product",
+                                "enum": [
+                                  "course",
+                                  "bundle",
+                                  "subscription"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "refund_at": {
+                            "description": "Refund date, in UNIX timestamp format",
+                            "format": "float",
+                            "type": [
+                              "null",
+                              "number"
+                            ]
+                          },
+                          "tax_amount": {
+                            "description": "Tax amount of the payment",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "tax_percentage": {
+                            "description": "Tax percentage of the payment",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "transaction_id": {
+                            "description": "Transaction id of the payment",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "Type of the payment",
+                            "enum": [
+                              "subscription",
+                              "installment",
+                              "one-off"
+                            ],
+                            "type": "string"
+                          },
+                          "user_id": {
+                            "description": "Unique identifier of the user",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/payments/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-transactions-id",
+        "parameters": [
+          {
+            "description": "Payment Id or Transaction id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "affiliate": {
+                        "code": "BOwVnd",
+                        "commission_amount": 10,
+                        "commission_percentage": 10,
+                        "id": "5a6f1e5a43c90b15208b4571",
+                        "payment_status": "paid",
+                        "username": "jondoe"
+                      },
+                      "coupon": null,
+                      "created": 1626852950,
+                      "discount": 0,
+                      "gateway": "stripe",
+                      "id": "60fa9afd0436534ae177b072",
+                      "instructors": [
+                        "5a323b4f43c90b78098b456b",
+                        "5acc9b3743c90b1b098b4568"
+                      ],
+                      "instructors_total_percentage": 0.3,
+                      "invoice": null,
+                      "paid_at": 1626852950,
+                      "payment_plan_current_payment": null,
+                      "payment_plan_total_payments": null,
+                      "period": null,
+                      "price": 100,
+                      "product": {
+                        "description": "A Great Guide to master your nightmares",
+                        "discount_price": 0,
+                        "final_price": 32,
+                        "id": "the-complete-nightmare-guide",
+                        "image": "https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg",
+                        "name": "The complete nightmare Guide",
+                        "original_price": 32,
+                        "trial_days": 0,
+                        "type": "course"
+                      },
+                      "refund_at": null,
+                      "tax_amount": 0,
+                      "tax_percentage": 0,
+                      "transaction_id": "Added by admin",
+                      "type": "one-off",
+                      "user_id": "5ea18eee1d2c27438d61abe2"
+                    }
+                  }
+                },
+                "schema": {
+                  "description": "",
+                  "examples": [
+                    {
+                      "affiliate": {
+                        "code": "BOwVnd",
+                        "commission_amount": 10,
+                        "commission_percentage": 10,
+                        "id": "5a6f1e5a43c90b15208b4571",
+                        "payment_status": "paid",
+                        "username": "jondoe"
+                      },
+                      "billing_info": {
+                        "bf_address": "Baker Street 221B",
+                        "bf_city": "London",
+                        "bf_country": "UK",
+                        "bf_name": "Sherlock Holmes",
+                        "bf_postalcode": "NW1",
+                        "bf_taxid": null
+                      },
+                      "coupon": null,
+                      "created": 1626852950,
+                      "discount": 0,
+                      "gateway": "stripe",
+                      "id": "60fa9afd0436534ae177b072",
+                      "instructors": [
+                        {
+                          "id": "5a323b4f43c90b78098b456b",
+                          "percentage": 0.2
+                        },
+                        {
+                          "id": "5acc9b3743c90b1b098b4568",
+                          "percentage": 0.1
+                        }
+                      ],
+                      "instructors_total_percentage": 0.3,
+                      "invoice": null,
+                      "paid_at": 1626852950,
+                      "payment_plan_current_payment": null,
+                      "payment_plan_total_payments": null,
+                      "period": null,
+                      "price": 100,
+                      "product": {
+                        "description": "A Great Guide to master your nightmares",
+                        "discount_price": 0,
+                        "final_price": 32,
+                        "id": "the-complete-nightmare-guide",
+                        "image": "https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg",
+                        "name": "The complete nightmare Guide",
+                        "original_price": 32,
+                        "trial_days": 0,
+                        "type": "course"
+                      },
+                      "refund_at": null,
+                      "tax_amount": 0,
+                      "tax_percentage": 0,
+                      "transaction_id": "Added by admin",
+                      "type": "one-off",
+                      "user_id": "5ea18eee1d2c27438d61abe2"
+                    }
+                  ],
+                  "properties": {
+                    "affiliate": {
+                      "description": "Related affiliate data",
+                      "properties": {
+                        "code": {
+                          "description": "Affiliate code",
+                          "type": "string"
+                        },
+                        "commission_amount": {
+                          "description": "Αffiliate commission amount",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "commission_percentage": {
+                          "description": "Affiliate commission (%)",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "id": {
+                          "description": "Unique identifier of the affiliate",
+                          "type": "string"
+                        },
+                        "payment_status": {
+                          "description": "Status of the affiliation pay",
+                          "enum": [
+                            "new",
+                            "approved",
+                            "mature",
+                            "paid",
+                            "rejected"
+                          ],
+                          "type": "string"
+                        },
+                        "username": {
+                          "description": "Affiliate username",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "billing_info": {
+                      "description": "Billing info of the payment",
+                      "type": [
+                        "null",
+                        "object"
+                      ]
+                    },
+                    "coupon": {
+                      "description": "Coupon code",
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "created": {
+                      "description": "Datetime of the payment was created, in UNIX timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "discount": {
+                      "description": "Discount of the payment",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "gateway": {
+                      "description": "Payment gateway name",
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "id": {
+                      "description": "Unique identifier of the payment",
+                      "type": "string"
+                    },
+                    "instructors": {
+                      "description": "Related instructor data",
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "description": "Unique identifiers of the instructor",
+                            "type": "string"
+                          },
+                          "percentage": {
+                            "description": "Percentage of the revenue for the instructor",
+                            "format": "float",
+                            "type": [
+                              "null",
+                              "number"
+                            ]
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "instructors_total_percentage": {
+                      "description": "Total percentage of the revenue for the instructor",
+                      "format": "float",
+                      "type": [
+                        "null",
+                        "number"
+                      ]
+                    },
+                    "invoice": {
+                      "description": "Invoice identifier",
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "paid_at": {
+                      "description": "Payment date, in UNIX timestamp format",
+                      "format": "float",
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "payment_plan_current_payment": {
+                      "description": "Current payment number of payment plan",
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "payment_plan_total_payments": {
+                      "description": "Total payments number of payment plan",
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "period": {
+                      "description": "Payment plan period",
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "price": {
+                      "description": "Price of the payment",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "product": {
+                      "description": "Related product data",
+                      "properties": {
+                        "description": {
+                          "description": "Description of the product",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "discount_price": {
+                          "description": "Discount price of the product",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "final_price": {
+                          "description": "Final price of the product",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "id": {
+                          "description": "Unique identifier of the product",
+                          "type": "string"
+                        },
+                        "image": {
+                          "description": "Image url of the product",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "name": {
+                          "description": "Name of the product",
+                          "type": "string"
+                        },
+                        "original_price": {
+                          "description": "Original price of the product",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "trial_days": {
+                          "description": "Specified trial days of the product",
+                          "type": "integer"
+                        },
+                        "type": {
+                          "description": "Type of the product",
+                          "enum": [
+                            "course",
+                            "bundle",
+                            "subscription"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "refund_at": {
+                      "description": "Refund date, in UNIX timestamp format",
+                      "format": "float",
+                      "type": [
+                        "null",
+                        "number"
+                      ]
+                    },
+                    "tax_amount": {
+                      "description": "Tax amount of the payment",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "tax_percentage": {
+                      "description": "Tax percentage of the payment",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "transaction_id": {
+                      "description": "Transaction id of the payment",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "Type of the payment",
+                      "enum": [
+                        "subscription",
+                        "installment",
+                        "one-off"
+                      ],
+                      "type": "string"
+                    },
+                    "user_id": {
+                      "description": "Unique identifier of the user",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [],
+        "securitySchemes": {},
+        "securitySource": "operation"
+      }
+    },
+    "GET /v2/payments/{id}/invoice-link": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-payments-id-invoice_link",
+        "parameters": [
+          {
+            "description": "Payment Id or Transaction id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "expires_at": 1631104180,
+                      "invoice": "00001",
+                      "url": "https://learnworldsdev.blob.core.windows.net/dev-private/invoices/invoice-00001-10-secrets-of-sleep-walking-5a006b8043c90b75078b4567.pdf?sv=2014-02-14&st=2021-09-08T12%3A28%3A40Z&se=2021-09-08T12%3A29%3A40Z&sr=b&sp=r&rscd=&sig=t6mq58yaMAcKRApYRiiBVMzppHOt5AObuMEFbvKxeKI%3D"
+                    }
+                  }
+                },
+                "schema": {
+                  "description": "",
+                  "properties": {
+                    "expires_at": {
+                      "description": "Date the invoice expires, in UNIX timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "invoice": {
+                      "description": "Invoice identifier",
+                      "type": "string"
+                    },
+                    "url": {
+                      "description": "Url of invoice",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

@@ -3,26 +3,26 @@
     "affiliate": {
       "AFFILIATE00": {
         "affiliate": {},
-        "affiliate_id": "AFFILIATE01",
+        "affiliateId": "s23b",
         "amount": 572,
         "billing_info": "s23d",
-        "click": "s23e",
+        "clicks": 574,
         "code": "s23f",
-        "commission": 576,
-        "commission_percentage": 577,
-        "completed_by": {},
+        "commission_percentage": 576,
+        "commissions": 577,
+        "completedBy": {},
         "coupon": "s243",
         "created": 580,
-        "customer": 581,
+        "customers": 581,
         "date": 582,
         "discount": 583,
         "due": 584,
         "email": "s249",
         "eu_customer": "s24a",
-        "field": {},
+        "fields": {},
         "gateway": "s24c",
         "id": "AFFILIATE00",
-        "instructor": [],
+        "instructors": [],
         "instructors_total_percentage": "s24f",
         "invoice": "s250",
         "is_admin": false,
@@ -31,16 +31,16 @@
         "is_reporter": true,
         "is_suspended": false,
         "last_login": "s256",
-        "lead": "s257",
+        "leads": 599,
         "nps_comment": "s258",
         "nps_score": "s259",
         "paid_at": "s25a",
-        "payment": [],
-        "payment_method": "s25c",
-        "payment_note": "s25d",
-        "payment_plan_current_payment": "s25e",
-        "payment_plan_total_payment": "s25f",
-        "payout": 608,
+        "paymentMethod": "s25b",
+        "paymentNotes": "s25c",
+        "payment_plan_current_payment": "s25d",
+        "payment_plan_total_payments": "s25e",
+        "payments": [],
+        "payouts": 608,
         "pending": 609,
         "period": "s262",
         "price": 611,
@@ -48,40 +48,40 @@
         "referrer_id": "REFERRER01",
         "refund_at": "s266",
         "role": {},
-        "sale": 616,
+        "sales": 616,
         "signup_approval_status": "s269",
-        "subscribed_for_marketing_email": "s26a",
-        "tag": [],
+        "subscribed_for_marketing_emails": "s26a",
+        "tags": [],
         "tax_amount": 620,
         "tax_percentage": 621,
         "transaction_id": "TRANSACTION01",
         "type": "s26f",
         "user_id": "USER01",
         "username": "s271",
-        "utm": {}
+        "utms": {}
       },
       "AFFILIATE01": {
         "affiliate": {},
-        "affiliate_id": "AFFILIATE01",
+        "affiliateId": "s475",
         "amount": 1142,
         "billing_info": "s477",
-        "click": "s478",
+        "clicks": 1144,
         "code": "s479",
-        "commission": 1146,
-        "commission_percentage": 1147,
-        "completed_by": {},
+        "commission_percentage": 1146,
+        "commissions": 1147,
+        "completedBy": {},
         "coupon": "s47d",
         "created": 1150,
-        "customer": 1151,
+        "customers": 1151,
         "date": 1152,
         "discount": 1153,
         "due": 1154,
         "email": "s483",
         "eu_customer": "s484",
-        "field": {},
+        "fields": {},
         "gateway": "s486",
         "id": "AFFILIATE01",
-        "instructor": [],
+        "instructors": [],
         "instructors_total_percentage": "s489",
         "invoice": "s48a",
         "is_admin": false,
@@ -90,16 +90,16 @@
         "is_reporter": true,
         "is_suspended": false,
         "last_login": "s490",
-        "lead": "s491",
+        "leads": 1169,
         "nps_comment": "s492",
         "nps_score": "s493",
         "paid_at": "s494",
-        "payment": [],
-        "payment_method": "s496",
-        "payment_note": "s497",
-        "payment_plan_current_payment": "s498",
-        "payment_plan_total_payment": "s499",
-        "payout": 1178,
+        "paymentMethod": "s495",
+        "paymentNotes": "s496",
+        "payment_plan_current_payment": "s497",
+        "payment_plan_total_payments": "s498",
+        "payments": [],
+        "payouts": 1178,
         "pending": 1179,
         "period": "s49c",
         "price": 1181,
@@ -107,40 +107,40 @@
         "referrer_id": "REFERRER01",
         "refund_at": "s4a0",
         "role": {},
-        "sale": 1186,
+        "sales": 1186,
         "signup_approval_status": "s4a3",
-        "subscribed_for_marketing_email": "s4a4",
-        "tag": [],
+        "subscribed_for_marketing_emails": "s4a4",
+        "tags": [],
         "tax_amount": 1190,
         "tax_percentage": 1191,
         "transaction_id": "TRANSACTION01",
         "type": "s4a9",
         "user_id": "USER01",
         "username": "s4ab",
-        "utm": {}
+        "utms": {}
       },
       "AFFILIATE02": {
         "affiliate": {},
-        "affiliate_id": "AFFILIATE01",
+        "affiliateId": "s6af",
         "amount": 1712,
         "billing_info": "s6b1",
-        "click": "s6b2",
+        "clicks": 1714,
         "code": "s6b3",
-        "commission": 1716,
-        "commission_percentage": 1717,
-        "completed_by": {},
+        "commission_percentage": 1716,
+        "commissions": 1717,
+        "completedBy": {},
         "coupon": "s6b7",
         "created": 1720,
-        "customer": 1721,
+        "customers": 1721,
         "date": 1722,
         "discount": 1723,
         "due": 1724,
         "email": "s6bd",
         "eu_customer": "s6be",
-        "field": {},
+        "fields": {},
         "gateway": "s6c0",
         "id": "AFFILIATE02",
-        "instructor": [],
+        "instructors": [],
         "instructors_total_percentage": "s6c3",
         "invoice": "s6c4",
         "is_admin": false,
@@ -149,16 +149,16 @@
         "is_reporter": true,
         "is_suspended": false,
         "last_login": "s6ca",
-        "lead": "s6cb",
+        "leads": 1739,
         "nps_comment": "s6cc",
         "nps_score": "s6cd",
         "paid_at": "s6ce",
-        "payment": [],
-        "payment_method": "s6d0",
-        "payment_note": "s6d1",
-        "payment_plan_current_payment": "s6d2",
-        "payment_plan_total_payment": "s6d3",
-        "payout": 1748,
+        "paymentMethod": "s6cf",
+        "paymentNotes": "s6d0",
+        "payment_plan_current_payment": "s6d1",
+        "payment_plan_total_payments": "s6d2",
+        "payments": [],
+        "payouts": 1748,
         "pending": 1749,
         "period": "s6d6",
         "price": 1751,
@@ -166,17 +166,17 @@
         "referrer_id": "REFERRER01",
         "refund_at": "s6da",
         "role": {},
-        "sale": 1756,
+        "sales": 1756,
         "signup_approval_status": "s6dd",
-        "subscribed_for_marketing_email": "s6de",
-        "tag": [],
+        "subscribed_for_marketing_emails": "s6de",
+        "tags": [],
         "tax_amount": 1760,
         "tax_percentage": 1761,
         "transaction_id": "TRANSACTION01",
         "type": "s6e3",
         "user_id": "USER01",
         "username": "s6e5",
-        "utm": {}
+        "utms": {}
       }
     }
   },
@@ -184,25 +184,25 @@
     "affiliate": {
       "affiliate_ref01": {
         "affiliate": {},
-        "affiliate_id": "AFFILIATE01",
+        "affiliateId": "s8e9",
         "amount": 2282,
         "billing_info": "s8eb",
-        "click": "s8ec",
+        "clicks": 2284,
         "code": "s8ed",
-        "commission": 2286,
-        "commission_percentage": 2287,
-        "completed_by": {},
+        "commission_percentage": 2286,
+        "commissions": 2287,
+        "completedBy": {},
         "coupon": "s8f1",
         "created": 2290,
-        "customer": 2291,
+        "customers": 2291,
         "date": 2292,
         "discount": 2293,
         "due": 2294,
         "email": "s8f7",
         "eu_customer": "s8f8",
-        "field": {},
+        "fields": {},
         "gateway": "s8fa",
-        "instructor": [],
+        "instructors": [],
         "instructors_total_percentage": "s8fd",
         "invoice": "s8fe",
         "is_admin": false,
@@ -211,16 +211,16 @@
         "is_reporter": true,
         "is_suspended": false,
         "last_login": "s904",
-        "lead": "s905",
+        "leads": 2309,
         "nps_comment": "s906",
         "nps_score": "s907",
         "paid_at": "s908",
-        "payment": [],
-        "payment_method": "s90a",
-        "payment_note": "s90b",
-        "payment_plan_current_payment": "s90c",
-        "payment_plan_total_payment": "s90d",
-        "payout": 2318,
+        "paymentMethod": "s909",
+        "paymentNotes": "s90a",
+        "payment_plan_current_payment": "s90b",
+        "payment_plan_total_payments": "s90c",
+        "payments": [],
+        "payouts": 2318,
         "pending": 2319,
         "period": "s910",
         "price": 2321,
@@ -228,17 +228,2927 @@
         "referrer_id": "REFERRER01",
         "refund_at": "s914",
         "role": {},
-        "sale": 2326,
+        "sales": 2326,
         "signup_approval_status": "s917",
-        "subscribed_for_marketing_email": "s918",
-        "tag": [],
+        "subscribed_for_marketing_emails": "s918",
+        "tags": [],
         "tax_amount": 2330,
         "tax_percentage": 2331,
         "transaction_id": "TRANSACTION01",
         "type": "s91d",
         "user_id": "USER01",
         "username": "s91f",
-        "utm": {}
+        "utms": {}
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/affiliates/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "post-affiliates-id",
+        "parameters": [
+          {
+            "description": "User Id or email (encoded string)",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "examples": [
+                  {
+                    "commission_percentage": 50.4,
+                    "paymentMethod": "paypal",
+                    "paymentNotes": "a note"
+                  }
+                ],
+                "properties": {
+                  "commission_percentage": {
+                    "default": 0,
+                    "description": "This is the percentage of the sale that goes to the affiliate. If set, the default affiliate program commission is overwritten.",
+                    "format": "float",
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "paymentMethod": {
+                    "default": "none",
+                    "description": "Payment method",
+                    "enum": [
+                      "paypal",
+                      "other",
+                      "bank_transfer",
+                      "none"
+                    ],
+                    "type": "string"
+                  },
+                  "paymentNotes": {
+                    "description": "Payment notes",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "clicks": 2,
+                          "code": "BOwVnd",
+                          "commission_percentage": 50.4,
+                          "commissions": 10,
+                          "customers": 2,
+                          "date": 1587639051.579715,
+                          "due": 0,
+                          "email": "test@learnworlds.com",
+                          "id": "5a6f1e5a43c90b15208b4571",
+                          "leads": 0,
+                          "paymentMethod": "paypal",
+                          "paymentNotes": "a note",
+                          "payouts": 0,
+                          "pending": 0,
+                          "sales": 100,
+                          "username": "test"
+                        }
+                      ],
+                      "properties": {
+                        "clicks": {
+                          "description": "Number of referral link clicks",
+                          "type": "integer"
+                        },
+                        "code": {
+                          "description": "Unique affiliate code",
+                          "type": "string"
+                        },
+                        "commission_percentage": {
+                          "description": "Percentage of the sale that goes to the affiliate",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "commissions": {
+                          "description": "Total commission amount ",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "customers": {
+                          "description": "Number of referred customers",
+                          "type": "number"
+                        },
+                        "date": {
+                          "description": "Datetime the affiliation was created, in UNIX timestamp format",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "due": {
+                          "description": "Total amount of due payouts",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "email": {
+                          "description": "Email of the user",
+                          "type": "string"
+                        },
+                        "id": {
+                          "description": "Unique identifier of the user",
+                          "type": "string"
+                        },
+                        "leads": {
+                          "description": "Number of leads",
+                          "type": "integer"
+                        },
+                        "paymentMethod": {
+                          "default": "none",
+                          "description": "Payment method",
+                          "enum": [
+                            "paypal",
+                            "other",
+                            "none",
+                            "bank_transfer"
+                          ],
+                          "type": [
+                            "null",
+                            "string"
+                          ]
+                        },
+                        "paymentNotes": {
+                          "description": "Payment notes",
+                          "type": [
+                            "null",
+                            "string"
+                          ]
+                        },
+                        "payouts": {
+                          "description": "Total amount of completed payouts",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "pending": {
+                          "description": "Total amount of upcoming payouts",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "sales": {
+                          "description": "Sales total amount",
+                          "format": "float",
+                          "type": "number"
+                        },
+                        "username": {
+                          "description": "Username of the user",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/affiliates/{id}/customers": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-affiliates-id-customers",
+        "parameters": [
+          {
+            "description": "Affiliate Id or email (encoded string)",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "billing_info": {
+                            "bf_address": "Baker Street 221B",
+                            "bf_city": "London",
+                            "bf_country": "UK",
+                            "bf_name": "Sherlock Holmes",
+                            "bf_postalcode": "NW1",
+                            "bf_taxid": null
+                          },
+                          "created": 1587639230.083278,
+                          "email": "testaffsearch@learnworlds.com",
+                          "eu_customer": false,
+                          "fields": {
+                            "address": null,
+                            "behance": null,
+                            "bio": null,
+                            "birthday": null,
+                            "cf_skill": "Personal trainer",
+                            "cf_studentlicence": "EA23123123",
+                            "company": null,
+                            "company_size": null,
+                            "country": null,
+                            "dribbble": null,
+                            "fb": null,
+                            "github": null,
+                            "graduation_year": null,
+                            "instagram": null,
+                            "linkedin": null,
+                            "location": null,
+                            "phone": null,
+                            "skype": null,
+                            "twitter": null,
+                            "university": null,
+                            "url": null
+                          },
+                          "id": "5ea173beca205e67b47f4552",
+                          "is_admin": false,
+                          "is_affiliate": false,
+                          "is_instructor": false,
+                          "is_reporter": false,
+                          "is_suspended": false,
+                          "last_login": 1587645977.964412,
+                          "nps_comment": "an nps comment by user",
+                          "nps_score": 8,
+                          "referrer_id": "5a6f1e5a43c90b15208b4571",
+                          "role": {
+                            "level": "user",
+                            "name": "User"
+                          },
+                          "signup_approval_status": "passed",
+                          "subscribed_for_marketing_emails": true,
+                          "tags": [
+                            "super-user",
+                            "fanboy",
+                            "just-signedup"
+                          ],
+                          "username": "testAffSearch@learnworlds.com",
+                          "utms": {
+                            "fc_country": null,
+                            "fc_landing": "/",
+                            "fc_referrer": null,
+                            "fc_utm_campaign": "WOW campaign",
+                            "fc_utm_content": null,
+                            "fc_utm_medium": "FB",
+                            "fc_utm_source": "Facebook",
+                            "fc_utm_term": null,
+                            "lc_country": null,
+                            "lc_landing": "/",
+                            "lc_referrer": null,
+                            "lc_utm_campaign": null,
+                            "lc_utm_content": null,
+                            "lc_utm_medium": null,
+                            "lc_utm_source": null,
+                            "lc_utm_term": null
+                          }
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 20,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "billing_info": {
+                              "bf_address": "Baker Street 221B",
+                              "bf_city": "London",
+                              "bf_country": "UK",
+                              "bf_name": "Sherlock Holmes",
+                              "bf_postalcode": "NW1",
+                              "bf_taxid": null
+                            },
+                            "created": 1587639230.083278,
+                            "email": "testaffsearch@learnworlds.com",
+                            "eu_customer": false,
+                            "fields": {
+                              "address": null,
+                              "behance": null,
+                              "bio": null,
+                              "birthday": null,
+                              "cf_skill": "Personal trainer",
+                              "cf_studentlicence": "EA23123123",
+                              "company": null,
+                              "company_size": null,
+                              "country": null,
+                              "dribbble": null,
+                              "fb": null,
+                              "github": null,
+                              "graduation_year": null,
+                              "instagram": null,
+                              "linkedin": null,
+                              "location": null,
+                              "phone": null,
+                              "skype": null,
+                              "twitter": null,
+                              "university": null,
+                              "url": null
+                            },
+                            "id": "5ea173beca205e67b47f4552",
+                            "is_admin": false,
+                            "is_affiliate": false,
+                            "is_instructor": false,
+                            "is_reporter": false,
+                            "is_suspended": false,
+                            "last_login": 1587645977.964412,
+                            "nps_comment": "an nps comment by user",
+                            "nps_score": 8,
+                            "referrer_id": "5a6f1e5a43c90b15208b4571",
+                            "role": {
+                              "level": "user",
+                              "name": "User"
+                            },
+                            "signup_approval_status": "passed",
+                            "subscribed_for_marketing_emails": true,
+                            "tags": [
+                              "super-user",
+                              "fanboy",
+                              "just-signedup"
+                            ],
+                            "username": "testAffSearch@learnworlds.com",
+                            "utms": {
+                              "fc_country": null,
+                              "fc_landing": "/",
+                              "fc_referrer": null,
+                              "fc_utm_campaign": "WOW campaign",
+                              "fc_utm_content": null,
+                              "fc_utm_medium": "FB",
+                              "fc_utm_source": "Facebook",
+                              "fc_utm_term": null,
+                              "lc_country": null,
+                              "lc_landing": "/",
+                              "lc_referrer": null,
+                              "lc_utm_campaign": null,
+                              "lc_utm_content": null,
+                              "lc_utm_medium": null,
+                              "lc_utm_source": null,
+                              "lc_utm_term": null
+                            }
+                          }
+                        ],
+                        "properties": {
+                          "billing_info": {
+                            "description": "Values of the billing info fields for this user",
+                            "type": [
+                              "object",
+                              "null"
+                            ]
+                          },
+                          "created": {
+                            "description": "Date the user was created, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "email": {
+                            "description": "Email account of the user",
+                            "type": "string"
+                          },
+                          "eu_customer": {
+                            "description": "Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.",
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "fields": {
+                            "description": "Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.",
+                            "properties": {
+                              "address": {
+                                "description": "User Address",
+                                "type": "string"
+                              },
+                              "behance": {
+                                "description": "User Behance URL",
+                                "type": "string"
+                              },
+                              "bio": {
+                                "description": "A short biography text",
+                                "type": "string"
+                              },
+                              "birthday": {
+                                "description": "User Birthday",
+                                "type": "string"
+                              },
+                              "company": {
+                                "description": "User Company",
+                                "type": "string"
+                              },
+                              "company_size": {
+                                "description": "User Company Size",
+                                "type": "string"
+                              },
+                              "country": {
+                                "description": "User Country",
+                                "type": "string"
+                              },
+                              "dribbble": {
+                                "description": "User Dribbble URL",
+                                "type": "string"
+                              },
+                              "fb": {
+                                "description": "User Facebook URL",
+                                "type": "string"
+                              },
+                              "github": {
+                                "description": "User Github URL",
+                                "type": "string"
+                              },
+                              "graduation_year": {
+                                "description": "User Graduation Year",
+                                "type": "string"
+                              },
+                              "instagram": {
+                                "description": "User Instagram URL",
+                                "type": "string"
+                              },
+                              "linkedin": {
+                                "description": "User Linkedin URL",
+                                "type": "string"
+                              },
+                              "location": {
+                                "description": "User location",
+                                "type": "string"
+                              },
+                              "phone": {
+                                "description": "User Phone",
+                                "type": "string"
+                              },
+                              "skype": {
+                                "description": "User Skype URL",
+                                "type": "string"
+                              },
+                              "twitter": {
+                                "description": "User Twitter URL",
+                                "type": "string"
+                              },
+                              "university": {
+                                "description": "User University",
+                                "type": "string"
+                              },
+                              "url": {
+                                "description": "User website URL",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "id": {
+                            "description": "Unique identifier of the user ",
+                            "type": "string"
+                          },
+                          "is_admin": {
+                            "description": "Indication about whether the user is an administrator of the school; true if she is, or false if she is not.",
+                            "type": "boolean"
+                          },
+                          "is_affiliate": {
+                            "description": "Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.",
+                            "type": "boolean"
+                          },
+                          "is_instructor": {
+                            "description": "Indication about whether the user is an instructor in the school; true if she is, or false if she is not.",
+                            "type": "boolean"
+                          },
+                          "is_reporter": {
+                            "description": "Indication about whether the user is an reporter in the school; true if she is, or false if she is not.",
+                            "type": "boolean"
+                          },
+                          "is_suspended": {
+                            "description": "Indication about whether the user is suspended in the school; true if she is, or false if she is not.",
+                            "type": "boolean"
+                          },
+                          "last_login": {
+                            "description": "Date of the last login of the user, in UNIX timestamp format",
+                            "format": "float",
+                            "type": [
+                              "null",
+                              "number"
+                            ]
+                          },
+                          "nps_comment": {
+                            "description": "The latest comment submitted by the user on the NPS form.",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "nps_score": {
+                            "description": "The latest NPS score submitted by the user. (1-10)",
+                            "example": 10,
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "referrer_id": {
+                            "description": "Unique user id of the referrer for this user",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "role": {
+                            "description": "Values of the role fields for this user",
+                            "properties": {
+                              "level": {
+                                "description": "Level of the role",
+                                "type": "string"
+                              },
+                              "name": {
+                                "description": "Name of the role",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "signup_approval_status": {
+                            "description": "User status regarding the Signup Approval flow",
+                            "enum": [
+                              "passed",
+                              "failed",
+                              "pending"
+                            ],
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "subscribed_for_marketing_emails": {
+                            "description": "Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.",
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "tags": {
+                            "description": "Array of the tags of the user",
+                            "items": {},
+                            "type": "array"
+                          },
+                          "username": {
+                            "description": "Username of the user",
+                            "type": "string"
+                          },
+                          "utms": {
+                            "description": "Values of the UTM fields for this user",
+                            "examples": [],
+                            "properties": {
+                              "fc_country": {
+                                "description": "First click country\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_landing": {
+                                "description": "First click landing\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_referrer": {
+                                "description": "First click referrer\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_utm_campaign": {
+                                "description": "First click campaign",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_utm_content": {
+                                "description": "First click content\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_utm_medium": {
+                                "description": "First click medium\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_utm_source": {
+                                "description": "First click source",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_utm_term": {
+                                "description": "First click term",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_country": {
+                                "description": "Last click country",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_landing": {
+                                "description": "Last click landing\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_referrer": {
+                                "description": "Last click referrer\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_utm_campaign": {
+                                "description": "Last click campaign",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_utm_content": {
+                                "description": "Last click content\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_utm_medium": {
+                                "description": "Last click medium",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_utm_source": {
+                                "description": "Last click source\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_utm_term": {
+                                "description": "Last click term",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "title": "utms",
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/affiliates/{id}/leads": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-affiliate-leads",
+        "parameters": [
+          {
+            "description": "Affiliate Id or email (encoded string)",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "billing_info": {
+                            "bf_address": "Baker Street 221B",
+                            "bf_city": "London",
+                            "bf_country": "UK",
+                            "bf_name": "Sherlock Holmes",
+                            "bf_postalcode": "NW1",
+                            "bf_taxid": null
+                          },
+                          "created": 1587639230.083278,
+                          "email": "testaffsearch@learnworlds.com",
+                          "eu_customer": false,
+                          "fields": {
+                            "address": null,
+                            "behance": null,
+                            "bio": null,
+                            "birthday": null,
+                            "cf_skill": "Personal trainer",
+                            "cf_studentlicence": "EA23123123",
+                            "company": null,
+                            "company_size": null,
+                            "country": null,
+                            "dribbble": null,
+                            "fb": null,
+                            "github": null,
+                            "graduation_year": null,
+                            "instagram": null,
+                            "linkedin": null,
+                            "location": null,
+                            "phone": null,
+                            "skype": null,
+                            "twitter": null,
+                            "university": null,
+                            "url": null
+                          },
+                          "id": "5ea173beca205e67b47f4552",
+                          "is_admin": false,
+                          "is_affiliate": false,
+                          "is_instructor": false,
+                          "is_reporter": false,
+                          "is_suspended": false,
+                          "last_login": 1587645977.964412,
+                          "nps_comment": "an nps comment by user",
+                          "nps_score": 8,
+                          "referrer_id": "5a6f1e5a43c90b15208b4571",
+                          "role": {
+                            "level": "user",
+                            "name": "User"
+                          },
+                          "signup_approval_status": "passed",
+                          "subscribed_for_marketing_emails": true,
+                          "tags": [
+                            "super-user",
+                            "fanboy",
+                            "just-signedup"
+                          ],
+                          "username": "testAffSearch@learnworlds.com",
+                          "utms": {
+                            "fc_country": null,
+                            "fc_landing": "/",
+                            "fc_referrer": null,
+                            "fc_utm_campaign": "WOW campaign",
+                            "fc_utm_content": null,
+                            "fc_utm_medium": "FB",
+                            "fc_utm_source": "Facebook",
+                            "fc_utm_term": null,
+                            "lc_country": null,
+                            "lc_landing": "/",
+                            "lc_referrer": null,
+                            "lc_utm_campaign": null,
+                            "lc_utm_content": null,
+                            "lc_utm_medium": null,
+                            "lc_utm_source": null,
+                            "lc_utm_term": null
+                          }
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 20,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "billing_info": {
+                              "bf_address": "Baker Street 221B",
+                              "bf_city": "London",
+                              "bf_country": "UK",
+                              "bf_name": "Sherlock Holmes",
+                              "bf_postalcode": "NW1",
+                              "bf_taxid": null
+                            },
+                            "created": 1587639230.083278,
+                            "email": "testaffsearch@learnworlds.com",
+                            "eu_customer": false,
+                            "fields": {
+                              "address": null,
+                              "behance": null,
+                              "bio": null,
+                              "birthday": null,
+                              "cf_skill": "Personal trainer",
+                              "cf_studentlicence": "EA23123123",
+                              "company": null,
+                              "company_size": null,
+                              "country": null,
+                              "dribbble": null,
+                              "fb": null,
+                              "github": null,
+                              "graduation_year": null,
+                              "instagram": null,
+                              "linkedin": null,
+                              "location": null,
+                              "phone": null,
+                              "skype": null,
+                              "twitter": null,
+                              "university": null,
+                              "url": null
+                            },
+                            "id": "5ea173beca205e67b47f4552",
+                            "is_admin": false,
+                            "is_affiliate": false,
+                            "is_instructor": false,
+                            "is_reporter": false,
+                            "is_suspended": false,
+                            "last_login": 1587645977.964412,
+                            "nps_comment": "an nps comment by user",
+                            "nps_score": 8,
+                            "referrer_id": "5a6f1e5a43c90b15208b4571",
+                            "role": {
+                              "level": "user",
+                              "name": "User"
+                            },
+                            "signup_approval_status": "passed",
+                            "subscribed_for_marketing_emails": true,
+                            "tags": [
+                              "super-user",
+                              "fanboy",
+                              "just-signedup"
+                            ],
+                            "username": "testAffSearch@learnworlds.com",
+                            "utms": {
+                              "fc_country": null,
+                              "fc_landing": "/",
+                              "fc_referrer": null,
+                              "fc_utm_campaign": "WOW campaign",
+                              "fc_utm_content": null,
+                              "fc_utm_medium": "FB",
+                              "fc_utm_source": "Facebook",
+                              "fc_utm_term": null,
+                              "lc_country": null,
+                              "lc_landing": "/",
+                              "lc_referrer": null,
+                              "lc_utm_campaign": null,
+                              "lc_utm_content": null,
+                              "lc_utm_medium": null,
+                              "lc_utm_source": null,
+                              "lc_utm_term": null
+                            }
+                          }
+                        ],
+                        "properties": {
+                          "billing_info": {
+                            "description": "Values of the billing info fields for this user",
+                            "type": [
+                              "object",
+                              "null"
+                            ]
+                          },
+                          "created": {
+                            "description": "Date the user was created, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "email": {
+                            "description": "Email account of the user",
+                            "type": "string"
+                          },
+                          "eu_customer": {
+                            "description": "Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.",
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "fields": {
+                            "description": "Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.",
+                            "properties": {
+                              "address": {
+                                "description": "User Address",
+                                "type": "string"
+                              },
+                              "behance": {
+                                "description": "User Behance URL",
+                                "type": "string"
+                              },
+                              "bio": {
+                                "description": "A short biography text",
+                                "type": "string"
+                              },
+                              "birthday": {
+                                "description": "User Birthday",
+                                "type": "string"
+                              },
+                              "company": {
+                                "description": "User Company",
+                                "type": "string"
+                              },
+                              "company_size": {
+                                "description": "User Company Size",
+                                "type": "string"
+                              },
+                              "country": {
+                                "description": "User Country",
+                                "type": "string"
+                              },
+                              "dribbble": {
+                                "description": "User Dribbble URL",
+                                "type": "string"
+                              },
+                              "fb": {
+                                "description": "User Facebook URL",
+                                "type": "string"
+                              },
+                              "github": {
+                                "description": "User Github URL",
+                                "type": "string"
+                              },
+                              "graduation_year": {
+                                "description": "User Graduation Year",
+                                "type": "string"
+                              },
+                              "instagram": {
+                                "description": "User Instagram URL",
+                                "type": "string"
+                              },
+                              "linkedin": {
+                                "description": "User Linkedin URL",
+                                "type": "string"
+                              },
+                              "location": {
+                                "description": "User location",
+                                "type": "string"
+                              },
+                              "phone": {
+                                "description": "User Phone",
+                                "type": "string"
+                              },
+                              "skype": {
+                                "description": "User Skype URL",
+                                "type": "string"
+                              },
+                              "twitter": {
+                                "description": "User Twitter URL",
+                                "type": "string"
+                              },
+                              "university": {
+                                "description": "User University",
+                                "type": "string"
+                              },
+                              "url": {
+                                "description": "User website URL",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "id": {
+                            "description": "Unique identifier of the user ",
+                            "type": "string"
+                          },
+                          "is_admin": {
+                            "description": "Indication about whether the user is an administrator of the school; true if she is, or false if she is not.",
+                            "type": "boolean"
+                          },
+                          "is_affiliate": {
+                            "description": "Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.",
+                            "type": "boolean"
+                          },
+                          "is_instructor": {
+                            "description": "Indication about whether the user is an instructor in the school; true if she is, or false if she is not.",
+                            "type": "boolean"
+                          },
+                          "is_reporter": {
+                            "description": "Indication about whether the user is an reporter in the school; true if she is, or false if she is not.",
+                            "type": "boolean"
+                          },
+                          "is_suspended": {
+                            "description": "Indication about whether the user is suspended in the school; true if she is, or false if she is not.",
+                            "type": "boolean"
+                          },
+                          "last_login": {
+                            "description": "Date of the last login of the user, in UNIX timestamp format",
+                            "format": "float",
+                            "type": [
+                              "null",
+                              "number"
+                            ]
+                          },
+                          "nps_comment": {
+                            "description": "The latest comment submitted by the user on the NPS form.",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "nps_score": {
+                            "description": "The latest NPS score submitted by the user. (1-10)",
+                            "example": 10,
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "referrer_id": {
+                            "description": "Unique user id of the referrer for this user",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "role": {
+                            "description": "Values of the role fields for this user",
+                            "properties": {
+                              "level": {
+                                "description": "Level of the role",
+                                "type": "string"
+                              },
+                              "name": {
+                                "description": "Name of the role",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "signup_approval_status": {
+                            "description": "User status regarding the Signup Approval flow",
+                            "enum": [
+                              "passed",
+                              "failed",
+                              "pending"
+                            ],
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "subscribed_for_marketing_emails": {
+                            "description": "Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.",
+                            "type": [
+                              "boolean",
+                              "null"
+                            ]
+                          },
+                          "tags": {
+                            "description": "Array of the tags of the user",
+                            "items": {},
+                            "type": "array"
+                          },
+                          "username": {
+                            "description": "Username of the user",
+                            "type": "string"
+                          },
+                          "utms": {
+                            "description": "Values of the UTM fields for this user",
+                            "examples": [],
+                            "properties": {
+                              "fc_country": {
+                                "description": "First click country\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_landing": {
+                                "description": "First click landing\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_referrer": {
+                                "description": "First click referrer\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_utm_campaign": {
+                                "description": "First click campaign",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_utm_content": {
+                                "description": "First click content\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_utm_medium": {
+                                "description": "First click medium\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_utm_source": {
+                                "description": "First click source",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "fc_utm_term": {
+                                "description": "First click term",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_country": {
+                                "description": "Last click country",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_landing": {
+                                "description": "Last click landing\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_referrer": {
+                                "description": "Last click referrer\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_utm_campaign": {
+                                "description": "Last click campaign",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_utm_content": {
+                                "description": "Last click content\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_utm_medium": {
+                                "description": "Last click medium",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_utm_source": {
+                                "description": "Last click source\n",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "lc_utm_term": {
+                                "description": "Last click term",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "title": "utms",
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/affiliates/{id}/payments": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-affiliates-id-payments",
+        "parameters": [
+          {
+            "description": "Affiliate Id or email (encoded string)",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "affiliate": {
+                            "code": "BOwVnd",
+                            "commission_amount": 10,
+                            "commission_percentage": 10,
+                            "id": "5a6f1e5a43c90b15208b4571",
+                            "payment_status": "paid",
+                            "username": "jondoe"
+                          },
+                          "billing_info": {
+                            "bf_address": "Baker Street 221B",
+                            "bf_city": "London",
+                            "bf_country": "UK",
+                            "bf_name": "Sherlock Holmes",
+                            "bf_postalcode": "NW1",
+                            "bf_taxid": null
+                          },
+                          "coupon": null,
+                          "created": 1626852950,
+                          "discount": 0,
+                          "gateway": "stripe",
+                          "id": "60fa9afd0436534ae177b072",
+                          "instructors": [
+                            {
+                              "id": "5a323b4f43c90b78098b456b",
+                              "percentage": 0.2
+                            },
+                            {
+                              "id": "5acc9b3743c90b1b098b4568",
+                              "percentage": 0.1
+                            }
+                          ],
+                          "instructors_total_percentage": 0.3,
+                          "invoice": null,
+                          "paid_at": 1626852950,
+                          "payment_plan_current_payment": null,
+                          "payment_plan_total_payments": null,
+                          "period": null,
+                          "price": 100,
+                          "product": {
+                            "description": "A Great Guide to master your nightmares",
+                            "discount_price": 0,
+                            "final_price": 32,
+                            "id": "the-complete-nightmare-guide",
+                            "image": "https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg",
+                            "name": "The complete nightmare Guide",
+                            "original_price": 32,
+                            "trial_days": 0,
+                            "type": "course"
+                          },
+                          "refund_at": null,
+                          "tax_amount": 0,
+                          "tax_percentage": 0,
+                          "transaction_id": "Added by admin",
+                          "type": "one-off",
+                          "user_id": "5ea18eee1d2c27438d61abe2"
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 20,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "affiliate": {
+                              "code": "BOwVnd",
+                              "commission_amount": 10,
+                              "commission_percentage": 10,
+                              "id": "5a6f1e5a43c90b15208b4571",
+                              "payment_status": "paid",
+                              "username": "jondoe"
+                            },
+                            "billing_info": {
+                              "bf_address": "Baker Street 221B",
+                              "bf_city": "London",
+                              "bf_country": "UK",
+                              "bf_name": "Sherlock Holmes",
+                              "bf_postalcode": "NW1",
+                              "bf_taxid": null
+                            },
+                            "coupon": null,
+                            "created": 1626852950,
+                            "discount": 0,
+                            "gateway": "stripe",
+                            "id": "60fa9afd0436534ae177b072",
+                            "instructors": [
+                              {
+                                "id": "5a323b4f43c90b78098b456b",
+                                "percentage": 0.2
+                              },
+                              {
+                                "id": "5acc9b3743c90b1b098b4568",
+                                "percentage": 0.1
+                              }
+                            ],
+                            "instructors_total_percentage": 0.3,
+                            "invoice": null,
+                            "paid_at": 1626852950,
+                            "payment_plan_current_payment": null,
+                            "payment_plan_total_payments": null,
+                            "period": null,
+                            "price": 100,
+                            "product": {
+                              "description": "A Great Guide to master your nightmares",
+                              "discount_price": 0,
+                              "final_price": 32,
+                              "id": "the-complete-nightmare-guide",
+                              "image": "https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg",
+                              "name": "The complete nightmare Guide",
+                              "original_price": 32,
+                              "trial_days": 0,
+                              "type": "course"
+                            },
+                            "refund_at": null,
+                            "tax_amount": 0,
+                            "tax_percentage": 0,
+                            "transaction_id": "Added by admin",
+                            "type": "one-off",
+                            "user_id": "5ea18eee1d2c27438d61abe2"
+                          }
+                        ],
+                        "properties": {
+                          "affiliate": {
+                            "description": "Related affiliate data",
+                            "properties": {
+                              "code": {
+                                "description": "Affiliate code",
+                                "type": "string"
+                              },
+                              "commission_amount": {
+                                "description": "Αffiliate commission amount",
+                                "format": "float",
+                                "type": "number"
+                              },
+                              "commission_percentage": {
+                                "description": "Affiliate commission (%)",
+                                "format": "float",
+                                "type": "number"
+                              },
+                              "id": {
+                                "description": "Unique identifier of the affiliate",
+                                "type": "string"
+                              },
+                              "payment_status": {
+                                "description": "Status of the affiliation pay",
+                                "enum": [
+                                  "new",
+                                  "approved",
+                                  "mature",
+                                  "paid",
+                                  "rejected"
+                                ],
+                                "type": "string"
+                              },
+                              "username": {
+                                "description": "Affiliate username",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "billing_info": {
+                            "description": "Billing info of the payment",
+                            "type": [
+                              "null",
+                              "object"
+                            ]
+                          },
+                          "coupon": {
+                            "description": "Coupon code",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "created": {
+                            "description": "Datetime of the payment was created, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "discount": {
+                            "description": "Discount of the payment",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "gateway": {
+                            "description": "Payment gateway name",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "id": {
+                            "description": "Unique identifier of the payment",
+                            "type": "string"
+                          },
+                          "instructors": {
+                            "description": "Related instructor data",
+                            "items": {
+                              "properties": {
+                                "id": {
+                                  "description": "Unique identifiers of the instructor",
+                                  "type": "string"
+                                },
+                                "percentage": {
+                                  "description": "Percentage of the revenue for the instructor",
+                                  "format": "float",
+                                  "type": [
+                                    "null",
+                                    "number"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "instructors_total_percentage": {
+                            "description": "Total percentage of the revenue for the instructor",
+                            "format": "float",
+                            "type": [
+                              "null",
+                              "number"
+                            ]
+                          },
+                          "invoice": {
+                            "description": "Invoice identifier",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "paid_at": {
+                            "description": "Payment date, in UNIX timestamp format",
+                            "format": "float",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "payment_plan_current_payment": {
+                            "description": "Current payment number of payment plan",
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "payment_plan_total_payments": {
+                            "description": "Total payments number of payment plan",
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "period": {
+                            "description": "Payment plan period",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "price": {
+                            "description": "Price of the payment",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "product": {
+                            "description": "Related product data",
+                            "properties": {
+                              "description": {
+                                "description": "Description of the product",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "discount_price": {
+                                "description": "Discount price of the product",
+                                "format": "float",
+                                "type": "number"
+                              },
+                              "final_price": {
+                                "description": "Final price of the product",
+                                "format": "float",
+                                "type": "number"
+                              },
+                              "id": {
+                                "description": "Unique identifier of the product",
+                                "type": "string"
+                              },
+                              "image": {
+                                "description": "Image url of the product",
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "name": {
+                                "description": "Name of the product",
+                                "type": "string"
+                              },
+                              "original_price": {
+                                "description": "Original price of the product",
+                                "format": "float",
+                                "type": "number"
+                              },
+                              "trial_days": {
+                                "description": "Specified trial days of the product",
+                                "type": "integer"
+                              },
+                              "type": {
+                                "description": "Type of the product",
+                                "enum": [
+                                  "course",
+                                  "bundle",
+                                  "subscription"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "refund_at": {
+                            "description": "Refund date, in UNIX timestamp format",
+                            "format": "float",
+                            "type": [
+                              "null",
+                              "number"
+                            ]
+                          },
+                          "tax_amount": {
+                            "description": "Tax amount of the payment",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "tax_percentage": {
+                            "description": "Tax percentage of the payment",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "transaction_id": {
+                            "description": "Transaction id of the payment",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "Type of the payment",
+                            "enum": [
+                              "subscription",
+                              "installment",
+                              "one-off"
+                            ],
+                            "type": "string"
+                          },
+                          "user_id": {
+                            "description": "Unique identifier of the user",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/affiliates/{id}/payouts/completed": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-affiliates-id-payouts-completed",
+        "parameters": [
+          {
+            "description": "Affiliate Id or email (encoded string)",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "amount": 11,
+                          "completedBy": {
+                            "id": "5be0561d43c90b171a8b4567",
+                            "username": "admin"
+                          },
+                          "created": 1627036930.8283,
+                          "id": "60fa9d02f5b07f0c0b7c8712",
+                          "paymentMethod": "paypal",
+                          "paymentNotes": "mypaypal@mail.com",
+                          "payments": [
+                            {
+                              "affiliate": {
+                                "code": "BOwVnd",
+                                "commission_amount": 10,
+                                "commission_percentage": 10,
+                                "id": "5a6f1e5a43c90b15208b4571",
+                                "payment_status": "paid",
+                                "username": "test46"
+                              },
+                              "billing_info": {
+                                "bf_address": "Baker Street 221B",
+                                "bf_city": "London",
+                                "bf_country": "UK",
+                                "bf_name": "Sherlock Holmes",
+                                "bf_postalcode": "NW1",
+                                "bf_taxid": null
+                              },
+                              "coupon": null,
+                              "created": 1626852950,
+                              "discount": 0,
+                              "gateway": null,
+                              "id": "60fa9afd0436534ae177b072",
+                              "instructors": [
+                                "5a323b4f43c90b78098b456b",
+                                "5acc9b3743c90b1b098b4568"
+                              ],
+                              "instructors_total_percentage": 0.3,
+                              "invoice": null,
+                              "paid_at": 1626852950,
+                              "payment_plan_current_payment": null,
+                              "payment_plan_total_payments": null,
+                              "period": null,
+                              "price": 100,
+                              "product": {
+                                "description": "A Great Guide to master your nightmares",
+                                "discount_price": 0,
+                                "final_price": 32,
+                                "id": "the-complete-nightmare-guide",
+                                "image": "https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg",
+                                "name": "The complete nightmare Guide",
+                                "original_price": 32,
+                                "trial_days": 0,
+                                "type": "course"
+                              },
+                              "refund_at": null,
+                              "tax_amount": 0,
+                              "tax_percentage": 0,
+                              "transaction_id": "Added by admin jon",
+                              "type": "one-off",
+                              "user_id": "5ea18eee1d2c27438d61abe2"
+                            }
+                          ]
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 20,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "amount": 11,
+                            "completedBy": {
+                              "id": "5be0561d43c90b171a8b4567",
+                              "username": "admin"
+                            },
+                            "created": 1627036930.8283,
+                            "id": "60fa9d02f5b07f0c0b7c8712",
+                            "paymentMethod": "paypal",
+                            "paymentNotes": "mypaypal@mail.com",
+                            "payments": [
+                              {
+                                "affiliate": {
+                                  "code": "BOwVnd",
+                                  "commission_amount": 10,
+                                  "commission_percentage": 10,
+                                  "id": "5a6f1e5a43c90b15208b4571",
+                                  "payment_status": "paid",
+                                  "username": "test46"
+                                },
+                                "billing_info": {
+                                  "bf_address": "Baker Street 221B",
+                                  "bf_city": "London",
+                                  "bf_country": "UK",
+                                  "bf_name": "Sherlock Holmes",
+                                  "bf_postalcode": "NW1",
+                                  "bf_taxid": null
+                                },
+                                "coupon": null,
+                                "created": 1626852950,
+                                "discount": 0,
+                                "gateway": null,
+                                "id": "60fa9afd0436534ae177b072",
+                                "instructors": [
+                                  "5a323b4f43c90b78098b456b",
+                                  "5acc9b3743c90b1b098b4568"
+                                ],
+                                "instructors_total_percentage": 0.3,
+                                "invoice": null,
+                                "paid_at": 1626852950,
+                                "payment_plan_current_payment": null,
+                                "payment_plan_total_payments": null,
+                                "period": null,
+                                "price": 100,
+                                "product": {
+                                  "description": "A Great Guide to master your nightmares",
+                                  "discount_price": 0,
+                                  "final_price": 32,
+                                  "id": "the-complete-nightmare-guide",
+                                  "image": "https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg",
+                                  "name": "The complete nightmare Guide",
+                                  "original_price": 32,
+                                  "trial_days": 0,
+                                  "type": "course"
+                                },
+                                "refund_at": null,
+                                "tax_amount": 0,
+                                "tax_percentage": 0,
+                                "transaction_id": "Added by admin jon",
+                                "type": "one-off",
+                                "user_id": "5ea18eee1d2c27438d61abe2"
+                              }
+                            ]
+                          }
+                        ],
+                        "properties": {
+                          "amount": {
+                            "description": "Amount of the payout",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "completedBy": {
+                            "properties": {
+                              "id": {
+                                "description": "Unique identifier of the the user that initiated the completion of the pay",
+                                "type": "string"
+                              },
+                              "username": {
+                                "description": "Username of the the user that initiated the completion of the payout",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "created": {
+                            "description": "Datetime the payout was created, in UNIX timestamp format",
+                            "type": "number"
+                          },
+                          "id": {
+                            "description": "Unique identifier of the payout",
+                            "type": "string"
+                          },
+                          "paymentMethod": {
+                            "description": "Payment method of the payout",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "paymentNotes": {
+                            "description": "Payment note of the payout",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "payments": {
+                            "items": {
+                              "description": "",
+                              "examples": [
+                                {
+                                  "affiliate": {
+                                    "code": "BOwVnd",
+                                    "commission_amount": 10,
+                                    "commission_percentage": 10,
+                                    "id": "5a6f1e5a43c90b15208b4571",
+                                    "payment_status": "paid",
+                                    "username": "jondoe"
+                                  },
+                                  "billing_info": {
+                                    "bf_address": "Baker Street 221B",
+                                    "bf_city": "London",
+                                    "bf_country": "UK",
+                                    "bf_name": "Sherlock Holmes",
+                                    "bf_postalcode": "NW1",
+                                    "bf_taxid": null
+                                  },
+                                  "coupon": null,
+                                  "created": 1626852950,
+                                  "discount": 0,
+                                  "gateway": "stripe",
+                                  "id": "60fa9afd0436534ae177b072",
+                                  "instructors": [
+                                    {
+                                      "id": "5a323b4f43c90b78098b456b",
+                                      "percentage": 0.2
+                                    },
+                                    {
+                                      "id": "5acc9b3743c90b1b098b4568",
+                                      "percentage": 0.1
+                                    }
+                                  ],
+                                  "instructors_total_percentage": 0.3,
+                                  "invoice": null,
+                                  "paid_at": 1626852950,
+                                  "payment_plan_current_payment": null,
+                                  "payment_plan_total_payments": null,
+                                  "period": null,
+                                  "price": 100,
+                                  "product": {
+                                    "description": "A Great Guide to master your nightmares",
+                                    "discount_price": 0,
+                                    "final_price": 32,
+                                    "id": "the-complete-nightmare-guide",
+                                    "image": "https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg",
+                                    "name": "The complete nightmare Guide",
+                                    "original_price": 32,
+                                    "trial_days": 0,
+                                    "type": "course"
+                                  },
+                                  "refund_at": null,
+                                  "tax_amount": 0,
+                                  "tax_percentage": 0,
+                                  "transaction_id": "Added by admin",
+                                  "type": "one-off",
+                                  "user_id": "5ea18eee1d2c27438d61abe2"
+                                }
+                              ],
+                              "properties": {
+                                "affiliate": {
+                                  "description": "Related affiliate data",
+                                  "properties": {
+                                    "code": {
+                                      "description": "Affiliate code",
+                                      "type": "string"
+                                    },
+                                    "commission_amount": {
+                                      "description": "Αffiliate commission amount",
+                                      "format": "float",
+                                      "type": "number"
+                                    },
+                                    "commission_percentage": {
+                                      "description": "Affiliate commission (%)",
+                                      "format": "float",
+                                      "type": "number"
+                                    },
+                                    "id": {
+                                      "description": "Unique identifier of the affiliate",
+                                      "type": "string"
+                                    },
+                                    "payment_status": {
+                                      "description": "Status of the affiliation pay",
+                                      "enum": [
+                                        "new",
+                                        "approved",
+                                        "mature",
+                                        "paid",
+                                        "rejected"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "username": {
+                                      "description": "Affiliate username",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "billing_info": {
+                                  "description": "Billing info of the payment",
+                                  "type": [
+                                    "null",
+                                    "object"
+                                  ]
+                                },
+                                "coupon": {
+                                  "description": "Coupon code",
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "created": {
+                                  "description": "Datetime of the payment was created, in UNIX timestamp format",
+                                  "format": "float",
+                                  "type": "number"
+                                },
+                                "discount": {
+                                  "description": "Discount of the payment",
+                                  "format": "float",
+                                  "type": "number"
+                                },
+                                "gateway": {
+                                  "description": "Payment gateway name",
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "id": {
+                                  "description": "Unique identifier of the payment",
+                                  "type": "string"
+                                },
+                                "instructors": {
+                                  "description": "Related instructor data",
+                                  "items": {
+                                    "properties": {
+                                      "id": {
+                                        "description": "Unique identifiers of the instructor",
+                                        "type": "string"
+                                      },
+                                      "percentage": {
+                                        "description": "Percentage of the revenue for the instructor",
+                                        "format": "float",
+                                        "type": [
+                                          "null",
+                                          "number"
+                                        ]
+                                      }
+                                    },
+                                    "type": "object"
+                                  },
+                                  "type": "array"
+                                },
+                                "instructors_total_percentage": {
+                                  "description": "Total percentage of the revenue for the instructor",
+                                  "format": "float",
+                                  "type": [
+                                    "null",
+                                    "number"
+                                  ]
+                                },
+                                "invoice": {
+                                  "description": "Invoice identifier",
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "paid_at": {
+                                  "description": "Payment date, in UNIX timestamp format",
+                                  "format": "float",
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "payment_plan_current_payment": {
+                                  "description": "Current payment number of payment plan",
+                                  "type": [
+                                    "integer",
+                                    "null"
+                                  ]
+                                },
+                                "payment_plan_total_payments": {
+                                  "description": "Total payments number of payment plan",
+                                  "type": [
+                                    "integer",
+                                    "null"
+                                  ]
+                                },
+                                "period": {
+                                  "description": "Payment plan period",
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "price": {
+                                  "description": "Price of the payment",
+                                  "format": "float",
+                                  "type": "number"
+                                },
+                                "product": {
+                                  "description": "Related product data",
+                                  "properties": {
+                                    "description": {
+                                      "description": "Description of the product",
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ]
+                                    },
+                                    "discount_price": {
+                                      "description": "Discount price of the product",
+                                      "format": "float",
+                                      "type": "number"
+                                    },
+                                    "final_price": {
+                                      "description": "Final price of the product",
+                                      "format": "float",
+                                      "type": "number"
+                                    },
+                                    "id": {
+                                      "description": "Unique identifier of the product",
+                                      "type": "string"
+                                    },
+                                    "image": {
+                                      "description": "Image url of the product",
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ]
+                                    },
+                                    "name": {
+                                      "description": "Name of the product",
+                                      "type": "string"
+                                    },
+                                    "original_price": {
+                                      "description": "Original price of the product",
+                                      "format": "float",
+                                      "type": "number"
+                                    },
+                                    "trial_days": {
+                                      "description": "Specified trial days of the product",
+                                      "type": "integer"
+                                    },
+                                    "type": {
+                                      "description": "Type of the product",
+                                      "enum": [
+                                        "course",
+                                        "bundle",
+                                        "subscription"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "refund_at": {
+                                  "description": "Refund date, in UNIX timestamp format",
+                                  "format": "float",
+                                  "type": [
+                                    "null",
+                                    "number"
+                                  ]
+                                },
+                                "tax_amount": {
+                                  "description": "Tax amount of the payment",
+                                  "format": "float",
+                                  "type": "number"
+                                },
+                                "tax_percentage": {
+                                  "description": "Tax percentage of the payment",
+                                  "format": "float",
+                                  "type": "number"
+                                },
+                                "transaction_id": {
+                                  "description": "Transaction id of the payment",
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "description": "Type of the payment",
+                                  "enum": [
+                                    "subscription",
+                                    "installment",
+                                    "one-off"
+                                  ],
+                                  "type": "string"
+                                },
+                                "user_id": {
+                                  "description": "Unique identifier of the user",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array",
+                            "uniqueItems": false
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/affiliates/{id}/payouts/due": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-affiliates-id-payouts-due",
+        "parameters": [
+          {
+            "description": "Affiliate Id or email (encoded string)",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "affiliateId": "606e1eef24e8a149b162fd12",
+                          "amount": 75,
+                          "paymentMethod": "stripe",
+                          "paymentNotes": "Y-123"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "affiliateId": "606e1eef24e8a149b162fd12",
+                            "amount": 75,
+                            "paymentMethod": "stripe",
+                            "paymentNotes": "Y-123"
+                          }
+                        ],
+                        "properties": {
+                          "affiliateId": {
+                            "description": "Unique identifier of the affiliate",
+                            "type": "string"
+                          },
+                          "amount": {
+                            "description": "Amount of payout",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "paymentMethod": {
+                            "description": "Payment method",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "paymentNotes": {
+                            "description": "Payment note",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/affiliates/{id}/payouts/upcoming": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-affiliates-id-payouts-upcoming",
+        "parameters": [
+          {
+            "description": "Affiliate Id or email (encoded string)",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "affiliateId": "606e1eef24e8a149b162fd12",
+                          "amount": 75,
+                          "paymentMethod": "stripe",
+                          "paymentNotes": "Y-123"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "affiliateId": "606e1eef24e8a149b162fd12",
+                            "amount": 75,
+                            "paymentMethod": "stripe",
+                            "paymentNotes": "Y-123"
+                          }
+                        ],
+                        "properties": {
+                          "affiliateId": {
+                            "description": "Unique identifier of the affiliate",
+                            "type": "string"
+                          },
+                          "amount": {
+                            "description": "Amount of payout",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "paymentMethod": {
+                            "description": "Payment method",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "paymentNotes": {
+                            "description": "Payment note",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/affiliates": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-affiliates",
+        "parameters": [
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "clicks": 7,
+                          "code": "q7eXVe",
+                          "commission_percentage": 10,
+                          "commissions": 16.4,
+                          "customers": 1,
+                          "date": 1618323920.141964,
+                          "due": 0,
+                          "email": "test45@learnworlds.com",
+                          "id": "5a6f111843c90b78238b4568",
+                          "leads": 0,
+                          "paymentMethod": null,
+                          "paymentNotes": null,
+                          "payouts": 0,
+                          "pending": 0,
+                          "sales": 164,
+                          "username": "test45"
+                        },
+                        {
+                          "clicks": 2,
+                          "code": "BOwVnd",
+                          "commission_percentage": 10,
+                          "commissions": 10,
+                          "customers": 2,
+                          "date": 1587639051.579715,
+                          "due": 0,
+                          "email": "test46@learnworlds.com",
+                          "id": "5a6f1e5a43c90b15208b4571",
+                          "leads": 0,
+                          "paymentMethod": "paypal",
+                          "paymentNotes": "gdffgd",
+                          "payouts": 0,
+                          "pending": 0,
+                          "sales": 100,
+                          "username": "test46"
+                        },
+                        {
+                          "clicks": 0,
+                          "code": "yN5HLZ",
+                          "commission_percentage": 10,
+                          "commissions": 31.398,
+                          "customers": 2,
+                          "date": 1617829783.839714,
+                          "due": 0,
+                          "email": "testaff1@learnworlds.com",
+                          "id": "606e1eef24e8a149b162fd12",
+                          "leads": 1,
+                          "paymentMethod": null,
+                          "paymentNotes": null,
+                          "payouts": 0,
+                          "pending": 0,
+                          "sales": 333.98,
+                          "username": "testaff1"
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 20,
+                        "page": 1,
+                        "totalItems": 3,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "clicks": 2,
+                            "code": "BOwVnd",
+                            "commission_percentage": 50.4,
+                            "commissions": 10,
+                            "customers": 2,
+                            "date": 1587639051.579715,
+                            "due": 0,
+                            "email": "test@learnworlds.com",
+                            "id": "5a6f1e5a43c90b15208b4571",
+                            "leads": 0,
+                            "paymentMethod": "paypal",
+                            "paymentNotes": "a note",
+                            "payouts": 0,
+                            "pending": 0,
+                            "sales": 100,
+                            "username": "test"
+                          }
+                        ],
+                        "properties": {
+                          "clicks": {
+                            "description": "Number of referral link clicks",
+                            "type": "integer"
+                          },
+                          "code": {
+                            "description": "Unique affiliate code",
+                            "type": "string"
+                          },
+                          "commission_percentage": {
+                            "description": "Percentage of the sale that goes to the affiliate",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "commissions": {
+                            "description": "Total commission amount ",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "customers": {
+                            "description": "Number of referred customers",
+                            "type": "number"
+                          },
+                          "date": {
+                            "description": "Datetime the affiliation was created, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "due": {
+                            "description": "Total amount of due payouts",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "email": {
+                            "description": "Email of the user",
+                            "type": "string"
+                          },
+                          "id": {
+                            "description": "Unique identifier of the user",
+                            "type": "string"
+                          },
+                          "leads": {
+                            "description": "Number of leads",
+                            "type": "integer"
+                          },
+                          "paymentMethod": {
+                            "default": "none",
+                            "description": "Payment method",
+                            "enum": [
+                              "paypal",
+                              "other",
+                              "none",
+                              "bank_transfer"
+                            ],
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "paymentNotes": {
+                            "description": "Payment notes",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "payouts": {
+                            "description": "Total amount of completed payouts",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "pending": {
+                            "description": "Total amount of upcoming payouts",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "sales": {
+                            "description": "Sales total amount",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "username": {
+                            "description": "Username of the user",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

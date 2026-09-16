@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>API | API</title><link rel="stylesheet" href="assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="index.html">API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/learnworlds-sdk">voxgig-sdk/learnworlds-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details open><summary>Overview</summary><a aria-current="page" href="index.html">API</a></details>
+<details><summary>API</summary><a href="api/index.html">API overview</a>
+<a href="api/active.html">Active</a>
+<a href="api/affiliate.html">Affiliate</a>
+<a href="api/assessment.html">Assessment</a>
+<a href="api/bundle.html">Bundle</a>
+<a href="api/by_product.html">ByProduct</a>
+<a href="api/by_segment.html">BySegment</a>
+<a href="api/calendar.html">Calendar</a>
+<a href="api/certificate.html">Certificate</a>
+<a href="api/community.html">Community</a>
+<a href="api/community_post.html">CommunityPost</a>
+<a href="api/community_space.html">CommunitySpace</a>
+<a href="api/completed.html">Completed</a>
+<a href="api/coupon.html">Coupon</a>
+<a href="api/coupon_usage.html">CouponUsage</a>
+<a href="api/course.html">Course</a>
+<a href="api/course_analytics.html">CourseAnalytics</a>
+<a href="api/course_content.html">CourseContent</a>
+<a href="api/due.html">Due</a>
+<a href="api/event.html">Event</a>
+<a href="api/event_log.html">EventLog</a>
+<a href="api/form.html">Form</a>
+<a href="api/installment.html">Installment</a>
+<a href="api/lead.html">Lead</a>
+<a href="api/multiple_seat.html">MultipleSeat</a>
+<a href="api/payment.html">Payment</a>
+<a href="api/post.html">Post</a>
+<a href="api/promotion.html">Promotion</a>
+<a href="api/reporting.html">Reporting</a>
+<a href="api/score.html">Score</a>
+<a href="api/seat.html">Seat</a>
+<a href="api/segment.html">Segment</a>
+<a href="api/space.html">Space</a>
+<a href="api/subscription_plan.html">SubscriptionPlan</a>
+<a href="api/unit.html">Unit</a>
+<a href="api/unit_analytics.html">UnitAnalytics</a>
+<a href="api/upcoming.html">Upcoming</a>
+<a href="api/update_user_progress.html">UpdateUserProgress</a>
+<a href="api/user.html">User</a>
+<a href="api/user_group.html">UserGroup</a>
+<a href="api/user_progress.html">UserProgress</a>
+<a href="api/user_role.html">UserRole</a>
+<a href="api/user_subscription.html">UserSubscription</a></details>
+<details><summary>Guides</summary><a href="guides/authentication.html">Authentication</a>
+<a href="guides/first-call.html">Make your first API call</a>
+<a href="guides/errors.html">Handle errors</a>
+<a href="guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="sdks/seneca-provider.html">Seneca Provider</a>
+<a href="sdks/ts.html">TypeScript</a></details>
+<details><summary>Features</summary><a href="features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="features/paging.html">Pagination signals for list operations</a>
+<a href="features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>Overview</div><h1 id="api">API</h1>
+<h2 id="http-methods-this-api-uses-http-verbs-methods-as-following--get---read---used-to-read-or-retrieve-a-representation-of-a-resource--post---create---used-to-create-new-resources-in-particular-it39s-used-to-create-subordinate-resources--put---updatereplace---used-for-update-capabilities-put-ing-to-a-known-resource-uri-with-the-request-body-containing-the-newly-updated-representation-of-the-original-resource-on-successful-request-replaces-identified-resource-with-the-request-body--delete---delete---used-to-delete-a-resource-identified-by-a-uri------required-headers-for-all-requests--lw-client-123the-school-id125--authorization--bearer-123token125------rate-limit-a-rate-limit-is-the-number-of-api-calls-an-app-can-make-within-a-given-time-period-if-this-limit-is-exceeded-any-extra-request-will-fail-and-the-app-will-respond-with-a-429-quottoo-many-requestsquot-error-all-api-requests-are-subject-to-rate-limits-learnworlds-has-a-rate-limit-of-30-requests--10-sec------status-codes-and-errors-this-api-uses-http-status-codes-to-communicate-with-the-api-consumer--200-ok---response-to-a-successful-get-put--201-created---response-to-a-post-that-the-resource-is-succesfully-created--204-no-content---response-to-a-successful-request-that-won39t-be-returning-a-body-like-a-delete-request--400-bad-request---bad-request--401-unauthorized---when-no-or-invalid-authentication-details-are-provided--403-forbidden---when-authentication-succeeded-but-authenticated-user-doesn39t-have-access-to-the-resource--404-not-found---when-a-non-existent-resource-is-requested--422-validation-error---you-should-check-your-input-again--429-too-many-requests---the-consumer-has-sent-too-many-requests-in-a-given-amount-of-time-rate-limiting--500-server-error---a-general-server-error--examples--bad-request-json-123-quoterrorsquot--123-quotcodequot-quot400quot-quotcontextquot-quotaccess_deniedquot-quotmessagequot-quotthe-resource-owner-or-authorization-server-denied-the-requestquot-125--quotsuccessquot-false-125---too-many-requests-json-123-quoterrorquot-quottoo-many-requestsquot-125---unauthorized-json-123-quoterrorsquot--123-quotcodequot-quot401quot-quotcontextquot-null-quotmessagequot-quotinvalid-object-idquot-125--quotsuccessquot-false-125---resource-not-found-json-123-quoterrorquot-quotsorry-the-resource-your-trying-to-access-does-not-existquot-125---validation-error-json-123-quoterrorquot-quotyou-need-to-provide-a-valid-product_type-query-parameters-value-39course39-39bundle39-39subscription39quot-125---generic-error-json-123-quoterrorquot-quotserver-errorquot-125-------representation-of-date-and-datetime--all-exchange-of-date-should-follow-the-iso-8601-standard--all-exchange-of-datetime-should-follow-the-unix-timestamp-format-when-you-send-a-date-as-input-to-create-a-new-resource-or-to-filter-results-you-need-to-send-it-as-a-valid-date-string-with-the-form-quotyyyy-mm-ddquot-ex-quot2021-05-28quot-when-you-send-a-datetime-as-input-to-create-a-new-resource-or-to-filter-results-you-need-to-send-it-formatted-as-a-valid-unix-timestamp-number-ex-1626088013-1587639230083278------representation-of-float-numbers-float-numbers-are-represented-with-dot-decimal-point-character-ex-7345-1587639230083278-the-dot-character-is-omitted-for-numbers-with-zero-values-after-the-decimal-point-for-instance-the-numbers-5200-or-520-will-be-presented-as-52">HTTP Methods This API uses HTTP verbs (methods) as following: + <code>GET</code> - <em>Read</em> - used to <strong>read</strong> (or retrieve) a representation of a resource, + <code>POST</code> - <em>Create</em> - used to <strong>create</strong> new resources. In particular, it's used to create subordinate resources. + <code>PUT</code> - <em>Update/Replace</em> - used for <strong>update</strong> capabilities, PUT-ing to a known resource URI with the request body containing the newly-updated representation of the original resource. On successful request, replaces identified resource with the request body. + <code>DELETE</code> - <em>Delete</em> - used to <strong>delete</strong> a resource identified by a URI. --- ## Required Headers for all requests + Lw-Client: {The school ID} + Authorization : Bearer {token} --- ## Rate Limit A rate limit is the number of API calls an app can make within a given time period. If this limit is exceeded any extra request will fail and the App will respond with a 429 &quot;Too many Requests&quot; error. All API requests are subject to rate limits. <strong>LearnWorlds has a Rate limit of 30 requests / 10 sec</strong> --- ## Status Codes and Errors This API uses HTTP status codes to communicate with the API consumer. + <code>200 OK</code> - Response to a successful GET, PUT. + <code>201 Created</code> - Response to a POST that the resource is succesfully created. + <code>204 No Content</code> - Response to a successful request that won't be returning a body (like a DELETE request). + <code>400 Bad Request</code> - Bad request + <code>401 Unauthorized</code> - When no or invalid authentication details are provided. + <code>403 Forbidden</code> - When authentication succeeded but authenticated user doesn't have access to the resource. + <code>404 Not Found</code> - When a non-existent resource is requested. + <code>422 Validation error</code> - You should check your input again. + <code>429 Too many requests</code> - The consumer has sent too many requests in a given amount of time (“rate limiting”). + <code>500 Server error</code> - A general server error. ### Examples ##### Bad Request <code>json &amp;#123; &amp;quot;errors&amp;quot;: [ &amp;#123; &amp;quot;code&amp;quot;: &amp;quot;400&amp;quot;, &amp;quot;context&amp;quot;: &amp;quot;access_denied&amp;quot;, &amp;quot;message&amp;quot;: &amp;quot;The resource owner or authorization server denied the request.&amp;quot; &amp;#125; ], &amp;quot;success&amp;quot;: false &amp;#125; </code> ##### Too many Requests <code>json &amp;#123; &amp;quot;error&amp;quot;: &amp;quot;Too many requests&amp;quot; &amp;#125; </code> ##### Unauthorized <code>json &amp;#123; &amp;quot;errors&amp;quot;: [ &amp;#123; &amp;quot;code&amp;quot;: &amp;quot;401&amp;quot;, &amp;quot;context&amp;quot;: null, &amp;quot;message&amp;quot;: &amp;quot;Invalid object ID&amp;quot; &amp;#125; ], &amp;quot;success&amp;quot;: false &amp;#125; </code> ##### Resource not found <code>json &amp;#123; &amp;quot;error&amp;quot;: &amp;quot;Sorry the resource your trying to access does not exist.&amp;quot; &amp;#125; </code> ##### Validation Error <code>json &amp;#123; &amp;quot;error&amp;quot;: &amp;quot;You need to provide a valid product_type query parameters value: &amp;#39;course&amp;#39;, &amp;#39;bundle&amp;#39;, &amp;#39;subscription&amp;#39;&amp;quot; &amp;#125; </code> ##### Generic Error <code>json &amp;#123; &amp;quot;error&amp;quot;: &amp;quot;Server Error&amp;quot; &amp;#125; </code> --- ## Representation of Date and DateTime + All exchange of Date should follow the ISO 8601 standard. + All exchange of DateTime should follow the Unix timestamp format. When you send a Date as input to create a new resource or to filter results, you need to send it as a valid date string with the form &quot;yyyy-mm-dd&quot; (Ex: &quot;2021-05-28&quot;). When you send a DateTime as input to create a new resource or to filter results, you need to send it formatted as a valid Unix timestamp number (Ex: 1626088013, 1587639230.083278). --- ## Representation of Float Numbers Float numbers are represented with <strong>dot</strong> decimal-point character (Ex: 73.45, 1587639230.083278). The dot character is omitted for numbers with zero value(s) after the decimal-point. For instance, the numbers 52.00 or 52.0 will be presented as 52.</h2>
+</main></div>
+<script src="assets/search.js" defer></script></body></html>

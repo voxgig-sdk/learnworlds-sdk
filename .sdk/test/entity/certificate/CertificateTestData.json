@@ -2,7 +2,7 @@
   "existing": {
     "certificate": {
       "CERTIFICATE00": {
-        "attempt": "s82",
+        "attempts": 130,
         "course_id": "COURSE01",
         "external_url": "s84",
         "form": "s85",
@@ -17,7 +17,7 @@
         "user": {}
       },
       "CERTIFICATE01": {
-        "attempt": "s104",
+        "attempts": 260,
         "course_id": "COURSE01",
         "external_url": "s106",
         "form": "s107",
@@ -32,7 +32,7 @@
         "user": {}
       },
       "CERTIFICATE02": {
-        "attempt": "s186",
+        "attempts": 390,
         "course_id": "COURSE01",
         "external_url": "s188",
         "form": "s189",
@@ -51,7 +51,7 @@
   "new": {
     "certificate": {
       "certificate_ref01": {
-        "attempt": "s208",
+        "attempts": 520,
         "course_id": "COURSE01",
         "external_url": "s20a",
         "form": "s20b",
@@ -63,6 +63,566 @@
         "title": "s212",
         "type": "s213",
         "user": {}
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/certificates": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-certificates",
+        "parameters": [
+          {
+            "description": "Filter by course title id",
+            "in": "query",
+            "name": "course_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by user id or email",
+            "in": "query",
+            "name": "user_id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "attempts": 2,
+                          "course_id": "the-complete-nightmare-guide",
+                          "external_url": null,
+                          "form": {
+                            "firstname": "Joe",
+                            "lastname": "Doe",
+                            "ptin": "3456"
+                          },
+                          "id": "5a74574343c90be4158b456a",
+                          "issued": 1517573955.484916,
+                          "provider": "LearnWorlds",
+                          "score": "OK",
+                          "short_url": "https://goo.gl/cFJZhw",
+                          "status": "active",
+                          "title": "Certificate of completion",
+                          "type": "completion",
+                          "user": {
+                            "email": "gatuso@learnworlds.com",
+                            "id": "5a65a41e43c90b93098b4590"
+                          }
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 20,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "description": "",
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "examples": [
+                          {
+                            "attempts": 2,
+                            "course_id": "the-complete-nightmare-guide",
+                            "external_url": null,
+                            "form": {
+                              "firstname": "Jon",
+                              "lastname": "Doe",
+                              "ptin": "3456"
+                            },
+                            "id": "5a74574343c90be4158b456a",
+                            "issued": 1517573955.484916,
+                            "provider": "LearnWorlds",
+                            "score": "OK",
+                            "short_url": "https://goo.gl/cFJZhw",
+                            "status": "active",
+                            "title": "Certificate of completion",
+                            "type": "completion",
+                            "user": {
+                              "email": "gatuso@learnworlds.com",
+                              "id": "5a65a41e43c90b93098b4590"
+                            }
+                          }
+                        ],
+                        "properties": {
+                          "attempts": {
+                            "description": "Number of attempts",
+                            "format": "float",
+                            "type": "integer"
+                          },
+                          "course_id": {
+                            "description": "Unique identifier of the course",
+                            "type": "string"
+                          },
+                          "external_url": {
+                            "description": "External URL of the certificate; null if provider is LearnWorlds",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "form": {
+                            "description": "Form data of the certificate",
+                            "properties": {
+                              "firstname": {
+                                "description": "First name that appears in certificate pdf",
+                                "type": "string"
+                              },
+                              "lastname": {
+                                "description": "Last name that appears in certificate pdf",
+                                "type": "string"
+                              },
+                              "ptin": {
+                                "description": "ptin that appears in certificate pdf. A special field that can be used for showing user input, like a professional registration number, etc (available in Learning Center plans or higher)",
+                                "type": "string"
+                              }
+                            },
+                            "type": [
+                              "object",
+                              "null"
+                            ]
+                          },
+                          "id": {
+                            "description": "Unique identifier of the certificate",
+                            "type": "string"
+                          },
+                          "issued": {
+                            "description": "Date the certification was issued, in Unix timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "provider": {
+                            "description": "Provider of the certificate",
+                            "enum": [
+                              "LearnWorlds",
+                              "Accredible",
+                              "Credly"
+                            ],
+                            "type": "string"
+                          },
+                          "score": {
+                            "description": "Score of the certificate",
+                            "type": "string"
+                          },
+                          "short_url": {
+                            "description": "Short URL of the certificate",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "status": {
+                            "description": "Status of the certificate",
+                            "enum": [
+                              "active",
+                              "deleted"
+                            ],
+                            "type": "string"
+                          },
+                          "title": {
+                            "description": "Title of the certificate",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "Type of the certificate",
+                            "enum": [
+                              "completion",
+                              "certificate"
+                            ],
+                            "type": "string"
+                          },
+                          "user": {
+                            "description": "User related data",
+                            "properties": {
+                              "email": {
+                                "description": "Email of the user",
+                                "type": "string"
+                              },
+                              "id": {
+                                "description": "Unique identifier of the user",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "DELETE /v2/certificates/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "delete-certificates-id",
+        "parameters": [
+          {
+            "description": "Certificate Id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "PUT /v2/certificates/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "put-certificates-id",
+        "parameters": [
+          {
+            "description": "Certificate Id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "Example 2": {
+                  "value": {
+                    "issued": 1518790977.20607
+                  }
+                },
+                "Example 3": {
+                  "value": {
+                    "form": {
+                      "firstname": "John",
+                      "lastname": "Doe",
+                      "ptin": "9090"
+                    }
+                  }
+                }
+              },
+              "schema": {
+                "description": "",
+                "examples": [
+                  {
+                    "form": {
+                      "firstname": "JonForm",
+                      "lastname": "JonForm",
+                      "ptin": "9090"
+                    },
+                    "issued": 1518790977.20607
+                  }
+                ],
+                "properties": {
+                  "form": {
+                    "properties": {
+                      "firstname": {
+                        "description": "First name that appears in certificate pdf",
+                        "type": "string"
+                      },
+                      "lastname": {
+                        "description": "Last name that appears in certificate pdf",
+                        "type": "string"
+                      },
+                      "ptin": {
+                        "description": "ptin that appears in certificate pdf. A special field that can be used for showing user input, like a professional registration number, etc (available in Learning Center plans or higher)",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "firstname",
+                      "lastname",
+                      "ptin"
+                    ],
+                    "type": "object"
+                  },
+                  "issued": {
+                    "description": "Date the certificate was created, in UNIX timestamp format",
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "issued",
+                  "form"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "description": "Request input should include \"issued\" or \"form\" keys"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {},
+                "schema": {
+                  "examples": [
+                    {
+                      "attempts": 2,
+                      "course_id": "the-complete-nightmare-guide",
+                      "external_url": null,
+                      "form": {
+                        "firstname": "Jon",
+                        "lastname": "Doe",
+                        "ptin": "3456"
+                      },
+                      "id": "5a74574343c90be4158b456a",
+                      "issued": 1517573955.484916,
+                      "provider": "LearnWorlds",
+                      "score": "OK",
+                      "short_url": "https://goo.gl/cFJZhw",
+                      "status": "active",
+                      "title": "Certificate of completion",
+                      "type": "completion",
+                      "user": {
+                        "email": "gatuso@learnworlds.com",
+                        "id": "5a65a41e43c90b93098b4590"
+                      }
+                    }
+                  ],
+                  "properties": {
+                    "attempts": {
+                      "description": "Number of attempts",
+                      "format": "float",
+                      "type": "integer"
+                    },
+                    "course_id": {
+                      "description": "Unique identifier of the course",
+                      "type": "string"
+                    },
+                    "external_url": {
+                      "description": "External URL of the certificate; null if provider is LearnWorlds",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "form": {
+                      "description": "Form data of the certificate",
+                      "properties": {
+                        "firstname": {
+                          "description": "First name that appears in certificate pdf",
+                          "type": "string"
+                        },
+                        "lastname": {
+                          "description": "Last name that appears in certificate pdf",
+                          "type": "string"
+                        },
+                        "ptin": {
+                          "description": "ptin that appears in certificate pdf. A special field that can be used for showing user input, like a professional registration number, etc (available in Learning Center plans or higher)",
+                          "type": "string"
+                        }
+                      },
+                      "type": [
+                        "object",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "description": "Unique identifier of the certificate",
+                      "type": "string"
+                    },
+                    "issued": {
+                      "description": "Date the certification was issued, in Unix timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "provider": {
+                      "description": "Provider of the certificate",
+                      "enum": [
+                        "LearnWorlds",
+                        "Accredible",
+                        "Credly"
+                      ],
+                      "type": "string"
+                    },
+                    "score": {
+                      "description": "Score of the certificate",
+                      "type": "string"
+                    },
+                    "short_url": {
+                      "description": "Short URL of the certificate",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "status": {
+                      "description": "Status of the certificate",
+                      "enum": [
+                        "active",
+                        "deleted"
+                      ],
+                      "type": "string"
+                    },
+                    "title": {
+                      "description": "Title of the certificate",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "Type of the certificate",
+                      "enum": [
+                        "completion",
+                        "certificate"
+                      ],
+                      "type": "string"
+                    },
+                    "user": {
+                      "description": "User related data",
+                      "properties": {
+                        "email": {
+                          "description": "Email of the user",
+                          "type": "string"
+                        },
+                        "id": {
+                          "description": "Unique identifier of the user",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

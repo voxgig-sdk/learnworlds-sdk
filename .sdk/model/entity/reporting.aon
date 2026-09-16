@@ -1,0 +1,177 @@
+# Entity: reporting
+
+main: kit: entity: reporting: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      format: "float"
+      name: "average_score_rate"
+      req: false
+      short: "Average score percentage"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "completed_at"
+      req: false
+      short: "Completion date in UNIX timestamp format."
+      type: [
+        "`$ONE`"
+        [
+          "`$NUMBER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "completed_units"
+      req: false
+      short: "Total number of completed course learning activities by the user"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "course_id"
+      req: false
+      short: "Unique identifier of the course"
+      type: "`$STRING`"
+    }
+    {
+      name: "progress_per_section_unit"
+      req: false
+      short: "User progress data per section/learning activity"
+      type: "`$ARRAY`"
+    }
+    {
+      format: "float"
+      name: "progress_rate"
+      req: false
+      short: "Progress rate (%)"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "status"
+      req: false
+      short: "Status of user progress"
+      type: "`$STRING`"
+    }
+    {
+      name: "time_on_course"
+      req: false
+      short: "Time spent on the course in seconds"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "total_units"
+      req: false
+      short: "Total number of course learning activities"
+      type: "`$INTEGER`"
+    }
+  ]
+
+  name: "reporting"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "user_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "items_per_page"
+                orig: "items_per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: "1"
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/users/{id}/progress"
+            json: "{\"operationId\":\"get-v2-users-id-progress\",\"parameters\":[{\"description\":\"User Id or email (encoded string)\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter by the page number. In case page number is higher than the maximum one, no results will be returned\",\"in\":\"query\",\"name\":\"page\",\"schema\":{\"default\":\"1\",\"type\":\"integer\"}},{\"description\":\"Filter by the items per page number\",\"in\":\"query\",\"name\":\"items_per_page\",\"schema\":{\"maximum\":200,\"minimum\":1,\"type\":\"integer\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"data\":[{\"average_score_rate\":80,\"completed_at\":1510243831,\"completed_units\":1,\"course_id\":\"10-secrets-of-sleep-walking\",\"progress_per_section_unit\":[{\"section_id\":\"my-course_first_section\",\"units\":[{\"score_on_unit\":null,\"time_on_unit\":210,\"unit_duration\":773,\"unit_id\":\"5cdaa5856c72ec302c5698c3\",\"unit_name\":\"Von D - Burn Baphomet\",\"unit_progress_rate\":25,\"unit_section_name\":\"first section\",\"unit_status\":\"not_completed\",\"unit_type\":\"youtube\"},{\"score_on_unit\":100,\"time_on_unit\":555,\"unit_duration\":555,\"unit_id\":\"5cdac4bf6c72ec7ea8384e02\",\"unit_name\":\"best practices scorm\",\"unit_progress_rate\":100,\"unit_section_name\":\"first section\",\"unit_status\":\"completed\",\"unit_type\":\"scorm\"},{\"score_on_unit\":null,\"time_on_unit\":0,\"unit_duration\":281,\"unit_id\":\"5cdac50d6c72ec7ea40dce52\",\"unit_name\":\"test\",\"unit_progress_rate\":0,\"unit_section_name\":\"first section\",\"unit_status\":\"not_completed\",\"unit_type\":\"audio\"}]},{\"section_id\":\"my-course_second_section\",\"units\":[{\"score_on_unit\":null,\"time_on_unit\":223,\"unit_duration\":833,\"unit_id\":\"5f9a93b068fd38656d62b404\",\"unit_name\":\"my ebook\",\"unit_progress_rate\":35,\"unit_section_name\":\"second section\",\"unit_status\":\"not_completed\",\"unit_type\":\"ebook\"}]}],\"progress_rate\":100,\"status\":\"completed\",\"time_on_course\":12310,\"total_units\":4}],\"meta\":{\"itemsPerPage\":20,\"page\":1,\"totalItems\":1,\"totalPages\":1}}}},\"schema\":{\"properties\":{\"data\":{\"items\":{\"examples\":[{\"average_score_rate\":80,\"completed_at\":1510243831,\"completed_units\":1,\"course_id\":\"10-secrets-of-sleep-walking\",\"progress_per_section_unit\":[{\"section_id\":\"my-course_first_section\",\"units\":[{\"score_on_unit\":null,\"time_on_unit\":210,\"unit_duration\":773,\"unit_id\":\"5cdaa5856c72ec302c5698c3\",\"unit_name\":\"Von D - Burn Baphomet\",\"unit_progress_rate\":25,\"unit_section_name\":\"first section\",\"unit_status\":\"not_completed\",\"unit_type\":\"youtube\"},{\"score_on_unit\":100,\"time_on_unit\":555,\"unit_duration\":555,\"unit_id\":\"5cdac4bf6c72ec7ea8384e02\",\"unit_name\":\"best practices scorm\",\"unit_progress_rate\":100,\"unit_section_name\":\"first section\",\"unit_status\":\"completed\",\"unit_type\":\"scorm\"},{\"score_on_unit\":null,\"time_on_unit\":0,\"unit_duration\":281,\"unit_id\":\"5cdac50d6c72ec7ea40dce52\",\"unit_name\":\"test\",\"unit_progress_rate\":0,\"unit_section_name\":\"first section\",\"unit_status\":\"not_completed\",\"unit_type\":\"audio\"}]},{\"section_id\":\"my-course_second_section\",\"units\":[{\"score_on_unit\":null,\"time_on_unit\":223,\"unit_duration\":833,\"unit_id\":\"5f9a93b068fd38656d62b404\",\"unit_name\":\"my ebook\",\"unit_progress_rate\":35,\"unit_section_name\":\"second section\",\"unit_status\":\"not_completed\",\"unit_type\":\"ebook\"}]}],\"progress_rate\":100,\"status\":\"completed\",\"time_on_course\":12310,\"total_units\":4}],\"properties\":{\"average_score_rate\":{\"description\":\"Average score percentage\",\"format\":\"float\",\"type\":\"number\"},\"completed_at\":{\"description\":\"Completion date in UNIX timestamp format. If status is not_started or not_completed the null value will be returned\",\"example\":1510243831,\"type\":[\"number\",\"null\"]},\"completed_units\":{\"description\":\"Total number of completed course learning activities by the user \",\"type\":\"integer\"},\"course_id\":{\"description\":\"Unique identifier of the course\",\"type\":\"string\"},\"progress_per_section_unit\":{\"description\":\"User progress data per section/learning activity\",\"items\":{\"properties\":{\"section_id\":{\"description\":\"Unique identifier of the section\",\"type\":\"string\"},\"units\":{\"description\":\"User progress data per unit\",\"items\":{\"properties\":{\"score_on_unit\":{\"description\":\"User score on learning activity\",\"maximum\":100,\"minimum\":1,\"type\":[\"null\",\"integer\"]},\"time_on_unit\":{\"description\":\"Time spend by user on learning activity in seconds\",\"type\":\"integer\"},\"unit_duration\":{\"description\":\"Duration of the learning activity in seconds\",\"type\":[\"null\",\"integer\"]},\"unit_id\":{\"description\":\"Unique identifier of the learning activity\",\"type\":\"string\"},\"unit_name\":{\"description\":\"Name of the learning activity\",\"type\":\"string\"},\"unit_progress_rate\":{\"description\":\"Progress rate of user on learning activity\",\"maximum\":100,\"minimum\":0,\"type\":\"integer\"},\"unit_section_name\":{\"description\":\"Name of the section where the learning activity belongs\",\"type\":\"string\"},\"unit_status\":{\"description\":\"Status of the learning activity\",\"enum\":[\"completed\",\"not_completed\"],\"type\":\"string\"},\"unit_type\":{\"description\":\"Type of the learning activity\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"},\"type\":\"array\"},\"progress_rate\":{\"description\":\"Progress rate (%)\",\"format\":\"float\",\"type\":\"number\"},\"status\":{\"description\":\"Status of user progress\",\"enum\":[\"not_started\",\"completed\",\"not_completed\"],\"type\":\"string\"},\"time_on_course\":{\"description\":\"Time spent on the course in seconds\",\"type\":\"integer\"},\"total_units\":{\"description\":\"Total number of course learning activities \",\"type\":\"integer\"}},\"type\":\"object\"},\"type\":\"array\"},\"meta\":{\"description\":\"\",\"examples\":[{\"itemsPerPage\":20,\"page\":1,\"totalItems\":1,\"totalPages\":1}],\"properties\":{\"itemsPerPage\":{\"description\":\"Limit in the number of items per page\",\"type\":\"number\"},\"page\":{\"description\":\"Current page number\",\"type\":\"number\"},\"totalItems\":{\"description\":\"Total number of items in this page\",\"type\":\"number\"},\"totalPages\":{\"description\":\"Total number of pages\",\"type\":\"number\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/users/{id}/progress"
+          rename: {
+            param: {
+              id: "user_id"
+            }
+          }
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "user_id"
+            }
+            {
+              lit: "progress"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "items_per_page"
+              "lw_client"
+              "page"
+              "user_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "user"
+      ]
+    ]
+  }
+
+
+
+}

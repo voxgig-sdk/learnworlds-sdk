@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Promotion | API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/learnworlds-sdk">voxgig-sdk/learnworlds-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">API</a></details>
+<details open><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/active.html">Active</a>
+<a href="../api/affiliate.html">Affiliate</a>
+<a href="../api/assessment.html">Assessment</a>
+<a href="../api/bundle.html">Bundle</a>
+<a href="../api/by_product.html">ByProduct</a>
+<a href="../api/by_segment.html">BySegment</a>
+<a href="../api/calendar.html">Calendar</a>
+<a href="../api/certificate.html">Certificate</a>
+<a href="../api/community.html">Community</a>
+<a href="../api/community_post.html">CommunityPost</a>
+<a href="../api/community_space.html">CommunitySpace</a>
+<a href="../api/completed.html">Completed</a>
+<a href="../api/coupon.html">Coupon</a>
+<a href="../api/coupon_usage.html">CouponUsage</a>
+<a href="../api/course.html">Course</a>
+<a href="../api/course_analytics.html">CourseAnalytics</a>
+<a href="../api/course_content.html">CourseContent</a>
+<a href="../api/due.html">Due</a>
+<a href="../api/event.html">Event</a>
+<a href="../api/event_log.html">EventLog</a>
+<a href="../api/form.html">Form</a>
+<a href="../api/installment.html">Installment</a>
+<a href="../api/lead.html">Lead</a>
+<a href="../api/multiple_seat.html">MultipleSeat</a>
+<a href="../api/payment.html">Payment</a>
+<a href="../api/post.html">Post</a>
+<a aria-current="page" href="../api/promotion.html">Promotion</a><div class="nav-sections"><a class="nav-section" href="#post-v2promotions">POST /v2/promotions</a>
+<a class="nav-section" href="#get-v2promotionspidcoupons">GET /v2/promotions/{pid}/coupons</a>
+<a class="nav-section" href="#get-v2promotions">GET /v2/promotions</a>
+<a class="nav-section" href="#get-v2promotionsid">GET /v2/promotions/{id}</a></div>
+<a href="../api/reporting.html">Reporting</a>
+<a href="../api/score.html">Score</a>
+<a href="../api/seat.html">Seat</a>
+<a href="../api/segment.html">Segment</a>
+<a href="../api/space.html">Space</a>
+<a href="../api/subscription_plan.html">SubscriptionPlan</a>
+<a href="../api/unit.html">Unit</a>
+<a href="../api/unit_analytics.html">UnitAnalytics</a>
+<a href="../api/upcoming.html">Upcoming</a>
+<a href="../api/update_user_progress.html">UpdateUserProgress</a>
+<a href="../api/user.html">User</a>
+<a href="../api/user_group.html">UserGroup</a>
+<a href="../api/user_progress.html">UserProgress</a>
+<a href="../api/user_role.html">UserRole</a>
+<a href="../api/user_subscription.html">UserSubscription</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="../sdks/seneca-provider.html">Seneca Provider</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="promotion">Promotion</h1>
+<h2 id="operations">Operations</h2>
+<p>Every route this entity exposes. Each route links to its own reference on this page.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>SDK operation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-v2promotions"><code>/v2/promotions</code></a></td>
+<td><code>create</code></td>
+<td>Created</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2promotionspidcoupons"><code>/v2/promotions/{pid}/coupons</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2promotions"><code>/v2/promotions</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2promotionsid"><code>/v2/promotions/{id}</code></a></td>
+<td><code>load</code></td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>applies_to_all</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>All courses and/or bundles that the promotion coupon will be applied to.</td>
+</tr>
+<tr>
+<td><code>bulk</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether there's a bulk set of codes created for this coupon.</td>
+</tr>
+<tr>
+<td><code>code</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Coupon code</td>
+</tr>
+<tr>
+<td><code>coupons</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>Promotion coupons</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the promotion was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>expires</code></td>
+<td><code>one,null,string</code></td>
+<td>No</td>
+<td>Coupon expiration date, in YYYY-MM-DD format</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the promotion</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the promotion was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the promotion</td>
+</tr>
+<tr>
+<td><code>prefix</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>Coupon prefix</td>
+</tr>
+<tr>
+<td><code>products</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>Specific products that the promotion coupon will be applied to</td>
+</tr>
+<tr>
+<td><code>quantity</code></td>
+<td><code>one,number,null</code></td>
+<td>No</td>
+<td>Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)</td>
+</tr>
+<tr>
+<td><code>times_used</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td>Coupon number of times used.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Type of discount</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Percentage or fixed amount of discount</td>
+</tr>
+</tbody>
+</table>
+<h2 id="create">create</h2>
+<h3 id="post-v2promotions" class="operation" data-method="post"><code>POST</code> /v2/promotions</h3>
+<p>Operation ID: <code>post-promotions</code>.</p>
+<h4 id="parameters">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="request-body">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>applies_to_all</code></td>
+<td><code>array of enum: bundles, courses, courses_bundles, none</code></td>
+<td>No</td>
+<td>All courses and/or bundles that the promotion coupon will be applied to. None indicates that the coupon will not be applied to any course/bundle</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Promotion name</td>
+</tr>
+<tr>
+<td><code>products</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Specific products that the promotion coupon will be applied to</td>
+</tr>
+<tr>
+<td><code>products[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Product Id</td>
+</tr>
+<tr>
+<td><code>products[].type</code></td>
+<td><code>enum: course, bundle</code></td>
+<td>No</td>
+<td>Product type</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: percentage, fixed</code></td>
+<td>No</td>
+<td>Discount type</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Percentage or fixed amount of discount.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses">Responses</h4>
+<h5 id="201-created" class="status" data-status="2xx">201: Created</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>applies_to_all</code></td>
+<td><code>array of enum: bundles, courses, courses_bundles, none</code></td>
+<td>No</td>
+<td>All courses and/or all bundles that promotion coupon will be applied to. None indicates that the coupon will not be applied to any courses/bundles</td>
+</tr>
+<tr>
+<td><code>coupons</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Promotion coupons. The array is empty for newly created promotion.</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the promotion was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Promotion Id</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the promotion was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Promotion name</td>
+</tr>
+<tr>
+<td><code>products</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Specific products that the promotion coupon will be applied to</td>
+</tr>
+<tr>
+<td><code>products[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Product Id</td>
+</tr>
+<tr>
+<td><code>products[].type</code></td>
+<td><code>enum: course, bundle</code></td>
+<td>No</td>
+<td>Product type</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: percentage, fixed</code></td>
+<td>No</td>
+<td>Discount type</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Percentage or fixed amount of discount.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="list">list</h2>
+<h3 id="get-v2promotionspidcoupons" class="operation" data-method="get"><code>GET</code> /v2/promotions/{pid}/coupons</h3>
+<p>Operation ID: <code>get-promotion-coupons</code>.</p>
+<h4 id="parameters-1">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>pid</code> | <code>path</code> | <code>string</code> | Yes | Promotion Id |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="responses-1">Responses</h4>
+<h5 id="200-ok" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].bulk</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether there's a bulk set of codes created for this coupon.</td>
+</tr>
+<tr>
+<td><code>data[].code</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Coupon code</td>
+</tr>
+<tr>
+<td><code>data[].expires</code></td>
+<td><code>null,string (date)</code></td>
+<td>No</td>
+<td>Coupon expiration date, in YYYY-MM-DD format</td>
+</tr>
+<tr>
+<td><code>data[].prefix</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Coupon prefix</td>
+</tr>
+<tr>
+<td><code>data[].quantity</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td>Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)</td>
+</tr>
+<tr>
+<td><code>data[].times_used</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td>Coupon number of times used.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2promotions" class="operation" data-method="get"><code>GET</code> /v2/promotions</h3>
+<p>Operation ID: <code>get-promotions</code>.</p>
+<h4 id="parameters-2">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |</p>
+<h4 id="responses-2">Responses</h4>
+<h5 id="200-ok-1" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].applies_to_all</code></td>
+<td><code>array of enum: bundles, courses, courses_bundles, none</code></td>
+<td>No</td>
+<td>All courses and/or bundles that the promotion coupon will be applied to. None indicates that the coupon will not be applied to any course/bundle</td>
+</tr>
+<tr>
+<td><code>data[].coupons</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Promotion coupons</td>
+</tr>
+<tr>
+<td><code>data[].coupons[].bulk</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether there's a bulk set of codes created for this coupon.</td>
+</tr>
+<tr>
+<td><code>data[].coupons[].code</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Coupon code</td>
+</tr>
+<tr>
+<td><code>data[].coupons[].expires</code></td>
+<td><code>null,string (date)</code></td>
+<td>No</td>
+<td>Coupon expiration date, in YYYY-MM-DD format</td>
+</tr>
+<tr>
+<td><code>data[].coupons[].prefix</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Coupon prefix</td>
+</tr>
+<tr>
+<td><code>data[].coupons[].quantity</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td>Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)</td>
+</tr>
+<tr>
+<td><code>data[].coupons[].times_used</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td>Coupon number of times used.</td>
+</tr>
+<tr>
+<td><code>data[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the promotion was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the promotion</td>
+</tr>
+<tr>
+<td><code>data[].modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the promotion was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the promotion</td>
+</tr>
+<tr>
+<td><code>data[].products</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Specific products that the promotion coupon will be applied to</td>
+</tr>
+<tr>
+<td><code>data[].products[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the product</td>
+</tr>
+<tr>
+<td><code>data[].products[].type</code></td>
+<td><code>enum: course, bundle</code></td>
+<td>No</td>
+<td>Type of the product</td>
+</tr>
+<tr>
+<td><code>data[].type</code></td>
+<td><code>enum: percentage, fixed</code></td>
+<td>No</td>
+<td>Type of discount</td>
+</tr>
+<tr>
+<td><code>data[].value</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Percentage or fixed amount of discount</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h2 id="load">load</h2>
+<h3 id="get-v2promotionsid" class="operation" data-method="get"><code>GET</code> /v2/promotions/{id}</h3>
+<p>Operation ID: <code>get-promotions-id</code>.</p>
+<h4 id="parameters-3">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Promotion Id |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="responses-3">Responses</h4>
+<h5 id="200-ok-2" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>applies_to_all</code></td>
+<td><code>array of enum: bundles, courses, courses_bundles, none</code></td>
+<td>No</td>
+<td>All courses and/or bundles that the promotion coupon will be applied to. None indicates that the coupon will not be applied to any course/bundle</td>
+</tr>
+<tr>
+<td><code>coupons</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Promotion coupons</td>
+</tr>
+<tr>
+<td><code>coupons[].bulk</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether there's a bulk set of codes created for this coupon.</td>
+</tr>
+<tr>
+<td><code>coupons[].code</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Coupon code</td>
+</tr>
+<tr>
+<td><code>coupons[].expires</code></td>
+<td><code>null,string (date)</code></td>
+<td>No</td>
+<td>Coupon expiration date, in YYYY-MM-DD format</td>
+</tr>
+<tr>
+<td><code>coupons[].prefix</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Coupon prefix</td>
+</tr>
+<tr>
+<td><code>coupons[].quantity</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td>Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)</td>
+</tr>
+<tr>
+<td><code>coupons[].times_used</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td>Coupon number of times used.</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the promotion was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the promotion</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the promotion was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the promotion</td>
+</tr>
+<tr>
+<td><code>products</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Specific products that the promotion coupon will be applied to</td>
+</tr>
+<tr>
+<td><code>products[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the product</td>
+</tr>
+<tr>
+<td><code>products[].type</code></td>
+<td><code>enum: course, bundle</code></td>
+<td>No</td>
+<td>Type of the product</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum: percentage, fixed</code></td>
+<td>No</td>
+<td>Type of discount</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Percentage or fixed amount of discount</td>
+</tr>
+</tbody>
+</table>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

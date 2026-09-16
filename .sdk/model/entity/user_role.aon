@@ -1,0 +1,196 @@
+# Entity: user_role
+
+main: kit: entity: user_role: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "access_level"
+      req: false
+      short: "Access level of the user role"
+      type: "`$ANY`"
+    }
+    {
+      name: "course_id"
+      req: false
+      short: "Unique identifier of the course assigned to the instructor."
+      type: "`$STRING`"
+    }
+    {
+      name: "custom_role"
+      req: false
+      short: "`true` if role is a custom role created by school owner"
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "description"
+      req: false
+      short: "Description of the user role"
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: false
+      short: "Unique identifier of the role"
+      type: "`$STRING`"
+    }
+    {
+      name: "revenue_share_percentage"
+      req: false
+      short: "Instructor's revenue share (% ) from the assigned course e.g."
+      type: "`$NUMBER`"
+    }
+    {
+      name: "title"
+      req: false
+      short: "Title of the role"
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "user_role"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                example: "admin"
+                kind: "query"
+                name: "access_level"
+                orig: "access_level"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: "623337c2e7c2d86f9f17a9a3"
+                kind: "query"
+                name: "role_id"
+                orig: "role_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/user-roles"
+            json: "{\"operationId\":\"get-v2-users-roles\",\"parameters\":[{\"description\":\"Unique identifier of the user role; use this query parameter to return a specific user role.\",\"in\":\"query\",\"name\":\"role_id\",\"schema\":{\"example\":\"623337c2e7c2d86f9f17a9a3\",\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter roles by their access level. Values can be comma seperated to filter one or more access levels\",\"in\":\"query\",\"name\":\"access_level\",\"schema\":{\"enum\":[\"admin\",\"instructor\",\"reporter\",\"seat_manager\",\"user\"],\"example\":\"admin\",\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example 1\":{\"value\":{\"data\":[{\"access_level\":\"instructor\",\"custom_role\":false,\"description\":\"Upgrade an Instructor to Course Creator and grant them special permissions to create, manage, and publish their courses.\",\"id\":\"61bb42d5e07e202700000008\",\"title\":\"Course creator\"}]}}},\"schema\":{\"properties\":{\"data\":{\"items\":{\"properties\":{\"access_level\":{\"description\":\"Access level of the user role\",\"enum\":[\"admin\",\"instructor\",\"reporter\",\"seat_manager\",\"user\"]},\"custom_role\":{\"description\":\"`true` if role is a custom role created by school owner\",\"type\":\"boolean\"},\"description\":{\"description\":\"Description of the user role\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier of the role\",\"type\":\"string\"},\"title\":{\"description\":\"Title of the role\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/user-roles"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "user-roles"
+            }
+          ]
+          select: {
+            exist: [
+              "access_level"
+              "authorization"
+              "lw_client"
+              "role_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.data`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/users/{id}/user-role"
+            json: "{\"operationId\":\"get-v2-users-id-user-role\",\"parameters\":[{\"description\":\"User Id or email\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"description\":\"The response may vary depending on role.\",\"properties\":{\"assigned_courses\":{\"description\":\"Courses to be assigned to the instructor; empty if the user is not an instructor or if no courses should be assigned to the user.\\n\\n**Note**: If left empty, all previously assigned courses will be removed from the instructor.\",\"items\":{\"properties\":{\"course_id\":{\"description\":\"Unique identifier of the course assigned to the instructor.\",\"type\":\"string\"},\"revenue_share_percentage\":{\"description\":\"Instructor's revenue share (% ) from the assigned course e.g. \\\"45\\\".\",\"type\":\"number\"}},\"type\":\"object\"},\"type\":\"array\"},\"assigned_seat_offering_ids\":{\"description\":\"Unique identifier of the seat offerings to be assigned to the seat manager; empty if the user is not a seat manager or if no offerings should be assigned to the user.\\n\",\"items\":{\"type\":\"string\"},\"type\":\"array\"},\"assigned_segment_id\":{\"description\":\"Unique identifier of the segment to be assigned to the reporter; empty if the user is not a reporter or if no segment should be assigned to the user.\",\"type\":\"string\"},\"assigned_user_group_ids\":{\"description\":\"Unique identifier of the user groups to be assigned to the user group manager; empty if the user is not a group manager or if no groups should be assigned to the user.\\n\\nNote: If left empty, all previously assigned user groups will be removed from the group manager.\",\"items\":{\"type\":\"string\"},\"type\":\"array\"},\"email\":{\"description\":\"Email account of the user\",\"type\":\"string\"},\"id\":{\"description\":\"User Id or email (encoded string)\",\"type\":\"string\"},\"role_id\":{\"description\":\"User Id or email\",\"type\":\"string\"},\"user_role\":{\"description\":\"Values of the role fields for this user\",\"properties\":{\"access_level\":{\"description\":\"Access level of the role\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier of the user role\",\"type\":\"string\"},\"name\":{\"description\":\"Name of the role\",\"type\":\"string\"}},\"type\":\"object\"},\"username\":{\"description\":\"Username of the user\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/users/{id}/user-role"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "user-role"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.user_role`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

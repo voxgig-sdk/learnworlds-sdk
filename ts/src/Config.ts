@@ -1,12 +1,37 @@
 
 import { BaseFeature } from './feature/base/BaseFeature'
+import { DebugFeature } from './feature/debug/DebugFeature'
+import { IdempotencyFeature } from './feature/idempotency/IdempotencyFeature'
+import { MetricsFeature } from './feature/metrics/MetricsFeature'
+import { PagingFeature } from './feature/paging/PagingFeature'
+import { RatelimitFeature } from './feature/ratelimit/RatelimitFeature'
+import { RetryFeature } from './feature/retry/RetryFeature'
 import { TestFeature } from './feature/test/TestFeature'
+import { TimeoutFeature } from './feature/timeout/TimeoutFeature'
 
 
 
 const FEATURE_CLASS: Record<string, typeof BaseFeature> = {
-   test: TestFeature,
+   debug: DebugFeature,
+ idempotency: IdempotencyFeature,
+ metrics: MetricsFeature,
+ paging: PagingFeature,
+ ratelimit: RatelimitFeature,
+ retry: RetryFeature,
+ test: TestFeature,
+ timeout: TimeoutFeature,
 
+}
+
+
+// Per-feature plugin DEFINITIONS (voxgig/plugin `Definition` values), from
+// the model's active plugin groups. A feature that takes a `plugins` option
+// (secrets over sekreto) reads its own entry; a feature with no plugins has
+// none. Named imports above make each definition statically reachable, so
+// an SDK carries exactly the plugin modules its model selects — the same
+// leanness the old side-effect registry imports bought, without a registry.
+const FEATURE_PLUGINS: Record<string, any[]> = {
+  
 }
 
 
@@ -19,24 +44,160 @@ class Config {
     return fi
   }
 
+  // False for a feature added at runtime via options.extend (station's
+  // adopt path) - the constructor uses this to skip makeFeature for names
+  // no generated class backs.
+  hasFeature(this: any, fn: string) {
+    return null != FEATURE_CLASS[fn]
+  }
+
 
   main = {
-    name: 'ProjectName',
+    name: 'Learnworlds',
+        slug: "learnworlds",
+    version: "0.0.1",
+    target: "ts",
+
   }
 
 
   feature = {
-     test:     {
+     debug:     {
+      "options": {
+        "active": false,
+        "max": 100,
+        "redact": [
+          "authorization",
+          "cookie",
+          "set-cookie",
+          "api-key",
+          "apikey",
+          "x-api-key",
+          "idempotency-key"
+        ]
+      },
+      "optspec": {
+        "now": "`$FUNCTION`",
+        "onEntry": "`$FUNCTION`"
+      },
+      "strict": false,
+      "transport": "none"
+    },
+ idempotency:     {
+      "options": {
+        "active": false,
+        "header": "Idempotency-Key",
+        "methods": [
+          "POST",
+          "PUT",
+          "PATCH",
+          "DELETE"
+        ],
+        "ops": [
+          "create",
+          "update",
+          "remove"
+        ]
+      },
+      "optspec": {
+        "keygen": "`$FUNCTION`"
+      },
+      "strict": false,
+      "transport": "none"
+    },
+ metrics:     {
       "options": {
         "active": false
-      }
+      },
+      "optspec": {
+        "now": "`$FUNCTION`"
+      },
+      "strict": false,
+      "transport": "none"
+    },
+ paging:     {
+      "options": {
+        "active": false,
+        "afterVar": "after",
+        "cursorParam": "cursor",
+        "firstVar": "first",
+        "limitParam": "limit",
+        "pageParam": "page",
+        "startPage": 1
+      },
+      "optspec": {
+        "limit": "`$NUMBER`",
+        "ops": "`$LIST`"
+      },
+      "strict": false,
+      "transport": "none"
+    },
+ ratelimit:     {
+      "options": {
+        "active": false,
+        "burst": 5,
+        "rate": 5
+      },
+      "optspec": {
+        "now": "`$FUNCTION`",
+        "sleep": "`$FUNCTION`"
+      },
+      "strict": false,
+      "transport": "wrap"
+    },
+ retry:     {
+      "options": {
+        "active": false,
+        "factor": 2,
+        "maxDelay": 2000,
+        "minDelay": 50,
+        "retries": 2,
+        "statuses": [
+          408,
+          425,
+          429,
+          500,
+          502,
+          503,
+          504
+        ]
+      },
+      "optspec": {
+        "jitter": "`$BOOLEAN`",
+        "sleep": "`$FUNCTION`"
+      },
+      "strict": false,
+      "transport": "wrap"
+    },
+ test:     {
+      "options": {
+        "active": false
+      },
+      "optspec": {
+        "entity": "`$MAP`",
+        "net": "`$MAP`"
+      },
+      "strict": false,
+      "transport": "base"
+    },
+ timeout:     {
+      "options": {
+        "active": false,
+        "ms": 30000
+      },
+      "optspec": {
+        "clearTimer": "`$FUNCTION`",
+        "setTimer": "`$FUNCTION`"
+      },
+      "strict": false,
+      "transport": "wrap"
     },
 
   }
 
 
   options = {
-    base: 'https://stoplight.io/mocks/learnworlds/api:main/2951998',
+    base: "https://stoplight.io/mocks/learnworlds/api:main/2951998",
 
     headers: {
       "content-type": "application/json"
@@ -186,513 +347,418 @@ class Config {
     "affiliate": {
       "fields": [
         {
-          "active": true,
           "name": "affiliate",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 0
+          "short": "Related affiliate data",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
-          "name": "affiliate_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "name": "affiliateId",
+          "short": "Unique identifier of the affiliate",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "amount",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 2
+          "short": "Amount of the payout",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "billing_info",
-          "req": false,
+          "short": "Values of the billing info fields for this user",
           "type": [
             "`$ONE`",
             [
               "`$OBJECT`",
               "`$NULL`"
             ]
-          ],
-          "index$": 3
+          ]
         },
         {
-          "active": true,
-          "name": "click",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 4
+          "name": "clicks",
+          "short": "Number of referral link clicks",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "code",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 5
+          "short": "Unique affiliate code",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "commission",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 6
-        },
-        {
-          "active": true,
+          "format": "float",
           "name": "commission_percentage",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 7
+          "short": "This is the percentage of the sale that goes to the affiliate.",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "completed_by",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 8
+          "format": "float",
+          "name": "commissions",
+          "short": "Total commission amount",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "name": "completedBy",
+          "type": "`$OBJECT`"
+        },
+        {
           "name": "coupon",
-          "req": false,
+          "short": "Coupon code",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 9
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 10
+          "short": "Date the user was created, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "customer",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 11
+          "name": "customers",
+          "short": "Number of referred customers",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "date",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 12
+          "short": "Datetime the affiliation was created, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "discount",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 13
+          "short": "Discount of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "due",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 14
+          "short": "Total amount of due payouts",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "email",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 15
+          "short": "Email account of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "eu_customer",
-          "req": false,
+          "short": "Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 16
+          ]
         },
         {
-          "active": true,
-          "name": "field",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 17
+          "name": "fields",
+          "short": "Default sign up fields for the School.",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "gateway",
-          "req": false,
+          "short": "Payment gateway name",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 18
+          ]
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 19
+          "short": "Unique identifier of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "instructor",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 20
+          "name": "instructors",
+          "short": "Related instructor data",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "instructors_total_percentage",
-          "req": false,
+          "short": "Total percentage of the revenue for the instructor",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 21
+          ]
         },
         {
-          "active": true,
           "name": "invoice",
-          "req": false,
+          "short": "Invoice identifier",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 22
+          ]
         },
         {
-          "active": true,
           "name": "is_admin",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 23
+          "short": "Indication about whether the user is an administrator of the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_affiliate",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 24
+          "short": "Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_instructor",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 25
+          "short": "Indication about whether the user is an instructor in the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_reporter",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 26
+          "short": "Indication about whether the user is an reporter in the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_suspended",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 27
+          "short": "Indication about whether the user is suspended in the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "last_login",
-          "req": false,
+          "short": "Date of the last login of the user, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 28
+          ]
         },
         {
-          "active": true,
-          "name": "lead",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 29
+          "name": "leads",
+          "short": "Number of leads",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "nps_comment",
-          "req": false,
+          "short": "The latest comment submitted by the user on the NPS form.",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 30
+          ]
         },
         {
-          "active": true,
           "name": "nps_score",
-          "req": false,
+          "short": "The latest NPS score submitted by the user.",
           "type": [
             "`$ONE`",
             [
               "`$INTEGER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 31
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "paid_at",
-          "req": false,
+          "short": "Payment date, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NUMBER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 32
+          ]
         },
         {
-          "active": true,
-          "name": "payment",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 33
+          "name": "paymentMethod",
+          "short": "Payment method",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "payment_method",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 34
-        },
-        {
-          "active": true,
-          "name": "payment_note",
-          "req": false,
+          "name": "paymentNotes",
+          "short": "Payment notes",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 35
+          ]
         },
         {
-          "active": true,
           "name": "payment_plan_current_payment",
-          "req": false,
+          "short": "Current payment number of payment plan",
           "type": [
             "`$ONE`",
             [
               "`$INTEGER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 36
+          ]
         },
         {
-          "active": true,
-          "name": "payment_plan_total_payment",
-          "req": false,
+          "name": "payment_plan_total_payments",
+          "short": "Total payments number of payment plan",
           "type": [
             "`$ONE`",
             [
               "`$INTEGER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 37
+          ]
         },
         {
-          "active": true,
-          "name": "payout",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 38
+          "name": "payments",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
+          "format": "float",
+          "name": "payouts",
+          "short": "Total amount of completed payouts",
+          "type": "`$NUMBER`"
+        },
+        {
+          "format": "float",
           "name": "pending",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 39
+          "short": "Total amount of upcoming payouts",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "period",
-          "req": false,
+          "short": "Payment plan period",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 40
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "price",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 41
+          "short": "Price of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "product",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 42
+          "short": "Related product data",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "referrer_id",
-          "req": false,
+          "short": "Unique user id of the referrer for this user",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 43
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "refund_at",
-          "req": false,
+          "short": "Refund date, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 44
+          ]
         },
         {
-          "active": true,
           "name": "role",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 45
+          "short": "Values of the role fields for this user",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
-          "name": "sale",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 46
+          "format": "float",
+          "name": "sales",
+          "short": "Sales total amount",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "signup_approval_status",
-          "req": false,
+          "short": "User status regarding the Signup Approval flow",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 47
+          ]
         },
         {
-          "active": true,
-          "name": "subscribed_for_marketing_email",
-          "req": false,
+          "name": "subscribed_for_marketing_emails",
+          "short": "Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 48
+          ]
         },
         {
-          "active": true,
-          "name": "tag",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 49
+          "name": "tags",
+          "short": "Array of the tags of the user",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "tax_amount",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 50
+          "short": "Tax amount of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "tax_percentage",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 51
+          "short": "Tax percentage of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "transaction_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 52
+          "short": "Transaction id of the payment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 53
+          "short": "Type of the payment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "user_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 54
+          "short": "Unique identifier of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "username",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 55
+          "short": "Username of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "utm",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 56
+          "name": "utms",
+          "short": "Values of the UTM fields for this user",
+          "type": "`$OBJECT`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "affiliate",
       "op": {
         "create": {
@@ -700,11 +766,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -712,7 +776,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -722,7 +785,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -731,12 +793,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/affiliates/{id}",
-              "parts": [
-                "v2",
-                "affiliates",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "affiliates"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -747,23 +816,24 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "affiliates",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         },
         "list": {
           "input": "data",
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -771,7 +841,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -781,7 +850,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -791,23 +859,30 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/affiliates/{id}/customers",
-              "parts": [
-                "v2",
-                "affiliates",
-                "{id}",
-                "customers"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "affiliates"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "customers"
+                }
               ],
               "select": {
                 "$action": "customer",
@@ -822,14 +897,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "affiliates",
+                "{id}",
+                "customers"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -837,7 +915,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -847,7 +924,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -857,23 +933,30 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/affiliates/{id}/leads",
-              "parts": [
-                "v2",
-                "affiliates",
-                "{id}",
-                "leads"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "affiliates"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "leads"
+                }
               ],
               "select": {
                 "$action": "lead",
@@ -888,14 +971,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "affiliates",
+                "{id}",
+                "leads"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -903,7 +989,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -913,7 +998,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -923,23 +1007,30 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/affiliates/{id}/payments",
-              "parts": [
-                "v2",
-                "affiliates",
-                "{id}",
-                "payments"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "affiliates"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "payments"
+                }
               ],
               "select": {
                 "$action": "payment",
@@ -954,14 +1045,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 2
+              "parts": [
+                "v2",
+                "affiliates",
+                "{id}",
+                "payments"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -969,7 +1063,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -979,7 +1072,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -988,14 +1080,25 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/affiliates/{id}/payouts/completed",
-              "parts": [
-                "v2",
-                "affiliates",
-                "{id}",
-                "payouts",
-                "completed"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "affiliates"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "payouts"
+                },
+                {
+                  "lit": "completed"
+                }
               ],
               "select": {
                 "$action": "payout_completed",
@@ -1009,14 +1112,18 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 3
+              "parts": [
+                "v2",
+                "affiliates",
+                "{id}",
+                "payouts",
+                "completed"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -1024,7 +1131,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -1034,7 +1140,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -1043,14 +1148,25 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/affiliates/{id}/payouts/due",
-              "parts": [
-                "v2",
-                "affiliates",
-                "{id}",
-                "payouts",
-                "due"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "affiliates"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "payouts"
+                },
+                {
+                  "lit": "due"
+                }
               ],
               "select": {
                 "$action": "payout_due",
@@ -1062,16 +1178,20 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
-              "index$": 4
+              "parts": [
+                "v2",
+                "affiliates",
+                "{id}",
+                "payouts",
+                "due"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -1079,7 +1199,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -1089,7 +1208,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -1098,14 +1216,25 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/affiliates/{id}/payouts/upcoming",
-              "parts": [
-                "v2",
-                "affiliates",
-                "{id}",
-                "payouts",
-                "upcoming"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "affiliates"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "payouts"
+                },
+                {
+                  "lit": "upcoming"
+                }
               ],
               "select": {
                 "$action": "payout_upcoming",
@@ -1117,16 +1246,20 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
-              "index$": 5
+              "parts": [
+                "v2",
+                "affiliates",
+                "{id}",
+                "payouts",
+                "upcoming"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -1134,7 +1267,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -1144,21 +1276,24 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/affiliates",
-              "parts": [
-                "v2",
-                "affiliates"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "affiliates"
+                }
               ],
               "select": {
                 "exist": [
@@ -1171,10 +1306,12 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 6
+              "parts": [
+                "v2",
+                "affiliates"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -1184,94 +1321,81 @@ class Config {
     "assessment": {
       "fields": [
         {
-          "active": true,
-          "name": "answer",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 0
+          "name": "answers",
+          "short": "Related answers data",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 1
+          "short": "Date the submission was created (started), in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "email",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 2
+          "short": "Email account of the user who submitted the responses",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "general_feedback",
-          "req": false,
+          "name": "generalFeedback",
+          "short": "General feedback for a submission",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 3
+          ]
         },
         {
-          "active": true,
           "name": "grade",
-          "req": false,
+          "short": "The grade that corresponds to the responses provided by the user",
           "type": [
             "`$ONE`",
             [
               "`$NUMBER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 4
+          ]
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 5
+          "short": "Unique identifier of the submission of responses by the user specified by the user id",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "modified",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 6
+          "short": "Date the submission was modified for the last time, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "passed",
-          "req": false,
+          "short": "Indication about whether or not the assessment result was passed or failed",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 7
+          ]
         },
         {
-          "active": true,
-          "name": "submitted_timestamp",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 8
+          "format": "float",
+          "name": "submittedTimestamp",
+          "short": "Date the submission was finished (submitted), in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "user_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 9
+          "short": "Unique identifier of the user who submitted the responses",
+          "type": "`$STRING`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "assessment",
       "op": {
         "list": {
@@ -1279,11 +1403,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -1291,7 +1413,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -1301,7 +1422,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "form_id",
                     "orig": "id",
@@ -1311,45 +1431,48 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "items_per_page",
                     "orig": "items_per_page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "user",
                     "orig": "user",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/forms/{id}/responses",
-              "parts": [
-                "v2",
-                "forms",
-                "{form_id}",
-                "responses"
-              ],
               "rename": {
                 "param": {
                   "id": "form_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "forms"
+                },
+                {
+                  "var": "form_id"
+                },
+                {
+                  "lit": "responses"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -1364,14 +1487,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "forms",
+                "{form_id}",
+                "responses"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -1379,7 +1505,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -1389,7 +1514,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -1399,39 +1523,42 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "items_per_page",
                     "orig": "items_per_page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "user",
                     "orig": "user",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/assessments/{id}/responses",
-              "parts": [
-                "v2",
-                "assessments",
-                "{id}",
-                "responses"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "assessments"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "responses"
+                }
               ],
               "select": {
                 "$action": "response",
@@ -1448,10 +1575,14 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "assessments",
+                "{id}",
+                "responses"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -1465,95 +1596,80 @@ class Config {
     "bundle": {
       "fields": [
         {
-          "active": true,
           "name": "access",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 0
+          "short": "Access type of the bundle",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "after_purchase",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 1
+          "name": "afterPurchase",
+          "short": "After purchase navigation settings for this bundle",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 2
+          "short": "Date the bundle was created, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "description",
-          "req": false,
+          "short": "Bundle description",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 3
+          ]
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Unique identifier of the bundle",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "image",
-          "req": false,
+          "short": "Bundle image (full URL)",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 5
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "modified",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 6
+          "short": "Date the bundle was modified for the last time, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "payment_plan",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 7
+          "name": "paymentPlans",
+          "short": "Payment plans associated with the bundle.",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "price",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 8
+          "short": "Price of the bundle",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "product",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 9
+          "name": "products",
+          "short": "Products in the bundle",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "title",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 10
+          "short": "Title of the bundle",
+          "type": "`$STRING`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "bundle",
       "op": {
         "list": {
@@ -1561,11 +1677,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -1573,7 +1687,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -1583,21 +1696,24 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/bundles",
-              "parts": [
-                "v2",
-                "bundles"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "bundles"
+                }
               ],
               "select": {
                 "exist": [
@@ -1610,21 +1726,21 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "bundles"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         },
         "load": {
           "input": "data",
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -1632,7 +1748,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -1642,7 +1757,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -1651,12 +1765,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/bundles/{id}",
-              "parts": [
-                "v2",
-                "bundles",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "bundles"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -1669,10 +1790,13 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "bundles",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         }
       },
       "relations": {
@@ -1698,45 +1822,35 @@ class Config {
     "calendar": {
       "fields": [
         {
-          "active": true,
-          "name": "booking_detail",
-          "req": false,
+          "name": "bookingDetails",
+          "short": "Booking details of the event.",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$OBJECT`"
             ]
-          ],
-          "index$": 0
+          ]
         },
         {
-          "active": true,
-          "name": "product_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "name": "productId",
+          "short": "Unique identifier of the product",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "start_date",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 2
+          "name": "startDate",
+          "short": "Start date of the event, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "title",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 3
+          "short": "Title of the event",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Type of the event",
+          "type": "`$STRING`"
         }
       ],
       "name": "calendar",
@@ -1746,11 +1860,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -1758,7 +1870,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -1768,21 +1879,26 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "event_type",
                     "orig": "event_type",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/school/events",
-              "parts": [
-                "v2",
-                "school",
-                "events"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "school"
+                },
+                {
+                  "lit": "events"
+                }
               ],
               "select": {
                 "exist": [
@@ -1793,12 +1909,15 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "school",
+                "events"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -1808,34 +1927,28 @@ class Config {
     "certificate": {
       "fields": [
         {
-          "active": true,
-          "name": "attempt",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 0
+          "format": "float",
+          "name": "attempts",
+          "short": "Number of attempts",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "course_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "short": "Unique identifier of the course",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "external_url",
-          "req": false,
+          "short": "External URL of the certificate; null if provider is LearnWorlds",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 2
+          ]
         },
         {
-          "active": true,
           "name": "form",
           "op": {
             "update": {
@@ -1843,25 +1956,22 @@ class Config {
               "type": "`$OBJECT`"
             }
           },
-          "req": false,
+          "short": "Form data of the certificate",
           "type": [
             "`$ONE`",
             [
               "`$OBJECT`",
               "`$NULL`"
             ]
-          ],
-          "index$": 3
+          ]
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Unique identifier of the certificate",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "issued",
           "op": {
             "update": {
@@ -1869,66 +1979,55 @@ class Config {
               "type": "`$NUMBER`"
             }
           },
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 5
+          "short": "Date the certification was issued, in Unix timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "provider",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 6
+          "short": "Provider of the certificate",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "score",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 7
+          "short": "Score of the certificate",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "short_url",
-          "req": false,
+          "short": "Short URL of the certificate",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 8
+          ]
         },
         {
-          "active": true,
           "name": "status",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 9
+          "short": "Status of the certificate",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "title",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 10
+          "short": "Title of the certificate",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 11
+          "short": "Type of the certificate",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "user",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 12
+          "short": "User related data",
+          "type": "`$OBJECT`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "certificate",
       "op": {
         "list": {
@@ -1936,11 +2035,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -1948,7 +2045,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -1958,37 +2054,36 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "course_id",
                     "orig": "course_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "user_id",
                     "orig": "user_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/certificates",
-              "parts": [
-                "v2",
-                "certificates"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "certificates"
+                }
               ],
               "select": {
                 "exist": [
@@ -2003,21 +2098,21 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "certificates"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         },
         "remove": {
           "input": "data",
           "name": "remove",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -2025,7 +2120,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -2035,7 +2129,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -2044,12 +2137,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "DELETE",
               "orig": "/v2/certificates/{id}",
-              "parts": [
-                "v2",
-                "certificates",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "certificates"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -2062,21 +2162,22 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "certificates",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "remove"
+          ]
         },
         "update": {
           "input": "data",
           "name": "update",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -2084,7 +2185,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -2094,7 +2194,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -2103,12 +2202,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "PUT",
               "orig": "/v2/certificates/{id}",
-              "parts": [
-                "v2",
-                "certificates",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "certificates"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -2121,10 +2227,13 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "certificates",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "update"
+          ]
         }
       },
       "relations": {
@@ -2134,188 +2243,147 @@ class Config {
     "community": {
       "fields": [
         {
-          "active": true,
           "name": "access",
-          "req": false,
-          "type": "`$ANY`",
-          "index$": 0
+          "short": "Access type of the space",
+          "type": "`$ANY`"
         },
         {
-          "active": true,
-          "name": "collection_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "name": "collectionId",
+          "short": "Unique identifier of the collection under which the space is displayed",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 2
+          "short": "Date the post was made, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "data",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 3
-        },
-        {
-          "active": true,
           "name": "description",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Description of the space",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "display_order",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 5
+          "short": "Display order of the collection as it appears in the community sidebar",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "hidden_from_community",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 6
+          "short": "Indication about whether the space is visible in the community",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 7
+          "short": "Unique identifier of the post",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "name": "invitation",
+          "short": "Indication whether the user was sent an invitation.",
+          "type": "`$BOOLEAN`"
+        },
+        {
           "name": "is_invitation_required",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 8
+          "short": "Indication about whether users are sent an invitation to join or are directly added to space",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
-          "name": "is_members_allowed_to_view_member",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 9
+          "name": "is_members_allowed_to_view_members",
+          "short": "Indication about whether users can view other users in space",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
-          "name": "item",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 10
+          "name": "items",
+          "short": "List of post content items outside of text content",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "like",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 11
+          "name": "likes",
+          "short": "List of users who have liked the post",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "mention",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 12
+          "name": "mentions",
+          "short": "User mentions of the post",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "modified",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 13
+          "short": "Date the collection was modified for the last time, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "name",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 14
+          "short": "Name of the collection",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "owner",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 15
+          "short": "Information about the space owner",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "posted_in",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 16
+          "short": "Information about where the post was made",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
-          "name": "space_id",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 17
+          "name": "space_ids",
+          "short": "List of spaces in this collection",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "status",
-          "req": false,
-          "type": "`$ANY`",
-          "index$": 18
+          "short": "The status of the user - `joined`, the user has joined the space - `invited`, the user has been sent an invitation to gain access to the space - `deleted`, the user has been removed from the space - `left`, the user has left the space",
+          "type": "`$ANY`"
         },
         {
-          "active": true,
           "name": "text",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 19
+          "short": "Text content of the post",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "title",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 20
+          "short": "Name of the space",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "uid",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 21
+          "name": "uids",
+          "short": "Unique identifiers or emails of the users to be invited/added",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "upvote",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 22
+          "name": "upvotes",
+          "short": "List of users who have upvoted the post",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "usage",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 23
+          "name": "usages",
+          "short": "List of space usages in the platform",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "user",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 24
+          "short": "Information about the post author",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "username",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 25
+          "short": "The username of the user",
+          "type": "`$STRING`"
+        },
+        {
+          "name": "users",
+          "short": "List of users that were added or invited to space",
+          "type": "`$OBJECT`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "community",
       "op": {
         "create": {
@@ -2323,11 +2391,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -2335,7 +2401,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -2345,7 +2410,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "space_id",
                     "orig": "id",
@@ -2354,20 +2418,31 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/community/spaces/{id}/users",
-              "parts": [
-                "v2",
-                "community",
-                "spaces",
-                "{space_id}",
-                "users"
-              ],
               "rename": {
                 "param": {
                   "id": "space_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "community"
+                },
+                {
+                  "lit": "spaces"
+                },
+                {
+                  "var": "space_id"
+                },
+                {
+                  "lit": "users"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -2377,23 +2452,26 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "community",
+                "spaces",
+                "{space_id}",
+                "users"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         },
         "list": {
           "input": "data",
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -2401,7 +2479,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -2411,62 +2488,57 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "course_id",
                     "orig": "course_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "items_per_page",
                     "orig": "items_per_page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "mention",
                     "orig": "mention",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "space_id",
                     "orig": "space_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "user_id",
                     "orig": "user_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/community/posts",
-              "parts": [
-                "v2",
-                "community",
-                "posts"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "community"
+                },
+                {
+                  "lit": "posts"
+                }
               ],
               "select": {
                 "$action": "post",
@@ -2485,14 +2557,16 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "community",
+                "posts"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -2500,7 +2574,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -2510,54 +2583,51 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "access",
                     "orig": "access",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "collection_id",
                     "orig": "collection_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "items_per_page",
                     "orig": "items_per_page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "usage",
                     "orig": "usage",
-                    "reqd": false,
                     "type": "`$ARRAY`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/community/spaces",
-              "parts": [
-                "v2",
-                "community",
-                "spaces"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "community"
+                },
+                {
+                  "lit": "spaces"
+                }
               ],
               "select": {
                 "$action": "space",
@@ -2575,14 +2645,16 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "community",
+                "spaces"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -2590,7 +2662,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -2600,7 +2671,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "space_id",
                     "orig": "id",
@@ -2610,38 +2680,45 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "items_per_page",
                     "orig": "items_per_page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/community/spaces/{id}/users",
-              "parts": [
-                "v2",
-                "community",
-                "spaces",
-                "{space_id}",
-                "users"
-              ],
               "rename": {
                 "param": {
                   "id": "space_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "community"
+                },
+                {
+                  "lit": "spaces"
+                },
+                {
+                  "var": "space_id"
+                },
+                {
+                  "lit": "users"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -2655,14 +2732,18 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 2
+              "parts": [
+                "v2",
+                "community",
+                "spaces",
+                "{space_id}",
+                "users"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -2670,7 +2751,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -2679,12 +2759,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/community/collections",
-              "parts": [
-                "v2",
-                "community",
-                "collections"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "community"
+                },
+                {
+                  "lit": "collections"
+                }
               ],
               "select": {
                 "$action": "collection",
@@ -2695,23 +2782,24 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
-              "index$": 3
+              "parts": [
+                "v2",
+                "community",
+                "collections"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         },
         "remove": {
           "input": "data",
           "name": "remove",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -2719,7 +2807,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -2729,7 +2816,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "space_id",
                     "orig": "id",
@@ -2737,7 +2823,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "uid",
                     "orig": "uid",
@@ -2746,21 +2831,34 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "DELETE",
               "orig": "/v2/community/spaces/{id}/users/{uid}",
-              "parts": [
-                "v2",
-                "community",
-                "spaces",
-                "{space_id}",
-                "users",
-                "{uid}"
-              ],
               "rename": {
                 "param": {
                   "id": "space_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "community"
+                },
+                {
+                  "lit": "spaces"
+                },
+                {
+                  "var": "space_id"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "uid"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -2773,14 +2871,19 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "community",
+                "spaces",
+                "{space_id}",
+                "users",
+                "{uid}"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -2788,7 +2891,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -2798,7 +2900,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -2807,13 +2908,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "DELETE",
               "orig": "/v2/community/spaces/{id}",
-              "parts": [
-                "v2",
-                "community",
-                "spaces",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "community"
+                },
+                {
+                  "lit": "spaces"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -2826,10 +2936,14 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "community",
+                "spaces",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "remove"
+          ]
         }
       },
       "relations": {
@@ -2847,69 +2961,56 @@ class Config {
     "community_post": {
       "fields": [
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 0
+          "short": "Date the post was made, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "short": "Unique identifier of the post",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "item",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 2
+          "name": "items",
+          "short": "List of post content items outside of text content",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "like",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 3
+          "name": "likes",
+          "short": "List of users who have liked the post",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "mention",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 4
+          "name": "mentions",
+          "short": "User mentions of the post",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "posted_in",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 5
+          "short": "Information about where the post was made",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "text",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 6
+          "short": "Text content of the post",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "upvote",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 7
+          "name": "upvotes",
+          "short": "List of users who have upvoted the post",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "user",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 8
+          "short": "Information about the post author",
+          "type": "`$OBJECT`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "community_post",
       "op": {
         "load": {
@@ -2917,11 +3018,9 @@ class Config {
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -2929,7 +3028,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -2939,7 +3037,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -2948,13 +3045,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/community/posts/{id}",
-              "parts": [
-                "v2",
-                "community",
-                "posts",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "community"
+                },
+                {
+                  "lit": "posts"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -2967,10 +3073,14 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "community",
+                "posts",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         }
       },
       "relations": {
@@ -2980,7 +3090,6 @@ class Config {
     "community_space": {
       "fields": [
         {
-          "active": true,
           "name": "access",
           "op": {
             "create": {
@@ -2988,61 +3097,45 @@ class Config {
               "type": "`$ANY`"
             }
           },
-          "req": false,
-          "type": "`$ANY`",
-          "index$": 0
+          "short": "Access type of the space",
+          "type": "`$ANY`"
         },
         {
-          "active": true,
-          "name": "collection_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "name": "collectionId",
+          "short": "Unique identifier of the collection under which the space is displayed",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "description",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 2
+          "short": "Description of the space",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "hidden_from_community",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 3
+          "short": "Indication about whether the space is visible in the community",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Unique identifier of the space",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "is_invitation_required",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 5
+          "short": "Indication about whether users are sent an invitation to join or are directly added to space",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
-          "name": "is_members_allowed_to_view_member",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 6
+          "name": "is_members_allowed_to_view_members",
+          "short": "Indication about whether users can view other users in space",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "owner",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 7
+          "short": "Information about the space owner",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "title",
           "op": {
             "create": {
@@ -3050,18 +3143,19 @@ class Config {
               "type": "`$STRING`"
             }
           },
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 8
+          "short": "Name of the space",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "usage",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 9
+          "name": "usages",
+          "short": "List of space usages in the platform",
+          "type": "`$ARRAY`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "community_space",
       "op": {
         "create": {
@@ -3069,11 +3163,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -3081,7 +3173,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -3090,12 +3181,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/community/spaces",
-              "parts": [
-                "v2",
-                "community",
-                "spaces"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "community"
+                },
+                {
+                  "lit": "spaces"
+                }
               ],
               "select": {
                 "exist": [
@@ -3107,21 +3205,22 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "community",
+                "spaces"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         },
         "load": {
           "input": "data",
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -3129,7 +3228,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -3139,7 +3237,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -3148,13 +3245,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/community/spaces/{id}",
-              "parts": [
-                "v2",
-                "community",
-                "spaces",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "community"
+                },
+                {
+                  "lit": "spaces"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -3167,21 +3273,23 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "community",
+                "spaces",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         },
         "update": {
           "input": "data",
           "name": "update",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -3189,7 +3297,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -3199,7 +3306,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -3208,13 +3314,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "PUT",
               "orig": "/v2/community/spaces/{id}",
-              "parts": [
-                "v2",
-                "community",
-                "spaces",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "community"
+                },
+                {
+                  "lit": "spaces"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -3227,10 +3342,14 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "community",
+                "spaces",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "update"
+          ]
         }
       },
       "relations": {
@@ -3252,14 +3371,11 @@ class Config {
     "coupon": {
       "fields": [
         {
-          "active": true,
           "name": "bulk",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 0
+          "short": "Indication about whether there's a bulk set of codes created for this coupon.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "code",
           "op": {
             "create": {
@@ -3267,25 +3383,22 @@ class Config {
               "type": "`$STRING`"
             }
           },
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "short": "Coupon code",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "expire",
-          "req": false,
+          "format": "date",
+          "name": "expires",
+          "short": "Coupon expiration date, in YYYY-MM-DD format",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 2
+          ]
         },
         {
-          "active": true,
           "name": "prefix",
           "op": {
             "create": {
@@ -3293,18 +3406,16 @@ class Config {
               "type": "`$STRING`"
             }
           },
-          "req": false,
+          "short": "Coupon prefix",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 3
+          ]
         },
         {
-          "active": true,
           "name": "quantity",
           "op": {
             "create": {
@@ -3312,22 +3423,19 @@ class Config {
               "type": "`$NUMBER`"
             }
           },
-          "req": false,
+          "short": "Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)",
           "type": [
             "`$ONE`",
             [
               "`$NUMBER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 4
+          ]
         },
         {
-          "active": true,
           "name": "times_used",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 5
+          "short": "Coupon number of times used.",
+          "type": "`$INTEGER`"
         }
       ],
       "name": "coupon",
@@ -3337,11 +3445,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -3349,7 +3455,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "example": "application/json",
                     "kind": "header",
                     "name": "content_type",
@@ -3358,7 +3463,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -3368,7 +3472,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "promotion_id",
                     "orig": "pid",
@@ -3377,19 +3480,28 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/promotions/{pid}/coupons",
-              "parts": [
-                "v2",
-                "promotions",
-                "{promotion_id}",
-                "coupons"
-              ],
               "rename": {
                 "param": {
                   "pid": "promotion_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "promotions"
+                },
+                {
+                  "var": "promotion_id"
+                },
+                {
+                  "lit": "coupons"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -3402,14 +3514,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "promotions",
+                "{promotion_id}",
+                "coupons"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -3417,7 +3532,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -3427,7 +3541,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "promotion_id",
                     "orig": "id",
@@ -3436,19 +3549,28 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/promotions/{id}/coupons-bulk",
-              "parts": [
-                "v2",
-                "promotions",
-                "{promotion_id}",
-                "coupons-bulk"
-              ],
               "rename": {
                 "param": {
                   "id": "promotion_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "promotions"
+                },
+                {
+                  "var": "promotion_id"
+                },
+                {
+                  "lit": "coupons-bulk"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -3460,10 +3582,14 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "promotions",
+                "{promotion_id}",
+                "coupons-bulk"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         }
       },
       "relations": {
@@ -3477,220 +3603,188 @@ class Config {
     "coupon_usage": {
       "fields": [
         {
-          "active": true,
           "name": "affiliate",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 0
+          "short": "Related affiliate data",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "billing_info",
-          "req": false,
+          "short": "Billing info of the payment",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$OBJECT`"
             ]
-          ],
-          "index$": 1
+          ]
         },
         {
-          "active": true,
           "name": "coupon",
-          "req": false,
+          "short": "Coupon code",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 2
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 3
+          "short": "Datetime of the payment was created, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "discount",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 4
+          "short": "Discount of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "gateway",
-          "req": false,
+          "short": "Payment gateway name",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 5
+          ]
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 6
+          "short": "Unique identifier of the payment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "instructor",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 7
+          "name": "instructors",
+          "short": "Related instructor data",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "instructors_total_percentage",
-          "req": false,
+          "short": "Total percentage of the revenue for the instructor",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 8
+          ]
         },
         {
-          "active": true,
           "name": "invoice",
-          "req": false,
+          "short": "Invoice identifier",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 9
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "paid_at",
-          "req": false,
+          "short": "Payment date, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NUMBER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 10
+          ]
         },
         {
-          "active": true,
           "name": "payment_plan_current_payment",
-          "req": false,
+          "short": "Current payment number of payment plan",
           "type": [
             "`$ONE`",
             [
               "`$INTEGER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 11
+          ]
         },
         {
-          "active": true,
-          "name": "payment_plan_total_payment",
-          "req": false,
+          "name": "payment_plan_total_payments",
+          "short": "Total payments number of payment plan",
           "type": [
             "`$ONE`",
             [
               "`$INTEGER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 12
+          ]
         },
         {
-          "active": true,
           "name": "period",
-          "req": false,
+          "short": "Payment plan period",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 13
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "price",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 14
+          "short": "Price of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "product",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 15
+          "short": "Related product data",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "refund_at",
-          "req": false,
+          "short": "Refund date, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 16
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "tax_amount",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 17
+          "short": "Tax amount of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "tax_percentage",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 18
+          "short": "Tax percentage of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "transaction_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 19
+          "short": "Transaction id of the payment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 20
+          "short": "Type of the payment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "user_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 21
+          "short": "Unique identifier of the user",
+          "type": "`$STRING`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "coupon_usage",
       "op": {
         "list": {
@@ -3698,11 +3792,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -3710,7 +3802,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -3720,7 +3811,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "cid",
@@ -3728,7 +3818,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "promotion_id",
                     "orig": "pid",
@@ -3738,32 +3827,43 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/promotions/{pid}/coupons/{cid}/usage",
-              "parts": [
-                "v2",
-                "promotions",
-                "{promotion_id}",
-                "coupons",
-                "{id}",
-                "usage"
-              ],
               "rename": {
                 "param": {
                   "cid": "id",
                   "pid": "promotion_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "promotions"
+                },
+                {
+                  "var": "promotion_id"
+                },
+                {
+                  "lit": "coupons"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "usage"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -3777,10 +3877,16 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "promotions",
+                "{promotion_id}",
+                "coupons",
+                "{id}",
+                "usage"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -3794,7 +3900,6 @@ class Config {
     "course": {
       "fields": [
         {
-          "active": true,
           "name": "access",
           "op": {
             "create": {
@@ -3802,349 +3907,280 @@ class Config {
               "type": "`$STRING`"
             }
           },
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 0
+          "short": "Access type of course",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "after_purchase",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 1
+          "name": "afterPurchase",
+          "short": "After purchase navigation settings for this course",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "author",
-          "req": false,
+          "short": "Information about the course author",
           "type": [
             "`$ONE`",
             [
               "`$OBJECT`",
               "`$NULL`"
             ]
-          ],
-          "index$": 2
+          ]
         },
         {
-          "active": true,
           "name": "billing_info",
-          "req": false,
+          "short": "Values of the billing info fields for this user",
           "type": [
             "`$ONE`",
             [
               "`$OBJECT`",
               "`$NULL`"
             ]
-          ],
-          "index$": 3
+          ]
         },
         {
-          "active": true,
-          "name": "category",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 4
+          "name": "categories",
+          "short": "Categories this course belongs in",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "course_image",
-          "req": false,
+          "name": "courseImage",
+          "short": "Course image (full URL)",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 5
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 6
+          "short": "Date the course was created, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "description",
-          "req": false,
+          "short": "Description of the course",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 7
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "discount_price",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 8
+          "short": "Discount price of the course",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "drip_feed",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 9
+          "name": "dripFeed",
+          "short": "Course setting for scheduled course delivery (drip feed); none refers to drip feed not being enabled.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "email",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 10
+          "short": "Email account of the user who submitted the responses",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "eu_customer",
-          "req": false,
+          "short": "Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 11
+          ]
         },
         {
-          "active": true,
-          "name": "expire",
-          "req": false,
+          "name": "expires",
+          "short": "Expiration timeframe value, defines the expiration timeframe, together with the type / unit in the \"expiresType\" field.",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$INTEGER`"
             ]
-          ],
-          "index$": 12
+          ]
         },
         {
-          "active": true,
-          "name": "expires_type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 13
+          "name": "expiresType",
+          "short": "Expiration timeframe type / unit, defines the expiration timeframe, together with the actual value in the \"expires\" field.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "field",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 14
+          "name": "fields",
+          "short": "Default sign up fields for the School.",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "final_price",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 15
+          "short": "Final price of the course",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "grade",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 16
+          "short": "The grade that corresponds to the responses provided by the user",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 17
+          "short": "Unique identifier of the course",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "identifier",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 18
+          "name": "identifiers",
+          "short": "Course identifiers for in app purchases.",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "is_admin",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 19
+          "short": "Indication about whether the user is an administrator of the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_affiliate",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 20
+          "short": "Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_instructor",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 21
+          "short": "Indication about whether the user is an instructor in the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_reporter",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 22
+          "short": "Indication about whether the user is an reporter in the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_suspended",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 23
+          "short": "Indication about whether the user is suspended in the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "label",
-          "req": false,
+          "short": "Label of the course",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 24
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "last_login",
-          "req": false,
+          "short": "Date of the last login of the user, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 25
+          ]
         },
         {
-          "active": true,
-          "name": "learning_unit",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 26
+          "name": "learningUnit",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "modified",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 27
+          "short": "Date the course was modified for the last time, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "nps_comment",
-          "req": false,
+          "short": "The latest comment submitted by the user on the NPS form.",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 28
+          ]
         },
         {
-          "active": true,
           "name": "nps_score",
-          "req": false,
+          "short": "The latest NPS score submitted by the user.",
           "type": [
             "`$ONE`",
             [
               "`$INTEGER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 29
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "original_price",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 30
+          "short": "Original price of the course",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "price",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 31
+          "short": "Price of the course",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "referrer_id",
-          "req": false,
+          "short": "Unique user id of the referrer for this user",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 32
+          ]
         },
         {
-          "active": true,
           "name": "role",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 33
+          "short": "Values of the role fields for this user",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "signup_approval_status",
-          "req": false,
+          "short": "User status regarding the Signup Approval flow",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 34
+          ]
         },
         {
-          "active": true,
-          "name": "submitted_timestamp",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 35
+          "format": "float",
+          "name": "submittedTimestamp",
+          "short": "Date the submission was finished (submitted), in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "subscribed_for_marketing_email",
-          "req": false,
+          "name": "subscribed_for_marketing_emails",
+          "short": "Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 36
+          ]
         },
         {
-          "active": true,
-          "name": "tag",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 37
+          "name": "tags",
+          "short": "Array of the tags of the user",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "title",
           "op": {
             "create": {
@@ -4152,39 +4188,35 @@ class Config {
               "type": "`$STRING`"
             }
           },
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 38
+          "short": "Title of the course",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "title_id",
+          "name": "titleId",
           "req": true,
-          "type": "`$STRING`",
-          "index$": 39
+          "short": "Unique identifier of the course title.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "user_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 40
+          "short": "Unique identifier of the user who submitted the responses",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "username",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 41
+          "short": "Username of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "utm",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 42
+          "name": "utms",
+          "short": "Values of the UTM fields for this user",
+          "type": "`$OBJECT`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "course",
       "op": {
         "create": {
@@ -4192,11 +4224,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -4204,7 +4234,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -4213,11 +4242,16 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/courses",
-              "parts": [
-                "v2",
-                "courses"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "courses"
+                }
               ],
               "select": {
                 "exist": [
@@ -4229,21 +4263,21 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "courses"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         },
         "list": {
           "input": "data",
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -4251,7 +4285,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -4261,7 +4294,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -4271,63 +4303,60 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "items_per_page",
                     "orig": "items_per_page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "learning_unit",
                     "orig": "learning_unit",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "order",
                     "orig": "order",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "sort",
                     "orig": "sort",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "user",
                     "orig": "user",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/courses/{id}/grades",
-              "parts": [
-                "v2",
-                "courses",
-                "{id}",
-                "grades"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "courses"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "grades"
+                }
               ],
               "select": {
                 "$action": "grade",
@@ -4347,14 +4376,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "courses",
+                "{id}",
+                "grades"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -4362,7 +4394,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -4372,39 +4403,38 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": "[\"draft\", \"free\"]",
                     "kind": "query",
                     "name": "access",
                     "orig": "access",
-                    "reqd": false,
                     "type": "`$ARRAY`"
                   },
                   {
-                    "active": true,
                     "example": "super-course,newcourse",
                     "kind": "query",
                     "name": "category",
                     "orig": "category",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/courses",
-              "parts": [
-                "v2",
-                "courses"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "courses"
+                }
               ],
               "select": {
                 "exist": [
@@ -4419,14 +4449,15 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "courses"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -4434,7 +4465,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -4444,7 +4474,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -4454,31 +4483,36 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "items_per_page",
                     "orig": "items_per_page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/courses/{id}/users",
-              "parts": [
-                "v2",
-                "courses",
-                "{id}",
-                "users"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "courses"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "users"
+                }
               ],
               "select": {
                 "$action": "user",
@@ -4494,21 +4528,23 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 2
+              "parts": [
+                "v2",
+                "courses",
+                "{id}",
+                "users"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         },
         "load": {
           "input": "data",
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -4516,7 +4552,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -4526,22 +4561,27 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/courses/{id}",
-              "parts": [
-                "v2",
-                "courses",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "courses"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -4554,21 +4594,22 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "courses",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         },
         "update": {
           "input": "data",
           "name": "update",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -4576,7 +4617,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -4586,7 +4626,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -4595,12 +4634,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "PUT",
               "orig": "/v2/courses/{id}",
-              "parts": [
-                "v2",
-                "courses",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "courses"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -4613,10 +4659,13 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "courses",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "update"
+          ]
         }
       },
       "relations": {
@@ -4630,83 +4679,71 @@ class Config {
     "course_analytics": {
       "fields": [
         {
-          "active": true,
+          "format": "float",
           "name": "avg_score_rate",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 0
+          "short": "Average score (%)",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "avg_time_to_finish",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 1
+          "short": "Average time to finish the course in seconds",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "certificates_issued",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 2
+          "short": "Number of issued certifications",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
-          "name": "learning_unit",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 3
+          "name": "id",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "social_interaction",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 4
+          "name": "learning_units",
+          "short": "Number of learning activities",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
-          "name": "student",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 5
+          "name": "social_interactions",
+          "short": "Number of social interactions",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
+          "name": "students",
+          "short": "Number of students",
+          "type": "`$INTEGER`"
+        },
+        {
+          "format": "float",
           "name": "success_rate",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 6
+          "short": "Success rate (%)",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "total_study_time",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 7
+          "short": "Total study time in seconds",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
-          "name": "video",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 8
-        },
-        {
-          "active": true,
           "name": "video_time",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 9
+          "short": "Total video duration of the course in seconds",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "video_viewing_time",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 10
+          "short": "Total video time viewed",
+          "type": "`$INTEGER`"
+        },
+        {
+          "name": "videos",
+          "short": "Number of videos",
+          "type": "`$INTEGER`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "course_analytics",
       "op": {
         "load": {
@@ -4714,11 +4751,9 @@ class Config {
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -4726,7 +4761,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -4736,7 +4770,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -4745,13 +4778,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/courses/{id}/analytics",
-              "parts": [
-                "v2",
-                "courses",
-                "{id}",
-                "analytics"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "courses"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "analytics"
+                }
               ],
               "select": {
                 "exist": [
@@ -4764,10 +4806,14 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "courses",
+                "{id}",
+                "analytics"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         }
       },
       "relations": {
@@ -4777,67 +4823,56 @@ class Config {
     "course_content": {
       "fields": [
         {
-          "active": true,
           "name": "access",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 0
+          "short": "Access type of the section",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "description",
-          "req": false,
+          "short": "Description of the section",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 1
+          ]
         },
         {
-          "active": true,
           "name": "drip",
-          "req": false,
+          "short": "Drip feed details of the content.",
           "type": [
             "`$ONE`",
             [
               "`$OBJECT`",
               "`$NULL`"
             ]
-          ],
-          "index$": 2
+          ]
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 3
+          "short": "Unique identifier of the section",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "learning_unit",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 4
+          "name": "learningUnits",
+          "short": "Learning activities of section",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "section",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 5
+          "name": "sections",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "title",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 6
+          "short": "Title of the section",
+          "type": "`$STRING`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "course_content",
       "op": {
         "create": {
@@ -4845,11 +4880,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -4857,7 +4890,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -4867,7 +4899,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "example": "a-test",
                     "kind": "param",
                     "name": "id",
@@ -4877,13 +4908,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/courses/{id}/sections",
-              "parts": [
-                "v2",
-                "courses",
-                "{id}",
-                "sections"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "courses"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "sections"
+                }
               ],
               "select": {
                 "$action": "sections",
@@ -4897,21 +4937,23 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "courses",
+                "{id}",
+                "sections"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         },
         "list": {
           "input": "data",
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -4919,7 +4961,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -4929,7 +4970,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -4938,13 +4978,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/courses/{id}/contents",
-              "parts": [
-                "v2",
-                "courses",
-                "{id}",
-                "contents"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "courses"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "contents"
+                }
               ],
               "select": {
                 "exist": [
@@ -4955,12 +5004,16 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.sections`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "courses",
+                "{id}",
+                "contents"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -4990,58 +5043,47 @@ class Config {
     "event_log": {
       "fields": [
         {
-          "active": true,
           "name": "activity",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 0
+          "short": "Name of the activity",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "additional_info",
-          "req": false,
+          "short": "Additional info related to the activity.",
           "type": [
             "`$ONE`",
             [
               "`$OBJECT`",
               "`$NULL`"
             ]
-          ],
-          "index$": 1
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 2
+          "short": "Date the event log was created, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "description",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 3
+          "short": "Description of the activity",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "type",
-          "req": false,
+          "short": "Type of the activity",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 4
+          ]
         },
         {
-          "active": true,
           "name": "user",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 5
+          "short": "User details related to event log",
+          "type": "`$OBJECT`"
         }
       ],
       "name": "event_log",
@@ -5051,11 +5093,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -5063,7 +5103,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -5073,64 +5112,57 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "activity",
                     "orig": "activity",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "example": "1626088013",
                     "kind": "query",
                     "name": "created_after",
                     "orig": "created_after",
-                    "reqd": false,
                     "type": "`$NUMBER`"
                   },
                   {
-                    "active": true,
                     "example": "1626076929",
                     "kind": "query",
                     "name": "created_before",
                     "orig": "created_before",
-                    "reqd": false,
                     "type": "`$NUMBER`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "example": "desc",
                     "kind": "query",
                     "name": "sort",
                     "orig": "sort",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "user_id",
                     "orig": "user_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/event-logs",
-              "parts": [
-                "v2",
-                "event-logs"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "event-logs"
+                }
               ],
               "select": {
                 "exist": [
@@ -5148,10 +5180,12 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "event-logs"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -5169,165 +5203,131 @@ class Config {
     "installment": {
       "fields": [
         {
-          "active": true,
+          "format": "float",
           "name": "amount",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 0
+          "short": "Amount per installment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "current_period_end",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 1
+          "short": "End of the current period that the installment has been invoiced for, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "current_period_start",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 2
+          "short": "Start of the current period that the installment has been invoiced for, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "email",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 3
+          "short": "Email of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "ends_at",
-          "req": false,
+          "short": "Datetime the installment ends, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NUMBER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 4
+          ]
         },
         {
-          "active": true,
-          "name": "first_amount",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 5
+          "format": "float",
+          "name": "firstAmount",
+          "short": "Ιnitial amount of money the customers have to pay up front.",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "first_installment_date",
-          "req": false,
+          "format": "date",
+          "name": "firstInstallmentDate",
+          "short": "Date of the first installment, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NUMBER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 6
+          ]
         },
         {
-          "active": true,
-          "name": "first_installment_type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 7
+          "name": "firstInstallmentType",
+          "short": "Type of the first installment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "first_installmentl_day",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 8
+          "name": "firstInstallmentlDays",
+          "short": "Number of days since the first installment",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 9
+          "short": "Unique identifier of the installment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "installment_interval_type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 10
+          "name": "installmentIntervalType",
+          "short": "How much time between each installment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "is_cancelable",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 11
+          "name": "isCancelable",
+          "short": "Indication about whether the installment can be canceled; true if it is cancelable, or false if it is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "name",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 12
+          "short": "Name of the installment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "payments_count",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 13
+          "name": "paymentsCount",
+          "short": "Number of payments of the installment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "payments_payed",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 14
+          "name": "paymentsPayed",
+          "short": "Number of completed payments of the installment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "plan_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 15
+          "short": "Unique identifier of the subscription plan",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "product_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 16
+          "name": "productId",
+          "short": "Unique identifier of the product",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "product_type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 17
+          "name": "productType",
+          "short": "Type of the product",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "status",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 18
+          "short": "Status of the installment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 19
+          "short": "Type of the installment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "user_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 20
+          "short": "Unique identifier of the user",
+          "type": "`$STRING`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "installment",
       "op": {
         "list": {
@@ -5335,11 +5335,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -5347,7 +5345,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -5357,46 +5354,45 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "product_id",
                     "orig": "product_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "product_type",
                     "orig": "product_type",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "user_id",
                     "orig": "user_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/installments/active",
-              "parts": [
-                "v2",
-                "installments",
-                "active"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "installments"
+                },
+                {
+                  "lit": "active"
+                }
               ],
               "select": {
                 "$action": "active",
@@ -5413,10 +5409,13 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "installments",
+                "active"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -5426,118 +5425,97 @@ class Config {
     "lead": {
       "fields": [
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 0
+          "short": "Date the lead was created, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "email",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "short": "Email account of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "eu_customer",
-          "req": false,
+          "short": "Indication of whether the user is located in Europe; true if she is, or false if she's not located in Europe.",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 2
+          ]
         },
         {
-          "active": true,
           "name": "first_name",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 3
+          "short": "First Name of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "last_name",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Last name of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "page_submitted",
-          "req": false,
+          "short": "Page of the academy, in which the lead submitted their email account",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 5
+          ]
         },
         {
-          "active": true,
-          "name": "submission",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 6
+          "name": "submissions",
+          "short": "Array of the all the submissions of this email account in lead capture forms of the academy",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "subscribed_for_marketing_email",
-          "req": false,
+          "name": "subscribed_for_marketing_emails",
+          "short": "Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 7
+          ]
         },
         {
-          "active": true,
-          "name": "tag",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 8
+          "name": "tags",
+          "short": "Array of the tags of the user",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "user_id",
-          "req": false,
+          "short": "The unique identifier of the respective user",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 9
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "user_registered_at",
-          "req": false,
+          "short": "Date the respective lead was also registered as a user, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NUMBER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 10
+          ]
         },
         {
-          "active": true,
-          "name": "utm",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 11
+          "name": "utms",
+          "short": "Values of the UTM fields for this user",
+          "type": "`$OBJECT`"
         }
       ],
       "name": "lead",
@@ -5547,11 +5525,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -5559,7 +5535,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -5569,21 +5544,24 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/leads",
-              "parts": [
-                "v2",
-                "leads"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "leads"
+                }
               ],
               "select": {
                 "exist": [
@@ -5596,10 +5574,12 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "leads"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -5609,111 +5589,85 @@ class Config {
     "multiple_seat": {
       "fields": [
         {
-          "active": true,
+          "deprecated": true,
           "name": "access",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 0
+          "short": "Access status of the seat offering.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "add_to_active_seat",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 1
+          "short": "Indication about whether the user is assigned a seat in the seat offering; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
-          "name": "available_seat",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 2
+          "name": "available_seats",
+          "short": "Number of available seats in the offering.",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 3
+          "short": "Date the seat offering was created; displayed in UNIX timestamp format.",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "description",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Description of the seat offering.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 5
+          "short": "Unique identifier of the seat offering.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "max_number_of_user",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 6
+          "name": "max_number_of_users",
+          "short": "Max number of users who can be added to a seat offering; empty if there is no limit to the number of users who can be added.",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "modified",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 7
+          "short": "Date the seat offering was modified for the last time; displayed in UNIX timestamp format.",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "number_of_seat",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 8
+          "name": "number_of_seats",
+          "short": "Number of the seats in the offering.",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
-          "name": "product",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 9
+          "name": "products",
+          "short": "Products in the seat offering",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
-          "name": "seat_manager",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 10
+          "name": "seat_managers",
+          "short": "Unique identifier of each seat manager.",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "success",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 11
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
-          "name": "tag",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 12
+          "name": "tags",
+          "short": "Tags assigned to the users added to the seat offering.",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "title",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 13
+          "short": "Title of the seat offering.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "total_enrollment",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 14
+          "name": "total_enrollments",
+          "short": "Total enrollements of the seat offering.",
+          "type": "`$INTEGER`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "multiple_seat",
       "op": {
         "create": {
@@ -5721,11 +5675,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -5733,7 +5685,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -5743,7 +5694,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "seat_id",
                     "orig": "id",
@@ -5751,7 +5701,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "uid",
                     "orig": "uid",
@@ -5760,20 +5709,31 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/seats/{id}/users/{uid}",
-              "parts": [
-                "v2",
-                "seats",
-                "{seat_id}",
-                "users",
-                "{uid}"
-              ],
               "rename": {
                 "param": {
                   "id": "seat_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "seats"
+                },
+                {
+                  "var": "seat_id"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "uid"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -5786,21 +5746,24 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "seats",
+                "{seat_id}",
+                "users",
+                "{uid}"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         },
         "list": {
           "input": "data",
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -5808,7 +5771,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -5818,20 +5780,23 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/seats",
-              "parts": [
-                "v2",
-                "seats"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "seats"
+                }
               ],
               "select": {
                 "exist": [
@@ -5844,21 +5809,21 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "seats"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         },
         "remove": {
           "input": "data",
           "name": "remove",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -5866,7 +5831,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -5876,7 +5840,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "seat_id",
                     "orig": "id",
@@ -5884,7 +5847,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "uid",
                     "orig": "uid",
@@ -5893,20 +5855,31 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "DELETE",
               "orig": "/v2/seats/{id}/users/{uid}",
-              "parts": [
-                "v2",
-                "seats",
-                "{seat_id}",
-                "users",
-                "{uid}"
-              ],
               "rename": {
                 "param": {
                   "id": "seat_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "seats"
+                },
+                {
+                  "var": "seat_id"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "uid"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -5919,10 +5892,15 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "seats",
+                "{seat_id}",
+                "users",
+                "{uid}"
+              ]
             }
-          ],
-          "key$": "remove"
+          ]
         }
       },
       "relations": {
@@ -5937,234 +5915,199 @@ class Config {
     "payment": {
       "fields": [
         {
-          "active": true,
           "name": "affiliate",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 0
+          "short": "Related affiliate data",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "billing_info",
-          "req": false,
+          "short": "Billing info of the payment",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$OBJECT`"
             ]
-          ],
-          "index$": 1
+          ]
         },
         {
-          "active": true,
           "name": "coupon",
-          "req": false,
+          "short": "Coupon code",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 2
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 3
+          "short": "Datetime of the payment was created, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "discount",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 4
+          "short": "Discount of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "expires_at",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 5
+          "short": "Date the invoice expires, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "gateway",
-          "req": false,
+          "short": "Payment gateway name",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 6
+          ]
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 7
+          "short": "Unique identifier of the payment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "instructor",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 8
+          "name": "instructors",
+          "short": "Related instructor data",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "instructors_total_percentage",
-          "req": false,
+          "short": "Total percentage of the revenue for the instructor",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 9
+          ]
         },
         {
-          "active": true,
           "name": "invoice",
-          "req": false,
+          "short": "Invoice identifier",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 10
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "paid_at",
-          "req": false,
+          "short": "Payment date, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NUMBER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 11
+          ]
         },
         {
-          "active": true,
           "name": "payment_plan_current_payment",
-          "req": false,
+          "short": "Current payment number of payment plan",
           "type": [
             "`$ONE`",
             [
               "`$INTEGER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 12
+          ]
         },
         {
-          "active": true,
-          "name": "payment_plan_total_payment",
-          "req": false,
+          "name": "payment_plan_total_payments",
+          "short": "Total payments number of payment plan",
           "type": [
             "`$ONE`",
             [
               "`$INTEGER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 13
+          ]
         },
         {
-          "active": true,
           "name": "period",
-          "req": false,
+          "short": "Payment plan period",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 14
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "price",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 15
+          "short": "Price of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "product",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 16
+          "short": "Related product data",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "refund_at",
-          "req": false,
+          "short": "Refund date, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 17
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "tax_amount",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 18
+          "short": "Tax amount of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "tax_percentage",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 19
+          "short": "Tax percentage of the payment",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "transaction_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 20
+          "short": "Transaction id of the payment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 21
+          "short": "Type of the payment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "url",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 22
+          "short": "Url of invoice",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "user_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 23
+          "short": "Unique identifier of the user",
+          "type": "`$STRING`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "payment",
       "op": {
         "list": {
@@ -6172,11 +6115,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -6184,7 +6125,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -6194,79 +6134,68 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "affiliate_id",
                     "orig": "affiliate_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "example": 1626854780,
                     "kind": "query",
                     "name": "created_after",
                     "orig": "created_after",
-                    "reqd": false,
                     "type": "`$NUMBER`"
                   },
                   {
-                    "active": true,
                     "example": 1626852950,
                     "kind": "query",
                     "name": "created_before",
                     "orig": "created_before",
-                    "reqd": false,
                     "type": "`$NUMBER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "items_per_page",
                     "orig": "items_per_page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "product_id",
                     "orig": "product_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "product_type",
                     "orig": "product_type",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "user_id",
                     "orig": "user_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/payments",
-              "parts": [
-                "v2",
-                "payments"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "payments"
+                }
               ],
               "select": {
                 "exist": [
@@ -6286,21 +6215,21 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "payments"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         },
         "load": {
           "input": "data",
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -6308,7 +6237,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -6318,7 +6246,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -6327,12 +6254,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/payments/{id}",
-              "parts": [
-                "v2",
-                "payments",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "payments"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -6345,14 +6279,16 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "payments",
+                "{id}"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -6360,7 +6296,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -6370,7 +6305,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -6379,13 +6313,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/payments/{id}/invoice-link",
-              "parts": [
-                "v2",
-                "payments",
-                "{id}",
-                "invoice-link"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "payments"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "invoice-link"
+                }
               ],
               "select": {
                 "$action": "invoice_link",
@@ -6399,10 +6342,14 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "payments",
+                "{id}",
+                "invoice-link"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         }
       },
       "relations": {
@@ -6420,69 +6367,55 @@ class Config {
     "promotion": {
       "fields": [
         {
-          "active": true,
           "name": "applies_to_all",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 0
+          "short": "All courses and/or bundles that the promotion coupon will be applied to.",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "bulk",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 1
+          "short": "Indication about whether there's a bulk set of codes created for this coupon.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "code",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 2
+          "short": "Coupon code",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "coupon",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 3
+          "name": "coupons",
+          "short": "Promotion coupons",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 4
+          "short": "Date the promotion was created, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "expire",
-          "req": false,
+          "format": "date",
+          "name": "expires",
+          "short": "Coupon expiration date, in YYYY-MM-DD format",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$STRING`"
             ]
-          ],
-          "index$": 5
+          ]
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 6
+          "short": "Unique identifier of the promotion",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "modified",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 7
+          "short": "Date the promotion was modified for the last time, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "name",
           "op": {
             "create": {
@@ -6490,65 +6423,57 @@ class Config {
               "type": "`$STRING`"
             }
           },
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 8
+          "short": "Name of the promotion",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "prefix",
-          "req": false,
+          "short": "Coupon prefix",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 9
+          ]
         },
         {
-          "active": true,
-          "name": "product",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 10
+          "name": "products",
+          "short": "Specific products that the promotion coupon will be applied to",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "quantity",
-          "req": false,
+          "short": "Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)",
           "type": [
             "`$ONE`",
             [
               "`$NUMBER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 11
+          ]
         },
         {
-          "active": true,
           "name": "times_used",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 12
+          "short": "Coupon number of times used.",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 13
+          "short": "Type of discount",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "value",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 14
+          "short": "Percentage or fixed amount of discount",
+          "type": "`$NUMBER`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "promotion",
       "op": {
         "create": {
@@ -6556,11 +6481,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -6568,7 +6491,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -6577,11 +6499,16 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/promotions",
-              "parts": [
-                "v2",
-                "promotions"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "promotions"
+                }
               ],
               "select": {
                 "exist": [
@@ -6593,21 +6520,21 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "promotions"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         },
         "list": {
           "input": "data",
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -6615,7 +6542,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -6625,7 +6551,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "pid",
@@ -6634,19 +6559,28 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/promotions/{pid}/coupons",
-              "parts": [
-                "v2",
-                "promotions",
-                "{id}",
-                "coupons"
-              ],
               "rename": {
                 "param": {
                   "pid": "id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "promotions"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "coupons"
+                }
+              ],
               "select": {
                 "$action": "coupon",
                 "exist": [
@@ -6657,16 +6591,19 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "promotions",
+                "{id}",
+                "coupons"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -6674,7 +6611,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -6684,21 +6620,24 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/promotions",
-              "parts": [
-                "v2",
-                "promotions"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "promotions"
+                }
               ],
               "select": {
                 "exist": [
@@ -6711,21 +6650,21 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "promotions"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         },
         "load": {
           "input": "data",
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -6733,7 +6672,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -6743,7 +6681,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -6752,12 +6689,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/promotions/{id}",
-              "parts": [
-                "v2",
-                "promotions",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "promotions"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -6770,10 +6714,13 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "promotions",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         }
       },
       "relations": {
@@ -6783,73 +6730,57 @@ class Config {
     "reporting": {
       "fields": [
         {
-          "active": true,
+          "format": "float",
           "name": "average_score_rate",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 0
+          "short": "Average score percentage",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "completed_at",
-          "req": false,
+          "short": "Completion date in UNIX timestamp format.",
           "type": [
             "`$ONE`",
             [
               "`$NUMBER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 1
+          ]
         },
         {
-          "active": true,
-          "name": "completed_unit",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 2
+          "name": "completed_units",
+          "short": "Total number of completed course learning activities by the user",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "course_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 3
+          "short": "Unique identifier of the course",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "progress_per_section_unit",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 4
+          "short": "User progress data per section/learning activity",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "progress_rate",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 5
+          "short": "Progress rate (%)",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "status",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 6
+          "short": "Status of user progress",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "time_on_course",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 7
+          "short": "Time spent on the course in seconds",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
-          "name": "total_unit",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 8
+          "name": "total_units",
+          "short": "Total number of course learning activities",
+          "type": "`$INTEGER`"
         }
       ],
       "name": "reporting",
@@ -6859,11 +6790,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -6871,7 +6800,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -6881,7 +6809,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "user_id",
                     "orig": "id",
@@ -6891,37 +6818,42 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "items_per_page",
                     "orig": "items_per_page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "example": "1",
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users/{id}/progress",
-              "parts": [
-                "v2",
-                "users",
-                "{user_id}",
-                "progress"
-              ],
               "rename": {
                 "param": {
                   "id": "user_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "user_id"
+                },
+                {
+                  "lit": "progress"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -6935,10 +6867,14 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "users",
+                "{user_id}",
+                "progress"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -6960,57 +6896,43 @@ class Config {
     "seat": {
       "fields": [
         {
-          "active": true,
+          "deprecated": true,
           "name": "access",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 0
+          "short": "Access status of the seat offering.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "available_seat",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 1
+          "name": "available_seats",
+          "short": "Number of available seats in the offering.",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 2
+          "short": "Date the seat offering was created; displayed in UNIX timestamp format.",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "description",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 3
+          "short": "Description of the seat offering.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Unique identifier of the seat offering.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "max_number_of_user",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 5
+          "name": "max_number_of_users",
+          "short": "Max number of users who can be added to a seat offering; empty if there is no limit to the number of users who can be added.",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "modified",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 6
+          "short": "Date the seat offering was modified for the last time; displayed in UNIX timestamp format.",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "number_of_seat",
+          "name": "number_of_seats",
           "op": {
             "create": {
               "req": true,
@@ -7021,13 +6943,11 @@ class Config {
               "type": "`$INTEGER`"
             }
           },
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 7
+          "short": "Number of the seats in the offering.",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
-          "name": "product",
+          "name": "products",
           "op": {
             "create": {
               "req": true,
@@ -7038,26 +6958,20 @@ class Config {
               "type": "`$OBJECT`"
             }
           },
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 8
+          "short": "Products in the seat offering",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
-          "name": "seat_manager",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 9
+          "name": "seat_managers",
+          "short": "Unique identifier of each seat manager.",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "tag",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 10
+          "name": "tags",
+          "short": "Tags assigned to the users added to the seat offering.",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "title",
           "op": {
             "create": {
@@ -7069,18 +6983,19 @@ class Config {
               "type": "`$STRING`"
             }
           },
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 11
+          "short": "Title of the seat offering.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "total_enrollment",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 12
+          "name": "total_enrollments",
+          "short": "Total enrollements of the seat offering.",
+          "type": "`$INTEGER`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "seat",
       "op": {
         "create": {
@@ -7088,11 +7003,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -7100,7 +7013,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -7109,11 +7021,16 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/seats",
-              "parts": [
-                "v2",
-                "seats"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "seats"
+                }
               ],
               "select": {
                 "exist": [
@@ -7125,21 +7042,21 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "seats"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         },
         "load": {
           "input": "data",
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -7147,7 +7064,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -7157,7 +7073,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -7166,12 +7081,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/seats/{id}",
-              "parts": [
-                "v2",
-                "seats",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "seats"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -7184,21 +7106,22 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "seats",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         },
         "update": {
           "input": "data",
           "name": "update",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -7206,7 +7129,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -7216,7 +7138,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -7225,12 +7146,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "PUT",
               "orig": "/v2/seats/{id}",
-              "parts": [
-                "v2",
-                "seats",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "seats"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -7243,10 +7171,13 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "seats",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "update"
+          ]
         }
       },
       "relations": {
@@ -7272,116 +7203,95 @@ class Config {
     "subscription_plan": {
       "fields": [
         {
-          "active": true,
           "name": "access",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 0
+          "short": "Access type of the subscription",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "after_purchase",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 1
+          "name": "afterPurchase",
+          "short": "After purchase navigation settings for this subscription plan",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 2
+          "short": "Date the subscription plan was created, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "description",
-          "req": false,
+          "short": "Description of the subscription",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 3
+          ]
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Unique identifier of the subscription plan",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "image",
-          "req": false,
+          "short": "Subscription plan image (full URL)",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 5
+          ]
         },
         {
-          "active": true,
           "name": "interval",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 6
+          "short": "Billing interval value",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "interval_type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 7
+          "short": "Billing interval type",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "modified",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 8
+          "short": "Date the subscription plan was modified for the last time, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "price",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 9
+          "short": "Price of the subscription plan",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "product",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 10
+          "name": "products",
+          "short": "Products in the subsription",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
-          "name": "stripe_plan_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 11
+          "name": "stripePlanId",
+          "short": "Stripe's plan Id",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "title",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 12
+          "short": "Title of the subscription plan",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "trial_period_day",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 13
+          "name": "trial_period_days",
+          "short": "Number of days the trial subscription plan lasts",
+          "type": "`$INTEGER`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "subscription_plan",
       "op": {
         "list": {
@@ -7389,11 +7299,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -7401,7 +7309,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -7411,21 +7318,24 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/subscription-plans",
-              "parts": [
-                "v2",
-                "subscription-plans"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "subscription-plans"
+                }
               ],
               "select": {
                 "exist": [
@@ -7438,21 +7348,21 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "subscription-plans"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         },
         "load": {
           "input": "data",
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -7460,7 +7370,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -7470,7 +7379,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -7479,12 +7387,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/subscription-plans/{id}",
-              "parts": [
-                "v2",
-                "subscription-plans",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "subscription-plans"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -7497,10 +7412,13 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "subscription-plans",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         }
       },
       "relations": {
@@ -7522,55 +7440,52 @@ class Config {
     "unit_analytics": {
       "fields": [
         {
-          "active": true,
+          "format": "float",
           "name": "avg_score_rate",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 0
+          "short": "Average score (%)",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "avg_study_time",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 1
+          "short": "Average study time in seconds",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
+          "name": "id",
+          "type": "`$STRING`"
+        },
+        {
           "name": "name",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 2
+          "short": "Name of the learning activity",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "total_study_time",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 3
+          "short": "Total study time in seconds",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Type of the learning activity",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "users_completed",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 5
+          "short": "Number of users that have completed this learning activity",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
-          "name": "viewer",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 6
+          "name": "viewers",
+          "short": "Number of users that have viewed this learning activity",
+          "type": "`$INTEGER`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "unit_analytics",
       "op": {
         "load": {
@@ -7578,11 +7493,9 @@ class Config {
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -7590,7 +7503,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -7600,41 +7512,50 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "course_id",
                     "orig": "id",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 0
+                    "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "uid",
                     "reqd": true,
-                    "type": "`$STRING`",
-                    "index$": 1
+                    "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/courses/{id}/units/{uid}/analytics",
-              "parts": [
-                "v2",
-                "courses",
-                "{course_id}",
-                "units",
-                "{id}",
-                "analytics"
-              ],
               "rename": {
                 "param": {
                   "id": "course_id",
                   "uid": "id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "courses"
+                },
+                {
+                  "var": "course_id"
+                },
+                {
+                  "lit": "units"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "analytics"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -7647,10 +7568,16 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "courses",
+                "{course_id}",
+                "units",
+                "{id}",
+                "analytics"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         }
       },
       "relations": {
@@ -7676,32 +7603,26 @@ class Config {
     "update_user_progress": {
       "fields": [
         {
-          "active": true,
           "name": "async",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 0
+          "short": "Indication about whether the request will be executed asynchronously; true if it’s an asynchronous task, false if it is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "job_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "short": "Unique identifier of the asynchronous task; empty if the task is not asynchronous.” Ensure that the documentation link is accordingly updated",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "send_course_complete_email",
           "req": true,
-          "type": "`$BOOLEAN`",
-          "index$": 2
+          "short": "Indication about whether the user will receive the completion emails; true if she should receive the emails, false if she should not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
-          "name": "unit",
+          "name": "units",
           "req": true,
-          "type": "`$ARRAY`",
-          "index$": 3
+          "short": "Unique identifiers of the learning activities that should be marked as complete; empty if the progress of the whole course should be marked as complete.",
+          "type": "`$ARRAY`"
         }
       ],
       "name": "update_user_progress",
@@ -7711,11 +7632,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -7723,7 +7642,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -7733,7 +7651,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "course_id",
                     "orig": "cid",
@@ -7741,7 +7658,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "user_id",
                     "orig": "id",
@@ -7750,8 +7666,47 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/users/{id}/courses/{cid}/complete",
+              "rename": {
+                "param": {
+                  "cid": "course_id",
+                  "id": "user_id"
+                }
+              },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "user_id"
+                },
+                {
+                  "lit": "courses"
+                },
+                {
+                  "var": "course_id"
+                },
+                {
+                  "lit": "complete"
+                }
+              ],
+              "select": {
+                "exist": [
+                  "authorization",
+                  "course_id",
+                  "lw_client",
+                  "user_id"
+                ]
+              },
+              "transform": {
+                "req": "`reqdata`",
+                "res": "`body`"
+              },
               "parts": [
                 "v2",
                 "users",
@@ -7759,51 +7714,26 @@ class Config {
                 "courses",
                 "{course_id}",
                 "complete"
-              ],
-              "rename": {
-                "param": {
-                  "cid": "course_id",
-                  "id": "user_id"
-                }
-              },
-              "select": {
-                "exist": [
-                  "authorization",
-                  "course_id",
-                  "lw_client",
-                  "user_id"
-                ]
-              },
-              "transform": {
-                "req": "`reqdata`",
-                "res": "`body`"
-              },
-              "index$": 0
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "course_id",
                     "orig": "cid",
@@ -7811,7 +7741,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "user_id",
                     "orig": "id",
@@ -7820,22 +7749,35 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/users/{id}/courses/{cid}/reset",
-              "parts": [
-                "v2",
-                "users",
-                "{user_id}",
-                "courses",
-                "{course_id}",
-                "reset"
-              ],
               "rename": {
                 "param": {
                   "cid": "course_id",
                   "id": "user_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "user_id"
+                },
+                {
+                  "lit": "courses"
+                },
+                {
+                  "var": "course_id"
+                },
+                {
+                  "lit": "reset"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -7848,10 +7790,16 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "users",
+                "{user_id}",
+                "courses",
+                "{course_id}",
+                "reset"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         }
       },
       "relations": {
@@ -7866,82 +7814,64 @@ class Config {
     "user": {
       "fields": [
         {
-          "active": true,
           "name": "action",
           "req": true,
-          "type": "`$STRING`",
-          "index$": 0
+          "short": "The exact action to be performed with the aforementioned tags to the specified user; 'attach' is the indication to add these tags to the user and 'detach' is the indication to remove them from the user.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "active",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 1
+          "short": "True or false whether user is active in seat offering",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
-          "name": "answer",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 2
+          "name": "answers",
+          "short": "Related answers data",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "billing_info",
-          "req": false,
+          "short": "Values of the billing info fields for this user",
           "type": [
             "`$ONE`",
             [
               "`$OBJECT`",
               "`$NULL`"
             ]
-          ],
-          "index$": 3
+          ]
         },
         {
-          "active": true,
           "name": "course",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 4
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 5
+          "short": "Date the user was created, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "description",
-          "req": false,
+          "short": "Description of the segment",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 6
+          ]
         },
         {
-          "active": true,
           "name": "duration",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 7
+          "short": "Duration of the product.",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "duration_type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 8
+          "short": "Duration type of the product.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "email",
           "op": {
             "create": {
@@ -7949,354 +7879,289 @@ class Config {
               "type": "`$STRING`"
             }
           },
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 9
+          "short": "Email account of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "eu_customer",
-          "req": false,
+          "short": "Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 10
+          ]
         },
         {
-          "active": true,
-          "name": "expire",
-          "req": false,
+          "format": "float",
+          "name": "expires",
+          "short": "Date the enrollment expires, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 11
+          ]
         },
         {
-          "active": true,
-          "name": "field",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 12
+          "name": "fields",
+          "short": "Default sign up fields for the School.",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
-          "name": "general_feedback",
-          "req": false,
+          "name": "generalFeedback",
+          "short": "General feedback for a submission",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 13
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "got_seat_on",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 14
+          "short": "Date user was added to the seat offering, in UNIX timestamp",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "grade",
-          "req": false,
+          "short": "The grade that corresponds to the responses provided by the user",
           "type": [
             "`$ONE`",
             [
               "`$NUMBER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 15
+          ]
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 16
+          "short": "Unique identifier of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "is_admin",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 17
+          "short": "Indication about whether the user is an administrator of the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_affiliate",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 18
+          "short": "Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_instructor",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 19
+          "short": "Indication about whether the user is an instructor in the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_reporter",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 20
+          "short": "Indication about whether the user is an reporter in the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "is_suspended",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 21
+          "short": "Indication about whether the user is suspended in the school; true if she is, or false if she is not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "justification",
-          "req": false,
+          "short": "Any justification/note for the enrollment",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 22
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "last_login",
-          "req": false,
+          "short": "Date of the last login of the user, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 23
+          ]
         },
         {
-          "active": true,
+          "format": "float",
           "name": "modified",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 24
+          "short": "Date the submission was modified for the last time, in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "name",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 25
+          "short": "Name of the segment",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "nps_comment",
-          "req": false,
+          "short": "The latest comment submitted by the user on the NPS form.",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 26
+          ]
         },
         {
-          "active": true,
           "name": "nps_score",
-          "req": false,
+          "short": "The latest NPS score submitted by the user.",
           "type": [
             "`$ONE`",
             [
               "`$INTEGER`",
               "`$NULL`"
             ]
-          ],
-          "index$": 27
+          ]
         },
         {
-          "active": true,
           "name": "passed",
-          "req": false,
+          "short": "Indication about whether or not the assessment result was passed or failed",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 28
+          ]
         },
         {
-          "active": true,
           "name": "password",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 29
+          "short": "Password of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "price",
           "req": true,
-          "type": "`$NUMBER`",
-          "index$": 30
+          "short": "Price of the product",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "product_id",
+          "name": "productId",
           "req": true,
-          "type": "`$STRING`",
-          "index$": 31
+          "short": "Unique identifier of the product",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "product_type",
+          "name": "productType",
           "req": true,
-          "type": "`$STRING`",
-          "index$": 32
+          "short": "Type of the product",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "referrer_id",
-          "req": false,
+          "short": "Unique user id of the referrer for this user",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 33
+          ]
         },
         {
-          "active": true,
           "name": "role",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 34
+          "short": "Values of the role fields for this user",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "send_enrollment_email",
-          "req": false,
+          "short": "Indication about whether the user should receive the enrollment email; true if she should receive the email, false if she should not.",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 35
+          ]
         },
         {
-          "active": true,
           "name": "send_registration_email",
-          "req": false,
+          "short": "Indication about whether the user will receive the registration emails; true if she should receive the emails, false if she should not.",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 36
+          ]
         },
         {
-          "active": true,
           "name": "signup_approval_status",
-          "req": false,
+          "short": "User status regarding the Signup Approval flow",
           "type": [
             "`$ONE`",
             [
               "`$STRING`",
               "`$NULL`"
             ]
-          ],
-          "index$": 37
+          ]
         },
         {
-          "active": true,
-          "name": "signup_validation_rule",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 38
+          "name": "signup_validation_rules",
+          "short": "Indication about whether validation rules should be applied; default value equals to false, which means that validation rules should not be applied.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
-          "name": "submitted_timestamp",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 39
+          "format": "float",
+          "name": "submittedTimestamp",
+          "short": "Date the submission was finished (submitted), in UNIX timestamp format",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "subscribed_for_marketing_email",
-          "req": false,
+          "name": "subscribed_for_marketing_emails",
+          "short": "Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.",
           "type": [
             "`$ONE`",
             [
               "`$BOOLEAN`",
               "`$NULL`"
             ]
-          ],
-          "index$": 40
+          ]
         },
         {
-          "active": true,
           "name": "success",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 41
+          "short": "Indication about whether the action of the enrollment was successful; true if it was successful, or false if it was not.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
-          "name": "tag",
+          "name": "tags",
           "op": {
             "update": {
               "req": true,
               "type": "`$ARRAY`"
             }
           },
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 42
+          "short": "Array of the tags of the user",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "title",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 43
+          "short": "Title of the seat offering.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "type",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 44
+          "short": "Type of the product",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "user_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 45
+          "short": "Unique identifier of the user who submitted the responses",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "username",
           "op": {
             "create": {
@@ -8304,18 +8169,19 @@ class Config {
               "type": "`$STRING`"
             }
           },
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 46
+          "short": "Username of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "utm",
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 47
+          "name": "utms",
+          "short": "Values of the UTM fields for this user",
+          "type": "`$OBJECT`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "user",
       "op": {
         "create": {
@@ -8323,11 +8189,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -8335,7 +8199,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -8345,77 +8208,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
-                    "kind": "param",
-                    "name": "score_id",
-                    "orig": "id",
-                    "reqd": true,
-                    "type": "`$STRING`"
-                  }
-                ],
-                "query": [
-                  {
-                    "active": true,
-                    "kind": "query",
-                    "name": "",
-                    "orig": "",
-                    "reqd": false,
-                    "type": "`$STRING`"
-                  }
-                ]
-              },
-              "method": "POST",
-              "orig": "/v2/assessments/scores/{id}/review",
-              "parts": [
-                "v2",
-                "assessments",
-                "scores",
-                "{score_id}",
-                "review"
-              ],
-              "rename": {
-                "param": {
-                  "id": "score_id"
-                }
-              },
-              "select": {
-                "exist": [
-                  "",
-                  "authorization",
-                  "lw_client",
-                  "score_id"
-                ]
-              },
-              "transform": {
-                "req": "`reqdata`",
-                "res": "`body`"
-              },
-              "index$": 0
-            },
-            {
-              "active": true,
-              "args": {
-                "header": [
-                  {
-                    "active": true,
-                    "kind": "header",
-                    "name": "authorization",
-                    "orig": "authorization",
-                    "reqd": true,
-                    "type": "`$STRING`"
-                  },
-                  {
-                    "active": true,
-                    "kind": "header",
-                    "name": "lw_client",
-                    "orig": "lw_client",
-                    "reqd": true,
-                    "type": "`$STRING`"
-                  }
-                ],
-                "params": [
-                  {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "uid",
@@ -8423,7 +8215,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "user_group_id",
                     "orig": "id",
@@ -8432,21 +8223,32 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/user_groups/{id}/users/{uid}",
-              "parts": [
-                "v2",
-                "user_groups",
-                "{user_group_id}",
-                "users",
-                "{id}"
-              ],
               "rename": {
                 "param": {
                   "id": "user_group_id",
                   "uid": "id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "user_groups"
+                },
+                {
+                  "var": "user_group_id"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -8459,14 +8261,18 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "user_groups",
+                "{user_group_id}",
+                "users",
+                "{id}"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -8474,7 +8280,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -8484,7 +8289,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -8493,13 +8297,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/users/{id}/enrollment",
-              "parts": [
-                "v2",
-                "users",
-                "{id}",
-                "enrollment"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "enrollment"
+                }
               ],
               "select": {
                 "$action": "enrollment",
@@ -8513,14 +8326,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 2
+              "parts": [
+                "v2",
+                "users",
+                "{id}",
+                "enrollment"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -8528,7 +8344,78 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
+                    "kind": "header",
+                    "name": "lw_client",
+                    "orig": "lw_client",
+                    "reqd": true,
+                    "type": "`$STRING`"
+                  }
+                ],
+                "params": [
+                  {
+                    "kind": "param",
+                    "name": "score_id",
+                    "orig": "id",
+                    "reqd": true,
+                    "type": "`$STRING`"
+                  }
+                ]
+              },
+              "kind": "http",
+              "method": "POST",
+              "orig": "/v2/assessments/scores/{id}/review",
+              "rename": {
+                "param": {
+                  "id": "score_id"
+                }
+              },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "assessments"
+                },
+                {
+                  "lit": "scores"
+                },
+                {
+                  "var": "score_id"
+                },
+                {
+                  "lit": "review"
+                }
+              ],
+              "select": {
+                "exist": [
+                  "authorization",
+                  "lw_client",
+                  "score_id"
+                ]
+              },
+              "transform": {
+                "req": "`reqdata`",
+                "res": "`body`"
+              },
+              "parts": [
+                "v2",
+                "assessments",
+                "scores",
+                "{score_id}",
+                "review"
+              ]
+            },
+            {
+              "args": {
+                "header": [
+                  {
+                    "kind": "header",
+                    "name": "authorization",
+                    "orig": "authorization",
+                    "reqd": true,
+                    "type": "`$STRING`"
+                  },
+                  {
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -8537,11 +8424,16 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/users",
-              "parts": [
-                "v2",
-                "users"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                }
               ],
               "select": {
                 "exist": [
@@ -8553,21 +8445,21 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 3
+              "parts": [
+                "v2",
+                "users"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         },
         "list": {
           "input": "data",
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -8575,7 +8467,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -8585,92 +8476,79 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": "testvalue",
                     "kind": "query",
                     "name": "cf_$field_name",
                     "orig": "cf_$field_name",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "example": "true",
                     "kind": "query",
                     "name": "include_suspended",
                     "orig": "include_suspended",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "items_per_page",
                     "orig": "items_per_page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "example": "1626088013",
                     "kind": "query",
                     "name": "registration_after",
                     "orig": "registration_after",
-                    "reqd": false,
                     "type": "`$NUMBER`"
                   },
                   {
-                    "active": true,
                     "example": "1626076929",
                     "kind": "query",
                     "name": "registration_before",
                     "orig": "registration_before",
-                    "reqd": false,
                     "type": "`$NUMBER`"
                   },
                   {
-                    "active": true,
                     "example": "user",
                     "kind": "query",
                     "name": "role",
                     "orig": "role",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "example": "paying",
                     "kind": "query",
                     "name": "status",
                     "orig": "status",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "example": "big learner,other learner",
                     "kind": "query",
                     "name": "tag",
                     "orig": "tag",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users",
-              "parts": [
-                "v2",
-                "users"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                }
               ],
               "select": {
                 "exist": [
@@ -8691,14 +8569,15 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "users"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -8706,7 +8585,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -8716,16 +8594,13 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "product_id",
                     "orig": "product_id",
@@ -8733,7 +8608,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "product_type",
                     "orig": "product_type",
@@ -8742,12 +8616,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users/by-product",
-              "parts": [
-                "v2",
-                "users",
-                "by-product"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "lit": "by-product"
+                }
               ],
               "select": {
                 "$action": "by_product",
@@ -8763,32 +8644,30 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "users",
+                "by-product"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "seat_id",
                     "orig": "id",
@@ -8798,28 +8677,35 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/seats/{id}/users",
-              "parts": [
-                "v2",
-                "seats",
-                "{seat_id}",
-                "users"
-              ],
               "rename": {
                 "param": {
                   "id": "seat_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "seats"
+                },
+                {
+                  "var": "seat_id"
+                },
+                {
+                  "lit": "users"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -8832,14 +8718,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 2
+              "parts": [
+                "v2",
+                "seats",
+                "{seat_id}",
+                "users"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -8847,7 +8736,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -8857,16 +8745,13 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "segment_id",
                     "orig": "segment_id",
@@ -8875,12 +8760,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users/by-segment",
-              "parts": [
-                "v2",
-                "users",
-                "by-segment"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "lit": "by-segment"
+                }
               ],
               "select": {
                 "$action": "by_segment",
@@ -8895,14 +8787,16 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 3
+              "parts": [
+                "v2",
+                "users",
+                "by-segment"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -8910,7 +8804,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -8920,7 +8813,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -8930,23 +8822,30 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users/{id}/courses",
-              "parts": [
-                "v2",
-                "users",
-                "{id}",
-                "courses"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "courses"
+                }
               ],
               "select": {
                 "$action": "course",
@@ -8961,32 +8860,31 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 4
+              "parts": [
+                "v2",
+                "users",
+                "{id}",
+                "courses"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "user_group_id",
                     "orig": "id",
@@ -8996,28 +8894,35 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/user_groups/{id}/users",
-              "parts": [
-                "v2",
-                "user_groups",
-                "{user_group_id}",
-                "users"
-              ],
               "rename": {
                 "param": {
                   "id": "user_group_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "user_groups"
+                },
+                {
+                  "var": "user_group_id"
+                },
+                {
+                  "lit": "users"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -9030,14 +8935,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 5
+              "parts": [
+                "v2",
+                "user_groups",
+                "{user_group_id}",
+                "users"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9045,7 +8953,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9055,7 +8962,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -9064,13 +8970,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users/{id}/products",
-              "parts": [
-                "v2",
-                "users",
-                "{id}",
-                "products"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "products"
+                }
               ],
               "select": {
                 "$action": "product",
@@ -9082,16 +8997,19 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
-              "index$": 6
+              "parts": [
+                "v2",
+                "users",
+                "{id}",
+                "products"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9099,7 +9017,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9108,12 +9025,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users/segments",
-              "parts": [
-                "v2",
-                "users",
-                "segments"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "lit": "segments"
+                }
               ],
               "select": {
                 "$action": "segment",
@@ -9124,23 +9048,24 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
-              "index$": 7
+              "parts": [
+                "v2",
+                "users",
+                "segments"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         },
         "load": {
           "input": "data",
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9148,7 +9073,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9158,7 +9082,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -9168,22 +9091,27 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": "true",
                     "kind": "query",
                     "name": "include_suspended",
                     "orig": "include_suspended",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users/{id}",
-              "parts": [
-                "v2",
-                "users",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -9197,32 +9125,30 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "users",
+                "{id}"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -9231,13 +9157,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users/{id}/seats",
-              "parts": [
-                "v2",
-                "users",
-                "{id}",
-                "seats"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "seats"
+                }
               ],
               "select": {
                 "$action": "seat",
@@ -9251,21 +9186,23 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "users",
+                "{id}",
+                "seats"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         },
         "remove": {
           "input": "data",
           "name": "remove",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9273,7 +9210,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9283,7 +9219,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "uid",
@@ -9291,7 +9226,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "user_group_id",
                     "orig": "id",
@@ -9300,21 +9234,32 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "DELETE",
               "orig": "/v2/user_groups/{id}/users/{uid}",
-              "parts": [
-                "v2",
-                "user_groups",
-                "{user_group_id}",
-                "users",
-                "{id}"
-              ],
               "rename": {
                 "param": {
                   "id": "user_group_id",
                   "uid": "id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "user_groups"
+                },
+                {
+                  "var": "user_group_id"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -9327,14 +9272,18 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "user_groups",
+                "{user_group_id}",
+                "users",
+                "{id}"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9342,7 +9291,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9352,7 +9300,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -9361,13 +9308,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "DELETE",
               "orig": "/v2/users/{id}/enrollment",
-              "parts": [
-                "v2",
-                "users",
-                "{id}",
-                "enrollment"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "enrollment"
+                }
               ],
               "select": {
                 "$action": "enrollment",
@@ -9381,21 +9337,23 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "users",
+                "{id}",
+                "enrollment"
+              ]
             }
-          ],
-          "key$": "remove"
+          ]
         },
         "update": {
           "input": "data",
           "name": "update",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9403,7 +9361,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9413,7 +9370,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -9422,12 +9378,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "PUT",
               "orig": "/v2/users/{id}",
-              "parts": [
-                "v2",
-                "users",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -9440,14 +9403,16 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "users",
+                "{id}"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9455,7 +9420,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9465,7 +9429,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -9474,13 +9437,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "PUT",
               "orig": "/v2/users/{id}/suspend",
-              "parts": [
-                "v2",
-                "users",
-                "{id}",
-                "suspend"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "suspend"
+                }
               ],
               "select": {
                 "$action": "suspend",
@@ -9494,14 +9466,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "users",
+                "{id}",
+                "suspend"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9509,7 +9484,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9519,7 +9493,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -9528,13 +9501,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "PUT",
               "orig": "/v2/users/{id}/tags",
-              "parts": [
-                "v2",
-                "users",
-                "{id}",
-                "tags"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "tags"
+                }
               ],
               "select": {
                 "$action": "tag",
@@ -9548,14 +9530,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 2
+              "parts": [
+                "v2",
+                "users",
+                "{id}",
+                "tags"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9563,7 +9548,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9573,7 +9557,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -9582,13 +9565,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "PUT",
               "orig": "/v2/users/{id}/unsuspend",
-              "parts": [
-                "v2",
-                "users",
-                "{id}",
-                "unsuspend"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "unsuspend"
+                }
               ],
               "select": {
                 "$action": "unsuspend",
@@ -9602,10 +9594,14 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 3
+              "parts": [
+                "v2",
+                "users",
+                "{id}",
+                "unsuspend"
+              ]
             }
-          ],
-          "key$": "update"
+          ]
         }
       },
       "relations": {
@@ -9628,85 +9624,62 @@ class Config {
     "user_group": {
       "fields": [
         {
-          "active": true,
-          "name": "assigned_course",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 0
+          "name": "assigned_courses",
+          "short": "Courses to be assigned to the instructor; empty if the user is not an instructor or if no courses should be assigned to the user.",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
-          "name": "assigned_seat_offering_id",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 1
+          "name": "assigned_seat_offering_ids",
+          "short": "Unique identifier of the seat offerings to be assigned to the seat manager; empty if the user is not a seat manager or if no offerings should be assigned to the user.",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "assigned_segment_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 2
+          "short": "Unique identifier of the segment to be assigned to the reporter; empty if the user is not a reporter or if no segment should be assigned to the user.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "assigned_user_group_id",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 3
+          "name": "assigned_user_group_ids",
+          "short": "Unique identifier of the user groups to be assigned to the user group manager; empty if the user is not a group manager or if no groups should be assigned to the user.",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "created",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 4
+          "short": "Date the user group was created; displayed in UNIX timestamp format.",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "description",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 5
+          "short": "Description of the user group.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "enroll_users_on_course",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 6
+          "name": "enroll_users_on_courses",
+          "short": "Enroll users in all selected courses automatically upon joining the user group.",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
-          "name": "group_manager",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 7
+          "name": "group_managers",
+          "short": "Unique identifier of each group manager.",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 8
+          "short": "Unique identifier of the user group.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "max_number_of_user",
-          "req": false,
-          "type": "`$INTEGER`",
-          "index$": 9
+          "name": "max_number_of_users",
+          "short": "Max number of users who can be added to a user group; empty if there is no limit to the number of users who can be added.",
+          "type": "`$INTEGER`"
         },
         {
-          "active": true,
           "name": "modified",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 10
+          "short": "Date the user group was modified for the last time; displayed in UNIX timestamp format.",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
-          "name": "product",
+          "name": "products",
           "op": {
             "create": {
               "req": true,
@@ -9717,26 +9690,21 @@ class Config {
               "type": "`$OBJECT`"
             }
           },
-          "req": false,
-          "type": "`$OBJECT`",
-          "index$": 11
+          "short": "Products in the user group",
+          "type": "`$OBJECT`"
         },
         {
-          "active": true,
           "name": "role_id",
           "req": true,
-          "type": "`$STRING`",
-          "index$": 12
+          "short": "Unique identifier of the new user role",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "tag",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 13
+          "name": "tags",
+          "short": "Tags assigned to the users added to the user group.",
+          "type": "`$ARRAY`"
         },
         {
-          "active": true,
           "name": "title",
           "op": {
             "create": {
@@ -9748,11 +9716,14 @@ class Config {
               "type": "`$STRING`"
             }
           },
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 14
+          "short": "Title of the user group.",
+          "type": "`$STRING`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "user_group",
       "op": {
         "create": {
@@ -9760,11 +9731,9 @@ class Config {
           "name": "create",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9772,7 +9741,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9781,11 +9749,16 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "POST",
               "orig": "/v2/user_groups",
-              "parts": [
-                "v2",
-                "user_groups"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "user_groups"
+                }
               ],
               "select": {
                 "exist": [
@@ -9797,39 +9770,35 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "user_groups"
+              ]
             }
-          ],
-          "key$": "create"
+          ]
         },
         "list": {
           "input": "data",
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -9838,13 +9807,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users/{id}/user-groups",
-              "parts": [
-                "v2",
-                "users",
-                "{id}",
-                "user-groups"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "user-groups"
+                }
               ],
               "select": {
                 "exist": [
@@ -9857,14 +9835,17 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "users",
+                "{id}",
+                "user-groups"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9872,7 +9853,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9882,20 +9862,23 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/user_groups",
-              "parts": [
-                "v2",
-                "user_groups"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "user_groups"
+                }
               ],
               "select": {
                 "exist": [
@@ -9908,21 +9891,21 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "user_groups"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         },
         "load": {
           "input": "data",
           "name": "load",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9930,7 +9913,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9940,7 +9922,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -9949,12 +9930,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/user_groups/{id}",
-              "parts": [
-                "v2",
-                "user_groups",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "user_groups"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -9967,21 +9955,22 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "user_groups",
+                "{id}"
+              ]
             }
-          ],
-          "key$": "load"
+          ]
         },
         "update": {
           "input": "data",
           "name": "update",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -9989,7 +9978,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -9999,7 +9987,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -10008,12 +9995,19 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "PUT",
               "orig": "/v2/user_groups/{id}",
-              "parts": [
-                "v2",
-                "user_groups",
-                "{id}"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "user_groups"
+                },
+                {
+                  "var": "id"
+                }
               ],
               "select": {
                 "exist": [
@@ -10026,14 +10020,16 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "user_groups",
+                "{id}"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -10041,7 +10037,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -10051,7 +10046,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -10060,13 +10054,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "PUT",
               "orig": "/v2/users/{id}/user-role",
-              "parts": [
-                "v2",
-                "users",
-                "{id}",
-                "user-role"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "user-role"
+                }
               ],
               "select": {
                 "$action": "user-role",
@@ -10080,10 +10083,14 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "users",
+                "{id}",
+                "user-role"
+              ]
             }
-          ],
-          "key$": "update"
+          ]
         }
       },
       "relations": {
@@ -10093,18 +10100,14 @@ class Config {
     "user_progress": {
       "fields": [
         {
-          "active": true,
           "name": "section_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 0
+          "short": "Unique identifier of the section",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
-          "name": "unit",
-          "req": false,
-          "type": "`$ARRAY`",
-          "index$": 1
+          "name": "units",
+          "short": "User progress data per unit",
+          "type": "`$ARRAY`"
         }
       ],
       "name": "user_progress",
@@ -10114,11 +10117,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -10126,7 +10127,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -10136,7 +10136,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "course_id",
                     "orig": "cid",
@@ -10144,7 +10143,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "user_id",
                     "orig": "id",
@@ -10153,22 +10151,35 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users/{id}/courses/{cid}/progress",
-              "parts": [
-                "v2",
-                "users",
-                "{user_id}",
-                "courses",
-                "{course_id}",
-                "progress"
-              ],
               "rename": {
                 "param": {
                   "cid": "course_id",
                   "id": "user_id"
                 }
               },
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "user_id"
+                },
+                {
+                  "lit": "courses"
+                },
+                {
+                  "var": "course_id"
+                },
+                {
+                  "lit": "progress"
+                }
+              ],
               "select": {
                 "exist": [
                   "authorization",
@@ -10179,12 +10190,18 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.progress_per_section_unit`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "users",
+                "{user_id}",
+                "courses",
+                "{course_id}",
+                "progress"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -10199,55 +10216,45 @@ class Config {
     "user_role": {
       "fields": [
         {
-          "active": true,
           "name": "access_level",
-          "req": false,
-          "type": "`$ANY`",
-          "index$": 0
+          "short": "Access level of the user role",
+          "type": "`$ANY`"
         },
         {
-          "active": true,
           "name": "course_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "short": "Unique identifier of the course assigned to the instructor.",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "custom_role",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 2
+          "short": "`true` if role is a custom role created by school owner",
+          "type": "`$BOOLEAN`"
         },
         {
-          "active": true,
           "name": "description",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 3
+          "short": "Description of the user role",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Unique identifier of the role",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "revenue_share_percentage",
-          "req": false,
-          "type": "`$NUMBER`",
-          "index$": 5
+          "short": "Instructor's revenue share (% ) from the assigned course e.g.",
+          "type": "`$NUMBER`"
         },
         {
-          "active": true,
           "name": "title",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 6
+          "short": "Title of the role",
+          "type": "`$STRING`"
         }
       ],
+      "id": {
+        "field": "id",
+        "name": "id"
+      },
       "name": "user_role",
       "op": {
         "list": {
@@ -10255,11 +10262,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -10267,7 +10272,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -10277,30 +10281,31 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": "admin",
                     "kind": "query",
                     "name": "access_level",
                     "orig": "access_level",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "example": "623337c2e7c2d86f9f17a9a3",
                     "kind": "query",
                     "name": "role_id",
                     "orig": "role_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/user-roles",
-              "parts": [
-                "v2",
-                "user-roles"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "user-roles"
+                }
               ],
               "select": {
                 "exist": [
@@ -10312,16 +10317,17 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "user-roles"
+              ]
             },
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -10329,7 +10335,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -10339,7 +10344,6 @@ class Config {
                 ],
                 "params": [
                   {
-                    "active": true,
                     "kind": "param",
                     "name": "id",
                     "orig": "id",
@@ -10348,13 +10352,22 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/users/{id}/user-role",
-              "parts": [
-                "v2",
-                "users",
-                "{id}",
-                "user-role"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "users"
+                },
+                {
+                  "var": "id"
+                },
+                {
+                  "lit": "user-role"
+                }
               ],
               "select": {
                 "exist": [
@@ -10367,10 +10380,14 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body.user_role`"
               },
-              "index$": 1
+              "parts": [
+                "v2",
+                "users",
+                "{id}",
+                "user-role"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -10380,78 +10397,64 @@ class Config {
     "user_subscription": {
       "fields": [
         {
-          "active": true,
+          "format": "float",
           "name": "created",
-          "req": false,
+          "short": "Date the subscription was created, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 0
+          ]
         },
         {
-          "active": true,
           "name": "email",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 1
+          "short": "Email of the user",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
+          "format": "float",
           "name": "expires_at",
-          "req": false,
+          "short": "Date the subscription expires, in UNIX timestamp format",
           "type": [
             "`$ONE`",
             [
               "`$NULL`",
               "`$NUMBER`"
             ]
-          ],
-          "index$": 2
+          ]
         },
         {
-          "active": true,
           "name": "plan_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 3
+          "short": "Unique identifier of the subscription plan",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "provider",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 4
+          "short": "Provider of the subscription",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "provider_meta",
-          "req": false,
+          "short": "Metadata of the subscription provider.",
           "type": [
             "`$ONE`",
             [
               "`$OBJECT`",
               "`$NULL`"
             ]
-          ],
-          "index$": 5
+          ]
         },
         {
-          "active": true,
           "name": "status",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 6
+          "short": "Status of the subscription",
+          "type": "`$STRING`"
         },
         {
-          "active": true,
           "name": "user_id",
-          "req": false,
-          "type": "`$STRING`",
-          "index$": 7
+          "short": "Unique identifier of the user",
+          "type": "`$STRING`"
         }
       ],
       "name": "user_subscription",
@@ -10461,11 +10464,9 @@ class Config {
           "name": "list",
           "points": [
             {
-              "active": true,
               "args": {
                 "header": [
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "authorization",
                     "orig": "authorization",
@@ -10473,7 +10474,6 @@ class Config {
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "header",
                     "name": "lw_client",
                     "orig": "lw_client",
@@ -10483,37 +10483,36 @@ class Config {
                 ],
                 "query": [
                   {
-                    "active": true,
                     "example": 1,
                     "kind": "query",
                     "name": "page",
                     "orig": "page",
-                    "reqd": false,
                     "type": "`$INTEGER`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "status",
                     "orig": "status",
-                    "reqd": false,
                     "type": "`$STRING`"
                   },
                   {
-                    "active": true,
                     "kind": "query",
                     "name": "user_id",
                     "orig": "user_id",
-                    "reqd": false,
                     "type": "`$STRING`"
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v2/user-subscriptions",
-              "parts": [
-                "v2",
-                "user-subscriptions"
+              "segments": [
+                {
+                  "lit": "v2"
+                },
+                {
+                  "lit": "user-subscriptions"
+                }
               ],
               "select": {
                 "exist": [
@@ -10528,10 +10527,12 @@ class Config {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "index$": 0
+              "parts": [
+                "v2",
+                "user-subscriptions"
+              ]
             }
-          ],
-          "key$": "list"
+          ]
         }
       },
       "relations": {
@@ -10545,6 +10546,7 @@ class Config {
 const config = new Config()
 
 export {
-  config
+  config,
+  FEATURE_PLUGINS,
 }
 

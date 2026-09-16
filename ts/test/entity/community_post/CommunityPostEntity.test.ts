@@ -1,19 +1,21 @@
 
-const envlocal = __dirname + '/../../../.env.local'
-require('dotenv').config({ quiet: true, path: [envlocal] })
 
 import Path from 'node:path'
 import * as Fs from 'node:fs'
 
 import { test, describe, afterEach } from 'node:test'
 import assert from 'node:assert'
+import { createLiveTransport } from '../../live-runner'
+import { runLiveEntity } from '../../live-entity'
 
 
 import { LearnworldsSDK, BaseFeature, stdutil } from '../../..'
 
 import {
   envOverride,
+  liveClientOptions,
   liveDelay,
+  loadEnvLocal,
   makeCtrl,
   makeMatch,
   makeReqdata,
@@ -21,6 +23,13 @@ import {
   makeValid,
   maybeSkipControl,
 } from '../../utility'
+
+
+// AFTER the imports on purpose: TypeScript hoists `import` above any
+// statement in the emitted CommonJS, so a loader placed above them would
+// run only after every imported module had already been evaluated - and
+// anything reading process.env at module scope would miss these values.
+loadEnvLocal(__dirname + '/../../../.env.local')
 
 
 describe('CommunityPostEntity', async () => {
@@ -40,16 +49,13 @@ describe('CommunityPostEntity', async () => {
 
     const live = 'TRUE' === process.env.LEARNWORLDS_TEST_LIVE
     for (const op of ['load']) {
-      if (maybeSkipControl(t, 'entityOp', 'community_post.' + op, live)) return
+      if (!live && maybeSkipControl(t, 'entityOp', 'community_post.' + op, live)) return
     }
 
+    
     const setup = basicSetup()
-    // The basic flow consumes synthetic IDs and field values from the
-    // fixture (entity TestData.json). Those don't exist on the live API.
-    // Skip live runs unless the user provided a real ENTID env override.
-    if (setup.syntheticOnly) {
-      t.skip('live entity test uses synthetic IDs from fixture — set LEARNWORLDS_TEST_COMMUNITY_POST_ENTID JSON to run live')
-      return
+    if (setup.live) {
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":[{"active":true,"format":"float","name":"created","req":false,"short":"Date the post was made, in UNIX timestamp format","type":"`$NUMBER`","index$":0},{"active":true,"name":"id","req":false,"short":"Unique identifier of the post","type":"`$STRING`","index$":1},{"active":true,"name":"items","req":false,"short":"List of post content items outside of text content","type":"`$ARRAY`","index$":2},{"active":true,"name":"likes","req":false,"short":"List of users who have liked the post","type":"`$ARRAY`","index$":3},{"active":true,"name":"mentions","req":false,"short":"User mentions of the post","type":"`$ARRAY`","index$":4},{"active":true,"name":"posted_in","req":false,"short":"Information about where the post was made","type":"`$OBJECT`","index$":5},{"active":true,"name":"text","req":false,"short":"Text content of the post","type":"`$STRING`","index$":6},{"active":true,"name":"upvotes","req":false,"short":"List of users who have upvoted the post","type":"`$ARRAY`","index$":7},{"active":true,"name":"user","req":false,"short":"Information about the post author","type":"`$OBJECT`","index$":8}],"id":{"field":"id","name":"id"},"name":"community_post","op":{"load":{"input":"data","name":"load","points":[{"active":true,"args":{"header":[{"active":true,"kind":"header","name":"authorization","orig":"authorization","reqd":true,"type":"`$STRING`"},{"active":true,"kind":"header","name":"lw_client","orig":"lw_client","reqd":true,"type":"`$STRING`"}],"params":[{"active":true,"kind":"param","name":"id","orig":"id","reqd":true,"type":"`$STRING`","index$":0}]},"contract":{"id":"GET /v2/community/posts/{id}","json":"{\"operationId\":\"get-v2-community-posts-id\",\"parameters\":[{\"description\":\"Unique identifier of the community post\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"examples\":[{\"id\":\"65ce2ecc9066630b4e0913f4\",\"items\":[{\"data\":{\"options\":[{\"id\":\"ch_1\",\"results\":{\"per\":\"100.00\",\"val\":1},\"text\":\"Blue\"},{\"id\":\"ch_2\",\"results\":{\"per\":\"0.00\",\"val\":0},\"text\":\"Green\"}],\"text\":null,\"totalVotes\":1,\"type\":\"poll\"},\"type\":\"poll\"},{\"location\":\"social/2-the-sea-1198167.jpg\",\"size\":602033,\"title\":\"the-sea-1198167.jpg\",\"type\":\"image\"},{\"avStatus\":\"safe\",\"location\":\"socialAttachments/3-sample.pdf\",\"size\":501341,\"title\":\"sample.pdf\",\"type\":\"file\"},{\"location\":\"socialAttachments/video (240p).mp4\",\"size\":248505,\"title\":\"video (240p).mp4\",\"type\":\"video\"}],\"likes\":[{\"id\":\"5be0561d43c90b171a8b4567\",\"username\":\"admin\"}],\"mentions\":[{\"id\":\"625419b5e593d74a874fb573\",\"username\":\"Andreas\"}],\"posted_in\":{\"id\":\"61bb42d5e07e202700000001\",\"type\":\"space\"},\"text\":\"<p>What color is the sea? <a href=\\\"/profile?id=625419b5e593d74a874fb573\\\" class=\\\"social-mention\\\">@Andreas</a></p>\",\"upvotes\":[{\"id\":\"5be0561d43c90b171a8b4567\",\"username\":\"admin\"}],\"user\":{\"id\":\"5be0561d43c90b171a8b4567\",\"username\":\"admin\"}}],\"properties\":{\"created\":{\"description\":\"Date the post was made, in UNIX timestamp format\",\"format\":\"float\",\"type\":\"number\"},\"id\":{\"description\":\"Unique identifier of the post\",\"type\":\"string\"},\"items\":{\"description\":\"List of post content items outside of text content\",\"items\":{\"properties\":{\"data\":{\"description\":\"Content item information\",\"type\":\"object\"},\"type\":{\"description\":\"Type of content item of the post\",\"enum\":[\"poll\",\"image\",\"file\",\"video\"]}},\"type\":\"object\"},\"type\":\"array\"},\"likes\":{\"description\":\"List of users who have liked the post\",\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"mentions\":{\"description\":\"User mentions of the post\",\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"posted_in\":{\"description\":\"Information about where the post was made\",\"properties\":{\"id\":{\"description\":\"Unique identifier of where the post was made\",\"type\":\"string\"},\"type\":{\"description\":\"Type of where the post was made, either course or space\",\"enum\":[\"space\",\"course\"]}},\"type\":\"object\"},\"text\":{\"description\":\"Text content of the post\",\"type\":\"string\"},\"upvotes\":{\"description\":\"List of users who have upvoted the post\",\"items\":{\"type\":\"object\"},\"type\":\"array\"},\"user\":{\"description\":\"Information about the post author\",\"properties\":{\"id\":{\"description\":\"Unique identifier of the post author\",\"type\":\"string\"},\"username\":{\"description\":\"Username of the post author\",\"type\":\"string\"}},\"type\":\"object\"}},\"title\":\"CommunityPost\",\"type\":\"object\"}}},\"description\":\"OK\",\"headers\":{}}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}","source":"openapi3","version":1},"kind":"http","method":"GET","orig":"/v2/community/posts/{id}","segments":[{"lit":"v2"},{"lit":"community"},{"lit":"posts"},{"var":"id"}],"select":{"exist":["authorization","id","lw_client"]},"transform":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"load"}},"relations":{"ancestors":[]},"key$":"community_post","name__orig":"community_post","Name":"CommunityPost","name_":"community_post","name-":"community-post","NAME":"COMMUNITY_POST","index$":9}, {"active":true,"entity":"community_post","key$":"BasicCommunityPostFlow","kind":"basic","name":"BasicCommunityPostFlow","param":{},"step":[{"active":true,"data":{},"input":{"ref":"community_post_ref01","srcdatavar":"community_post_ref01_data","suffix":"_dt0"},"match":{"id":"community_post01"},"op":"load","spec":[],"valid":[{"apply":"TextFieldMark","def":{"mark":"Mark01-community_post_ref01"}}]}]}, 'CommunityPost')
     }
     const client = setup.client
     const struct = setup.struct
@@ -63,7 +69,7 @@ describe('CommunityPostEntity', async () => {
     const community_post_ref01_ent = client.CommunityPost()
     const community_post_ref01_match_dt0: any = {}
     community_post_ref01_match_dt0.id = community_post_ref01_data.id
-    const community_post_ref01_data_dt0 = await community_post_ref01_ent.load(community_post_ref01_match_dt0)
+    const community_post_ref01_data_dt0 = (await community_post_ref01_ent.load(community_post_ref01_match_dt0)).data()
     assert(community_post_ref01_data_dt0.id === community_post_ref01_data.id)
 
 
@@ -103,13 +109,6 @@ function basicSetup(extra?: any) {
       }]
     })
 
-  // Detect whether the user provided a real ENTID JSON via env var. The
-  // basic flow consumes synthetic IDs from the fixture file; without an
-  // override those synthetic IDs reach the live API and 4xx. Surface this
-  // to the test so it can skip rather than fail.
-  const idmapEnvVal = process.env['LEARNWORLDS_TEST_COMMUNITY_POST_ENTID']
-  const idmapOverridden = null != idmapEnvVal && idmapEnvVal.trim().startsWith('{')
-
   const env = envOverride({
     'LEARNWORLDS_TEST_COMMUNITY_POST_ENTID': idmap,
     'LEARNWORLDS_TEST_LIVE': 'FALSE',
@@ -120,11 +119,26 @@ function basicSetup(extra?: any) {
 
   const live = 'TRUE' === env.LEARNWORLDS_TEST_LIVE
 
+  const transport = createLiveTransport()
   if (live) {
+    const rawIds = process.env['LEARNWORLDS_TEST_COMMUNITY_POST_ENTID']
+    idmap = rawIds && rawIds.trim() ? JSON.parse(rawIds) : {}
+    if (!idmap || Array.isArray(idmap) || typeof idmap !== 'object') {
+      throw new Error('Live ENTID must be a JSON object')
+    }
     client = new LearnworldsSDK(merge([
+      // FIRST, so the generated fields below win: sdk-test-control.json's
+      // test.client.options adds to the live client, it does not redirect it.
+      liveClientOptions(),
       {
       },
-      extra
+      // 'extra || {}', not a bare 'extra': struct.merge returns UNDEFINED when the
+      // last entry is undefined, and basicSetup is normally called with no
+      // argument at all - so a bare 'extra' silently discarded the apikey
+      // and server values above and handed the SDK undefined. Harmless
+      // while there was nothing in that object; not harmless now.
+      extra || {},
+      { system: { fetch: transport.fetch } }
     ]))
   }
 
@@ -137,7 +151,7 @@ function basicSetup(extra?: any) {
     data: entityData,
     explain: 'TRUE' === env.LEARNWORLDS_TEST_EXPLAIN,
     live,
-    syntheticOnly: live && !idmapOverridden,
+    transport,
     now: Date.now(),
   }
 

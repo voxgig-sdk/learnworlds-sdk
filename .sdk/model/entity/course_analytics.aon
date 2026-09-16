@@ -1,0 +1,161 @@
+# Entity: course_analytics
+
+main: kit: entity: course_analytics: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      format: "float"
+      name: "avg_score_rate"
+      req: false
+      short: "Average score (%)"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "avg_time_to_finish"
+      req: false
+      short: "Average time to finish the course in seconds"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "certificates_issued"
+      req: false
+      short: "Number of issued certifications"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
+      name: "learning_units"
+      req: false
+      short: "Number of learning activities"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "social_interactions"
+      req: false
+      short: "Number of social interactions"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "students"
+      req: false
+      short: "Number of students"
+      type: "`$INTEGER`"
+    }
+    {
+      format: "float"
+      name: "success_rate"
+      req: false
+      short: "Success rate (%)"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "total_study_time"
+      req: false
+      short: "Total study time in seconds"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "video_time"
+      req: false
+      short: "Total video duration of the course in seconds"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "video_viewing_time"
+      req: false
+      short: "Total video time viewed"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "videos"
+      req: false
+      short: "Number of videos"
+      type: "`$INTEGER`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "course_analytics"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/courses/{id}/analytics"
+            json: "{\"operationId\":\"get-courses-id-analytics\",\"parameters\":[{\"description\":\"Course Id\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"avg_score_rate\":95,\"avg_time_to_finish\":0,\"certificates_issued\":3,\"learning_units\":16,\"social_interactions\":7,\"students\":134,\"success_rate\":0,\"total_study_time\":13953,\"video_time\":0,\"video_viewing_time\":0,\"videos\":5}}},\"schema\":{\"examples\":[{\"avg_score_rate\":95,\"avg_time_to_finish\":0,\"certificates_issued\":3,\"learning_units\":16,\"social_interactions\":7,\"students\":134,\"success_rate\":0,\"total_study_time\":13953,\"video_time\":0,\"video_viewing_time\":0,\"videos\":5}],\"properties\":{\"avg_score_rate\":{\"description\":\"Average score (%)\",\"format\":\"float\",\"type\":\"number\"},\"avg_time_to_finish\":{\"description\":\"Average time to finish the course in seconds\",\"type\":\"integer\"},\"certificates_issued\":{\"description\":\"Number of issued certifications\",\"type\":\"integer\"},\"learning_units\":{\"description\":\"Number of learning activities\",\"type\":\"integer\"},\"social_interactions\":{\"description\":\"Number of social interactions \",\"type\":\"integer\"},\"students\":{\"description\":\"Number of students\",\"type\":\"integer\"},\"success_rate\":{\"description\":\"Success rate (%)\",\"format\":\"float\",\"type\":\"number\"},\"total_study_time\":{\"description\":\"Total study time in seconds\",\"type\":\"integer\"},\"video_time\":{\"description\":\"Total video duration of the course in seconds\",\"type\":\"integer\"},\"video_viewing_time\":{\"description\":\"Total video time viewed\",\"type\":\"integer\"},\"videos\":{\"description\":\"Number of videos\",\"type\":\"integer\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/courses/{id}/analytics"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "courses"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "analytics"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

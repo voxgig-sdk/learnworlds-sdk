@@ -1,0 +1,481 @@
+# Entity: payment
+
+main: kit: entity: payment: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "affiliate"
+      req: false
+      short: "Related affiliate data"
+      type: "`$OBJECT`"
+    }
+    {
+      name: "billing_info"
+      req: false
+      short: "Billing info of the payment"
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$OBJECT`"
+        ]
+      ]
+    }
+    {
+      name: "coupon"
+      req: false
+      short: "Coupon code"
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$STRING`"
+        ]
+      ]
+    }
+    {
+      format: "float"
+      name: "created"
+      req: false
+      short: "Datetime of the payment was created, in UNIX timestamp format"
+      type: "`$NUMBER`"
+    }
+    {
+      format: "float"
+      name: "discount"
+      req: false
+      short: "Discount of the payment"
+      type: "`$NUMBER`"
+    }
+    {
+      format: "float"
+      name: "expires_at"
+      req: false
+      short: "Date the invoice expires, in UNIX timestamp format"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "gateway"
+      req: false
+      short: "Payment gateway name"
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$STRING`"
+        ]
+      ]
+    }
+    {
+      name: "id"
+      req: false
+      short: "Unique identifier of the payment"
+      type: "`$STRING`"
+    }
+    {
+      name: "instructors"
+      req: false
+      short: "Related instructor data"
+      type: "`$ARRAY`"
+    }
+    {
+      format: "float"
+      name: "instructors_total_percentage"
+      req: false
+      short: "Total percentage of the revenue for the instructor"
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$NUMBER`"
+        ]
+      ]
+    }
+    {
+      name: "invoice"
+      req: false
+      short: "Invoice identifier"
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$STRING`"
+        ]
+      ]
+    }
+    {
+      format: "float"
+      name: "paid_at"
+      req: false
+      short: "Payment date, in UNIX timestamp format"
+      type: [
+        "`$ONE`"
+        [
+          "`$NUMBER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "payment_plan_current_payment"
+      req: false
+      short: "Current payment number of payment plan"
+      type: [
+        "`$ONE`"
+        [
+          "`$INTEGER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "payment_plan_total_payments"
+      req: false
+      short: "Total payments number of payment plan"
+      type: [
+        "`$ONE`"
+        [
+          "`$INTEGER`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "period"
+      req: false
+      short: "Payment plan period"
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$STRING`"
+        ]
+      ]
+    }
+    {
+      format: "float"
+      name: "price"
+      req: false
+      short: "Price of the payment"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "product"
+      req: false
+      short: "Related product data"
+      type: "`$OBJECT`"
+    }
+    {
+      format: "float"
+      name: "refund_at"
+      req: false
+      short: "Refund date, in UNIX timestamp format"
+      type: [
+        "`$ONE`"
+        [
+          "`$NULL`"
+          "`$NUMBER`"
+        ]
+      ]
+    }
+    {
+      format: "float"
+      name: "tax_amount"
+      req: false
+      short: "Tax amount of the payment"
+      type: "`$NUMBER`"
+    }
+    {
+      format: "float"
+      name: "tax_percentage"
+      req: false
+      short: "Tax percentage of the payment"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "transaction_id"
+      req: false
+      short: "Transaction id of the payment"
+      type: "`$STRING`"
+    }
+    {
+      name: "type"
+      req: false
+      short: "Type of the payment"
+      type: "`$STRING`"
+    }
+    {
+      name: "url"
+      req: false
+      short: "Url of invoice"
+      type: "`$STRING`"
+    }
+    {
+      name: "user_id"
+      req: false
+      short: "Unique identifier of the user"
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "payment"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "affiliate_id"
+                orig: "affiliate_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 1626854780
+                kind: "query"
+                name: "created_after"
+                orig: "created_after"
+                reqd: false
+                type: "`$NUMBER`"
+              }
+              {
+                example: 1626852950
+                kind: "query"
+                name: "created_before"
+                orig: "created_before"
+                reqd: false
+                type: "`$NUMBER`"
+              }
+              {
+                kind: "query"
+                name: "items_per_page"
+                orig: "items_per_page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "product_id"
+                orig: "product_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "product_type"
+                orig: "product_type"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                kind: "query"
+                name: "user_id"
+                orig: "user_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/payments"
+            json: "{\"operationId\":\"get-transactions\",\"parameters\":[{\"description\":\"Filter by product type\",\"in\":\"query\",\"name\":\"product_type\",\"schema\":{\"enum\":[\"course\",\"bundle\",\"subscription\"],\"type\":\"string\"}},{\"description\":\"Filter by user id or email (encoded string)\",\"in\":\"query\",\"name\":\"user_id\",\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter by affiliate id or email (encoded string)\",\"in\":\"query\",\"name\":\"affiliate_id\",\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter by product id\",\"in\":\"query\",\"name\":\"product_id\",\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned\",\"in\":\"query\",\"name\":\"page\",\"required\":false,\"schema\":{\"default\":1,\"type\":\"integer\"}},{\"description\":\"Filter by the items per page number\",\"in\":\"query\",\"name\":\"items_per_page\",\"schema\":{\"maximum\":200,\"minimum\":1,\"type\":\"integer\"}},{\"description\":\"Filter by payment creation before the given datetime (expected in UNIX timestamp format)\",\"in\":\"query\",\"name\":\"created_before\",\"schema\":{\"example\":1626852950,\"type\":\"number\"}},{\"description\":\"Filter by payment creation after the given datetime (expected in UNIX timestamp format)\",\"in\":\"query\",\"name\":\"created_after\",\"schema\":{\"example\":1626854780,\"type\":\"number\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"data\":[{\"affiliate\":{\"code\":\"BOwVnd\",\"commission_amount\":10,\"commission_percentage\":10,\"id\":\"5a6f1e5a43c90b15208b4571\",\"payment_status\":\"paid\",\"username\":\"jondoe\"},\"billing_info\":{\"bf_address\":\"Baker Street 221B\",\"bf_city\":\"London\",\"bf_country\":\"UK\",\"bf_name\":\"Sherlock Holmes\",\"bf_postalcode\":\"NW1\",\"bf_taxid\":null},\"coupon\":null,\"created\":1626852950,\"discount\":0,\"gateway\":\"stripe\",\"id\":\"60fa9afd0436534ae177b072\",\"instructors\":[{\"id\":\"5a323b4f43c90b78098b456b\",\"percentage\":0.2},{\"id\":\"5acc9b3743c90b1b098b4568\",\"percentage\":0.1}],\"instructors_total_percentage\":0.3,\"invoice\":null,\"paid_at\":1626852950,\"payment_plan_current_payment\":null,\"payment_plan_total_payments\":null,\"period\":null,\"price\":100,\"product\":{\"description\":\"A Great Guide to master your nightmares\",\"discount_price\":0,\"final_price\":32,\"id\":\"the-complete-nightmare-guide\",\"image\":\"https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg\",\"name\":\"The complete nightmare Guide\",\"original_price\":32,\"trial_days\":0,\"type\":\"course\"},\"refund_at\":null,\"tax_amount\":0,\"tax_percentage\":0,\"transaction_id\":\"Added by admin\",\"type\":\"one-off\",\"user_id\":\"5ea18eee1d2c27438d61abe2\"}],\"meta\":{\"itemsPerPage\":50,\"page\":1,\"totalItems\":1,\"totalPages\":1}}}},\"schema\":{\"properties\":{\"data\":{\"items\":{\"description\":\"\",\"examples\":[{\"affiliate\":{\"code\":\"BOwVnd\",\"commission_amount\":10,\"commission_percentage\":10,\"id\":\"5a6f1e5a43c90b15208b4571\",\"payment_status\":\"paid\",\"username\":\"jondoe\"},\"billing_info\":{\"bf_address\":\"Baker Street 221B\",\"bf_city\":\"London\",\"bf_country\":\"UK\",\"bf_name\":\"Sherlock Holmes\",\"bf_postalcode\":\"NW1\",\"bf_taxid\":null},\"coupon\":null,\"created\":1626852950,\"discount\":0,\"gateway\":\"stripe\",\"id\":\"60fa9afd0436534ae177b072\",\"instructors\":[{\"id\":\"5a323b4f43c90b78098b456b\",\"percentage\":0.2},{\"id\":\"5acc9b3743c90b1b098b4568\",\"percentage\":0.1}],\"instructors_total_percentage\":0.3,\"invoice\":null,\"paid_at\":1626852950,\"payment_plan_current_payment\":null,\"payment_plan_total_payments\":null,\"period\":null,\"price\":100,\"product\":{\"description\":\"A Great Guide to master your nightmares\",\"discount_price\":0,\"final_price\":32,\"id\":\"the-complete-nightmare-guide\",\"image\":\"https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg\",\"name\":\"The complete nightmare Guide\",\"original_price\":32,\"trial_days\":0,\"type\":\"course\"},\"refund_at\":null,\"tax_amount\":0,\"tax_percentage\":0,\"transaction_id\":\"Added by admin\",\"type\":\"one-off\",\"user_id\":\"5ea18eee1d2c27438d61abe2\"}],\"properties\":{\"affiliate\":{\"description\":\"Related affiliate data\",\"properties\":{\"code\":{\"description\":\"Affiliate code\",\"type\":\"string\"},\"commission_amount\":{\"description\":\"Αffiliate commission amount\",\"format\":\"float\",\"type\":\"number\"},\"commission_percentage\":{\"description\":\"Affiliate commission (%)\",\"format\":\"float\",\"type\":\"number\"},\"id\":{\"description\":\"Unique identifier of the affiliate\",\"type\":\"string\"},\"payment_status\":{\"description\":\"Status of the affiliation pay\",\"enum\":[\"new\",\"approved\",\"mature\",\"paid\",\"rejected\"],\"type\":\"string\"},\"username\":{\"description\":\"Affiliate username\",\"type\":\"string\"}},\"type\":\"object\"},\"billing_info\":{\"description\":\"Billing info of the payment\",\"type\":[\"null\",\"object\"]},\"coupon\":{\"description\":\"Coupon code\",\"type\":[\"null\",\"string\"]},\"created\":{\"description\":\"Datetime of the payment was created, in UNIX timestamp format\",\"format\":\"float\",\"type\":\"number\"},\"discount\":{\"description\":\"Discount of the payment\",\"format\":\"float\",\"type\":\"number\"},\"gateway\":{\"description\":\"Payment gateway name\",\"type\":[\"null\",\"string\"]},\"id\":{\"description\":\"Unique identifier of the payment\",\"type\":\"string\"},\"instructors\":{\"description\":\"Related instructor data\",\"items\":{\"properties\":{\"id\":{\"description\":\"Unique identifiers of the instructor\",\"type\":\"string\"},\"percentage\":{\"description\":\"Percentage of the revenue for the instructor\",\"format\":\"float\",\"type\":[\"null\",\"number\"]}},\"type\":\"object\"},\"type\":\"array\"},\"instructors_total_percentage\":{\"description\":\"Total percentage of the revenue for the instructor\",\"format\":\"float\",\"type\":[\"null\",\"number\"]},\"invoice\":{\"description\":\"Invoice identifier\",\"type\":[\"null\",\"string\"]},\"paid_at\":{\"description\":\"Payment date, in UNIX timestamp format\",\"format\":\"float\",\"type\":[\"number\",\"null\"]},\"payment_plan_current_payment\":{\"description\":\"Current payment number of payment plan\",\"type\":[\"integer\",\"null\"]},\"payment_plan_total_payments\":{\"description\":\"Total payments number of payment plan\",\"type\":[\"integer\",\"null\"]},\"period\":{\"description\":\"Payment plan period\",\"type\":[\"null\",\"string\"]},\"price\":{\"description\":\"Price of the payment\",\"format\":\"float\",\"type\":\"number\"},\"product\":{\"description\":\"Related product data\",\"properties\":{\"description\":{\"description\":\"Description of the product\",\"type\":[\"string\",\"null\"]},\"discount_price\":{\"description\":\"Discount price of the product\",\"format\":\"float\",\"type\":\"number\"},\"final_price\":{\"description\":\"Final price of the product\",\"format\":\"float\",\"type\":\"number\"},\"id\":{\"description\":\"Unique identifier of the product\",\"type\":\"string\"},\"image\":{\"description\":\"Image url of the product\",\"type\":[\"string\",\"null\"]},\"name\":{\"description\":\"Name of the product\",\"type\":\"string\"},\"original_price\":{\"description\":\"Original price of the product\",\"format\":\"float\",\"type\":\"number\"},\"trial_days\":{\"description\":\"Specified trial days of the product\",\"type\":\"integer\"},\"type\":{\"description\":\"Type of the product\",\"enum\":[\"course\",\"bundle\",\"subscription\"],\"type\":\"string\"}},\"type\":\"object\"},\"refund_at\":{\"description\":\"Refund date, in UNIX timestamp format\",\"format\":\"float\",\"type\":[\"null\",\"number\"]},\"tax_amount\":{\"description\":\"Tax amount of the payment\",\"format\":\"float\",\"type\":\"number\"},\"tax_percentage\":{\"description\":\"Tax percentage of the payment\",\"format\":\"float\",\"type\":\"number\"},\"transaction_id\":{\"description\":\"Transaction id of the payment\",\"type\":\"string\"},\"type\":{\"description\":\"Type of the payment\",\"enum\":[\"subscription\",\"installment\",\"one-off\"],\"type\":\"string\"},\"user_id\":{\"description\":\"Unique identifier of the user\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"},\"meta\":{\"description\":\"\",\"examples\":[{\"itemsPerPage\":20,\"page\":1,\"totalItems\":1,\"totalPages\":1}],\"properties\":{\"itemsPerPage\":{\"description\":\"Limit in the number of items per page\",\"type\":\"number\"},\"page\":{\"description\":\"Current page number\",\"type\":\"number\"},\"totalItems\":{\"description\":\"Total number of items in this page\",\"type\":\"number\"},\"totalPages\":{\"description\":\"Total number of pages\",\"type\":\"number\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/payments"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "payments"
+            }
+          ]
+          select: {
+            exist: [
+              "affiliate_id"
+              "authorization"
+              "created_after"
+              "created_before"
+              "items_per_page"
+              "lw_client"
+              "page"
+              "product_id"
+              "product_type"
+              "user_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/payments/{id}"
+            json: "{\"operationId\":\"get-transactions-id\",\"parameters\":[{\"description\":\"Payment Id or Transaction id\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"affiliate\":{\"code\":\"BOwVnd\",\"commission_amount\":10,\"commission_percentage\":10,\"id\":\"5a6f1e5a43c90b15208b4571\",\"payment_status\":\"paid\",\"username\":\"jondoe\"},\"coupon\":null,\"created\":1626852950,\"discount\":0,\"gateway\":\"stripe\",\"id\":\"60fa9afd0436534ae177b072\",\"instructors\":[\"5a323b4f43c90b78098b456b\",\"5acc9b3743c90b1b098b4568\"],\"instructors_total_percentage\":0.3,\"invoice\":null,\"paid_at\":1626852950,\"payment_plan_current_payment\":null,\"payment_plan_total_payments\":null,\"period\":null,\"price\":100,\"product\":{\"description\":\"A Great Guide to master your nightmares\",\"discount_price\":0,\"final_price\":32,\"id\":\"the-complete-nightmare-guide\",\"image\":\"https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg\",\"name\":\"The complete nightmare Guide\",\"original_price\":32,\"trial_days\":0,\"type\":\"course\"},\"refund_at\":null,\"tax_amount\":0,\"tax_percentage\":0,\"transaction_id\":\"Added by admin\",\"type\":\"one-off\",\"user_id\":\"5ea18eee1d2c27438d61abe2\"}}},\"schema\":{\"description\":\"\",\"examples\":[{\"affiliate\":{\"code\":\"BOwVnd\",\"commission_amount\":10,\"commission_percentage\":10,\"id\":\"5a6f1e5a43c90b15208b4571\",\"payment_status\":\"paid\",\"username\":\"jondoe\"},\"billing_info\":{\"bf_address\":\"Baker Street 221B\",\"bf_city\":\"London\",\"bf_country\":\"UK\",\"bf_name\":\"Sherlock Holmes\",\"bf_postalcode\":\"NW1\",\"bf_taxid\":null},\"coupon\":null,\"created\":1626852950,\"discount\":0,\"gateway\":\"stripe\",\"id\":\"60fa9afd0436534ae177b072\",\"instructors\":[{\"id\":\"5a323b4f43c90b78098b456b\",\"percentage\":0.2},{\"id\":\"5acc9b3743c90b1b098b4568\",\"percentage\":0.1}],\"instructors_total_percentage\":0.3,\"invoice\":null,\"paid_at\":1626852950,\"payment_plan_current_payment\":null,\"payment_plan_total_payments\":null,\"period\":null,\"price\":100,\"product\":{\"description\":\"A Great Guide to master your nightmares\",\"discount_price\":0,\"final_price\":32,\"id\":\"the-complete-nightmare-guide\",\"image\":\"https://lwfilesdev.mycourse.app/dev-public/insert/014d143dca751d1e3c661675924a266e.jpeg\",\"name\":\"The complete nightmare Guide\",\"original_price\":32,\"trial_days\":0,\"type\":\"course\"},\"refund_at\":null,\"tax_amount\":0,\"tax_percentage\":0,\"transaction_id\":\"Added by admin\",\"type\":\"one-off\",\"user_id\":\"5ea18eee1d2c27438d61abe2\"}],\"properties\":{\"affiliate\":{\"description\":\"Related affiliate data\",\"properties\":{\"code\":{\"description\":\"Affiliate code\",\"type\":\"string\"},\"commission_amount\":{\"description\":\"Αffiliate commission amount\",\"format\":\"float\",\"type\":\"number\"},\"commission_percentage\":{\"description\":\"Affiliate commission (%)\",\"format\":\"float\",\"type\":\"number\"},\"id\":{\"description\":\"Unique identifier of the affiliate\",\"type\":\"string\"},\"payment_status\":{\"description\":\"Status of the affiliation pay\",\"enum\":[\"new\",\"approved\",\"mature\",\"paid\",\"rejected\"],\"type\":\"string\"},\"username\":{\"description\":\"Affiliate username\",\"type\":\"string\"}},\"type\":\"object\"},\"billing_info\":{\"description\":\"Billing info of the payment\",\"type\":[\"null\",\"object\"]},\"coupon\":{\"description\":\"Coupon code\",\"type\":[\"null\",\"string\"]},\"created\":{\"description\":\"Datetime of the payment was created, in UNIX timestamp format\",\"format\":\"float\",\"type\":\"number\"},\"discount\":{\"description\":\"Discount of the payment\",\"format\":\"float\",\"type\":\"number\"},\"gateway\":{\"description\":\"Payment gateway name\",\"type\":[\"null\",\"string\"]},\"id\":{\"description\":\"Unique identifier of the payment\",\"type\":\"string\"},\"instructors\":{\"description\":\"Related instructor data\",\"items\":{\"properties\":{\"id\":{\"description\":\"Unique identifiers of the instructor\",\"type\":\"string\"},\"percentage\":{\"description\":\"Percentage of the revenue for the instructor\",\"format\":\"float\",\"type\":[\"null\",\"number\"]}},\"type\":\"object\"},\"type\":\"array\"},\"instructors_total_percentage\":{\"description\":\"Total percentage of the revenue for the instructor\",\"format\":\"float\",\"type\":[\"null\",\"number\"]},\"invoice\":{\"description\":\"Invoice identifier\",\"type\":[\"null\",\"string\"]},\"paid_at\":{\"description\":\"Payment date, in UNIX timestamp format\",\"format\":\"float\",\"type\":[\"number\",\"null\"]},\"payment_plan_current_payment\":{\"description\":\"Current payment number of payment plan\",\"type\":[\"integer\",\"null\"]},\"payment_plan_total_payments\":{\"description\":\"Total payments number of payment plan\",\"type\":[\"integer\",\"null\"]},\"period\":{\"description\":\"Payment plan period\",\"type\":[\"null\",\"string\"]},\"price\":{\"description\":\"Price of the payment\",\"format\":\"float\",\"type\":\"number\"},\"product\":{\"description\":\"Related product data\",\"properties\":{\"description\":{\"description\":\"Description of the product\",\"type\":[\"string\",\"null\"]},\"discount_price\":{\"description\":\"Discount price of the product\",\"format\":\"float\",\"type\":\"number\"},\"final_price\":{\"description\":\"Final price of the product\",\"format\":\"float\",\"type\":\"number\"},\"id\":{\"description\":\"Unique identifier of the product\",\"type\":\"string\"},\"image\":{\"description\":\"Image url of the product\",\"type\":[\"string\",\"null\"]},\"name\":{\"description\":\"Name of the product\",\"type\":\"string\"},\"original_price\":{\"description\":\"Original price of the product\",\"format\":\"float\",\"type\":\"number\"},\"trial_days\":{\"description\":\"Specified trial days of the product\",\"type\":\"integer\"},\"type\":{\"description\":\"Type of the product\",\"enum\":[\"course\",\"bundle\",\"subscription\"],\"type\":\"string\"}},\"type\":\"object\"},\"refund_at\":{\"description\":\"Refund date, in UNIX timestamp format\",\"format\":\"float\",\"type\":[\"null\",\"number\"]},\"tax_amount\":{\"description\":\"Tax amount of the payment\",\"format\":\"float\",\"type\":\"number\"},\"tax_percentage\":{\"description\":\"Tax percentage of the payment\",\"format\":\"float\",\"type\":\"number\"},\"transaction_id\":{\"description\":\"Transaction id of the payment\",\"type\":\"string\"},\"type\":{\"description\":\"Type of the payment\",\"enum\":[\"subscription\",\"installment\",\"one-off\"],\"type\":\"string\"},\"user_id\":{\"description\":\"Unique identifier of the user\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"security\":[],\"securitySchemes\":{},\"securitySource\":\"operation\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/payments/{id}"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "payments"
+            }
+            {
+              var: "id"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/payments/{id}/invoice-link"
+            json: "{\"operationId\":\"get-payments-id-invoice_link\",\"parameters\":[{\"description\":\"Payment Id or Transaction id\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"expires_at\":1631104180,\"invoice\":\"00001\",\"url\":\"https://learnworldsdev.blob.core.windows.net/dev-private/invoices/invoice-00001-10-secrets-of-sleep-walking-5a006b8043c90b75078b4567.pdf?sv=2014-02-14&st=2021-09-08T12%3A28%3A40Z&se=2021-09-08T12%3A29%3A40Z&sr=b&sp=r&rscd=&sig=t6mq58yaMAcKRApYRiiBVMzppHOt5AObuMEFbvKxeKI%3D\"}}},\"schema\":{\"description\":\"\",\"properties\":{\"expires_at\":{\"description\":\"Date the invoice expires, in UNIX timestamp format\",\"format\":\"float\",\"type\":\"number\"},\"invoice\":{\"description\":\"Invoice identifier\",\"type\":\"string\"},\"url\":{\"description\":\"Url of invoice\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/payments/{id}/invoice-link"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "payments"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "invoice-link"
+            }
+          ]
+          select: {
+            "$action": "invoice_link"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

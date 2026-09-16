@@ -1,0 +1,337 @@
+# Entity: certificate
+
+main: kit: entity: certificate: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      format: "float"
+      name: "attempts"
+      req: false
+      short: "Number of attempts"
+      type: "`$INTEGER`"
+    }
+    {
+      name: "course_id"
+      req: false
+      short: "Unique identifier of the course"
+      type: "`$STRING`"
+    }
+    {
+      name: "external_url"
+      req: false
+      short: "External URL of the certificate; null if provider is LearnWorlds"
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "form"
+      op: {
+        update: {
+          req: true
+          type: "`$OBJECT`"
+        }
+      }
+      req: false
+      short: "Form data of the certificate"
+      type: [
+        "`$ONE`"
+        [
+          "`$OBJECT`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "id"
+      req: false
+      short: "Unique identifier of the certificate"
+      type: "`$STRING`"
+    }
+    {
+      format: "float"
+      name: "issued"
+      op: {
+        update: {
+          req: true
+          type: "`$NUMBER`"
+        }
+      }
+      req: false
+      short: "Date the certification was issued, in Unix timestamp format"
+      type: "`$NUMBER`"
+    }
+    {
+      name: "provider"
+      req: false
+      short: "Provider of the certificate"
+      type: "`$STRING`"
+    }
+    {
+      name: "score"
+      req: false
+      short: "Score of the certificate"
+      type: "`$STRING`"
+    }
+    {
+      name: "short_url"
+      req: false
+      short: "Short URL of the certificate"
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "status"
+      req: false
+      short: "Status of the certificate"
+      type: "`$STRING`"
+    }
+    {
+      name: "title"
+      req: false
+      short: "Title of the certificate"
+      type: "`$STRING`"
+    }
+    {
+      name: "type"
+      req: false
+      short: "Type of the certificate"
+      type: "`$STRING`"
+    }
+    {
+      name: "user"
+      req: false
+      short: "User related data"
+      type: "`$OBJECT`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "certificate"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "course_id"
+                orig: "course_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+              {
+                example: 1
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+              {
+                kind: "query"
+                name: "user_id"
+                orig: "user_id"
+                reqd: false
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/certificates"
+            json: "{\"operationId\":\"get-certificates\",\"parameters\":[{\"description\":\"Filter by course title id\",\"in\":\"query\",\"name\":\"course_id\",\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter by user id or email\",\"in\":\"query\",\"name\":\"user_id\",\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned\",\"in\":\"query\",\"name\":\"page\",\"required\":false,\"schema\":{\"default\":1,\"type\":\"integer\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"data\":[{\"attempts\":2,\"course_id\":\"the-complete-nightmare-guide\",\"external_url\":null,\"form\":{\"firstname\":\"Joe\",\"lastname\":\"Doe\",\"ptin\":\"3456\"},\"id\":\"5a74574343c90be4158b456a\",\"issued\":1517573955.484916,\"provider\":\"LearnWorlds\",\"score\":\"OK\",\"short_url\":\"https://goo.gl/cFJZhw\",\"status\":\"active\",\"title\":\"Certificate of completion\",\"type\":\"completion\",\"user\":{\"email\":\"gatuso@learnworlds.com\",\"id\":\"5a65a41e43c90b93098b4590\"}}],\"meta\":{\"itemsPerPage\":20,\"page\":1,\"totalItems\":1,\"totalPages\":1}}}},\"schema\":{\"description\":\"\",\"properties\":{\"data\":{\"items\":{\"examples\":[{\"attempts\":2,\"course_id\":\"the-complete-nightmare-guide\",\"external_url\":null,\"form\":{\"firstname\":\"Jon\",\"lastname\":\"Doe\",\"ptin\":\"3456\"},\"id\":\"5a74574343c90be4158b456a\",\"issued\":1517573955.484916,\"provider\":\"LearnWorlds\",\"score\":\"OK\",\"short_url\":\"https://goo.gl/cFJZhw\",\"status\":\"active\",\"title\":\"Certificate of completion\",\"type\":\"completion\",\"user\":{\"email\":\"gatuso@learnworlds.com\",\"id\":\"5a65a41e43c90b93098b4590\"}}],\"properties\":{\"attempts\":{\"description\":\"Number of attempts\",\"format\":\"float\",\"type\":\"integer\"},\"course_id\":{\"description\":\"Unique identifier of the course\",\"type\":\"string\"},\"external_url\":{\"description\":\"External URL of the certificate; null if provider is LearnWorlds\",\"type\":[\"string\",\"null\"]},\"form\":{\"description\":\"Form data of the certificate\",\"properties\":{\"firstname\":{\"description\":\"First name that appears in certificate pdf\",\"type\":\"string\"},\"lastname\":{\"description\":\"Last name that appears in certificate pdf\",\"type\":\"string\"},\"ptin\":{\"description\":\"ptin that appears in certificate pdf. A special field that can be used for showing user input, like a professional registration number, etc (available in Learning Center plans or higher)\",\"type\":\"string\"}},\"type\":[\"object\",\"null\"]},\"id\":{\"description\":\"Unique identifier of the certificate\",\"type\":\"string\"},\"issued\":{\"description\":\"Date the certification was issued, in Unix timestamp format\",\"format\":\"float\",\"type\":\"number\"},\"provider\":{\"description\":\"Provider of the certificate\",\"enum\":[\"LearnWorlds\",\"Accredible\",\"Credly\"],\"type\":\"string\"},\"score\":{\"description\":\"Score of the certificate\",\"type\":\"string\"},\"short_url\":{\"description\":\"Short URL of the certificate\",\"type\":[\"string\",\"null\"]},\"status\":{\"description\":\"Status of the certificate\",\"enum\":[\"active\",\"deleted\"],\"type\":\"string\"},\"title\":{\"description\":\"Title of the certificate\",\"type\":\"string\"},\"type\":{\"description\":\"Type of the certificate\",\"enum\":[\"completion\",\"certificate\"],\"type\":\"string\"},\"user\":{\"description\":\"User related data\",\"properties\":{\"email\":{\"description\":\"Email of the user\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier of the user\",\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"},\"type\":\"array\"},\"meta\":{\"description\":\"\",\"examples\":[{\"itemsPerPage\":20,\"page\":1,\"totalItems\":1,\"totalPages\":1}],\"properties\":{\"itemsPerPage\":{\"description\":\"Limit in the number of items per page\",\"type\":\"number\"},\"page\":{\"description\":\"Current page number\",\"type\":\"number\"},\"totalItems\":{\"description\":\"Total number of items in this page\",\"type\":\"number\"},\"totalPages\":{\"description\":\"Total number of pages\",\"type\":\"number\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/certificates"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "certificates"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "course_id"
+              "lw_client"
+              "page"
+              "user_id"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "DELETE /v2/certificates/{id}"
+            json: "{\"operationId\":\"delete-certificates-id\",\"parameters\":[{\"description\":\"Certificate Id\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"204\":{\"description\":\"No Content\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "DELETE"
+          orig: "/v2/certificates/{id}"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "certificates"
+            }
+            {
+              var: "id"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    update: {
+      name: "update"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "PUT /v2/certificates/{id}"
+            json: "{\"operationId\":\"put-certificates-id\",\"parameters\":[{\"description\":\"Certificate Id\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"examples\":{\"Example 2\":{\"value\":{\"issued\":1518790977.20607}},\"Example 3\":{\"value\":{\"form\":{\"firstname\":\"John\",\"lastname\":\"Doe\",\"ptin\":\"9090\"}}}},\"schema\":{\"description\":\"\",\"examples\":[{\"form\":{\"firstname\":\"JonForm\",\"lastname\":\"JonForm\",\"ptin\":\"9090\"},\"issued\":1518790977.20607}],\"properties\":{\"form\":{\"properties\":{\"firstname\":{\"description\":\"First name that appears in certificate pdf\",\"type\":\"string\"},\"lastname\":{\"description\":\"Last name that appears in certificate pdf\",\"type\":\"string\"},\"ptin\":{\"description\":\"ptin that appears in certificate pdf. A special field that can be used for showing user input, like a professional registration number, etc (available in Learning Center plans or higher)\",\"type\":\"string\"}},\"required\":[\"firstname\",\"lastname\",\"ptin\"],\"type\":\"object\"},\"issued\":{\"description\":\"Date the certificate was created, in UNIX timestamp format\",\"format\":\"float\",\"type\":\"number\"}},\"required\":[\"issued\",\"form\"],\"type\":\"object\"}}},\"description\":\"Request input should include \\\"issued\\\" or \\\"form\\\" keys\"},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{},\"schema\":{\"examples\":[{\"attempts\":2,\"course_id\":\"the-complete-nightmare-guide\",\"external_url\":null,\"form\":{\"firstname\":\"Jon\",\"lastname\":\"Doe\",\"ptin\":\"3456\"},\"id\":\"5a74574343c90be4158b456a\",\"issued\":1517573955.484916,\"provider\":\"LearnWorlds\",\"score\":\"OK\",\"short_url\":\"https://goo.gl/cFJZhw\",\"status\":\"active\",\"title\":\"Certificate of completion\",\"type\":\"completion\",\"user\":{\"email\":\"gatuso@learnworlds.com\",\"id\":\"5a65a41e43c90b93098b4590\"}}],\"properties\":{\"attempts\":{\"description\":\"Number of attempts\",\"format\":\"float\",\"type\":\"integer\"},\"course_id\":{\"description\":\"Unique identifier of the course\",\"type\":\"string\"},\"external_url\":{\"description\":\"External URL of the certificate; null if provider is LearnWorlds\",\"type\":[\"string\",\"null\"]},\"form\":{\"description\":\"Form data of the certificate\",\"properties\":{\"firstname\":{\"description\":\"First name that appears in certificate pdf\",\"type\":\"string\"},\"lastname\":{\"description\":\"Last name that appears in certificate pdf\",\"type\":\"string\"},\"ptin\":{\"description\":\"ptin that appears in certificate pdf. A special field that can be used for showing user input, like a professional registration number, etc (available in Learning Center plans or higher)\",\"type\":\"string\"}},\"type\":[\"object\",\"null\"]},\"id\":{\"description\":\"Unique identifier of the certificate\",\"type\":\"string\"},\"issued\":{\"description\":\"Date the certification was issued, in Unix timestamp format\",\"format\":\"float\",\"type\":\"number\"},\"provider\":{\"description\":\"Provider of the certificate\",\"enum\":[\"LearnWorlds\",\"Accredible\",\"Credly\"],\"type\":\"string\"},\"score\":{\"description\":\"Score of the certificate\",\"type\":\"string\"},\"short_url\":{\"description\":\"Short URL of the certificate\",\"type\":[\"string\",\"null\"]},\"status\":{\"description\":\"Status of the certificate\",\"enum\":[\"active\",\"deleted\"],\"type\":\"string\"},\"title\":{\"description\":\"Title of the certificate\",\"type\":\"string\"},\"type\":{\"description\":\"Type of the certificate\",\"enum\":[\"completion\",\"certificate\"],\"type\":\"string\"},\"user\":{\"description\":\"User related data\",\"properties\":{\"email\":{\"description\":\"Email of the user\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier of the user\",\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "PUT"
+          orig: "/v2/certificates/{id}"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "certificates"
+            }
+            {
+              var: "id"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

@@ -1,5 +1,6 @@
 
-import { cmp, each, Content, canonToType, File, isAuthActive, entityIdField, opRequestShape, safeVarName } from '@voxgig/sdkgen'
+import { cmp, each, Content, canonToType, File, isAuthActive, isHttpBasicAuth, entityIdField, entityActions, opRequestShape, safeVarName, exampleVarName, jsKey, matchArg, idLiteral } from '@voxgig/sdkgen'
+import { ReadmeRefFeatures } from '@voxgig/sdkgen'
 
 import {
   KIT,
@@ -7,6 +8,17 @@ import {
 } from '@voxgig/apidef'
 
 import { exampleValue } from './utility_ts'
+
+
+// A `list()` on a NESTED entity needs its parent path params. The
+// quickstart used to emit `client.Moon().list()` for an entity at
+// `/planet/{planet_id}/moon`, which 404s against a live server from a
+// half-built URL — indistinguishable from "no such record". The model
+// already marks those params `reqd: true`; matchArg renders exactly them.
+function listMatchArg(ent: any): string {
+  const idF = entityIdField(ent)
+  return matchArg('ts', ent, 'list', idF, idLiteral(ent, 'list', idF))
+}
 
 
 const OP_SIGNATURES: Record<string, { sig: string, returns: string, desc: string }> = {
@@ -72,7 +84,7 @@ Create a new SDK client instance.
 | Name | Type | Description |
 | --- | --- | --- |
 | \`options\` | \`object\` | SDK configuration options. |
-${isAuthActive(model) ? '| \`options.apikey\` | \`string\` | API key for authentication. |\n' : ''}| \`options.base\` | \`string\` | Base URL for API requests. |
+${isAuthActive(model) ? '| \`options.apikey\` | \`string\` | API key for authentication. |\n' : ''}${isAuthActive(model) && isHttpBasicAuth(model) ? '| \`options.secret\` | \`string\` | API secret for authentication. |\n' : ''}| \`options.base\` | \`string\` | Base URL for API requests. |
 | \`options.prefix\` | \`string\` | URL prefix appended after base. |
 | \`options.suffix\` | \`string\` | URL suffix appended after path. |
 | \`options.headers\` | \`object\` | Custom headers for all requests. |
@@ -185,7 +197,7 @@ Alias for \`${model.Name}SDK.test()\`.
       // which case load/remove match on no argument and update omits the id.
       const idF = entityIdField(ent)
       // Variable-safe lowercase name (a `Delete` entity must not bind `delete`).
-      const eVar = safeVarName(ent.name, target.name)
+      const eVar = exampleVarName(ent.name, target.name)
 
       Content(`
 ---
@@ -254,6 +266,45 @@ const ${eVar} = client.${ent.Name}()
       }
 
 
+      // Custom actions.
+      //
+      // A POST route like `/api/planet/{id}/terraform` is folded into the
+      // `create` op as an alternative point, selected at call time by
+      // `$action`. The mechanism was implemented and documented NOWHERE — so
+      // for an API with two such routes, two of its six endpoints were
+      // unreachable by anyone reading the docs. A user who wanted `terraform`
+      // had to fall back to `direct()` and rebuild the URL by hand, which is
+      // exactly what the entity model exists to spare them.
+      const actions = entityActions(ent)
+      if (0 < actions.length) {
+        Content(`### Actions
+
+This entity exposes custom API actions in addition to the standard
+operations. Select one with \`$action\` in the call's argument; the
+remaining keys are sent as that action's payload.
+
+| Action | Route | Call |
+| --- | --- | --- |
+`)
+        actions.forEach((a: any) => {
+          Content(`| \`${a.action}\` | \`${a.path}\` | \`client.${ent.Name}().${a.op}({ $action: '${a.action}', ... })\` |
+`)
+        })
+
+        Content(`
+An action returns that action's OWN response, which is not necessarily a
+${ent.Name} record — check the API definition for its shape.
+
+\`\`\`ts
+const result = await client.${ent.Name}().${actions[0].op}({
+  $action: '${actions[0].action}',
+  /* ...the action's own arguments */
+})
+\`\`\`
+
+`)
+      }
+
       // Operation details
       if (opnames.length > 0) {
         Content(`### Operations
@@ -281,7 +332,7 @@ ${info.desc}
                 (a.name === idF ? 0 : 1) - (b.name === idF ? 0 : 1))
             const arg = 0 < matchItems.length
               ? `{ ${matchItems.map((it: any) =>
-                `${it.name}: ${exampleValue(ent, ent.op && ent.op[opname], it.name,
+                `${jsKey(it.name)}: ${exampleValue(ent, ent.op && ent.op[opname], it.name,
                   it.name === idF ? ent.name + '_id' : it.name)}`).join(', ')} }`
               : ''
             Content(`\`\`\`ts
@@ -292,7 +343,7 @@ const result = await client.${ent.Name}().${opname}(${arg})
           }
           else if ('list' === opname) {
             Content(`\`\`\`ts
-const results = await client.${ent.Name}().${opname}()
+const results = await client.${ent.Name}().${opname}(${listMatchArg(ent)})
 \`\`\`
 
 `)
@@ -308,7 +359,7 @@ const results = await client.${ent.Name}().${opname}()
 const result = await client.${ent.Name}().create({
 `)
             createItems.map((it: any) => {
-              Content(`  ${it.name}: ${exampleValue(ent, ent.op && ent.op.create, it.name, 'example_' + it.name)},
+              Content(`  ${jsKey(it.name)}: ${exampleValue(ent, ent.op && ent.op.create, it.name, 'example_' + it.name)},
 `)
             })
             Content(`})
@@ -324,7 +375,7 @@ const result = await client.${ent.Name}().create({
               .sort((a: any, b: any) =>
                 (a.name === idF ? 0 : 1) - (b.name === idF ? 0 : 1))
             const updateLines = updateItems.map((it: any) =>
-              `  ${it.name}: ${exampleValue(ent, ent.op && ent.op.update, it.name,
+              `  ${jsKey(it.name)}: ${exampleValue(ent, ent.op && ent.op.update, it.name,
                 it.name === idF ? ent.name + '_id' : it.name)},\n`).join('')
             Content(`\`\`\`ts
 const result = await client.${ent.Name}().update({
@@ -404,6 +455,10 @@ const client = new ${model.Name}SDK({
 \`\`\`
 
 `)
+      // The shared feature reference: options, defaults, usage and the
+      // considerations. Model facts, identical in every target, so they are
+      // written once in cmp/ReadmeRefFeatures.ts rather than here.
+      ReadmeRefFeatures({ target })
     }
 
   })

@@ -39,14 +39,15 @@ class UserGroupEntity extends LearnworldsEntityBase<UserGroup> {
 
 
 
-  async load(this: any, reqmatch?: UserGroupLoadMatch, ctrl?: Control): Promise<UserGroup> {
+  async load(this: any, reqmatch?: UserGroupLoadMatch, ctrl?: Control): Promise<UserGroupEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -130,7 +131,15 @@ class UserGroupEntity extends LearnworldsEntityBase<UserGroup> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
 
@@ -152,14 +161,15 @@ class UserGroupEntity extends LearnworldsEntityBase<UserGroup> {
 
 
 
-  async list(this: any, reqmatch?: UserGroupListMatch, ctrl?: Control): Promise<UserGroup[]> {
+  async list(this: any, reqmatch?: UserGroupListMatch, ctrl?: Control): Promise<UserGroupEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -261,13 +271,14 @@ class UserGroupEntity extends LearnworldsEntityBase<UserGroup> {
 
 
 
-  async create(this: any, reqdata?: UserGroupCreateData, ctrl?: Control): Promise<UserGroup> {
+  async create(this: any, reqdata?: UserGroupCreateData, ctrl?: Control): Promise<UserGroupEntity> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -347,7 +358,15 @@ class UserGroupEntity extends LearnworldsEntityBase<UserGroup> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
 
@@ -369,14 +388,15 @@ class UserGroupEntity extends LearnworldsEntityBase<UserGroup> {
 
 
 
-  async update(this: any, reqdata?: UserGroupUpdateData, ctrl?: Control): Promise<UserGroup> {
+  async update(this: any, reqdata?: UserGroupUpdateData, ctrl?: Control): Promise<UserGroupEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -461,7 +481,15 @@ class UserGroupEntity extends LearnworldsEntityBase<UserGroup> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
 

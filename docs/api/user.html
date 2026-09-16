@@ -1,0 +1,5986 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>User | API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/learnworlds-sdk">voxgig-sdk/learnworlds-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">API</a></details>
+<details open><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/active.html">Active</a>
+<a href="../api/affiliate.html">Affiliate</a>
+<a href="../api/assessment.html">Assessment</a>
+<a href="../api/bundle.html">Bundle</a>
+<a href="../api/by_product.html">ByProduct</a>
+<a href="../api/by_segment.html">BySegment</a>
+<a href="../api/calendar.html">Calendar</a>
+<a href="../api/certificate.html">Certificate</a>
+<a href="../api/community.html">Community</a>
+<a href="../api/community_post.html">CommunityPost</a>
+<a href="../api/community_space.html">CommunitySpace</a>
+<a href="../api/completed.html">Completed</a>
+<a href="../api/coupon.html">Coupon</a>
+<a href="../api/coupon_usage.html">CouponUsage</a>
+<a href="../api/course.html">Course</a>
+<a href="../api/course_analytics.html">CourseAnalytics</a>
+<a href="../api/course_content.html">CourseContent</a>
+<a href="../api/due.html">Due</a>
+<a href="../api/event.html">Event</a>
+<a href="../api/event_log.html">EventLog</a>
+<a href="../api/form.html">Form</a>
+<a href="../api/installment.html">Installment</a>
+<a href="../api/lead.html">Lead</a>
+<a href="../api/multiple_seat.html">MultipleSeat</a>
+<a href="../api/payment.html">Payment</a>
+<a href="../api/post.html">Post</a>
+<a href="../api/promotion.html">Promotion</a>
+<a href="../api/reporting.html">Reporting</a>
+<a href="../api/score.html">Score</a>
+<a href="../api/seat.html">Seat</a>
+<a href="../api/segment.html">Segment</a>
+<a href="../api/space.html">Space</a>
+<a href="../api/subscription_plan.html">SubscriptionPlan</a>
+<a href="../api/unit.html">Unit</a>
+<a href="../api/unit_analytics.html">UnitAnalytics</a>
+<a href="../api/upcoming.html">Upcoming</a>
+<a href="../api/update_user_progress.html">UpdateUserProgress</a>
+<a aria-current="page" href="../api/user.html">User</a><div class="nav-sections"><a class="nav-section" href="#post-v2user_groupsidusersuid">POST /v2/user_groups/{id}/users/{uid}</a>
+<a class="nav-section" href="#post-v2usersidenrollment">POST /v2/users/{id}/enrollment</a>
+<a class="nav-section" href="#post-v2assessmentsscoresidreview">POST /v2/assessments/scores/{id}/review</a>
+<a class="nav-section" href="#post-v2users">POST /v2/users</a>
+<a class="nav-section" href="#get-v2users">GET /v2/users</a>
+<a class="nav-section" href="#get-v2usersby-product">GET /v2/users/by-product</a>
+<a class="nav-section" href="#get-v2seatsidusers">GET /v2/seats/{id}/users</a>
+<a class="nav-section" href="#get-v2usersby-segment">GET /v2/users/by-segment</a>
+<a class="nav-section" href="#get-v2usersidcourses">GET /v2/users/{id}/courses</a>
+<a class="nav-section" href="#get-v2user_groupsidusers">GET /v2/user_groups/{id}/users</a>
+<a class="nav-section" href="#get-v2usersidproducts">GET /v2/users/{id}/products</a>
+<a class="nav-section" href="#get-v2userssegments">GET /v2/users/segments</a>
+<a class="nav-section" href="#get-v2usersid">GET /v2/users/{id}</a>
+<a class="nav-section" href="#get-v2usersidseats">GET /v2/users/{id}/seats</a>
+<a class="nav-section" href="#delete-v2user_groupsidusersuid">DELETE /v2/user_groups/{id}/users/{uid}</a>
+<a class="nav-section" href="#delete-v2usersidenrollment">DELETE /v2/users/{id}/enrollment</a>
+<a class="nav-section" href="#put-v2usersid">PUT /v2/users/{id}</a>
+<a class="nav-section" href="#put-v2usersidsuspend">PUT /v2/users/{id}/suspend</a>
+<a class="nav-section" href="#put-v2usersidtags">PUT /v2/users/{id}/tags</a>
+<a class="nav-section" href="#put-v2usersidunsuspend">PUT /v2/users/{id}/unsuspend</a></div>
+<a href="../api/user_group.html">UserGroup</a>
+<a href="../api/user_progress.html">UserProgress</a>
+<a href="../api/user_role.html">UserRole</a>
+<a href="../api/user_subscription.html">UserSubscription</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="../sdks/seneca-provider.html">Seneca Provider</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="user">User</h1>
+<h2 id="operations">Operations</h2>
+<p>Every route this entity exposes. Each route links to its own reference on this page.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>SDK operation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-v2user_groupsidusersuid"><code>/v2/user_groups/{id}/users/{uid}</code></a></td>
+<td><code>create</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-v2usersidenrollment"><code>/v2/users/{id}/enrollment</code></a></td>
+<td><code>create</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-v2assessmentsscoresidreview"><code>/v2/assessments/scores/{id}/review</code></a></td>
+<td><code>create</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-v2users"><code>/v2/users</code></a></td>
+<td><code>create</code></td>
+<td>Created</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2users"><code>/v2/users</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2usersby-product"><code>/v2/users/by-product</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2seatsidusers"><code>/v2/seats/{id}/users</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2usersby-segment"><code>/v2/users/by-segment</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2usersidcourses"><code>/v2/users/{id}/courses</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2user_groupsidusers"><code>/v2/user_groups/{id}/users</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2usersidproducts"><code>/v2/users/{id}/products</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2userssegments"><code>/v2/users/segments</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2usersid"><code>/v2/users/{id}</code></a></td>
+<td><code>load</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2usersidseats"><code>/v2/users/{id}/seats</code></a></td>
+<td><code>load</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-v2user_groupsidusersuid"><code>/v2/user_groups/{id}/users/{uid}</code></a></td>
+<td><code>remove</code></td>
+<td>No Content</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><a href="#delete-v2usersidenrollment"><code>/v2/users/{id}/enrollment</code></a></td>
+<td><code>remove</code></td>
+<td>No Content</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><a href="#put-v2usersid"><code>/v2/users/{id}</code></a></td>
+<td><code>update</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><a href="#put-v2usersidsuspend"><code>/v2/users/{id}/suspend</code></a></td>
+<td><code>update</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><a href="#put-v2usersidtags"><code>/v2/users/{id}/tags</code></a></td>
+<td><code>update</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><a href="#put-v2usersidunsuspend"><code>/v2/users/{id}/unsuspend</code></a></td>
+<td><code>update</code></td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>action</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>The exact action to be performed with the aforementioned tags to the specified user; 'attach' is the indication to add these tags to the user and 'detach' is the indication to remove them from the user.</td>
+</tr>
+<tr>
+<td><code>active</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>True or false whether user is active in seat offering</td>
+</tr>
+<tr>
+<td><code>answers</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>Related answers data</td>
+</tr>
+<tr>
+<td><code>billing_info</code></td>
+<td><code>one,object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>course</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>Description of the segment</td>
+</tr>
+<tr>
+<td><code>duration</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td>Duration of the product.</td>
+</tr>
+<tr>
+<td><code>duration_type</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Duration type of the product.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>eu_customer</code></td>
+<td><code>one,boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>expires</code></td>
+<td><code>one,null,number</code></td>
+<td>No</td>
+<td>Date the enrollment expires, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School.</td>
+</tr>
+<tr>
+<td><code>generalFeedback</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>General feedback for a submission</td>
+</tr>
+<tr>
+<td><code>got_seat_on</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date user was added to the seat offering, in UNIX timestamp</td>
+</tr>
+<tr>
+<td><code>grade</code></td>
+<td><code>one,number,null</code></td>
+<td>No</td>
+<td>The grade that corresponds to the responses provided by the user</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>justification</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>Any justification/note for the enrollment</td>
+</tr>
+<tr>
+<td><code>last_login</code></td>
+<td><code>one,null,number</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the submission was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the segment</td>
+</tr>
+<tr>
+<td><code>nps_comment</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>nps_score</code></td>
+<td><code>one,integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user.</td>
+</tr>
+<tr>
+<td><code>passed</code></td>
+<td><code>one,boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether or not the assessment result was passed or failed</td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Password of the user</td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td><code>number</code></td>
+<td>Yes</td>
+<td>Price of the product</td>
+</tr>
+<tr>
+<td><code>productId</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the product</td>
+</tr>
+<tr>
+<td><code>productType</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Type of the product</td>
+</tr>
+<tr>
+<td><code>referrer_id</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>send_enrollment_email</code></td>
+<td><code>one,boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user should receive the enrollment email; true if she should receive the email, false if she should not.</td>
+</tr>
+<tr>
+<td><code>send_registration_email</code></td>
+<td><code>one,boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user will receive the registration emails; true if she should receive the emails, false if she should not.</td>
+</tr>
+<tr>
+<td><code>signup_approval_status</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>signup_validation_rules</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether validation rules should be applied; default value equals to false, which means that validation rules should not be applied.</td>
+</tr>
+<tr>
+<td><code>submittedTimestamp</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the submission was finished (submitted), in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>subscribed_for_marketing_emails</code></td>
+<td><code>one,boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>success</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the action of the enrollment was successful; true if it was successful, or false if it was not.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title of the seat offering.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Type of the product</td>
+</tr>
+<tr>
+<td><code>user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user who submitted the responses</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+</tbody>
+</table>
+<h2 id="create">create</h2>
+<h3 id="post-v2user_groupsidusersuid" class="operation" data-method="post"><code>POST</code> /v2/user_groups/{id}/users/{uid}</h3>
+<p>Operation ID: <code>post-v2-groups-id-users-uid</code>.</p>
+<h4 id="parameters">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the user group |
+| <code>uid</code> | <code>path</code> | <code>string</code> | Yes | User Id or email (encoded string) |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="responses">Responses</h4>
+<h5 id="200-ok" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>success</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-v2usersidenrollment" class="operation" data-method="post"><code>POST</code> /v2/users/{id}/enrollment</h3>
+<p>Operation ID: <code>post-users-id-product-enrollment-pid</code>.</p>
+<h4 id="parameters-1">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | User Id or email (encoded string) |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="request-body">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>duration</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td>Duration of the product. This field is applicable only for subscriptions</td>
+</tr>
+<tr>
+<td><code>duration_type</code></td>
+<td><code>enum: months, weeks, days</code></td>
+<td>No</td>
+<td>Duration type of the product. This field is applicable only for subscriptions</td>
+</tr>
+<tr>
+<td><code>justification</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Any justification/note for the enrollment</td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td><code>number (float)</code></td>
+<td>Yes</td>
+<td>Price of the product</td>
+</tr>
+<tr>
+<td><code>productId</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the product</td>
+</tr>
+<tr>
+<td><code>productType</code></td>
+<td><code>enum: course, bundle, subscription</code></td>
+<td>Yes</td>
+<td>Type of the product</td>
+</tr>
+<tr>
+<td><code>send_enrollment_email</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user should receive the enrollment email; true if she should receive the email, false if she should not.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-1">Responses</h4>
+<h5 id="200-ok-1" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>success</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the action of the enrollment was successful; true if it was successful, or false if it was not.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-v2assessmentsscoresidreview" class="operation" data-method="post"><code>POST</code> /v2/assessments/scores/{id}/review</h3>
+<p>Operation ID: <code>review-assessment-submission</code>.</p>
+<h4 id="parameters-2">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the score |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| `` | <code>query</code> | <code>string</code> | No |  |</p>
+<h4 id="request-body-1">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>answers</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>An array of submittable blocks with grade and feedback</td>
+</tr>
+<tr>
+<td><code>answers[].blockId</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The id of the block</td>
+</tr>
+<tr>
+<td><code>answers[].feedback</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The feedback to set for the specific block</td>
+</tr>
+<tr>
+<td><code>answers[].grade</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td>The grade to set for teacher gradable blocks</td>
+</tr>
+<tr>
+<td><code>generalFeedback</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The general feedback for the submission</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-2">Responses</h4>
+<h5 id="200-ok-2" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>answers</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Related answers data</td>
+</tr>
+<tr>
+<td><code>answers[].answer</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The text content of the user's answer for this question block</td>
+</tr>
+<tr>
+<td><code>answers[].answerData</code></td>
+<td><code>array,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>answers[].blockId</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the question block inside the assessment</td>
+</tr>
+<tr>
+<td><code>answers[].blockMaxScore</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td>The maximum points an answer can gather for this question block</td>
+</tr>
+<tr>
+<td><code>answers[].blockType</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The type of the question block inside the assessment</td>
+</tr>
+<tr>
+<td><code>answers[].description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The text content of the question block</td>
+</tr>
+<tr>
+<td><code>answers[].feedback</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Feedback for an answer</td>
+</tr>
+<tr>
+<td><code>answers[].points</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td>The points for the user's answer for this question block</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the submission was created (started), in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user who submitted the responses</td>
+</tr>
+<tr>
+<td><code>generalFeedback</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>General feedback for a submission</td>
+</tr>
+<tr>
+<td><code>grade</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td>The grade that corresponds to the responses provided by the user</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the submission of responses by the user specified by the user id</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the submission was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>passed</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether or not the assessment result was passed or failed</td>
+</tr>
+<tr>
+<td><code>submittedTimestamp</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the submission was finished (submitted), in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user who submitted the responses</td>
+</tr>
+</tbody>
+</table>
+<h3 id="post-v2users" class="operation" data-method="post"><code>POST</code> /v2/users</h3>
+<p>Operation ID: <code>post-users</code>.</p>
+<h4 id="parameters-3">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="request-body-2">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Password of the user</td>
+</tr>
+<tr>
+<td><code>send_registration_email</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user will receive the registration emails; true if she should receive the emails, false if she should not.</td>
+</tr>
+<tr>
+<td><code>signup_validation_rules</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether validation rules should be applied; default value equals to false, which means that validation rules should not be applied.</td>
+</tr>
+<tr>
+<td><code>subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>utms.fc_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>utms.fc_landing</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>utms.fc_referrer</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_campaign</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_content</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_medium</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_source</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_term</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>utms.lc_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>utms.lc_landing</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>utms.lc_referrer</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_campaign</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_content</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_medium</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_source</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_term</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-3">Responses</h4>
+<h5 id="201-created" class="status" data-status="2xx">201: Created</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+</tbody>
+</table>
+<h2 id="list">list</h2>
+<h3 id="get-v2users" class="operation" data-method="get"><code>GET</code> /v2/users</h3>
+<p>Operation ID: <code>get-users</code>.</p>
+<h4 id="parameters-4">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>registration_after</code> | <code>query</code> | <code>number</code> | No | Filter by registration after the given datetime (expected in UNIX timestamp format) |
+| <code>status</code> | <code>query</code> | <code>enum: paying, non_paying, suspended, never_logged_in</code> | No | Filter by user status |
+| <code>role</code> | <code>query</code> | <code>enum: user, admin, instructor, reporter</code> | No | Filter by user role |
+| <code>tags</code> | <code>query</code> | <code>string</code> | No | Filter by tags. For several tag values, a comma separated string can be provided. |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |
+| <code>cf_$field_name</code> | <code>query</code> | <code>string</code> | No | Filter by custom field. All custom fields start with the cf_ prefix; the &quot;$field_name&quot; part should be replaced by the name of the corresponding custom field. Also, it is possible to use more than one custom fields as filters, using the aforementioned convention. |
+| <code>registration_before</code> | <code>query</code> | <code>number</code> | No | Filter by registration before the given datetime (expected in UNIX timestamp format) |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>items_per_page</code> | <code>query</code> | <code>integer</code> | No | Filter by the items per page number |
+| <code>include_suspended</code> | <code>query</code> | <code>enum: true, flase</code> | No | Filter by include_suspended flag. The default value is false. |</p>
+<h4 id="responses-4">Responses</h4>
+<h5 id="200-ok-3" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>data[].eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>data[].fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>data[].fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>data[].fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>data[].fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>data[].fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>data[].fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>data[].fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>data[].fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>data[].fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>data[].fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>data[].fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>data[].fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>data[].is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>data[].nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>data[].referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>data[].role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>data[].role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>data[].signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>data[].subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>data[].tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>data[].username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>data[].utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2usersby-product" class="operation" data-method="get"><code>GET</code> /v2/users/by-product</h3>
+<p>Operation ID: <code>get-users-by-product</code>.</p>
+<h4 id="parameters-5">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>product_id</code> | <code>query</code> | <code>string</code> | Yes | Filter by product title Id |
+| <code>product_type</code> | <code>query</code> | <code>enum: course, bundle, subscription</code> | Yes | Filter by product type |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |</p>
+<h4 id="responses-5">Responses</h4>
+<h5 id="200-ok-4" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>data[].eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>data[].fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>data[].fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>data[].fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>data[].fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>data[].fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>data[].fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>data[].fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>data[].fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>data[].fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>data[].fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>data[].fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>data[].fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>data[].is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>data[].nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>data[].referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>data[].role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>data[].role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>data[].signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>data[].subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>data[].tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>data[].username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>data[].utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2seatsidusers" class="operation" data-method="get"><code>GET</code> /v2/seats/{id}/users</h3>
+<p>Operation ID: <code>get-v2-seats-:id-users</code>.</p>
+<h4 id="parameters-6">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the seat offering. |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | No | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | No | The school Client ID |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |</p>
+<h4 id="responses-6">Responses</h4>
+<h5 id="200-ok-5" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>[].email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>[].eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>[].fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>[].fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>[].fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>[].fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>[].fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>[].fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>[].fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>[].fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>[].fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>[].fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>[].fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>[].fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>[].fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>[].fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>[].fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>[].fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>[].fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>[].fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>[].fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>[].fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>[].is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>[].is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>[].is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>[].is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>[].is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>[].last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>[].nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>[].nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>[].referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>[].role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>[].role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>[].role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>[].signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>[].subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>[].tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>[].username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>[].utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2usersby-segment" class="operation" data-method="get"><code>GET</code> /v2/users/by-segment</h3>
+<p>Operation ID: <code>get-users-by-segment</code>.</p>
+<h4 id="parameters-7">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>segment_id</code> | <code>query</code> | <code>string</code> | Yes | Filter by segment id |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, no results will be returned |</p>
+<h4 id="responses-7">Responses</h4>
+<h5 id="200-ok-6" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>data[].eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>data[].fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>data[].fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>data[].fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>data[].fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>data[].fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>data[].fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>data[].fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>data[].fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>data[].fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>data[].fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>data[].fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>data[].fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>data[].is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>data[].nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>data[].referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>data[].role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>data[].role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>data[].signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>data[].subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>data[].tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>data[].username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>data[].utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2usersidcourses" class="operation" data-method="get"><code>GET</code> /v2/users/{id}/courses</h3>
+<p>Operation ID: <code>get-users-id-courses</code>.</p>
+<h4 id="parameters-8">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | User Id or email (encoded string) |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |</p>
+<h4 id="responses-8">Responses</h4>
+<h5 id="200-ok-7" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].course</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].course.access</code></td>
+<td><code>enum: paid, free, coming_soon, enrollment_closed, private, draft</code></td>
+<td>No</td>
+<td>Access type of course</td>
+</tr>
+<tr>
+<td><code>data[].course.afterPurchase</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation settings for this course</td>
+</tr>
+<tr>
+<td><code>data[].course.afterPurchase.settings</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation URL for this course, leading to a school page or a given URL</td>
+</tr>
+<tr>
+<td><code>data[].course.afterPurchase.settings.page</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Navigation to a specific school page</td>
+</tr>
+<tr>
+<td><code>data[].course.afterPurchase.settings.url</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Navigation to a specific URL</td>
+</tr>
+<tr>
+<td><code>data[].course.afterPurchase.type</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Type of the after purchase navigation</td>
+</tr>
+<tr>
+<td><code>data[].course.author</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Information about the course author</td>
+</tr>
+<tr>
+<td><code>data[].course.author.image</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course author avatar (full URL)</td>
+</tr>
+<tr>
+<td><code>data[].course.author.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course author name</td>
+</tr>
+<tr>
+<td><code>data[].course.categories</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>Categories this course belongs in</td>
+</tr>
+<tr>
+<td><code>data[].course.courseImage</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Course image (full URL)</td>
+</tr>
+<tr>
+<td><code>data[].course.created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the course was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].course.description</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Description of the course</td>
+</tr>
+<tr>
+<td><code>data[].course.discount_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Discount price of the course</td>
+</tr>
+<tr>
+<td><code>data[].course.dripFeed</code></td>
+<td><code>enum: date, days, none</code></td>
+<td>No</td>
+<td>Course setting for scheduled course delivery (drip feed); none refers to drip feed not being enabled.</td>
+</tr>
+<tr>
+<td><code>data[].course.expires</code></td>
+<td><code>null,integer</code></td>
+<td>No</td>
+<td>Expiration timeframe value, defines the expiration timeframe, together with the type / unit in the &quot;expiresType&quot; field.</td>
+</tr>
+<tr>
+<td><code>data[].course.expiresType</code></td>
+<td><code>enum: days, weeks, months</code></td>
+<td>No</td>
+<td>Expiration timeframe type / unit, defines the expiration timeframe, together with the actual value in the &quot;expires&quot; field.</td>
+</tr>
+<tr>
+<td><code>data[].course.final_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Final price of the course</td>
+</tr>
+<tr>
+<td><code>data[].course.id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course</td>
+</tr>
+<tr>
+<td><code>data[].course.identifiers</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Course identifiers for in app purchases.</td>
+</tr>
+<tr>
+<td><code>data[].course.identifiers.apple_store_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course in apple store</td>
+</tr>
+<tr>
+<td><code>data[].course.identifiers.google_store_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course in google store</td>
+</tr>
+<tr>
+<td><code>data[].course.label</code></td>
+<td><code>null,string</code></td>
+<td>No</td>
+<td>Label of the course</td>
+</tr>
+<tr>
+<td><code>data[].course.modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the course was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].course.original_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Original price of the course</td>
+</tr>
+<tr>
+<td><code>data[].course.title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title of the course</td>
+</tr>
+<tr>
+<td><code>data[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the enrollment was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].expires</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date the enrollment expires, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2user_groupsidusers" class="operation" data-method="get"><code>GET</code> /v2/user_groups/{id}/users</h3>
+<p>Operation ID: <code>get-v2-user_groups-id-users</code>.</p>
+<h4 id="parameters-9">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the user group |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | No | Unique identifier of the seat offering. |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | No | The school Client ID |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |</p>
+<h4 id="responses-9">Responses</h4>
+<h5 id="200-ok-8" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[].billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>[].email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>[].eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>[].fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>[].fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>[].fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>[].fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>[].fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>[].fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>[].fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>[].fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>[].fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>[].fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>[].fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>[].fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>[].fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>[].fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>[].fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>[].fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>[].fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>[].fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>[].fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>[].fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>[].is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>[].is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>[].is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>[].is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>[].is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>[].last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>[].nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>[].nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>[].referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>[].role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>[].role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>[].role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>[].signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>[].subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>[].tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>[].username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>[].utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>[].utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>[].utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2usersidproducts" class="operation" data-method="get"><code>GET</code> /v2/users/{id}/products</h3>
+<p>Operation ID: <code>get-user-id-products</code>.</p>
+<h4 id="parameters-10">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | User id or email |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="responses-10">Responses</h4>
+<h5 id="200-ok-9" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the product</td>
+</tr>
+<tr>
+<td><code>data[].title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title of the product</td>
+</tr>
+<tr>
+<td><code>data[].type</code></td>
+<td><code>enum: course, bundle, subscription</code></td>
+<td>No</td>
+<td>Type of the product</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2userssegments" class="operation" data-method="get"><code>GET</code> /v2/users/segments</h3>
+<p>Operation ID: <code>get-school-segments</code>.</p>
+<h4 id="parameters-11">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="responses-11">Responses</h4>
+<h5 id="200-ok-10" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].description</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Description of the segment</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the segment</td>
+</tr>
+<tr>
+<td><code>data[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the segment</td>
+</tr>
+</tbody>
+</table>
+<h2 id="load">load</h2>
+<h3 id="get-v2usersid" class="operation" data-method="get"><code>GET</code> /v2/users/{id}</h3>
+<p>Operation ID: <code>get-users-id</code>.</p>
+<h4 id="parameters-12">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | User Id or email (encoded string) |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>include_suspended</code> | <code>query</code> | <code>enum: true, false</code> | No | Filter by include_suspended flag. The default value is false. |</p>
+<h4 id="responses-12">Responses</h4>
+<h5 id="200-ok-11" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2usersidseats" class="operation" data-method="get"><code>GET</code> /v2/users/{id}/seats</h3>
+<p>Operation ID: <code>get-v2-users-id-seats</code>.</p>
+<h4 id="parameters-13">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | User Id or email (encoded string) |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | No | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | No | The school Client ID |</p>
+<h4 id="responses-13">Responses</h4>
+<h5 id="200-ok-12" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<p>The response is <code>array,null</code>.</p>
+<h2 id="remove">remove</h2>
+<h3 id="delete-v2user_groupsidusersuid" class="operation" data-method="delete"><code>DELETE</code> /v2/user_groups/{id}/users/{uid}</h3>
+<p>Operation ID: <code>delete-v2-user_groups-id-users-uid</code>.</p>
+<h4 id="parameters-14">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the user group |
+| <code>uid</code> | <code>path</code> | <code>string</code> | Yes | User Id or email (encoded string) |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="responses-14">Responses</h4>
+<h5 id="204-no-content" class="status" data-status="2xx">204: No Content</h5>
+<h3 id="delete-v2usersidenrollment" class="operation" data-method="delete"><code>DELETE</code> /v2/users/{id}/enrollment</h3>
+<p>Operation ID: <code>delete-users-id-product-enrollment-pid</code>.</p>
+<h4 id="parameters-15">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | User Id or email (encoded string) |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="request-body-3">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>productId</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the product</td>
+</tr>
+<tr>
+<td><code>productType</code></td>
+<td><code>enum: course, bundle, subscription</code></td>
+<td>Yes</td>
+<td>Type of the product</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-15">Responses</h4>
+<h5 id="204-no-content-1" class="status" data-status="2xx">204: No Content</h5>
+<h2 id="update">update</h2>
+<h3 id="put-v2usersid" class="operation" data-method="put"><code>PUT</code> /v2/users/{id}</h3>
+<p>Operation ID: <code>put-users-id</code>.</p>
+<h4 id="parameters-16">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | User Id or email (encoded string) |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="request-body-4">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>The user Behance URL</td>
+</tr>
+<tr>
+<td><code>fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>signup_validation_rules</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether validation rules should be applied; default value equals to false, which means that validation rules should not be applied.</td>
+</tr>
+<tr>
+<td><code>subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>utms.fc_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>utms.fc_landing</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>utms.fc_referrer</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_campaign</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_content</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_medium</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_source</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_term</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>utms.lc_country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>utms.lc_landing</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>utms.lc_referrer</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_campaign</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_content</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_medium</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_source</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_term</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-16">Responses</h4>
+<h5 id="200-ok-13" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+</tbody>
+</table>
+<h3 id="put-v2usersidsuspend" class="operation" data-method="put"><code>PUT</code> /v2/users/{id}/suspend</h3>
+<p>Operation ID: <code>put-users-id-suspend</code>.</p>
+<h4 id="parameters-17">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | User id or email (encoded string) |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="responses-17">Responses</h4>
+<h5 id="200-ok-14" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+</tbody>
+</table>
+<h3 id="put-v2usersidtags" class="operation" data-method="put"><code>PUT</code> /v2/users/{id}/tags</h3>
+<p>Operation ID: <code>put-users-id-tags</code>.</p>
+<h4 id="parameters-18">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | User Id or email (encoded string) |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="request-body-5">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>action</code></td>
+<td><code>enum: attach, detach</code></td>
+<td>Yes</td>
+<td>The exact action to be performed with the aforementioned tags to the specified user; 'attach' is the indication to add these tags to the user and 'detach' is the indication to remove them from the user.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>array of string</code></td>
+<td>Yes</td>
+<td>Array of the tags of the user</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-18">Responses</h4>
+<h5 id="200-ok-15" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+</tbody>
+</table>
+<h3 id="put-v2usersidunsuspend" class="operation" data-method="put"><code>PUT</code> /v2/users/{id}/unsuspend</h3>
+<p>Operation ID: <code>put-users-id-unsuspend</code>.</p>
+<h4 id="parameters-19">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | User id or email (encoded string) |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="responses-19">Responses</h4>
+<h5 id="200-ok-16" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+</tbody>
+</table>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

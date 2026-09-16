@@ -5,16 +5,16 @@
         "applies_to_all": [],
         "bulk": false,
         "code": "s98",
-        "coupon": [],
+        "coupons": [],
         "created": 154,
-        "expire": "s9b",
+        "expires": "s9b",
         "id": "PROMOTION00",
         "modified": 157,
         "name": "s9e",
         "prefix": "s9f",
-        "product": [],
+        "products": [],
         "quantity": "sa1",
-        "times_used": "sa2",
+        "times_used": 162,
         "type": "sa3",
         "value": 164
       },
@@ -22,16 +22,16 @@
         "applies_to_all": [],
         "bulk": false,
         "code": "s12e",
-        "coupon": [],
+        "coupons": [],
         "created": 304,
-        "expire": "s131",
+        "expires": "s131",
         "id": "PROMOTION01",
         "modified": 307,
         "name": "s134",
         "prefix": "s135",
-        "product": [],
+        "products": [],
         "quantity": "s137",
-        "times_used": "s138",
+        "times_used": 312,
         "type": "s139",
         "value": 314
       },
@@ -39,16 +39,16 @@
         "applies_to_all": [],
         "bulk": false,
         "code": "s1c4",
-        "coupon": [],
+        "coupons": [],
         "created": 454,
-        "expire": "s1c7",
+        "expires": "s1c7",
         "id": "PROMOTION02",
         "modified": 457,
         "name": "s1ca",
         "prefix": "s1cb",
-        "product": [],
+        "products": [],
         "quantity": "s1cd",
-        "times_used": "s1ce",
+        "times_used": 462,
         "type": "s1cf",
         "value": 464
       }
@@ -60,17 +60,919 @@
         "applies_to_all": [],
         "bulk": false,
         "code": "s25a",
-        "coupon": [],
+        "coupons": [],
         "created": 604,
-        "expire": "s25d",
+        "expires": "s25d",
         "modified": 607,
         "name": "s260",
         "prefix": "s261",
-        "product": [],
+        "products": [],
         "quantity": "s263",
-        "times_used": "s264",
+        "times_used": 612,
         "type": "s265",
         "value": 614
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/promotions": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "post-promotions",
+        "parameters": [
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "Example": {
+                  "value": {
+                    "applies_to_all": [
+                      "bundles"
+                    ],
+                    "name": "my promo",
+                    "products": [
+                      {
+                        "id": "my-first-course",
+                        "type": "course"
+                      },
+                      {
+                        "id": "my-second-course",
+                        "type": "course"
+                      }
+                    ],
+                    "type": "percentage",
+                    "value": 20.5
+                  }
+                },
+                "Example [applies_to_all: none]": {
+                  "value": {
+                    "applies_to_all": [
+                      "none"
+                    ],
+                    "name": "my promo",
+                    "products": [
+                      {
+                        "id": "my-first-course",
+                        "type": "course"
+                      },
+                      {
+                        "id": "my-first-bundle",
+                        "type": "bundle"
+                      }
+                    ],
+                    "type": "percentage",
+                    "value": 20.5
+                  }
+                }
+              },
+              "schema": {
+                "description": "",
+                "properties": {
+                  "applies_to_all": {
+                    "description": "All courses and/or bundles that the promotion coupon will be applied to. None indicates that the coupon will not be applied to any course/bundle",
+                    "items": {
+                      "enum": [
+                        "bundles",
+                        "courses",
+                        "courses_bundles",
+                        "none"
+                      ],
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "name": {
+                    "description": "Promotion name",
+                    "type": "string"
+                  },
+                  "products": {
+                    "description": "Specific products that the promotion coupon will be applied to",
+                    "items": {
+                      "properties": {
+                        "id": {
+                          "description": "Product Id",
+                          "type": "string"
+                        },
+                        "type": {
+                          "description": "Product type",
+                          "enum": [
+                            "course",
+                            "bundle"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "type": {
+                    "default": "percentage",
+                    "description": "Discount type",
+                    "enum": [
+                      "percentage",
+                      "fixed"
+                    ],
+                    "type": "string"
+                  },
+                  "value": {
+                    "default": 0,
+                    "description": "Percentage or fixed amount of discount.",
+                    "format": "float",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "description": ""
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "applies_to_all": [
+                        "bundles"
+                      ],
+                      "coupons": [],
+                      "created": 1632913376.270253,
+                      "id": "615447e090c3ce7a00092772",
+                      "modified": 1632913376.270253,
+                      "name": "my promo",
+                      "products": [
+                        {
+                          "id": "my-first-course",
+                          "type": "course"
+                        },
+                        {
+                          "id": "my-second-course",
+                          "type": "course"
+                        }
+                      ],
+                      "type": "percentage",
+                      "value": 20.5
+                    }
+                  }
+                },
+                "schema": {
+                  "description": "",
+                  "properties": {
+                    "applies_to_all": {
+                      "description": "All courses and/or all bundles that promotion coupon will be applied to. None indicates that the coupon will not be applied to any courses/bundles",
+                      "items": {
+                        "enum": [
+                          "bundles",
+                          "courses",
+                          "courses_bundles",
+                          "none"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "coupons": {
+                      "description": "Promotion coupons. The array is empty for newly created promotion.",
+                      "items": {
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "created": {
+                      "description": "Date the promotion was created, in UNIX timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "id": {
+                      "description": "Promotion Id",
+                      "type": "string"
+                    },
+                    "modified": {
+                      "description": "Date the promotion was modified for the last time, in UNIX timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "name": {
+                      "description": "Promotion name",
+                      "type": "string"
+                    },
+                    "products": {
+                      "description": "Specific products that the promotion coupon will be applied to",
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "description": "Product Id",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "Product type",
+                            "enum": [
+                              "course",
+                              "bundle"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "type": {
+                      "description": "Discount type",
+                      "enum": [
+                        "percentage",
+                        "fixed"
+                      ],
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "Percentage or fixed amount of discount.",
+                      "format": "float",
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/promotions/{pid}/coupons": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-promotion-coupons",
+        "parameters": [
+          {
+            "description": "Promotion Id",
+            "in": "path",
+            "name": "pid",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "bulk": true,
+                          "code": "coup-ZFPVOG",
+                          "expires": "2023-10-28",
+                          "prefix": "coup",
+                          "quantity": 1,
+                          "times_used": 12
+                        },
+                        {
+                          "bulk": true,
+                          "code": "coup-ZFPVOE",
+                          "expires": "2023-10-28",
+                          "prefix": "coup",
+                          "quantity": 1,
+                          "times_used": 0
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "bulk": true,
+                            "code": "coup-ZFPVOG",
+                            "expires": "2020-10-28",
+                            "prefix": "coup",
+                            "quantity": 1,
+                            "times_used": 12
+                          }
+                        ],
+                        "properties": {
+                          "bulk": {
+                            "description": "Indication about whether there's a bulk set of codes created for this coupon.",
+                            "type": "boolean"
+                          },
+                          "code": {
+                            "description": "Coupon code",
+                            "type": "string"
+                          },
+                          "expires": {
+                            "description": "Coupon expiration date, in YYYY-MM-DD format",
+                            "example": "2021-06-17",
+                            "format": "date",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "prefix": {
+                            "description": "Coupon prefix",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "quantity": {
+                            "description": "Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "times_used": {
+                            "description": "Coupon number of times used.",
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/promotions": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-promotions",
+        "parameters": [
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "applies_to_all": [
+                            "bundles"
+                          ],
+                          "coupons": [
+                            {
+                              "bulk": true,
+                              "code": "coup-ZFPVOG",
+                              "expires": "2020-10-28",
+                              "prefix": "coup",
+                              "quantity": 1,
+                              "times_used": 12
+                            }
+                          ],
+                          "created": 1522913229.399585,
+                          "id": "615447e090c3ce7a00092772",
+                          "modified": 1522913229.399585,
+                          "name": "api promo",
+                          "products": [
+                            {
+                              "id": "my-course",
+                              "type": "course"
+                            }
+                          ],
+                          "type": "percentage",
+                          "value": 20
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 20,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "applies_to_all": [
+                              "bundles"
+                            ],
+                            "coupons": [
+                              {
+                                "bulk": true,
+                                "code": "coup-ZFPVOG",
+                                "expires": "2020-10-28",
+                                "prefix": "coup",
+                                "quantity": 1,
+                                "times_used": 12
+                              }
+                            ],
+                            "created": 1522913229.399585,
+                            "id": "615447e090c3ce7a00092772",
+                            "modified": 1522913229.399585,
+                            "name": "api promo",
+                            "products": [
+                              {
+                                "id": "my-course",
+                                "type": "course"
+                              }
+                            ],
+                            "type": "percentage",
+                            "value": 20
+                          }
+                        ],
+                        "properties": {
+                          "applies_to_all": {
+                            "description": "All courses and/or bundles that the promotion coupon will be applied to. None indicates that the coupon will not be applied to any course/bundle",
+                            "items": {
+                              "enum": [
+                                "bundles",
+                                "courses",
+                                "courses_bundles",
+                                "none"
+                              ],
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "coupons": {
+                            "description": "Promotion coupons",
+                            "items": {
+                              "description": "",
+                              "examples": [
+                                {
+                                  "bulk": true,
+                                  "code": "coup-ZFPVOG",
+                                  "expires": "2020-10-28",
+                                  "prefix": "coup",
+                                  "quantity": 1,
+                                  "times_used": 12
+                                }
+                              ],
+                              "properties": {
+                                "bulk": {
+                                  "description": "Indication about whether there's a bulk set of codes created for this coupon.",
+                                  "type": "boolean"
+                                },
+                                "code": {
+                                  "description": "Coupon code",
+                                  "type": "string"
+                                },
+                                "expires": {
+                                  "description": "Coupon expiration date, in YYYY-MM-DD format",
+                                  "example": "2021-06-17",
+                                  "format": "date",
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "prefix": {
+                                  "description": "Coupon prefix",
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "quantity": {
+                                  "description": "Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)",
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "times_used": {
+                                  "description": "Coupon number of times used.",
+                                  "type": "integer"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array",
+                            "uniqueItems": false
+                          },
+                          "created": {
+                            "description": "Date the promotion was created, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "id": {
+                            "description": "Unique identifier of the promotion",
+                            "type": "string"
+                          },
+                          "modified": {
+                            "description": "Date the promotion was modified for the last time, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "name": {
+                            "description": "Name of the promotion",
+                            "type": "string"
+                          },
+                          "products": {
+                            "description": "Specific products that the promotion coupon will be applied to",
+                            "items": {
+                              "properties": {
+                                "id": {
+                                  "description": "Unique identifier of the product",
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "description": "Type of the product",
+                                  "enum": [
+                                    "course",
+                                    "bundle"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "type": {
+                            "description": "Type of discount",
+                            "enum": [
+                              "percentage",
+                              "fixed"
+                            ],
+                            "type": "string"
+                          },
+                          "value": {
+                            "description": "Percentage or fixed amount of discount",
+                            "format": "float",
+                            "type": "number"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/promotions/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-promotions-id",
+        "parameters": [
+          {
+            "description": "Promotion Id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "applies_to_all": [
+                        "bundles"
+                      ],
+                      "coupons": [
+                        {
+                          "bulk": true,
+                          "code": "coup-ZFPVOG",
+                          "expires": "2020-10-28",
+                          "prefix": "coup",
+                          "quantity": 1,
+                          "times_used": 12
+                        }
+                      ],
+                      "created": 1522913229.399585,
+                      "id": "615447e090c3ce7a00092772",
+                      "modified": 1522913229.399585,
+                      "name": "api promo",
+                      "products": [
+                        {
+                          "id": "my-course",
+                          "type": "course"
+                        }
+                      ],
+                      "type": "percentage",
+                      "value": 20
+                    }
+                  }
+                },
+                "schema": {
+                  "description": "",
+                  "examples": [
+                    {
+                      "applies_to_all": [
+                        "bundles"
+                      ],
+                      "coupons": [
+                        {
+                          "bulk": true,
+                          "code": "coup-ZFPVOG",
+                          "expires": "2020-10-28",
+                          "prefix": "coup",
+                          "quantity": 1,
+                          "times_used": 12
+                        }
+                      ],
+                      "created": 1522913229.399585,
+                      "id": "615447e090c3ce7a00092772",
+                      "modified": 1522913229.399585,
+                      "name": "api promo",
+                      "products": [
+                        {
+                          "id": "my-course",
+                          "type": "course"
+                        }
+                      ],
+                      "type": "percentage",
+                      "value": 20
+                    }
+                  ],
+                  "properties": {
+                    "applies_to_all": {
+                      "description": "All courses and/or bundles that the promotion coupon will be applied to. None indicates that the coupon will not be applied to any course/bundle",
+                      "items": {
+                        "enum": [
+                          "bundles",
+                          "courses",
+                          "courses_bundles",
+                          "none"
+                        ],
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "coupons": {
+                      "description": "Promotion coupons",
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "bulk": true,
+                            "code": "coup-ZFPVOG",
+                            "expires": "2020-10-28",
+                            "prefix": "coup",
+                            "quantity": 1,
+                            "times_used": 12
+                          }
+                        ],
+                        "properties": {
+                          "bulk": {
+                            "description": "Indication about whether there's a bulk set of codes created for this coupon.",
+                            "type": "boolean"
+                          },
+                          "code": {
+                            "description": "Coupon code",
+                            "type": "string"
+                          },
+                          "expires": {
+                            "description": "Coupon expiration date, in YYYY-MM-DD format",
+                            "example": "2021-06-17",
+                            "format": "date",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "prefix": {
+                            "description": "Coupon prefix",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "quantity": {
+                            "description": "Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "times_used": {
+                            "description": "Coupon number of times used.",
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array",
+                      "uniqueItems": false
+                    },
+                    "created": {
+                      "description": "Date the promotion was created, in UNIX timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "id": {
+                      "description": "Unique identifier of the promotion",
+                      "type": "string"
+                    },
+                    "modified": {
+                      "description": "Date the promotion was modified for the last time, in UNIX timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "name": {
+                      "description": "Name of the promotion",
+                      "type": "string"
+                    },
+                    "products": {
+                      "description": "Specific products that the promotion coupon will be applied to",
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "description": "Unique identifier of the product",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "Type of the product",
+                            "enum": [
+                              "course",
+                              "bundle"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "type": {
+                      "description": "Type of discount",
+                      "enum": [
+                        "percentage",
+                        "fixed"
+                      ],
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "Percentage or fixed amount of discount",
+                      "format": "float",
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bundle | API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/learnworlds-sdk">voxgig-sdk/learnworlds-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">API</a></details>
+<details open><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/active.html">Active</a>
+<a href="../api/affiliate.html">Affiliate</a>
+<a href="../api/assessment.html">Assessment</a>
+<a aria-current="page" href="../api/bundle.html">Bundle</a><div class="nav-sections"><a class="nav-section" href="#get-v2bundles">GET /v2/bundles</a>
+<a class="nav-section" href="#get-v2bundlesid">GET /v2/bundles/{id}</a></div>
+<a href="../api/by_product.html">ByProduct</a>
+<a href="../api/by_segment.html">BySegment</a>
+<a href="../api/calendar.html">Calendar</a>
+<a href="../api/certificate.html">Certificate</a>
+<a href="../api/community.html">Community</a>
+<a href="../api/community_post.html">CommunityPost</a>
+<a href="../api/community_space.html">CommunitySpace</a>
+<a href="../api/completed.html">Completed</a>
+<a href="../api/coupon.html">Coupon</a>
+<a href="../api/coupon_usage.html">CouponUsage</a>
+<a href="../api/course.html">Course</a>
+<a href="../api/course_analytics.html">CourseAnalytics</a>
+<a href="../api/course_content.html">CourseContent</a>
+<a href="../api/due.html">Due</a>
+<a href="../api/event.html">Event</a>
+<a href="../api/event_log.html">EventLog</a>
+<a href="../api/form.html">Form</a>
+<a href="../api/installment.html">Installment</a>
+<a href="../api/lead.html">Lead</a>
+<a href="../api/multiple_seat.html">MultipleSeat</a>
+<a href="../api/payment.html">Payment</a>
+<a href="../api/post.html">Post</a>
+<a href="../api/promotion.html">Promotion</a>
+<a href="../api/reporting.html">Reporting</a>
+<a href="../api/score.html">Score</a>
+<a href="../api/seat.html">Seat</a>
+<a href="../api/segment.html">Segment</a>
+<a href="../api/space.html">Space</a>
+<a href="../api/subscription_plan.html">SubscriptionPlan</a>
+<a href="../api/unit.html">Unit</a>
+<a href="../api/unit_analytics.html">UnitAnalytics</a>
+<a href="../api/upcoming.html">Upcoming</a>
+<a href="../api/update_user_progress.html">UpdateUserProgress</a>
+<a href="../api/user.html">User</a>
+<a href="../api/user_group.html">UserGroup</a>
+<a href="../api/user_progress.html">UserProgress</a>
+<a href="../api/user_role.html">UserRole</a>
+<a href="../api/user_subscription.html">UserSubscription</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="../sdks/seneca-provider.html">Seneca Provider</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="bundle">Bundle</h1>
+<h2 id="operations">Operations</h2>
+<p>Every route this entity exposes. Each route links to its own reference on this page.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>SDK operation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2bundles"><code>/v2/bundles</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2bundlesid"><code>/v2/bundles/{id}</code></a></td>
+<td><code>load</code></td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>access</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Access type of the bundle</td>
+</tr>
+<tr>
+<td><code>afterPurchase</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation settings for this bundle</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the bundle was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>Bundle description</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the bundle</td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td><code>one,null,string</code></td>
+<td>No</td>
+<td>Bundle image (full URL)</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the bundle was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>paymentPlans</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>Payment plans associated with the bundle.</td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Price of the bundle</td>
+</tr>
+<tr>
+<td><code>products</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Products in the bundle</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title of the bundle</td>
+</tr>
+</tbody>
+</table>
+<h2 id="list">list</h2>
+<h3 id="get-v2bundles" class="operation" data-method="get"><code>GET</code> /v2/bundles</h3>
+<p>Operation ID: <code>get-bundles</code>.</p>
+<h4 id="parameters">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="responses">Responses</h4>
+<h5 id="200-ok" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].access</code></td>
+<td><code>enum: draft, public</code></td>
+<td>No</td>
+<td>Access type of the bundle</td>
+</tr>
+<tr>
+<td><code>data[].afterPurchase</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation settings for this bundle</td>
+</tr>
+<tr>
+<td><code>data[].afterPurchase.settings</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation URL for this bundle: leading to a school page or a given URL</td>
+</tr>
+<tr>
+<td><code>data[].afterPurchase.settings.page</code></td>
+<td><code>null,string</code></td>
+<td>No</td>
+<td>Navigation to a specific school page</td>
+</tr>
+<tr>
+<td><code>data[].afterPurchase.settings.url</code></td>
+<td><code>null,string</code></td>
+<td>No</td>
+<td>Navigation to a specific URL</td>
+</tr>
+<tr>
+<td><code>data[].afterPurchase.type</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Type of the after purchase navigation</td>
+</tr>
+<tr>
+<td><code>data[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the bundle was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].description</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Bundle description</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the bundle</td>
+</tr>
+<tr>
+<td><code>data[].image</code></td>
+<td><code>null,string</code></td>
+<td>No</td>
+<td>Bundle image (full URL)</td>
+</tr>
+<tr>
+<td><code>data[].modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the bundle was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Payment plans associated with the bundle. Customers can pay in two or more installments (and an optional upfront payment).</td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].amount</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].description</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].firstAmount</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].isCancelable</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].nameOverride</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].order</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].paymentPlanNameOverride</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].paymentsCount</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].status</code></td>
+<td><code>enum: private, public, hidden, archived, deleted</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].subscriptionIntervalType</code></td>
+<td><code>enum: 7-day, 14-day, 15-day, 42-day, 1-month, 2-month, ...</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].subscriptionTrialDate</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].subscriptionTrialDays</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].subscriptionTrialType</code></td>
+<td><code>enum: default, days, date</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].type</code></td>
+<td><code>enum: with_upfront, without_upfront</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].validFrom</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].paymentPlans[].validTo</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Price of the bundle</td>
+</tr>
+<tr>
+<td><code>data[].products</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Products in the bundle</td>
+</tr>
+<tr>
+<td><code>data[].products.courses</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Unique identifier of each course</td>
+</tr>
+<tr>
+<td><code>data[].title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title of the bundle</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h2 id="load">load</h2>
+<h3 id="get-v2bundlesid" class="operation" data-method="get"><code>GET</code> /v2/bundles/{id}</h3>
+<p>Operation ID: <code>get-bundles-id</code>.</p>
+<h4 id="parameters-1">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the bundle |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="responses-1">Responses</h4>
+<h5 id="200-ok-1" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>access</code></td>
+<td><code>enum: draft, public</code></td>
+<td>No</td>
+<td>Access type of the bundle</td>
+</tr>
+<tr>
+<td><code>afterPurchase</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation settings for this bundle</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation URL for this bundle: leading to a school page or a given URL</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings.page</code></td>
+<td><code>null,string</code></td>
+<td>No</td>
+<td>Navigation to a specific school page</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings.url</code></td>
+<td><code>null,string</code></td>
+<td>No</td>
+<td>Navigation to a specific URL</td>
+</tr>
+<tr>
+<td><code>afterPurchase.type</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Type of the after purchase navigation</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the bundle was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Bundle description</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the bundle</td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td><code>null,string</code></td>
+<td>No</td>
+<td>Bundle image (full URL)</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the bundle was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>paymentPlans</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Payment plans associated with the bundle. Customers can pay in two or more installments (and an optional upfront payment).</td>
+</tr>
+<tr>
+<td><code>paymentPlans[].amount</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].description</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].firstAmount</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].isCancelable</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].nameOverride</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].order</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].paymentPlanNameOverride</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].paymentsCount</code></td>
+<td><code>integer</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].status</code></td>
+<td><code>enum: private, public, hidden, archived, deleted</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].subscriptionIntervalType</code></td>
+<td><code>enum: 7-day, 14-day, 15-day, 42-day, 1-month, 2-month, ...</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].subscriptionTrialDate</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].subscriptionTrialDays</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].subscriptionTrialType</code></td>
+<td><code>enum: default, days, date</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].type</code></td>
+<td><code>enum: with_upfront, without_upfront</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].validFrom</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>paymentPlans[].validTo</code></td>
+<td><code>number,null</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Price of the bundle</td>
+</tr>
+<tr>
+<td><code>products</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Products in the bundle</td>
+</tr>
+<tr>
+<td><code>products.courses</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td>Unique identifier of each course</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title of the bundle</td>
+</tr>
+</tbody>
+</table>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

@@ -58,6 +58,7 @@ import { Utility } from './utility/Utility'
 import { BaseFeature } from './feature/base/BaseFeature'
 
 
+
 const stdutil = new Utility()
 
 
@@ -67,6 +68,7 @@ class LearnworldsSDK {
   _utility = new Utility()
   _features: Feature[]
   _rootctx: Context
+  
 
   constructor(options?: any) {
 
@@ -99,18 +101,26 @@ class LearnworldsSDK {
     // the `test` feature installs the base mock transport and the transport
     // features (retry/cache/netsim/proxy/ratelimit) wrap whatever is current,
     // so `test` must be added before them to sit at the base of the chain.
+    const extend = this._options.extend || []
+
     const featureorder = getpath(this._options, '__derived__.featureorder') || []
     for (const fname of featureorder) {
       const fopts = this._options.feature[fname] || {}
       if (fopts.active) {
+        // An active name with no generated class is legal when an
+        // extend-supplied instance carries that name (station's adopt
+        // path): the instance is added below, positioned by its own
+        // __after__ entry, so skip it here rather than fail construction.
+        if (!this._rootctx.config.hasFeature(fname) &&
+          extend.some((f: any) => fname === f.name)) {
+          continue
+        }
         featureAdd(this._rootctx, this._rootctx.config.makeFeature(fname))
       }
     }
 
-    if (null != this._options.extend) {
-      for (let f of this._options.extend) {
-        featureAdd(this._rootctx, f)
-      }
+    for (let f of extend) {
+      featureAdd(this._rootctx, f)
     }
 
     for (let f of this._features) {
@@ -130,6 +140,8 @@ class LearnworldsSDK {
   utility() {
     return this._utility.struct.clone(this._utility)
   }
+
+  
 
 
   async prepare(fetchargs?: any) {
@@ -177,6 +189,8 @@ class LearnworldsSDK {
       }
     }
 
+    
+
     // Apply SDK auth (apikey, auth prefix, etc.)
     const authResult = prepareAuth(ctx)
     if (authResult instanceof Error) {
@@ -187,8 +201,29 @@ class LearnworldsSDK {
   }
 
 
+  // Raw endpoint access is operator-controllable, like every entity op.
+  // Blocking it means denying BOTH the 'direct' and 'graphql' tokens, since
+  // either one reaches the same endpoint.
   async direct(fetchargs?: any) {
+    if (!this._options.allow.op.includes('direct')) {
+      return {
+        ok: false,
+        err: new Error('LearnworldsSDK: direct: operation not allowed by' +
+          ' SDK option allow.op value: "' + this._options.allow.op + '"'),
+      }
+    }
+
+    return this._rawRequest(fetchargs)
+  }
+
+
+  // Ungated request path shared by direct() and graphql(), each of which
+  // checks its own allow.op token first. Private, rather than a flag on
+  // fetchargs: a caller-supplied marker would let anyone opt straight back
+  // out of the gate by passing it.
+  async _rawRequest(fetchargs?: any) {
     const utility = this._utility
+
     const fetcher = utility.fetcher
     const makeContext = utility.makeContext
 
@@ -249,297 +284,435 @@ class LearnworldsSDK {
 
 
 
+  // Raw GraphQL access: the pressure valve that makes the generated
+  // surface's deliberate omissions (per-call selection sets, typed filter
+  // builders, batching, subscriptions) livable — the whole schema stays
+  // reachable.
+  //
+  // Thin wrapper over the same prepare/fetch path `direct` uses, with the
+  // one thing raw `direct` cannot do for GraphQL: a GraphQL failure rides
+  // HTTP 200 as a top-level `errors` array, so status alone would report a
+  // failed query as ok.
+  //
+  // NOTE: like `direct`, this bypasses the feature pipeline — no retry,
+  // ratelimit or paging features apply.
+  async graphql(query: string, variables?: any, ctrl?: any) {
+    const options = this._options
+
+    if (!options.allow.op.includes('graphql')) {
+      return {
+        ok: false,
+        err: new Error('LearnworldsSDK: graphql: operation not allowed by' +
+          ' SDK option allow.op value: "' + options.allow.op + '"'),
+      }
+    }
+
+    const res: any = await this._rawRequest({
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: { query, variables: variables || {} },
+      ctrl,
+    })
+
+    if (res instanceof Error) {
+      return res
+    }
+
+    // Errors are read BEFORE any status check: a GraphQL parse or validation
+    // failure comes back as HTTP 400 carrying the standard { errors: [...] }
+    // body, and the raw path represents a non-2xx as { ok: false } with no
+    // err — so returning early on status would discard the server's own
+    // diagnostics, which are the only useful part of that response.
+    const errors = null == res.data ? undefined : res.data.errors
+
+    if (null != errors && Array.isArray(errors) && 0 < errors.length) {
+      const first = errors[0] || {}
+      const err: any = new Error('LearnworldsSDK: graphql: ' +
+        (first.message || 'graphql error'))
+      err.graphql = errors
+      return { ok: false, status: res.status, headers: res.headers, err, data: res.data }
+    }
+
+    return res
+  }
+
+
+
   // Entity access: `client.Active().list()` / `client.Active().load({ id })`.
-  Active(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Active(entopts?: Record<string, any>) {
     const self = this
-    return new ActiveEntity(self,data)
+    return new ActiveEntity(self, entopts)
   }
 
 
   // Entity access: `client.Affiliate().list()` / `client.Affiliate().load({ id })`.
-  Affiliate(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Affiliate(entopts?: Record<string, any>) {
     const self = this
-    return new AffiliateEntity(self,data)
+    return new AffiliateEntity(self, entopts)
   }
 
 
   // Entity access: `client.Assessment().list()` / `client.Assessment().load({ id })`.
-  Assessment(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Assessment(entopts?: Record<string, any>) {
     const self = this
-    return new AssessmentEntity(self,data)
+    return new AssessmentEntity(self, entopts)
   }
 
 
   // Entity access: `client.Bundle().list()` / `client.Bundle().load({ id })`.
-  Bundle(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Bundle(entopts?: Record<string, any>) {
     const self = this
-    return new BundleEntity(self,data)
+    return new BundleEntity(self, entopts)
   }
 
 
   // Entity access: `client.ByProduct().list()` / `client.ByProduct().load({ id })`.
-  ByProduct(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  ByProduct(entopts?: Record<string, any>) {
     const self = this
-    return new ByProductEntity(self,data)
+    return new ByProductEntity(self, entopts)
   }
 
 
   // Entity access: `client.BySegment().list()` / `client.BySegment().load({ id })`.
-  BySegment(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  BySegment(entopts?: Record<string, any>) {
     const self = this
-    return new BySegmentEntity(self,data)
+    return new BySegmentEntity(self, entopts)
   }
 
 
   // Entity access: `client.Calendar().list()` / `client.Calendar().load({ id })`.
-  Calendar(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Calendar(entopts?: Record<string, any>) {
     const self = this
-    return new CalendarEntity(self,data)
+    return new CalendarEntity(self, entopts)
   }
 
 
   // Entity access: `client.Certificate().list()` / `client.Certificate().load({ id })`.
-  Certificate(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Certificate(entopts?: Record<string, any>) {
     const self = this
-    return new CertificateEntity(self,data)
+    return new CertificateEntity(self, entopts)
   }
 
 
   // Entity access: `client.Community().list()` / `client.Community().load({ id })`.
-  Community(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Community(entopts?: Record<string, any>) {
     const self = this
-    return new CommunityEntity(self,data)
+    return new CommunityEntity(self, entopts)
   }
 
 
   // Entity access: `client.CommunityPost().list()` / `client.CommunityPost().load({ id })`.
-  CommunityPost(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  CommunityPost(entopts?: Record<string, any>) {
     const self = this
-    return new CommunityPostEntity(self,data)
+    return new CommunityPostEntity(self, entopts)
   }
 
 
   // Entity access: `client.CommunitySpace().list()` / `client.CommunitySpace().load({ id })`.
-  CommunitySpace(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  CommunitySpace(entopts?: Record<string, any>) {
     const self = this
-    return new CommunitySpaceEntity(self,data)
+    return new CommunitySpaceEntity(self, entopts)
   }
 
 
   // Entity access: `client.Completed().list()` / `client.Completed().load({ id })`.
-  Completed(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Completed(entopts?: Record<string, any>) {
     const self = this
-    return new CompletedEntity(self,data)
+    return new CompletedEntity(self, entopts)
   }
 
 
   // Entity access: `client.Coupon().list()` / `client.Coupon().load({ id })`.
-  Coupon(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Coupon(entopts?: Record<string, any>) {
     const self = this
-    return new CouponEntity(self,data)
+    return new CouponEntity(self, entopts)
   }
 
 
   // Entity access: `client.CouponUsage().list()` / `client.CouponUsage().load({ id })`.
-  CouponUsage(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  CouponUsage(entopts?: Record<string, any>) {
     const self = this
-    return new CouponUsageEntity(self,data)
+    return new CouponUsageEntity(self, entopts)
   }
 
 
   // Entity access: `client.Course().list()` / `client.Course().load({ id })`.
-  Course(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Course(entopts?: Record<string, any>) {
     const self = this
-    return new CourseEntity(self,data)
+    return new CourseEntity(self, entopts)
   }
 
 
   // Entity access: `client.CourseAnalytics().list()` / `client.CourseAnalytics().load({ id })`.
-  CourseAnalytics(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  CourseAnalytics(entopts?: Record<string, any>) {
     const self = this
-    return new CourseAnalyticsEntity(self,data)
+    return new CourseAnalyticsEntity(self, entopts)
   }
 
 
   // Entity access: `client.CourseContent().list()` / `client.CourseContent().load({ id })`.
-  CourseContent(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  CourseContent(entopts?: Record<string, any>) {
     const self = this
-    return new CourseContentEntity(self,data)
+    return new CourseContentEntity(self, entopts)
   }
 
 
   // Entity access: `client.Due().list()` / `client.Due().load({ id })`.
-  Due(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Due(entopts?: Record<string, any>) {
     const self = this
-    return new DueEntity(self,data)
+    return new DueEntity(self, entopts)
   }
 
 
   // Entity access: `client.Event().list()` / `client.Event().load({ id })`.
-  Event(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Event(entopts?: Record<string, any>) {
     const self = this
-    return new EventEntity(self,data)
+    return new EventEntity(self, entopts)
   }
 
 
   // Entity access: `client.EventLog().list()` / `client.EventLog().load({ id })`.
-  EventLog(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  EventLog(entopts?: Record<string, any>) {
     const self = this
-    return new EventLogEntity(self,data)
+    return new EventLogEntity(self, entopts)
   }
 
 
   // Entity access: `client.Form().list()` / `client.Form().load({ id })`.
-  Form(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Form(entopts?: Record<string, any>) {
     const self = this
-    return new FormEntity(self,data)
+    return new FormEntity(self, entopts)
   }
 
 
   // Entity access: `client.Installment().list()` / `client.Installment().load({ id })`.
-  Installment(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Installment(entopts?: Record<string, any>) {
     const self = this
-    return new InstallmentEntity(self,data)
+    return new InstallmentEntity(self, entopts)
   }
 
 
   // Entity access: `client.Lead().list()` / `client.Lead().load({ id })`.
-  Lead(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Lead(entopts?: Record<string, any>) {
     const self = this
-    return new LeadEntity(self,data)
+    return new LeadEntity(self, entopts)
   }
 
 
   // Entity access: `client.MultipleSeat().list()` / `client.MultipleSeat().load({ id })`.
-  MultipleSeat(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  MultipleSeat(entopts?: Record<string, any>) {
     const self = this
-    return new MultipleSeatEntity(self,data)
+    return new MultipleSeatEntity(self, entopts)
   }
 
 
   // Entity access: `client.Payment().list()` / `client.Payment().load({ id })`.
-  Payment(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Payment(entopts?: Record<string, any>) {
     const self = this
-    return new PaymentEntity(self,data)
+    return new PaymentEntity(self, entopts)
   }
 
 
   // Entity access: `client.Post().list()` / `client.Post().load({ id })`.
-  Post(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Post(entopts?: Record<string, any>) {
     const self = this
-    return new PostEntity(self,data)
+    return new PostEntity(self, entopts)
   }
 
 
   // Entity access: `client.Promotion().list()` / `client.Promotion().load({ id })`.
-  Promotion(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Promotion(entopts?: Record<string, any>) {
     const self = this
-    return new PromotionEntity(self,data)
+    return new PromotionEntity(self, entopts)
   }
 
 
   // Entity access: `client.Reporting().list()` / `client.Reporting().load({ id })`.
-  Reporting(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Reporting(entopts?: Record<string, any>) {
     const self = this
-    return new ReportingEntity(self,data)
+    return new ReportingEntity(self, entopts)
   }
 
 
   // Entity access: `client.Score().list()` / `client.Score().load({ id })`.
-  Score(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Score(entopts?: Record<string, any>) {
     const self = this
-    return new ScoreEntity(self,data)
+    return new ScoreEntity(self, entopts)
   }
 
 
   // Entity access: `client.Seat().list()` / `client.Seat().load({ id })`.
-  Seat(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Seat(entopts?: Record<string, any>) {
     const self = this
-    return new SeatEntity(self,data)
+    return new SeatEntity(self, entopts)
   }
 
 
   // Entity access: `client.Segment().list()` / `client.Segment().load({ id })`.
-  Segment(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Segment(entopts?: Record<string, any>) {
     const self = this
-    return new SegmentEntity(self,data)
+    return new SegmentEntity(self, entopts)
   }
 
 
   // Entity access: `client.Space().list()` / `client.Space().load({ id })`.
-  Space(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Space(entopts?: Record<string, any>) {
     const self = this
-    return new SpaceEntity(self,data)
+    return new SpaceEntity(self, entopts)
   }
 
 
   // Entity access: `client.SubscriptionPlan().list()` / `client.SubscriptionPlan().load({ id })`.
-  SubscriptionPlan(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  SubscriptionPlan(entopts?: Record<string, any>) {
     const self = this
-    return new SubscriptionPlanEntity(self,data)
+    return new SubscriptionPlanEntity(self, entopts)
   }
 
 
   // Entity access: `client.Unit().list()` / `client.Unit().load({ id })`.
-  Unit(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Unit(entopts?: Record<string, any>) {
     const self = this
-    return new UnitEntity(self,data)
+    return new UnitEntity(self, entopts)
   }
 
 
   // Entity access: `client.UnitAnalytics().list()` / `client.UnitAnalytics().load({ id })`.
-  UnitAnalytics(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  UnitAnalytics(entopts?: Record<string, any>) {
     const self = this
-    return new UnitAnalyticsEntity(self,data)
+    return new UnitAnalyticsEntity(self, entopts)
   }
 
 
   // Entity access: `client.Upcoming().list()` / `client.Upcoming().load({ id })`.
-  Upcoming(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  Upcoming(entopts?: Record<string, any>) {
     const self = this
-    return new UpcomingEntity(self,data)
+    return new UpcomingEntity(self, entopts)
   }
 
 
   // Entity access: `client.UpdateUserProgress().list()` / `client.UpdateUserProgress().load({ id })`.
-  UpdateUserProgress(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  UpdateUserProgress(entopts?: Record<string, any>) {
     const self = this
-    return new UpdateUserProgressEntity(self,data)
+    return new UpdateUserProgressEntity(self, entopts)
   }
 
 
   // Entity access: `client.User().list()` / `client.User().load({ id })`.
-  User(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  User(entopts?: Record<string, any>) {
     const self = this
-    return new UserEntity(self,data)
+    return new UserEntity(self, entopts)
   }
 
 
   // Entity access: `client.UserGroup().list()` / `client.UserGroup().load({ id })`.
-  UserGroup(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  UserGroup(entopts?: Record<string, any>) {
     const self = this
-    return new UserGroupEntity(self,data)
+    return new UserGroupEntity(self, entopts)
   }
 
 
   // Entity access: `client.UserProgress().list()` / `client.UserProgress().load({ id })`.
-  UserProgress(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  UserProgress(entopts?: Record<string, any>) {
     const self = this
-    return new UserProgressEntity(self,data)
+    return new UserProgressEntity(self, entopts)
   }
 
 
   // Entity access: `client.UserRole().list()` / `client.UserRole().load({ id })`.
-  UserRole(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  UserRole(entopts?: Record<string, any>) {
     const self = this
-    return new UserRoleEntity(self,data)
+    return new UserRoleEntity(self, entopts)
   }
 
 
   // Entity access: `client.UserSubscription().list()` / `client.UserSubscription().load({ id })`.
-  UserSubscription(data?: any) {
+  // The argument is the entity OPTIONS object (passed to the entity
+  // constructor as entopts), not initial entity data.
+  UserSubscription(entopts?: Record<string, any>) {
     const self = this
-    return new UserSubscriptionEntity(self,data)
+    return new UserSubscriptionEntity(self, entopts)
   }
 
 
@@ -592,6 +765,7 @@ const SDK = LearnworldsSDK
 export {
   stdutil,
   config,
+  
 
   BaseFeature,
   LearnworldsEntityBase,

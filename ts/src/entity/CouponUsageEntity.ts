@@ -37,14 +37,15 @@ class CouponUsageEntity extends LearnworldsEntityBase<CouponUsage> {
 
 
 
-  async list(this: any, reqmatch?: CouponUsageListMatch, ctrl?: Control): Promise<CouponUsage[]> {
+  async list(this: any, reqmatch?: CouponUsageListMatch, ctrl?: Control): Promise<CouponUsageEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,

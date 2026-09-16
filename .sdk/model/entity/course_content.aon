@@ -1,0 +1,210 @@
+# Entity: course_content
+
+main: kit: entity: course_content: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      name: "access"
+      req: false
+      short: "Access type of the section"
+      type: "`$STRING`"
+    }
+    {
+      name: "description"
+      req: false
+      short: "Description of the section"
+      type: [
+        "`$ONE`"
+        [
+          "`$STRING`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "drip"
+      req: false
+      short: "Drip feed details of the content."
+      type: [
+        "`$ONE`"
+        [
+          "`$OBJECT`"
+          "`$NULL`"
+        ]
+      ]
+    }
+    {
+      name: "id"
+      req: false
+      short: "Unique identifier of the section"
+      type: "`$STRING`"
+    }
+    {
+      name: "learningUnits"
+      req: false
+      short: "Learning activities of section"
+      type: "`$ARRAY`"
+    }
+    {
+      name: "sections"
+      req: false
+      type: "`$ARRAY`"
+    }
+    {
+      name: "title"
+      req: false
+      short: "Title of the section"
+      type: "`$STRING`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "course_content"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                example: "a-test"
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "POST /v2/courses/{id}/sections"
+            json: "{\"operationId\":\"post-courses-id-sections\",\"parameters\":[{\"description\":\"Course Id\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"example\":\"a-test\",\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"examples\":{\"Example with DripFeed (by date)\":{\"value\":{\"access\":\"draft\",\"description\":\"Intro\",\"drip\":{\"body\":\"Hi there dear user, the course is available.\",\"date\":1518792296,\"notify\":true,\"subject\":\"Your new course is available now\"},\"title\":\"Introduction\"}},\"Example with DripFeed (by days)\":{\"value\":{\"access\":\"draft\",\"description\":\"Intro\",\"drip\":{\"body\":\"Hi there dear user, the course is available.\",\"days\":4,\"notify\":true,\"subject\":\"Your new course is available now\"},\"title\":\"Introduction\"}},\"Example without DripFeed\":{\"value\":{\"access\":\"paid\",\"description\":\"Intro description\",\"title\":\"Introduction\"}}},\"schema\":{\"type\":\"object\"}}}},\"responses\":{\"201\":{\"content\":{\"application/json\":{\"examples\":{\"Example with DripFeed (by date)\":{\"value\":{\"id\":\"testunits\",\"sections\":[{\"access\":\"draft\",\"description\":\"Intro\",\"drip\":{\"body\":\"Hi there dear user, the course is available.\",\"date\":1518792296,\"days\":0,\"notify\":true,\"subject\":\"Your new course is available now\"},\"id\":\"testu_introduction\",\"learningUnits\":[],\"title\":\"Introduction\"}],\"title\":\"testunits\"}},\"Example with DripFeed (by days)\":{\"value\":{\"id\":\"testunits\",\"sections\":[{\"access\":\"draft\",\"description\":\"Intro\",\"drip\":{\"body\":\"Hi there dear user, the course is available.\",\"date\":null,\"days\":4,\"notify\":true,\"subject\":\"Your new course is available now\"},\"id\":\"testu_introduction\",\"learningUnits\":[],\"title\":\"Introduction\"}],\"title\":\"testunits\"}},\"Example without DripFeed\":{\"value\":{\"id\":\"testunits\",\"sections\":[{\"access\":\"paid\",\"description\":\"Intro description\",\"drip\":null,\"id\":\"testu_introduction\",\"learningUnits\":[],\"title\":\"Introduction\"}],\"title\":\"testunits\"}}},\"schema\":{\"description\":\"\",\"examples\":[{\"id\":\"testunits\",\"sections\":[{\"access\":\"private\",\"description\":\"Intro\",\"drip\":{\"body\":\"hi there\",\"date\":null,\"days\":28,\"notify\":true,\"subject\":\"email subject\"},\"id\":\"testu_introduction\",\"learningUnits\":[{\"icon\":\"pdf\",\"id\":\"611f83d9f8794544223ee7e4\",\"subtitle\":\"pdf\",\"title\":\"pdf\",\"type\":\"pdf\"},{\"icon\":\"url\",\"id\":\"611f83ef11ac917cfc05c2b2\",\"subtitle\":\"external page\",\"title\":\"external page\",\"type\":\"url\"},{\"icon\":\"scorm\",\"id\":\"611f83f711ac917cfc05c2b3\",\"subtitle\":\"SCORM/HTML 5 Package\",\"title\":\"SCORM/HTML 5 Package\",\"type\":\"scorm\"},{\"icon\":\"certification\",\"id\":\"611f87aa9ab7f357693baa22\",\"subtitle\":\"certificate\",\"title\":\"certificate\",\"type\":\"certificate\"}],\"title\":\"Introduction\"}],\"title\":\"testunits\"}],\"properties\":{\"id\":{\"description\":\"Unique identifier of the course\",\"type\":\"string\"},\"sections\":{\"description\":\"Sections of the course\",\"items\":{\"properties\":{\"access\":{\"description\":\"Access type of the section\",\"enum\":[\"public\",\"premium\",\"soon\",\"private\"],\"type\":\"string\"},\"description\":{\"description\":\"Description of the section\",\"type\":[\"string\",\"null\"]},\"drip\":{\"description\":\"Drip feed details of the content. Null value indicates that the course has drip feed option as disabled\",\"properties\":{\"body\":{\"description\":\"Body of the notification\",\"type\":[\"string\",\"null\"]},\"date\":{\"description\":\"Drip feed date\",\"type\":[\"null\",\"number\"]},\"days\":{\"description\":\"Drip feed days\",\"type\":\"integer\"},\"notify\":{\"description\":\"Setup an email notification to be sent to students once this section becomes unlocked\",\"type\":\"boolean\"},\"subject\":{\"description\":\"Subject of the notification\",\"type\":[\"string\",\"null\"]}},\"type\":[\"object\",\"null\"]},\"id\":{\"description\":\"Unique identifier of the section\",\"type\":\"string\"},\"learningUnits\":{\"description\":\"Learning activities of section\",\"items\":{\"properties\":{\"icon\":{\"description\":\"Type icon of learning activity\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier of learning activity\",\"type\":\"string\"},\"subtitle\":{\"description\":\"Subtitle of learning activity\",\"type\":\"string\"},\"title\":{\"description\":\"Title of learning activity\",\"type\":\"string\"},\"type\":{\"description\":\"Type of learning activity\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\",\"uniqueItems\":false},\"title\":{\"description\":\"Title of the section\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\",\"uniqueItems\":false},\"title\":{\"description\":\"Title of the course\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"Created\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "POST"
+          orig: "/v2/courses/{id}/sections"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "courses"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "sections"
+            }
+          ]
+          select: {
+            "$action": "sections"
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/courses/{id}/contents"
+            json: "{\"operationId\":\"get-courses-id-contents\",\"parameters\":[{\"description\":\"Course title Id\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{\"Example\":{\"value\":{\"id\":\"testunits\",\"sections\":[{\"access\":\"private\",\"description\":\"Intro\",\"drip\":{\"body\":\"hi there\",\"date\":null,\"days\":28,\"notify\":true,\"subject\":\"email subject\"},\"id\":\"testu_introduction\",\"learningUnits\":[{\"icon\":\"pdf\",\"id\":\"611f83d9f8794544223ee7e4\",\"subtitle\":\"pdf\",\"title\":\"pdf\",\"type\":\"pdf\"},{\"icon\":\"url\",\"id\":\"611f83ef11ac917cfc05c2b2\",\"subtitle\":\"external page\",\"title\":\"external page\",\"type\":\"url\"},{\"icon\":\"scorm\",\"id\":\"611f83f711ac917cfc05c2b3\",\"subtitle\":\"SCORM/HTML 5 Package\",\"title\":\"SCORM/HTML 5 Package\",\"type\":\"scorm\"},{\"icon\":\"certification\",\"id\":\"611f87aa9ab7f357693baa22\",\"subtitle\":\"certificate\",\"title\":\"certificate\",\"type\":\"certificate\"},{\"icon\":\"certification\",\"id\":\"611f87c227652810e3544fe2\",\"subtitle\":\"certificate\",\"title\":\"certificate\",\"type\":\"certificate\"}],\"title\":\"Introduction\"}],\"title\":\"testunits\"}}},\"schema\":{\"description\":\"\",\"examples\":[{\"id\":\"testunits\",\"sections\":[{\"access\":\"private\",\"description\":\"Intro\",\"drip\":{\"body\":\"hi there\",\"date\":null,\"days\":28,\"notify\":true,\"subject\":\"email subject\"},\"id\":\"testu_introduction\",\"learningUnits\":[{\"icon\":\"pdf\",\"id\":\"611f83d9f8794544223ee7e4\",\"subtitle\":\"pdf\",\"title\":\"pdf\",\"type\":\"pdf\"},{\"icon\":\"url\",\"id\":\"611f83ef11ac917cfc05c2b2\",\"subtitle\":\"external page\",\"title\":\"external page\",\"type\":\"url\"},{\"icon\":\"scorm\",\"id\":\"611f83f711ac917cfc05c2b3\",\"subtitle\":\"SCORM/HTML 5 Package\",\"title\":\"SCORM/HTML 5 Package\",\"type\":\"scorm\"},{\"icon\":\"certification\",\"id\":\"611f87aa9ab7f357693baa22\",\"subtitle\":\"certificate\",\"title\":\"certificate\",\"type\":\"certificate\"}],\"title\":\"Introduction\"}],\"title\":\"testunits\"}],\"properties\":{\"id\":{\"description\":\"Unique identifier of the course\",\"type\":\"string\"},\"sections\":{\"description\":\"Sections of the course\",\"items\":{\"properties\":{\"access\":{\"description\":\"Access type of the section\",\"enum\":[\"public\",\"premium\",\"soon\",\"private\"],\"type\":\"string\"},\"description\":{\"description\":\"Description of the section\",\"type\":[\"string\",\"null\"]},\"drip\":{\"description\":\"Drip feed details of the content. Null value indicates that the course has drip feed option as disabled\",\"properties\":{\"body\":{\"description\":\"Body of the notification\",\"type\":[\"string\",\"null\"]},\"date\":{\"description\":\"Drip feed date\",\"type\":[\"null\",\"number\"]},\"days\":{\"description\":\"Drip feed days\",\"type\":\"integer\"},\"notify\":{\"description\":\"Setup an email notification to be sent to students once this section becomes unlocked\",\"type\":\"boolean\"},\"subject\":{\"description\":\"Subject of the notification\",\"type\":[\"string\",\"null\"]}},\"type\":[\"object\",\"null\"]},\"id\":{\"description\":\"Unique identifier of the section\",\"type\":\"string\"},\"learningUnits\":{\"description\":\"Learning activities of section\",\"items\":{\"properties\":{\"icon\":{\"description\":\"Type icon of learning activity\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier of learning activity\",\"type\":\"string\"},\"subtitle\":{\"description\":\"Subtitle of learning activity\",\"type\":\"string\"},\"title\":{\"description\":\"Title of learning activity\",\"type\":\"string\"},\"type\":{\"description\":\"Type of learning activity\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\",\"uniqueItems\":false},\"title\":{\"description\":\"Title of the section\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\",\"uniqueItems\":false},\"title\":{\"description\":\"Title of the course\",\"type\":\"string\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/courses/{id}/contents"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "courses"
+            }
+            {
+              var: "id"
+            }
+            {
+              lit: "contents"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "id"
+              "lw_client"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body.sections`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

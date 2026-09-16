@@ -1,0 +1,1813 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Course | API</title><link rel="stylesheet" href="../assets/style.css"></head>
+<body><a class="skip" href="#content">Skip to content</a>
+<header class="site-header"><a class="site-title" href="../index.html">API<span>SDK documentation</span></a><div class="site-links"><a class="repo-link" href="https://github.com/voxgig-sdk/learnworlds-sdk">voxgig-sdk/learnworlds-sdk</a></div></header>
+<div class="site-notice" role="note"></div>
+<div class="shell"><nav class="site-nav" aria-label="Documentation"><div class="search"><label for="search">Search documentation</label><input id="search" type="search" data-base="../" placeholder="Find a guide or reference"><div id="results" aria-live="polite"></div></div><details><summary>Overview</summary><a href="../index.html">API</a></details>
+<details open><summary>API</summary><a href="../api/index.html">API overview</a>
+<a href="../api/active.html">Active</a>
+<a href="../api/affiliate.html">Affiliate</a>
+<a href="../api/assessment.html">Assessment</a>
+<a href="../api/bundle.html">Bundle</a>
+<a href="../api/by_product.html">ByProduct</a>
+<a href="../api/by_segment.html">BySegment</a>
+<a href="../api/calendar.html">Calendar</a>
+<a href="../api/certificate.html">Certificate</a>
+<a href="../api/community.html">Community</a>
+<a href="../api/community_post.html">CommunityPost</a>
+<a href="../api/community_space.html">CommunitySpace</a>
+<a href="../api/completed.html">Completed</a>
+<a href="../api/coupon.html">Coupon</a>
+<a href="../api/coupon_usage.html">CouponUsage</a>
+<a aria-current="page" href="../api/course.html">Course</a><div class="nav-sections"><a class="nav-section" href="#post-v2courses">POST /v2/courses</a>
+<a class="nav-section" href="#get-v2coursesidgrades">GET /v2/courses/{id}/grades</a>
+<a class="nav-section" href="#get-v2courses">GET /v2/courses</a>
+<a class="nav-section" href="#get-v2coursesidusers">GET /v2/courses/{id}/users</a>
+<a class="nav-section" href="#get-v2coursesid">GET /v2/courses/{id}</a>
+<a class="nav-section" href="#put-v2coursesid">PUT /v2/courses/{id}</a></div>
+<a href="../api/course_analytics.html">CourseAnalytics</a>
+<a href="../api/course_content.html">CourseContent</a>
+<a href="../api/due.html">Due</a>
+<a href="../api/event.html">Event</a>
+<a href="../api/event_log.html">EventLog</a>
+<a href="../api/form.html">Form</a>
+<a href="../api/installment.html">Installment</a>
+<a href="../api/lead.html">Lead</a>
+<a href="../api/multiple_seat.html">MultipleSeat</a>
+<a href="../api/payment.html">Payment</a>
+<a href="../api/post.html">Post</a>
+<a href="../api/promotion.html">Promotion</a>
+<a href="../api/reporting.html">Reporting</a>
+<a href="../api/score.html">Score</a>
+<a href="../api/seat.html">Seat</a>
+<a href="../api/segment.html">Segment</a>
+<a href="../api/space.html">Space</a>
+<a href="../api/subscription_plan.html">SubscriptionPlan</a>
+<a href="../api/unit.html">Unit</a>
+<a href="../api/unit_analytics.html">UnitAnalytics</a>
+<a href="../api/upcoming.html">Upcoming</a>
+<a href="../api/update_user_progress.html">UpdateUserProgress</a>
+<a href="../api/user.html">User</a>
+<a href="../api/user_group.html">UserGroup</a>
+<a href="../api/user_progress.html">UserProgress</a>
+<a href="../api/user_role.html">UserRole</a>
+<a href="../api/user_subscription.html">UserSubscription</a></details>
+<details><summary>Guides</summary><a href="../guides/authentication.html">Authentication</a>
+<a href="../guides/first-call.html">Make your first API call</a>
+<a href="../guides/errors.html">Handle errors</a>
+<a href="../guides/concepts.html">Entities, SDKs, and tools</a></details>
+<details><summary>SDKs</summary><a href="../sdks/seneca-provider.html">Seneca Provider</a>
+<a href="../sdks/ts.html">TypeScript</a></details>
+<details><summary>Features</summary><a href="../features/debug.html">Request/response capture ring buffer for debugging</a>
+<a href="../features/idempotency.html">Idempotency keys for safe retries of mutating operations</a>
+<a href="../features/metrics.html">Statistics capture: per-operation counters and latency</a>
+<a href="../features/paging.html">Pagination signals for list operations</a>
+<a href="../features/ratelimit.html">Client-side rate limiting via a token bucket</a>
+<a href="../features/retry.html">Automatic retry of transient failures with exponential backoff</a>
+<a href="../features/test.html">In-memory mock transport for testing without a live server</a>
+<a href="../features/timeout.html">Per-request timeout with transport abort</a></details></nav><main id="content"><div class="page-context"><span class="section-dot" aria-hidden="true"></span>API</div><h1 id="course">Course</h1>
+<h2 id="operations">Operations</h2>
+<p>Every route this entity exposes. Each route links to its own reference on this page.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>SDK operation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><a href="#post-v2courses"><code>/v2/courses</code></a></td>
+<td><code>create</code></td>
+<td>Created</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2coursesidgrades"><code>/v2/courses/{id}/grades</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2courses"><code>/v2/courses</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2coursesidusers"><code>/v2/courses/{id}/users</code></a></td>
+<td><code>list</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><a href="#get-v2coursesid"><code>/v2/courses/{id}</code></a></td>
+<td><code>load</code></td>
+<td>OK</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><a href="#put-v2coursesid"><code>/v2/courses/{id}</code></a></td>
+<td><code>update</code></td>
+<td>OK</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fields">Fields</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>access</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Access type of course</td>
+</tr>
+<tr>
+<td><code>afterPurchase</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation settings for this course</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td><code>one,object,null</code></td>
+<td>No</td>
+<td>Information about the course author</td>
+</tr>
+<tr>
+<td><code>billing_info</code></td>
+<td><code>one,object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>Categories this course belongs in</td>
+</tr>
+<tr>
+<td><code>courseImage</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>Course image (full URL)</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the course was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>Description of the course</td>
+</tr>
+<tr>
+<td><code>discount_price</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Discount price of the course</td>
+</tr>
+<tr>
+<td><code>dripFeed</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course setting for scheduled course delivery (drip feed); none refers to drip feed not being enabled.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user who submitted the responses</td>
+</tr>
+<tr>
+<td><code>eu_customer</code></td>
+<td><code>one,boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>expires</code></td>
+<td><code>one,null,integer</code></td>
+<td>No</td>
+<td>Expiration timeframe value, defines the expiration timeframe, together with the type / unit in the &quot;expiresType&quot; field.</td>
+</tr>
+<tr>
+<td><code>expiresType</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Expiration timeframe type / unit, defines the expiration timeframe, together with the actual value in the &quot;expires&quot; field.</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School.</td>
+</tr>
+<tr>
+<td><code>final_price</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Final price of the course</td>
+</tr>
+<tr>
+<td><code>grade</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>The grade that corresponds to the responses provided by the user</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course</td>
+</tr>
+<tr>
+<td><code>identifiers</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Course identifiers for in app purchases.</td>
+</tr>
+<tr>
+<td><code>is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td><code>one,null,string</code></td>
+<td>No</td>
+<td>Label of the course</td>
+</tr>
+<tr>
+<td><code>last_login</code></td>
+<td><code>one,null,number</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>learningUnit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the course was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>nps_comment</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>nps_score</code></td>
+<td><code>one,integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user.</td>
+</tr>
+<tr>
+<td><code>original_price</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Original price of the course</td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Price of the course</td>
+</tr>
+<tr>
+<td><code>referrer_id</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>signup_approval_status</code></td>
+<td><code>one,string,null</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>submittedTimestamp</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Date the submission was finished (submitted), in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>subscribed_for_marketing_emails</code></td>
+<td><code>one,boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>array</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title of the course</td>
+</tr>
+<tr>
+<td><code>titleId</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the course title.</td>
+</tr>
+<tr>
+<td><code>user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user who submitted the responses</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+</tbody>
+</table>
+<h2 id="create">create</h2>
+<h3 id="post-v2courses" class="operation" data-method="post"><code>POST</code> /v2/courses</h3>
+<p>Operation ID: <code>post-courses</code>.</p>
+<h4 id="parameters">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="request-body">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>access</code></td>
+<td><code>enum: paid, free, coming_soon, private, draft</code></td>
+<td>Yes</td>
+<td>Access type of the course</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>Categories this course belongs in</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Description of the course</td>
+</tr>
+<tr>
+<td><code>dripFeed</code></td>
+<td><code>enum: days, date, none</code></td>
+<td>No</td>
+<td>Course setting for scheduled course delivery (drip feed); returns none if drip feed is not enabled.</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Label of the course</td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Price of the course</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Title of the course</td>
+</tr>
+<tr>
+<td><code>titleId</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>Unique identifier of the course title. If it is empty the identifier is formed based on the provided title.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses">Responses</h4>
+<h5 id="201-created" class="status" data-status="2xx">201: Created</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>access</code></td>
+<td><code>enum: paid, free, coming_soon, enrollment_closed, private, draft</code></td>
+<td>No</td>
+<td>Access type of course</td>
+</tr>
+<tr>
+<td><code>afterPurchase</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation settings for this course</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation URL for this course, leading to a school page or a given URL</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings.page</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Navigation to a specific school page</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings.url</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Navigation to a specific URL</td>
+</tr>
+<tr>
+<td><code>afterPurchase.type</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Type of the after purchase navigation</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Information about the course author</td>
+</tr>
+<tr>
+<td><code>author.image</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course author avatar (full URL)</td>
+</tr>
+<tr>
+<td><code>author.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course author name</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>Categories this course belongs in</td>
+</tr>
+<tr>
+<td><code>courseImage</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Course image (full URL)</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the course was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Description of the course</td>
+</tr>
+<tr>
+<td><code>discount_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Discount price of the course</td>
+</tr>
+<tr>
+<td><code>dripFeed</code></td>
+<td><code>enum: date, days, none</code></td>
+<td>No</td>
+<td>Course setting for scheduled course delivery (drip feed); none refers to drip feed not being enabled.</td>
+</tr>
+<tr>
+<td><code>expires</code></td>
+<td><code>null,integer</code></td>
+<td>No</td>
+<td>Expiration timeframe value, defines the expiration timeframe, together with the type / unit in the &quot;expiresType&quot; field.</td>
+</tr>
+<tr>
+<td><code>expiresType</code></td>
+<td><code>enum: days, weeks, months</code></td>
+<td>No</td>
+<td>Expiration timeframe type / unit, defines the expiration timeframe, together with the actual value in the &quot;expires&quot; field.</td>
+</tr>
+<tr>
+<td><code>final_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Final price of the course</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course</td>
+</tr>
+<tr>
+<td><code>identifiers</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Course identifiers for in app purchases.</td>
+</tr>
+<tr>
+<td><code>identifiers.apple_store_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course in apple store</td>
+</tr>
+<tr>
+<td><code>identifiers.google_store_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course in google store</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td><code>null,string</code></td>
+<td>No</td>
+<td>Label of the course</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the course was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>original_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Original price of the course</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title of the course</td>
+</tr>
+</tbody>
+</table>
+<h2 id="list">list</h2>
+<h3 id="get-v2coursesidgrades" class="operation" data-method="get"><code>GET</code> /v2/courses/{id}/grades</h3>
+<p>Operation ID: <code>get-v2-courses-id-grades</code>.</p>
+<h4 id="parameters-1">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the course |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>users</code> | <code>query</code> | <code>string</code> | No | Filter by user ids. For several id values, a comma separated string can be provided |
+| <code>learningUnits</code> | <code>query</code> | <code>string</code> | No | Filter by learning unit ids. For several id values, a comma separated string can be provided. |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |
+| <code>items_per_page</code> | <code>query</code> | <code>integer</code> | No | Filter by the items per page number |
+| <code>sort</code> | <code>query</code> | <code>enum: created, submittedTimestamp</code> | No | Specifies the field to sort by. Allowed values are &quot;created&quot; or &quot;submittedTimestamp&quot;. |
+| <code>order</code> | <code>query</code> | <code>enum: asc, desc</code> | No | Specifies the order of sorting. Allowed values are &quot;asc&quot; for ascending or &quot;desc&quot; for descending. |</p>
+<h4 id="responses-1">Responses</h4>
+<h5 id="200-ok" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the submission was created (started), in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user who submitted the responses</td>
+</tr>
+<tr>
+<td><code>data[].grade</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>The grade that corresponds to the responses provided by the user</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the submission of responses by the user specified by the user id</td>
+</tr>
+<tr>
+<td><code>data[].learningUnit</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].learningUnit.icon</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Type icon of learning activity</td>
+</tr>
+<tr>
+<td><code>data[].learningUnit.id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of learning activity</td>
+</tr>
+<tr>
+<td><code>data[].learningUnit.subtitle</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Subtitle of learning activity</td>
+</tr>
+<tr>
+<td><code>data[].learningUnit.type</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Type of learning activity</td>
+</tr>
+<tr>
+<td><code>data[].modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the submission was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].submittedTimestamp</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the submission was finished (submitted), in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].user_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user who submitted the responses</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2courses" class="operation" data-method="get"><code>GET</code> /v2/courses</h3>
+<p>Operation ID: <code>get-courses</code>.</p>
+<h4 id="parameters-2">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>categories</code> | <code>query</code> | <code>string</code> | No | Filter by course categories. For several categories, a comma separated string can be provided. |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |
+| <code>access</code> | <code>query</code> | <code>array of any</code> | No | Filter by course access. This can be an array of strings if you want to query with multiple access values or just a string. Possible values are: paid, free, coming_soon, private, draft, enrollment_closed |</p>
+<h4 id="responses-2">Responses</h4>
+<h5 id="200-ok-1" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].access</code></td>
+<td><code>enum: paid, free, coming_soon, enrollment_closed, private, draft</code></td>
+<td>No</td>
+<td>Access type of course</td>
+</tr>
+<tr>
+<td><code>data[].afterPurchase</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation settings for this course</td>
+</tr>
+<tr>
+<td><code>data[].afterPurchase.settings</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation URL for this course, leading to a school page or a given URL</td>
+</tr>
+<tr>
+<td><code>data[].afterPurchase.settings.page</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Navigation to a specific school page</td>
+</tr>
+<tr>
+<td><code>data[].afterPurchase.settings.url</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Navigation to a specific URL</td>
+</tr>
+<tr>
+<td><code>data[].afterPurchase.type</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Type of the after purchase navigation</td>
+</tr>
+<tr>
+<td><code>data[].author</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Information about the course author</td>
+</tr>
+<tr>
+<td><code>data[].author.image</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course author avatar (full URL)</td>
+</tr>
+<tr>
+<td><code>data[].author.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course author name</td>
+</tr>
+<tr>
+<td><code>data[].categories</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>Categories this course belongs in</td>
+</tr>
+<tr>
+<td><code>data[].courseImage</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Course image (full URL)</td>
+</tr>
+<tr>
+<td><code>data[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the course was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].description</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Description of the course</td>
+</tr>
+<tr>
+<td><code>data[].discount_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Discount price of the course</td>
+</tr>
+<tr>
+<td><code>data[].dripFeed</code></td>
+<td><code>enum: date, days, none</code></td>
+<td>No</td>
+<td>Course setting for scheduled course delivery (drip feed); none refers to drip feed not being enabled.</td>
+</tr>
+<tr>
+<td><code>data[].expires</code></td>
+<td><code>null,integer</code></td>
+<td>No</td>
+<td>Expiration timeframe value, defines the expiration timeframe, together with the type / unit in the &quot;expiresType&quot; field.</td>
+</tr>
+<tr>
+<td><code>data[].expiresType</code></td>
+<td><code>enum: days, weeks, months</code></td>
+<td>No</td>
+<td>Expiration timeframe type / unit, defines the expiration timeframe, together with the actual value in the &quot;expires&quot; field.</td>
+</tr>
+<tr>
+<td><code>data[].final_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Final price of the course</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course</td>
+</tr>
+<tr>
+<td><code>data[].identifiers</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Course identifiers for in app purchases.</td>
+</tr>
+<tr>
+<td><code>data[].identifiers.apple_store_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course in apple store</td>
+</tr>
+<tr>
+<td><code>data[].identifiers.google_store_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course in google store</td>
+</tr>
+<tr>
+<td><code>data[].label</code></td>
+<td><code>null,string</code></td>
+<td>No</td>
+<td>Label of the course</td>
+</tr>
+<tr>
+<td><code>data[].modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the course was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].original_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Original price of the course</td>
+</tr>
+<tr>
+<td><code>data[].title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title of the course</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get-v2coursesidusers" class="operation" data-method="get"><code>GET</code> /v2/courses/{id}/users</h3>
+<p>Operation ID: <code>get-courses-id-users</code>.</p>
+<h4 id="parameters-3">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Course id |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |
+| <code>page</code> | <code>query</code> | <code>integer</code> | No | Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned |
+| <code>items_per_page</code> | <code>query</code> | <code>integer</code> | No | Filter by the items per page number |</p>
+<h4 id="responses-3">Responses</h4>
+<h5 id="200-ok-2" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>array of object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>data[].billing_info</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Values of the billing info fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the user was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].email</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Email account of the user</td>
+</tr>
+<tr>
+<td><code>data[].eu_customer</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user is located in Europe; true if she is, or false if she is not located in Europe.</td>
+</tr>
+<tr>
+<td><code>data[].fields</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Default sign up fields for the School. If custom sign up fields are enabled within the school settings, they are going to be included here too.</td>
+</tr>
+<tr>
+<td><code>data[].fields.address</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Address</td>
+</tr>
+<tr>
+<td><code>data[].fields.behance</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Behance URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.bio</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>A short biography text</td>
+</tr>
+<tr>
+<td><code>data[].fields.birthday</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Birthday</td>
+</tr>
+<tr>
+<td><code>data[].fields.company</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company</td>
+</tr>
+<tr>
+<td><code>data[].fields.company_size</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Company Size</td>
+</tr>
+<tr>
+<td><code>data[].fields.country</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Country</td>
+</tr>
+<tr>
+<td><code>data[].fields.dribbble</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Dribbble URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.fb</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Facebook URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.github</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Github URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.graduation_year</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Graduation Year</td>
+</tr>
+<tr>
+<td><code>data[].fields.instagram</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Instagram URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.linkedin</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Linkedin URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.location</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User location</td>
+</tr>
+<tr>
+<td><code>data[].fields.phone</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Phone</td>
+</tr>
+<tr>
+<td><code>data[].fields.skype</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Skype URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.twitter</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User Twitter URL</td>
+</tr>
+<tr>
+<td><code>data[].fields.university</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User University</td>
+</tr>
+<tr>
+<td><code>data[].fields.url</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>User website URL</td>
+</tr>
+<tr>
+<td><code>data[].id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the user</td>
+</tr>
+<tr>
+<td><code>data[].is_admin</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an administrator of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_affiliate</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an affiliate of the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_instructor</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an instructor in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_reporter</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is an reporter in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].is_suspended</code></td>
+<td><code>boolean</code></td>
+<td>No</td>
+<td>Indication about whether the user is suspended in the school; true if she is, or false if she is not.</td>
+</tr>
+<tr>
+<td><code>data[].last_login</code></td>
+<td><code>null,number (float)</code></td>
+<td>No</td>
+<td>Date of the last login of the user, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>data[].nps_comment</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>The latest comment submitted by the user on the NPS form.</td>
+</tr>
+<tr>
+<td><code>data[].nps_score</code></td>
+<td><code>integer,null</code></td>
+<td>No</td>
+<td>The latest NPS score submitted by the user. (1-10)</td>
+</tr>
+<tr>
+<td><code>data[].referrer_id</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Unique user id of the referrer for this user</td>
+</tr>
+<tr>
+<td><code>data[].role</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the role fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].role.level</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Level of the role</td>
+</tr>
+<tr>
+<td><code>data[].role.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Name of the role</td>
+</tr>
+<tr>
+<td><code>data[].signup_approval_status</code></td>
+<td><code>enum: passed, failed, pending</code></td>
+<td>No</td>
+<td>User status regarding the Signup Approval flow</td>
+</tr>
+<tr>
+<td><code>data[].subscribed_for_marketing_emails</code></td>
+<td><code>boolean,null</code></td>
+<td>No</td>
+<td>Indication about whether the user has agreed to receive marketing emails; true if she has agreed and thus should receive marketing emails, or false if she has not.</td>
+</tr>
+<tr>
+<td><code>data[].tags</code></td>
+<td><code>array of any</code></td>
+<td>No</td>
+<td>Array of the tags of the user</td>
+</tr>
+<tr>
+<td><code>data[].username</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Username of the user</td>
+</tr>
+<tr>
+<td><code>data[].utms</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Values of the UTM fields for this user</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click country</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click landing</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click referrer</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click campaign</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click content</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click medium</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click source</td>
+</tr>
+<tr>
+<td><code>data[].utms.fc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>First click term</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_country</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click country</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_landing</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click landing</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_referrer</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click referrer</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_campaign</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click campaign</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_content</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click content</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_medium</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click medium</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_source</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click source</td>
+</tr>
+<tr>
+<td><code>data[].utms.lc_utm_term</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Last click term</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>meta.itemsPerPage</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Limit in the number of items per page</td>
+</tr>
+<tr>
+<td><code>meta.page</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Current page number</td>
+</tr>
+<tr>
+<td><code>meta.totalItems</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of items in this page</td>
+</tr>
+<tr>
+<td><code>meta.totalPages</code></td>
+<td><code>number</code></td>
+<td>No</td>
+<td>Total number of pages</td>
+</tr>
+</tbody>
+</table>
+<h2 id="load">load</h2>
+<h3 id="get-v2coursesid" class="operation" data-method="get"><code>GET</code> /v2/courses/{id}</h3>
+<p>Operation ID: <code>get-courses-id</code>.</p>
+<h4 id="parameters-4">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the course |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="responses-4">Responses</h4>
+<h5 id="200-ok-3" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>access</code></td>
+<td><code>enum: paid, free, coming_soon, enrollment_closed, private, draft</code></td>
+<td>No</td>
+<td>Access type of course</td>
+</tr>
+<tr>
+<td><code>afterPurchase</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation settings for this course</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation URL for this course, leading to a school page or a given URL</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings.page</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Navigation to a specific school page</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings.url</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Navigation to a specific URL</td>
+</tr>
+<tr>
+<td><code>afterPurchase.type</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Type of the after purchase navigation</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Information about the course author</td>
+</tr>
+<tr>
+<td><code>author.image</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course author avatar (full URL)</td>
+</tr>
+<tr>
+<td><code>author.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course author name</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>Categories this course belongs in</td>
+</tr>
+<tr>
+<td><code>courseImage</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Course image (full URL)</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the course was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Description of the course</td>
+</tr>
+<tr>
+<td><code>discount_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Discount price of the course</td>
+</tr>
+<tr>
+<td><code>dripFeed</code></td>
+<td><code>enum: date, days, none</code></td>
+<td>No</td>
+<td>Course setting for scheduled course delivery (drip feed); none refers to drip feed not being enabled.</td>
+</tr>
+<tr>
+<td><code>expires</code></td>
+<td><code>null,integer</code></td>
+<td>No</td>
+<td>Expiration timeframe value, defines the expiration timeframe, together with the type / unit in the &quot;expiresType&quot; field.</td>
+</tr>
+<tr>
+<td><code>expiresType</code></td>
+<td><code>enum: days, weeks, months</code></td>
+<td>No</td>
+<td>Expiration timeframe type / unit, defines the expiration timeframe, together with the actual value in the &quot;expires&quot; field.</td>
+</tr>
+<tr>
+<td><code>final_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Final price of the course</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course</td>
+</tr>
+<tr>
+<td><code>identifiers</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Course identifiers for in app purchases.</td>
+</tr>
+<tr>
+<td><code>identifiers.apple_store_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course in apple store</td>
+</tr>
+<tr>
+<td><code>identifiers.google_store_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course in google store</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td><code>null,string</code></td>
+<td>No</td>
+<td>Label of the course</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the course was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>original_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Original price of the course</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title of the course</td>
+</tr>
+</tbody>
+</table>
+<h2 id="update">update</h2>
+<h3 id="put-v2coursesid" class="operation" data-method="put"><code>PUT</code> /v2/courses/{id}</h3>
+<p>Operation ID: <code>put-courses-id</code>.</p>
+<h4 id="parameters-5">Parameters</h4>
+<p>| Parameter | In | Type | Required | Description |
+| --- | --- | --- | --- |
+| <code>id</code> | <code>path</code> | <code>string</code> | Yes | Unique identifier of the course |
+| <code>Authorization</code> | <code>header</code> | <code>string</code> | Yes | The Bearer token |
+| <code>Lw-Client</code> | <code>header</code> | <code>string</code> | Yes | The school Client ID |</p>
+<h4 id="request-body-1">Request body</h4>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>access</code></td>
+<td><code>enum: paid, free, coming_soon, enrollment_closed, private, draft</code></td>
+<td>No</td>
+<td>Course access type</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>Categories this course belongs in</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course description</td>
+</tr>
+<tr>
+<td><code>dripFeed</code></td>
+<td><code>enum: days, date, none</code></td>
+<td>No</td>
+<td>Course setting for scheduled course delivery (drip feed); returns none if drip feed is not enabled.</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Label of the course</td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Course price</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course title</td>
+</tr>
+</tbody>
+</table>
+<h4 id="responses-5">Responses</h4>
+<h5 id="200-ok-4" class="status" data-status="2xx">200: OK</h5>
+<p><code>application/json</code></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>access</code></td>
+<td><code>enum: paid, free, coming_soon, enrollment_closed, private, draft</code></td>
+<td>No</td>
+<td>Access type of course</td>
+</tr>
+<tr>
+<td><code>afterPurchase</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation settings for this course</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>After purchase navigation URL for this course, leading to a school page or a given URL</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings.page</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Navigation to a specific school page</td>
+</tr>
+<tr>
+<td><code>afterPurchase.settings.url</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Navigation to a specific URL</td>
+</tr>
+<tr>
+<td><code>afterPurchase.type</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Type of the after purchase navigation</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td><code>object,null</code></td>
+<td>No</td>
+<td>Information about the course author</td>
+</tr>
+<tr>
+<td><code>author.image</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course author avatar (full URL)</td>
+</tr>
+<tr>
+<td><code>author.name</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Course author name</td>
+</tr>
+<tr>
+<td><code>categories</code></td>
+<td><code>array of string</code></td>
+<td>No</td>
+<td>Categories this course belongs in</td>
+</tr>
+<tr>
+<td><code>courseImage</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Course image (full URL)</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the course was created, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string,null</code></td>
+<td>No</td>
+<td>Description of the course</td>
+</tr>
+<tr>
+<td><code>discount_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Discount price of the course</td>
+</tr>
+<tr>
+<td><code>dripFeed</code></td>
+<td><code>enum: date, days, none</code></td>
+<td>No</td>
+<td>Course setting for scheduled course delivery (drip feed); none refers to drip feed not being enabled.</td>
+</tr>
+<tr>
+<td><code>expires</code></td>
+<td><code>null,integer</code></td>
+<td>No</td>
+<td>Expiration timeframe value, defines the expiration timeframe, together with the type / unit in the &quot;expiresType&quot; field.</td>
+</tr>
+<tr>
+<td><code>expiresType</code></td>
+<td><code>enum: days, weeks, months</code></td>
+<td>No</td>
+<td>Expiration timeframe type / unit, defines the expiration timeframe, together with the actual value in the &quot;expires&quot; field.</td>
+</tr>
+<tr>
+<td><code>final_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Final price of the course</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course</td>
+</tr>
+<tr>
+<td><code>identifiers</code></td>
+<td><code>object</code></td>
+<td>No</td>
+<td>Course identifiers for in app purchases.</td>
+</tr>
+<tr>
+<td><code>identifiers.apple_store_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course in apple store</td>
+</tr>
+<tr>
+<td><code>identifiers.google_store_id</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Unique identifier of the course in google store</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td><code>null,string</code></td>
+<td>No</td>
+<td>Label of the course</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Date the course was modified for the last time, in UNIX timestamp format</td>
+</tr>
+<tr>
+<td><code>original_price</code></td>
+<td><code>number (float)</code></td>
+<td>No</td>
+<td>Original price of the course</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>string</code></td>
+<td>No</td>
+<td>Title of the course</td>
+</tr>
+</tbody>
+</table>
+</main></div>
+<script src="../assets/search.js" defer></script></body></html>

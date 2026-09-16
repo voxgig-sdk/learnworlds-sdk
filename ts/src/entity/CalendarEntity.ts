@@ -37,14 +37,15 @@ class CalendarEntity extends LearnworldsEntityBase<Calendar> {
 
 
 
-  async list(this: any, reqmatch?: CalendarListMatch, ctrl?: Control): Promise<Calendar[]> {
+  async list(this: any, reqmatch?: CalendarListMatch, ctrl?: Control): Promise<CalendarEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,

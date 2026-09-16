@@ -3,41 +3,41 @@
     "bundle": {
       "BUNDLE00": {
         "access": "s6e",
-        "after_purchase": {},
+        "afterPurchase": {},
         "created": 112,
         "description": "s71",
         "id": "BUNDLE00",
         "image": "s73",
         "modified": 116,
-        "payment_plan": [],
+        "paymentPlans": [],
         "price": 118,
-        "product": {},
+        "products": {},
         "title": "s78"
       },
       "BUNDLE01": {
         "access": "sdc",
-        "after_purchase": {},
+        "afterPurchase": {},
         "created": 222,
         "description": "sdf",
         "id": "BUNDLE01",
         "image": "se1",
         "modified": 226,
-        "payment_plan": [],
+        "paymentPlans": [],
         "price": 228,
-        "product": {},
+        "products": {},
         "title": "se6"
       },
       "BUNDLE02": {
         "access": "s14a",
-        "after_purchase": {},
+        "afterPurchase": {},
         "created": 332,
         "description": "s14d",
         "id": "BUNDLE02",
         "image": "s14f",
         "modified": 336,
-        "payment_plan": [],
+        "paymentPlans": [],
         "price": 338,
-        "product": {},
+        "products": {},
         "title": "s154"
       }
     }
@@ -46,15 +46,746 @@
     "bundle": {
       "bundle_ref01": {
         "access": "s1b8",
-        "after_purchase": {},
+        "afterPurchase": {},
         "created": 442,
         "description": "s1bb",
         "image": "s1bd",
         "modified": 446,
-        "payment_plan": [],
+        "paymentPlans": [],
         "price": 448,
-        "product": {},
+        "products": {},
         "title": "s1c2"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/bundles": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-bundles",
+        "parameters": [
+          {
+            "description": "Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "access": "private",
+                          "afterPurchase": {
+                            "settings": {
+                              "page": null,
+                              "url": null
+                            },
+                            "type": "afterlogin"
+                          },
+                          "created": 1623061666.590018,
+                          "description": null,
+                          "id": "a-bundle",
+                          "image": null,
+                          "modified": 1623061666.590018,
+                          "paymentPlans": [
+                            {
+                              "amount": 37,
+                              "description": null,
+                              "firstAmount": 37,
+                              "id": "a-bundle-60ba022a8e162",
+                              "isCancelable": false,
+                              "name": "2 payments of $37/month",
+                              "nameOverride": false,
+                              "order": 1,
+                              "paymentPlanNameOverride": null,
+                              "paymentsCount": 2,
+                              "status": "public",
+                              "subscriptionIntervalType": "1-month",
+                              "subscriptionTrialDate": null,
+                              "subscriptionTrialDays": null,
+                              "subscriptionTrialType": "default",
+                              "type": "without_upfront",
+                              "validFrom": null,
+                              "validTo": null
+                            }
+                          ],
+                          "price": 0,
+                          "products": {
+                            "courses": [
+                              "learn-to-drive"
+                            ]
+                          },
+                          "title": "a bundle"
+                        }
+                      ],
+                      "meta": {
+                        "itemsPerPage": 20,
+                        "page": 1,
+                        "totalItems": 1,
+                        "totalPages": 1
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "examples": [
+                          {
+                            "access": "private",
+                            "afterPurchase": {
+                              "settings": {
+                                "page": null,
+                                "url": null
+                              },
+                              "type": "afterlogin"
+                            },
+                            "created": 1623061666.590018,
+                            "description": null,
+                            "id": "a-bundle",
+                            "image": null,
+                            "modified": 1623061666.590018,
+                            "paymentPlans": [
+                              {
+                                "amount": 37,
+                                "description": null,
+                                "firstAmount": 37,
+                                "id": "a-bundle-60ba022a8e162",
+                                "isCancelable": false,
+                                "name": "2 payments of $37/month",
+                                "nameOverride": false,
+                                "order": 1,
+                                "paymentPlanNameOverride": null,
+                                "paymentsCount": 2,
+                                "status": "public",
+                                "subscriptionIntervalType": "1-month",
+                                "subscriptionTrialDate": null,
+                                "subscriptionTrialDays": null,
+                                "subscriptionTrialType": "default",
+                                "type": "without_upfront",
+                                "validFrom": null,
+                                "validTo": null
+                              }
+                            ],
+                            "price": 0,
+                            "products": {
+                              "courses": [
+                                "learn-to-drive"
+                              ]
+                            },
+                            "title": "a bundle"
+                          }
+                        ],
+                        "properties": {
+                          "access": {
+                            "description": "Access type of the bundle",
+                            "enum": [
+                              "draft",
+                              "public"
+                            ],
+                            "type": "string"
+                          },
+                          "afterPurchase": {
+                            "description": "After purchase navigation settings for this bundle",
+                            "properties": {
+                              "settings": {
+                                "description": "After purchase navigation URL for this bundle: leading to a school page or a given URL",
+                                "properties": {
+                                  "page": {
+                                    "description": "Navigation to a specific school page",
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "url": {
+                                    "description": "Navigation to a specific URL",
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": {
+                                "default": "afterlogin",
+                                "description": "Type of the after purchase navigation",
+                                "example": "thankyou",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "created": {
+                            "description": "Date the bundle was created, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "description": {
+                            "description": "Bundle description",
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "id": {
+                            "description": "Unique identifier of the bundle",
+                            "type": "string"
+                          },
+                          "image": {
+                            "description": "Bundle image (full URL)",
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "modified": {
+                            "description": "Date the bundle was modified for the last time, in UNIX timestamp format",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "paymentPlans": {
+                            "description": "Payment plans associated with the bundle. Customers can pay in two or more installments (and an optional upfront payment).",
+                            "items": {
+                              "properties": {
+                                "amount": {
+                                  "type": "number"
+                                },
+                                "description": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "firstAmount": {
+                                  "type": "number"
+                                },
+                                "id": {
+                                  "type": "string"
+                                },
+                                "isCancelable": {
+                                  "type": "boolean"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "nameOverride": {
+                                  "type": "boolean"
+                                },
+                                "order": {
+                                  "type": "integer"
+                                },
+                                "paymentPlanNameOverride": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "paymentsCount": {
+                                  "type": "integer"
+                                },
+                                "status": {
+                                  "enum": [
+                                    "private",
+                                    "public",
+                                    "hidden",
+                                    "archived",
+                                    "deleted"
+                                  ]
+                                },
+                                "subscriptionIntervalType": {
+                                  "enum": [
+                                    "7-day",
+                                    "14-day",
+                                    "15-day",
+                                    "42-day",
+                                    "1-month",
+                                    "2-month",
+                                    "3-month",
+                                    "6-month"
+                                  ]
+                                },
+                                "subscriptionTrialDate": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "subscriptionTrialDays": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "subscriptionTrialType": {
+                                  "enum": [
+                                    "default",
+                                    "days",
+                                    "date"
+                                  ]
+                                },
+                                "type": {
+                                  "enum": [
+                                    "with_upfront",
+                                    "without_upfront"
+                                  ]
+                                },
+                                "validFrom": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                },
+                                "validTo": {
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "title": "PaymentPlan",
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "price": {
+                            "description": "Price of the bundle",
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "products": {
+                            "description": "Products in the bundle",
+                            "properties": {
+                              "courses": {
+                                "description": "Unique identifier of each course",
+                                "items": {
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "title": {
+                            "description": "Title of the bundle",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "meta": {
+                      "description": "",
+                      "examples": [
+                        {
+                          "itemsPerPage": 20,
+                          "page": 1,
+                          "totalItems": 1,
+                          "totalPages": 1
+                        }
+                      ],
+                      "properties": {
+                        "itemsPerPage": {
+                          "description": "Limit in the number of items per page",
+                          "type": "number"
+                        },
+                        "page": {
+                          "description": "Current page number",
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "description": "Total number of items in this page",
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "description": "Total number of pages",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/bundles/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-bundles-id",
+        "parameters": [
+          {
+            "description": "Unique identifier of the bundle",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "access": "private",
+                      "afterPurchase": {
+                        "settings": {
+                          "page": null,
+                          "url": null
+                        },
+                        "type": "afterlogin"
+                      },
+                      "created": 1623061666.590018,
+                      "description": null,
+                      "id": "a-bundle",
+                      "image": null,
+                      "modified": 1623061666.590018,
+                      "paymentPlans": [
+                        {
+                          "amount": 37,
+                          "description": null,
+                          "firstAmount": 37,
+                          "id": "a-bundle-60ba022a8e162",
+                          "isCancelable": false,
+                          "name": "2 payments of $37/month",
+                          "nameOverride": false,
+                          "order": 1,
+                          "paymentPlanNameOverride": null,
+                          "paymentsCount": 2,
+                          "status": "public",
+                          "subscriptionIntervalType": "1-month",
+                          "subscriptionTrialDate": null,
+                          "subscriptionTrialDays": null,
+                          "subscriptionTrialType": "default",
+                          "type": "without_upfront",
+                          "validFrom": null,
+                          "validTo": null
+                        }
+                      ],
+                      "price": 0,
+                      "products": {
+                        "courses": [
+                          "learn-to-drive"
+                        ]
+                      },
+                      "title": "a bundle"
+                    }
+                  }
+                },
+                "schema": {
+                  "examples": [
+                    {
+                      "access": "private",
+                      "afterPurchase": {
+                        "settings": {
+                          "page": null,
+                          "url": null
+                        },
+                        "type": "afterlogin"
+                      },
+                      "created": 1623061666.590018,
+                      "description": null,
+                      "id": "a-bundle",
+                      "image": null,
+                      "modified": 1623061666.590018,
+                      "paymentPlans": [
+                        {
+                          "amount": 37,
+                          "description": null,
+                          "firstAmount": 37,
+                          "id": "a-bundle-60ba022a8e162",
+                          "isCancelable": false,
+                          "name": "2 payments of $37/month",
+                          "nameOverride": false,
+                          "order": 1,
+                          "paymentPlanNameOverride": null,
+                          "paymentsCount": 2,
+                          "status": "public",
+                          "subscriptionIntervalType": "1-month",
+                          "subscriptionTrialDate": null,
+                          "subscriptionTrialDays": null,
+                          "subscriptionTrialType": "default",
+                          "type": "without_upfront",
+                          "validFrom": null,
+                          "validTo": null
+                        }
+                      ],
+                      "price": 0,
+                      "products": {
+                        "courses": [
+                          "learn-to-drive"
+                        ]
+                      },
+                      "title": "a bundle"
+                    }
+                  ],
+                  "properties": {
+                    "access": {
+                      "description": "Access type of the bundle",
+                      "enum": [
+                        "draft",
+                        "public"
+                      ],
+                      "type": "string"
+                    },
+                    "afterPurchase": {
+                      "description": "After purchase navigation settings for this bundle",
+                      "properties": {
+                        "settings": {
+                          "description": "After purchase navigation URL for this bundle: leading to a school page or a given URL",
+                          "properties": {
+                            "page": {
+                              "description": "Navigation to a specific school page",
+                              "type": [
+                                "null",
+                                "string"
+                              ]
+                            },
+                            "url": {
+                              "description": "Navigation to a specific URL",
+                              "type": [
+                                "null",
+                                "string"
+                              ]
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": {
+                          "default": "afterlogin",
+                          "description": "Type of the after purchase navigation",
+                          "example": "thankyou",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "created": {
+                      "description": "Date the bundle was created, in UNIX timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "description": {
+                      "description": "Bundle description",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "description": "Unique identifier of the bundle",
+                      "type": "string"
+                    },
+                    "image": {
+                      "description": "Bundle image (full URL)",
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "modified": {
+                      "description": "Date the bundle was modified for the last time, in UNIX timestamp format",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "paymentPlans": {
+                      "description": "Payment plans associated with the bundle. Customers can pay in two or more installments (and an optional upfront payment).",
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "number"
+                          },
+                          "description": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "firstAmount": {
+                            "type": "number"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "isCancelable": {
+                            "type": "boolean"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "nameOverride": {
+                            "type": "boolean"
+                          },
+                          "order": {
+                            "type": "integer"
+                          },
+                          "paymentPlanNameOverride": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "paymentsCount": {
+                            "type": "integer"
+                          },
+                          "status": {
+                            "enum": [
+                              "private",
+                              "public",
+                              "hidden",
+                              "archived",
+                              "deleted"
+                            ]
+                          },
+                          "subscriptionIntervalType": {
+                            "enum": [
+                              "7-day",
+                              "14-day",
+                              "15-day",
+                              "42-day",
+                              "1-month",
+                              "2-month",
+                              "3-month",
+                              "6-month"
+                            ]
+                          },
+                          "subscriptionTrialDate": {
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "subscriptionTrialDays": {
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "subscriptionTrialType": {
+                            "enum": [
+                              "default",
+                              "days",
+                              "date"
+                            ]
+                          },
+                          "type": {
+                            "enum": [
+                              "with_upfront",
+                              "without_upfront"
+                            ]
+                          },
+                          "validFrom": {
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "validTo": {
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "title": "PaymentPlan",
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "price": {
+                      "description": "Price of the bundle",
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "products": {
+                      "description": "Products in the bundle",
+                      "properties": {
+                        "courses": {
+                          "description": "Unique identifier of each course",
+                          "items": {
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "title": {
+                      "description": "Title of the bundle",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

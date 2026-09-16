@@ -3,48 +3,48 @@
     "seat": {
       "SEAT00": {
         "access": "s82",
-        "available_seat": "s83",
+        "available_seats": 131,
         "created": 132,
         "description": "s85",
         "id": "SEAT00",
-        "max_number_of_user": "s87",
+        "max_number_of_users": 135,
         "modified": 136,
-        "number_of_seat": "s89",
-        "product": {},
-        "seat_manager": [],
-        "tag": [],
+        "number_of_seats": 137,
+        "products": {},
+        "seat_managers": [],
+        "tags": [],
         "title": "s8d",
-        "total_enrollment": "s8e"
+        "total_enrollments": 142
       },
       "SEAT01": {
         "access": "s104",
-        "available_seat": "s105",
+        "available_seats": 261,
         "created": 262,
         "description": "s107",
         "id": "SEAT01",
-        "max_number_of_user": "s109",
+        "max_number_of_users": 265,
         "modified": 266,
-        "number_of_seat": "s10b",
-        "product": {},
-        "seat_manager": [],
-        "tag": [],
+        "number_of_seats": 267,
+        "products": {},
+        "seat_managers": [],
+        "tags": [],
         "title": "s10f",
-        "total_enrollment": "s110"
+        "total_enrollments": 272
       },
       "SEAT02": {
         "access": "s186",
-        "available_seat": "s187",
+        "available_seats": 391,
         "created": 392,
         "description": "s189",
         "id": "SEAT02",
-        "max_number_of_user": "s18b",
+        "max_number_of_users": 395,
         "modified": 396,
-        "number_of_seat": "s18d",
-        "product": {},
-        "seat_manager": [],
-        "tag": [],
+        "number_of_seats": 397,
+        "products": {},
+        "seat_managers": [],
+        "tags": [],
         "title": "s191",
-        "total_enrollment": "s192"
+        "total_enrollments": 402
       }
     }
   },
@@ -52,17 +52,713 @@
     "seat": {
       "seat_ref01": {
         "access": "s208",
-        "available_seat": "s209",
+        "available_seats": 521,
         "created": 522,
         "description": "s20b",
-        "max_number_of_user": "s20d",
+        "max_number_of_users": 525,
         "modified": 526,
-        "number_of_seat": "s20f",
-        "product": {},
-        "seat_manager": [],
-        "tag": [],
+        "number_of_seats": 527,
+        "products": {},
+        "seat_managers": [],
+        "tags": [],
         "title": "s213",
-        "total_enrollment": "s214"
+        "total_enrollments": 532
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/seats": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "post-v2-seats",
+        "parameters": [
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "examples": [
+                  {
+                    "description": "lorem ipsum dolor sit amet",
+                    "id": "646f3a8010b76ba4270c87b4",
+                    "max_number_of_users": 100,
+                    "number_of_seats": 10,
+                    "products": {
+                      "courses": [
+                        "1st-paid"
+                      ]
+                    },
+                    "seat_managers": [
+                      "64623b0113687181610046c0"
+                    ],
+                    "tags": [
+                      "tag1",
+                      "tag2"
+                    ],
+                    "title": "test suspend"
+                  }
+                ],
+                "properties": {
+                  "access": {
+                    "deprecated": true,
+                    "description": "Access type of the seat offering.",
+                    "enum": [
+                      "active",
+                      "inactive"
+                    ],
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "Description of the seat offering.",
+                    "type": "string"
+                  },
+                  "max_number_of_users": {
+                    "description": "Max number of users who can be added to a seat offering; empty if there is no limit to the number of users who can be added. Specific limits may apply depending on the pricing plan.",
+                    "type": "integer"
+                  },
+                  "number_of_seats": {
+                    "description": "Number of the seats in the offering.",
+                    "type": "integer"
+                  },
+                  "products": {
+                    "description": "Products in the seat offering",
+                    "properties": {
+                      "courses": {
+                        "description": "Unique identifier of each course.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "courses"
+                    ],
+                    "type": "object"
+                  },
+                  "seat_managers": {
+                    "description": "Unique identifier of each seat manager.",
+                    "items": {
+                      "example": "6450fc106f4d5668470da734",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "tags": {
+                    "description": "Tags assigned to the users added to the seat offering.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "title": {
+                    "description": "Title of the seat offering.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "products",
+                  "number_of_seats"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "examples": [
+                    {
+                      "access": "active",
+                      "created": 1685011072.247868,
+                      "description": "lorem ipsum dolor sit amet",
+                      "id": "646f3a8010b76ba4270c87b4",
+                      "max_number_of_users": 100,
+                      "modified": 1685011166.656884,
+                      "number_of_seats": 10,
+                      "products": {
+                        "courses": [
+                          "1st-paid"
+                        ]
+                      },
+                      "seat_managers": [
+                        {
+                          "email": "seatmanager@learnworlds.com",
+                          "id": "64623b0113687181610046c0",
+                          "role_id": "61bb42d5e07e202700000014",
+                          "username": "Seat manager username"
+                        }
+                      ],
+                      "tags": [
+                        "tag1",
+                        "tag2"
+                      ],
+                      "title": "test suspend",
+                      "total_enrollments": 2
+                    }
+                  ],
+                  "properties": {
+                    "access": {
+                      "deprecated": true,
+                      "description": "Access status of the seat offering.",
+                      "enum": [
+                        "active",
+                        "inactive"
+                      ],
+                      "type": "string"
+                    },
+                    "available_seats": {
+                      "description": "Number of available seats in the offering.",
+                      "type": "integer"
+                    },
+                    "created": {
+                      "description": "Date the seat offering was created; displayed in UNIX timestamp format.",
+                      "type": "number"
+                    },
+                    "description": {
+                      "description": "Description of the seat offering.",
+                      "type": "string"
+                    },
+                    "id": {
+                      "description": "Unique identifier of the seat offering.",
+                      "type": "string"
+                    },
+                    "max_number_of_users": {
+                      "description": "Max number of users who can be added to a seat offering; empty if there is no limit to the number of users who can be added.",
+                      "type": "integer"
+                    },
+                    "modified": {
+                      "description": "Date the seat offering was modified for the last time; displayed in UNIX timestamp format.",
+                      "type": "number"
+                    },
+                    "number_of_seats": {
+                      "description": "Number of the seats in the offering.",
+                      "type": "integer"
+                    },
+                    "products": {
+                      "description": "Products in the seat offering",
+                      "properties": {
+                        "courses": {
+                          "description": "Unique identifier of each course.",
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "seat_managers": {
+                      "description": "Unique identifier of each seat manager.",
+                      "items": {
+                        "properties": {
+                          "email": {
+                            "description": "Email account of the user",
+                            "type": "string"
+                          },
+                          "id": {
+                            "description": "Unique identifier of the seat manager.",
+                            "type": "string"
+                          },
+                          "role_id": {
+                            "description": "Unique identifier of the user role.",
+                            "type": "string"
+                          },
+                          "username": {
+                            "description": "Username account of the user",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "tags": {
+                      "description": "Tags assigned to the users added to the seat offering.",
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "title": {
+                      "description": "Title of the seat offering.",
+                      "type": "string"
+                    },
+                    "total_enrollments": {
+                      "description": "Total enrollements of the seat offering.",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Created"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "GET /v2/seats/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-v2-seats-id",
+        "parameters": [
+          {
+            "description": "The unique identifier of the seat offering",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {},
+                "schema": {
+                  "examples": [
+                    {
+                      "access": "active",
+                      "created": 1685011072.247868,
+                      "description": "lorem ipsum dolor sit amet",
+                      "id": "646f3a8010b76ba4270c87b4",
+                      "max_number_of_users": 100,
+                      "modified": 1685011166.656884,
+                      "number_of_seats": 10,
+                      "products": {
+                        "courses": [
+                          "1st-paid"
+                        ]
+                      },
+                      "seat_managers": [
+                        {
+                          "email": "seatmanager@learnworlds.com",
+                          "id": "64623b0113687181610046c0",
+                          "role_id": "61bb42d5e07e202700000014",
+                          "username": "Seat manager username"
+                        }
+                      ],
+                      "tags": [
+                        "tag1",
+                        "tag2"
+                      ],
+                      "title": "test suspend",
+                      "total_enrollments": 2
+                    }
+                  ],
+                  "properties": {
+                    "access": {
+                      "deprecated": true,
+                      "description": "Access status of the seat offering.",
+                      "enum": [
+                        "active",
+                        "inactive"
+                      ],
+                      "type": "string"
+                    },
+                    "available_seats": {
+                      "description": "Number of available seats in the offering.",
+                      "type": "integer"
+                    },
+                    "created": {
+                      "description": "Date the seat offering was created; displayed in UNIX timestamp format.",
+                      "type": "number"
+                    },
+                    "description": {
+                      "description": "Description of the seat offering.",
+                      "type": "string"
+                    },
+                    "id": {
+                      "description": "Unique identifier of the seat offering.",
+                      "type": "string"
+                    },
+                    "max_number_of_users": {
+                      "description": "Max number of users who can be added to a seat offering; empty if there is no limit to the number of users who can be added.",
+                      "type": "integer"
+                    },
+                    "modified": {
+                      "description": "Date the seat offering was modified for the last time; displayed in UNIX timestamp format.",
+                      "type": "number"
+                    },
+                    "number_of_seats": {
+                      "description": "Number of the seats in the offering.",
+                      "type": "integer"
+                    },
+                    "products": {
+                      "description": "Products in the seat offering",
+                      "properties": {
+                        "courses": {
+                          "description": "Unique identifier of each course.",
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "seat_managers": {
+                      "description": "Unique identifier of each seat manager.",
+                      "items": {
+                        "properties": {
+                          "email": {
+                            "description": "Email account of the user",
+                            "type": "string"
+                          },
+                          "id": {
+                            "description": "Unique identifier of the seat manager.",
+                            "type": "string"
+                          },
+                          "role_id": {
+                            "description": "Unique identifier of the user role.",
+                            "type": "string"
+                          },
+                          "username": {
+                            "description": "Username account of the user",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "tags": {
+                      "description": "Tags assigned to the users added to the seat offering.",
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "title": {
+                      "description": "Title of the seat offering.",
+                      "type": "string"
+                    },
+                    "total_enrollments": {
+                      "description": "Total enrollements of the seat offering.",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "PUT /v2/seats/{id}": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "put-v2-seats-id",
+        "parameters": [
+          {
+            "description": "The unique identifier of the seat offering",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "examples": [
+                  {
+                    "description": "lorem ipsum dolor sit amet",
+                    "id": "646f3a8010b76ba4270c87b4",
+                    "max_number_of_users": 100,
+                    "number_of_seats": 10,
+                    "products": {
+                      "courses": [
+                        "1st-paid"
+                      ]
+                    },
+                    "seat_managers": [
+                      "64623b0113687181610046c0"
+                    ],
+                    "tags": [
+                      "tag1",
+                      "tag2"
+                    ],
+                    "title": "test suspend"
+                  }
+                ],
+                "properties": {
+                  "access": {
+                    "deprecated": true,
+                    "description": "Access type of the seat offering.",
+                    "enum": [
+                      "active",
+                      "inactive"
+                    ],
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "Description of the seat offering.",
+                    "type": "string"
+                  },
+                  "max_number_of_users": {
+                    "description": "Max number of users who can be added to a seat offering; empty if there is no limit to the number of users who can be added. Specific limits may apply depending on the pricing plan.",
+                    "type": "integer"
+                  },
+                  "number_of_seats": {
+                    "description": "Number of the seats in the offering.",
+                    "type": "integer"
+                  },
+                  "products": {
+                    "description": "Products in the seat offering",
+                    "properties": {
+                      "courses": {
+                        "description": "Unique identifier of each course.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "courses"
+                    ],
+                    "type": "object"
+                  },
+                  "seat_managers": {
+                    "description": "Unique identifier of each seat manager.",
+                    "items": {
+                      "example": "6450fc106f4d5668470da734",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "tags": {
+                    "description": "Tags assigned to the users added to the seat offering.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "title": {
+                    "description": "Title of the seat offering.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "products",
+                  "number_of_seats"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "examples": [
+                    {
+                      "access": "active",
+                      "created": 1685011072.247868,
+                      "description": "lorem ipsum dolor sit amet",
+                      "id": "646f3a8010b76ba4270c87b4",
+                      "max_number_of_users": 100,
+                      "modified": 1685011166.656884,
+                      "number_of_seats": 10,
+                      "products": {
+                        "courses": [
+                          "1st-paid"
+                        ]
+                      },
+                      "seat_managers": [
+                        {
+                          "email": "seatmanager@learnworlds.com",
+                          "id": "64623b0113687181610046c0",
+                          "role_id": "61bb42d5e07e202700000014",
+                          "username": "Seat manager username"
+                        }
+                      ],
+                      "tags": [
+                        "tag1",
+                        "tag2"
+                      ],
+                      "title": "test suspend",
+                      "total_enrollments": 2
+                    }
+                  ],
+                  "properties": {
+                    "access": {
+                      "deprecated": true,
+                      "description": "Access status of the seat offering.",
+                      "enum": [
+                        "active",
+                        "inactive"
+                      ],
+                      "type": "string"
+                    },
+                    "available_seats": {
+                      "description": "Number of available seats in the offering.",
+                      "type": "integer"
+                    },
+                    "created": {
+                      "description": "Date the seat offering was created; displayed in UNIX timestamp format.",
+                      "type": "number"
+                    },
+                    "description": {
+                      "description": "Description of the seat offering.",
+                      "type": "string"
+                    },
+                    "id": {
+                      "description": "Unique identifier of the seat offering.",
+                      "type": "string"
+                    },
+                    "max_number_of_users": {
+                      "description": "Max number of users who can be added to a seat offering; empty if there is no limit to the number of users who can be added.",
+                      "type": "integer"
+                    },
+                    "modified": {
+                      "description": "Date the seat offering was modified for the last time; displayed in UNIX timestamp format.",
+                      "type": "number"
+                    },
+                    "number_of_seats": {
+                      "description": "Number of the seats in the offering.",
+                      "type": "integer"
+                    },
+                    "products": {
+                      "description": "Products in the seat offering",
+                      "properties": {
+                        "courses": {
+                          "description": "Unique identifier of each course.",
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "seat_managers": {
+                      "description": "Unique identifier of each seat manager.",
+                      "items": {
+                        "properties": {
+                          "email": {
+                            "description": "Email account of the user",
+                            "type": "string"
+                          },
+                          "id": {
+                            "description": "Unique identifier of the seat manager.",
+                            "type": "string"
+                          },
+                          "role_id": {
+                            "description": "Unique identifier of the user role.",
+                            "type": "string"
+                          },
+                          "username": {
+                            "description": "Username account of the user",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "tags": {
+                      "description": "Tags assigned to the users added to the seat offering.",
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "title": {
+                      "description": "Title of the seat offering.",
+                      "type": "string"
+                    },
+                    "total_enrollments": {
+                      "description": "Total enrollements of the seat offering.",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

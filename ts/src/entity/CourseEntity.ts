@@ -39,14 +39,15 @@ class CourseEntity extends LearnworldsEntityBase<Course> {
 
 
 
-  async load(this: any, reqmatch?: CourseLoadMatch, ctrl?: Control): Promise<Course> {
+  async load(this: any, reqmatch?: CourseLoadMatch, ctrl?: Control): Promise<CourseEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -130,7 +131,15 @@ class CourseEntity extends LearnworldsEntityBase<Course> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
 
@@ -152,14 +161,15 @@ class CourseEntity extends LearnworldsEntityBase<Course> {
 
 
 
-  async list(this: any, reqmatch?: CourseListMatch, ctrl?: Control): Promise<Course[]> {
+  async list(this: any, reqmatch?: CourseListMatch, ctrl?: Control): Promise<CourseEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -261,13 +271,14 @@ class CourseEntity extends LearnworldsEntityBase<Course> {
 
 
 
-  async create(this: any, reqdata?: CourseCreateData, ctrl?: Control): Promise<Course> {
+  async create(this: any, reqdata?: CourseCreateData, ctrl?: Control): Promise<CourseEntity> {
 
     const utility = this._utility
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -347,7 +358,15 @@ class CourseEntity extends LearnworldsEntityBase<Course> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
 
@@ -369,14 +388,15 @@ class CourseEntity extends LearnworldsEntityBase<Course> {
 
 
 
-  async update(this: any, reqdata?: CourseUpdateData, ctrl?: Control): Promise<Course> {
+  async update(this: any, reqdata?: CourseUpdateData, ctrl?: Control): Promise<CourseEntity> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,
@@ -461,7 +481,15 @@ class CourseEntity extends LearnworldsEntityBase<Course> {
         }
       }
 
-      return done(ctx)
+      const out = done(ctx)
+
+      // An operation resolves to the ENTITY, not the raw data — the record
+      // has just been absorbed into this instance and is reached through
+      // data(). `done` still runs: it completes the pipeline and raises on
+      // failure, and when throwing is disabled it hands back the error
+      // payload, which passes through unchanged. See AGENTS.md "Entity
+      // operations return ENTITIES".
+      return (ctx.result && ctx.result.ok) ? this : out
     }
     catch (err: any) {
 

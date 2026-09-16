@@ -2,23 +2,23 @@
   "existing": {
     "calendar": {
       "CALENDAR00": {
-        "booking_detail": "s32",
-        "product_id": "PRODUCT01",
-        "start_date": 52,
+        "bookingDetails": "s32",
+        "productId": "s33",
+        "startDate": 52,
         "title": "s35",
         "type": "s36"
       },
       "CALENDAR01": {
-        "booking_detail": "s64",
-        "product_id": "PRODUCT01",
-        "start_date": 102,
+        "bookingDetails": "s64",
+        "productId": "s65",
+        "startDate": 102,
         "title": "s67",
         "type": "s68"
       },
       "CALENDAR02": {
-        "booking_detail": "s96",
-        "product_id": "PRODUCT01",
-        "start_date": 152,
+        "bookingDetails": "s96",
+        "productId": "s97",
+        "startDate": 152,
         "title": "s99",
         "type": "s9a"
       }
@@ -27,11 +27,191 @@
   "new": {
     "calendar": {
       "calendar_ref01": {
-        "booking_detail": "sc8",
-        "product_id": "PRODUCT01",
-        "start_date": 202,
+        "bookingDetails": "sc8",
+        "productId": "sc9",
+        "startDate": 202,
         "title": "scb",
         "type": "scc"
+      }
+    }
+  },
+  "requests": {
+    "GET /v2/school/events": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "get-courses-name-live-sessions",
+        "parameters": [
+          {
+            "description": "Filter by event type",
+            "in": "query",
+            "name": "event_type",
+            "schema": {
+              "enum": [
+                "dripFeed",
+                "fileAssignment",
+                "liveSession"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "data": [
+                        {
+                          "bookingDetails": null,
+                          "productId": "learn-how-to-walk",
+                          "startDate": 1632949200,
+                          "title": "Learn how to walk section",
+                          "type": "dripFeed"
+                        }
+                      ]
+                    }
+                  },
+                  "Example With Booking Details": {
+                    "value": {
+                      "data": [
+                        {
+                          "bookingDetails": {
+                            "hostUserId": "5be0561d43c90b171a8b4567",
+                            "learnerUserId": "6256cff2ef8b8f563e01956e",
+                            "providerData": {
+                              "durationInMinutes": 30,
+                              "eventTypeId": "8dfd6800-9b06-4d9f-ad3e-052f3792ba57",
+                              "joinUrl": null,
+                              "location": "my office",
+                              "locationType": "physical",
+                              "scheduledEventId": "f5675834-57e6-4a16-ae57-167f68127dcd"
+                            },
+                            "providerName": "calendly",
+                            "status": "scheduled",
+                            "type": "oneOnOne"
+                          },
+                          "productId": "coachingCourse",
+                          "startDate": 1659088800,
+                          "title": "Coaching session oneOnOne",
+                          "type": "liveSession"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "description": "",
+                        "examples": [
+                          {
+                            "bookingDetails": null,
+                            "productId": "learn-how-to-walk",
+                            "startDate": 1632949200,
+                            "title": "Learn how to walk section",
+                            "type": "dripFeed"
+                          }
+                        ],
+                        "properties": {
+                          "bookingDetails": {
+                            "description": "Booking details of the event. In case of non oneOnOne or group sessions, the bookingDetails is null",
+                            "properties": {
+                              "hostUserId": {
+                                "description": "Unique identifier of the user who hosts the session",
+                                "type": "string"
+                              },
+                              "learnerUserId": {
+                                "description": "Unique identifier of the learner",
+                                "type": "string"
+                              },
+                              "providerData": {
+                                "description": "Provider related data",
+                                "type": "object"
+                              },
+                              "providerName": {
+                                "example": "calendly",
+                                "type": "string"
+                              },
+                              "status": {
+                                "description": "The status of the session",
+                                "enum": [
+                                  "scheduled"
+                                ],
+                                "example": "scheduled",
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "oneOnOne",
+                                  "group"
+                                ],
+                                "example": "oneOnOne",
+                                "type": "string"
+                              }
+                            },
+                            "type": [
+                              "null",
+                              "object"
+                            ]
+                          },
+                          "productId": {
+                            "description": "Unique identifier of the product",
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "description": "Start date of the event, in UNIX timestamp format",
+                            "type": "number"
+                          },
+                          "title": {
+                            "description": "Title of the event",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "Type of the event",
+                            "enum": [
+                              "dripFeed",
+                              "fileAssignment",
+                              "liveSession"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }

@@ -1,0 +1,347 @@
+# Entity: multiple_seat
+
+main: kit: entity: multiple_seat: {
+
+  alias: field: {}
+
+  fields: [
+    {
+      deprecated: true
+      name: "access"
+      req: false
+      short: "Access status of the seat offering."
+      type: "`$STRING`"
+    }
+    {
+      name: "add_to_active_seat"
+      req: false
+      short: "Indication about whether the user is assigned a seat in the seat offering; true if she is, or false if she is not."
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "available_seats"
+      req: false
+      short: "Number of available seats in the offering."
+      type: "`$INTEGER`"
+    }
+    {
+      name: "created"
+      req: false
+      short: "Date the seat offering was created; displayed in UNIX timestamp format."
+      type: "`$NUMBER`"
+    }
+    {
+      name: "description"
+      req: false
+      short: "Description of the seat offering."
+      type: "`$STRING`"
+    }
+    {
+      name: "id"
+      req: false
+      short: "Unique identifier of the seat offering."
+      type: "`$STRING`"
+    }
+    {
+      name: "max_number_of_users"
+      req: false
+      short: "Max number of users who can be added to a seat offering; empty if there is no limit to the number of users who can be added."
+      type: "`$INTEGER`"
+    }
+    {
+      name: "modified"
+      req: false
+      short: "Date the seat offering was modified for the last time; displayed in UNIX timestamp format."
+      type: "`$NUMBER`"
+    }
+    {
+      name: "number_of_seats"
+      req: false
+      short: "Number of the seats in the offering."
+      type: "`$INTEGER`"
+    }
+    {
+      name: "products"
+      req: false
+      short: "Products in the seat offering"
+      type: "`$OBJECT`"
+    }
+    {
+      name: "seat_managers"
+      req: false
+      short: "Unique identifier of each seat manager."
+      type: "`$ARRAY`"
+    }
+    {
+      name: "success"
+      req: false
+      type: "`$BOOLEAN`"
+    }
+    {
+      name: "tags"
+      req: false
+      short: "Tags assigned to the users added to the seat offering."
+      type: "`$ARRAY`"
+    }
+    {
+      name: "title"
+      req: false
+      short: "Title of the seat offering."
+      type: "`$STRING`"
+    }
+    {
+      name: "total_enrollments"
+      req: false
+      short: "Total enrollements of the seat offering."
+      type: "`$INTEGER`"
+    }
+  ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "multiple_seat"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "seat_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "uid"
+                orig: "uid"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "POST /v2/seats/{id}/users/{uid}"
+            json: "{\"operationId\":\"post-v2-seats-id-users-uid\",\"parameters\":[{\"description\":\"Unique identifier of the seat offering.\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"User Id or email (encoded string)\",\"in\":\"path\",\"name\":\"uid\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"add_to_active_seat\":{\"description\":\"Indication about whether the user is assigned a seat in the seat offering; true if she is, or false if she is not. Default false.\",\"type\":\"boolean\"}},\"type\":\"object\"}}}},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"success\":{\"type\":\"boolean\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "POST"
+          orig: "/v2/seats/{id}/users/{uid}"
+          rename: {
+            param: {
+              id: "seat_id"
+            }
+          }
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "seats"
+            }
+            {
+              var: "seat_id"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "uid"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "lw_client"
+              "seat_id"
+              "uid"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    list: {
+      name: "list"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            query: [
+              {
+                kind: "query"
+                name: "page"
+                orig: "page"
+                reqd: false
+                type: "`$INTEGER`"
+              }
+            ]
+          }
+          contract: {
+            id: "GET /v2/seats"
+            json: "{\"operationId\":\"get-v2-seats\",\"parameters\":[{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"Filter by the page number. In case page number is higher than the maximum one, the results of last page will be returned\",\"in\":\"query\",\"name\":\"page\",\"schema\":{\"type\":\"integer\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"examples\":{},\"schema\":{\"properties\":{\"data\":{\"items\":{\"examples\":[{\"access\":\"active\",\"created\":1685011072.247868,\"description\":\"lorem ipsum dolor sit amet\",\"id\":\"646f3a8010b76ba4270c87b4\",\"max_number_of_users\":100,\"modified\":1685011166.656884,\"number_of_seats\":10,\"products\":{\"courses\":[\"1st-paid\"]},\"seat_managers\":[{\"email\":\"seatmanager@learnworlds.com\",\"id\":\"64623b0113687181610046c0\",\"role_id\":\"61bb42d5e07e202700000014\",\"username\":\"Seat manager username\"}],\"tags\":[\"tag1\",\"tag2\"],\"title\":\"test suspend\",\"total_enrollments\":2}],\"properties\":{\"access\":{\"deprecated\":true,\"description\":\"Access status of the seat offering.\",\"enum\":[\"active\",\"inactive\"],\"type\":\"string\"},\"available_seats\":{\"description\":\"Number of available seats in the offering.\",\"type\":\"integer\"},\"created\":{\"description\":\"Date the seat offering was created; displayed in UNIX timestamp format.\",\"type\":\"number\"},\"description\":{\"description\":\"Description of the seat offering.\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier of the seat offering.\",\"type\":\"string\"},\"max_number_of_users\":{\"description\":\"Max number of users who can be added to a seat offering; empty if there is no limit to the number of users who can be added.\",\"type\":\"integer\"},\"modified\":{\"description\":\"Date the seat offering was modified for the last time; displayed in UNIX timestamp format.\",\"type\":\"number\"},\"number_of_seats\":{\"description\":\"Number of the seats in the offering.\",\"type\":\"integer\"},\"products\":{\"description\":\"Products in the seat offering\",\"properties\":{\"courses\":{\"description\":\"Unique identifier of each course.\",\"items\":{\"type\":\"string\"},\"type\":\"array\"}},\"type\":\"object\"},\"seat_managers\":{\"description\":\"Unique identifier of each seat manager.\",\"items\":{\"properties\":{\"email\":{\"description\":\"Email account of the user\",\"type\":\"string\"},\"id\":{\"description\":\"Unique identifier of the seat manager.\",\"type\":\"string\"},\"role_id\":{\"description\":\"Unique identifier of the user role.\",\"type\":\"string\"},\"username\":{\"description\":\"Username account of the user\",\"type\":\"string\"}},\"type\":\"object\"},\"type\":\"array\"},\"tags\":{\"description\":\"Tags assigned to the users added to the seat offering.\",\"items\":{\"type\":\"string\"},\"type\":\"array\"},\"title\":{\"description\":\"Title of the seat offering.\",\"type\":\"string\"},\"total_enrollments\":{\"description\":\"Total enrollements of the seat offering.\",\"type\":\"integer\"}},\"type\":\"object\"},\"type\":\"array\"},\"meta\":{\"description\":\"\",\"examples\":[{\"itemsPerPage\":20,\"page\":1,\"totalItems\":1,\"totalPages\":1}],\"properties\":{\"itemsPerPage\":{\"description\":\"Limit in the number of items per page\",\"type\":\"number\"},\"page\":{\"description\":\"Current page number\",\"type\":\"number\"},\"totalItems\":{\"description\":\"Total number of items in this page\",\"type\":\"number\"},\"totalPages\":{\"description\":\"Total number of pages\",\"type\":\"number\"}},\"type\":\"object\"}},\"type\":\"object\"}}},\"description\":\"OK\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "GET"
+          orig: "/v2/seats"
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "seats"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "lw_client"
+              "page"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    remove: {
+      name: "remove"
+      points: [
+        {
+          args: {
+            header: [
+              {
+                kind: "header"
+                name: "authorization"
+                orig: "authorization"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "header"
+                name: "lw_client"
+                orig: "lw_client"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+            params: [
+              {
+                kind: "param"
+                name: "seat_id"
+                orig: "id"
+                reqd: true
+                type: "`$STRING`"
+              }
+              {
+                kind: "param"
+                name: "uid"
+                orig: "uid"
+                reqd: true
+                type: "`$STRING`"
+              }
+            ]
+          }
+          contract: {
+            id: "DELETE /v2/seats/{id}/users/{uid}"
+            json: "{\"operationId\":\"delete-v2-seats-id-users-uid\",\"parameters\":[{\"description\":\"Unique identifier of the seat offering.\",\"in\":\"path\",\"name\":\"id\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"User Id or email (encoded string)\",\"in\":\"path\",\"name\":\"uid\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The Bearer token\",\"in\":\"header\",\"name\":\"Authorization\",\"required\":true,\"schema\":{\"type\":\"string\"}},{\"description\":\"The school Client ID\",\"in\":\"header\",\"name\":\"Lw-Client\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"remove_from_seat_offering\":{\"description\":\"Indication about whether the user should be also removed from the seat offering; true if she should be removed, and false if she should not.\",\"type\":\"boolean\"}},\"type\":\"object\"}}}},\"responses\":{\"204\":{\"description\":\"No Content\"}},\"securitySchemes\":{},\"securitySource\":\"unspecified\"}"
+            source: "openapi3"
+            version: 1
+          }
+          method: "DELETE"
+          orig: "/v2/seats/{id}/users/{uid}"
+          rename: {
+            param: {
+              id: "seat_id"
+            }
+          }
+          segments: [
+            {
+              lit: "v2"
+            }
+            {
+              lit: "seats"
+            }
+            {
+              var: "seat_id"
+            }
+            {
+              lit: "users"
+            }
+            {
+              var: "uid"
+            }
+          ]
+          select: {
+            exist: [
+              "authorization"
+              "lw_client"
+              "seat_id"
+              "uid"
+            ]
+          }
+          transform: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  relations: {
+    ancestors: [
+      [
+        "seat"
+        "user"
+      ]
+    ]
+  }
+
+
+
+}

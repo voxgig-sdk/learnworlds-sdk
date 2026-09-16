@@ -25,17 +25,17 @@ clean:
 SHELL := /bin/bash
 VERSION := $(shell node -p "require('./package.json').version")
 TAG := ts/v$(VERSION)
-AQL_DRY_RUN_FILLER := AQL-DRY-RUN-FILLER-NOT-A-REAL-SECRET
+BORU_DRY_RUN_FILLER := BORU-DRY-RUN-FILLER-NOT-A-REAL-SECRET
 publish: test
 	@if git rev-parse -q --verify "refs/tags/$(TAG)" >/dev/null; then \
 	  echo "tag $(TAG) already exists — bump package.json version first"; exit 1; fi
 	@set -e; \
 	token="$${GITHUB_TOKEN:-$$GH_TOKEN}"; \
-	if [ "$$token" = "$(AQL_DRY_RUN_FILLER)" ]; then \
+	if [ "$$token" = "$(BORU_DRY_RUN_FILLER)" ]; then \
 	  echo "[dry-run] boru filler token detected: would publish to npm and tag $(TAG); nothing pushed."; \
 	  exit 0; \
 	fi; \
-	npm publish --access public --registry https://registry.npmjs.org; \
+	npm stage publish --access public --registry https://registry.npmjs.org; \
 	git tag -a "$(TAG)" -m "ts v$(VERSION)"; \
 	url=$$(git remote get-url origin | sed -E 's#^git@github.com:#https://github.com/#'); \
 	if [ -n "$$token" ] && printf '%s' "$$url" | grep -q '^https://github.com/'; then \

@@ -37,14 +37,15 @@ class UserProgressEntity extends LearnworldsEntityBase<UserProgress> {
 
 
 
-  async list(this: any, reqmatch?: UserProgressListMatch, ctrl?: Control): Promise<UserProgress[]> {
+  async list(this: any, reqmatch?: UserProgressListMatch, ctrl?: Control): Promise<UserProgressEntity[]> {
 
     const utility = this._utility
 
     const {
       makeContext,
       done,
-      error,
+      // The registry name is `makeError`; `error` is the local alias.
+      makeError: error,
       featureHook,
       makePoint,
       makeRequest,

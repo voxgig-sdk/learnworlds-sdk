@@ -4,30 +4,30 @@
       "COUPON00": {
         "bulk": true,
         "code": "s3d",
-        "expire": "s3e",
+        "expires": "s3e",
         "prefix": "s3f",
         "quantity": "s40",
-        "times_used": "s41",
+        "times_used": 65,
         "promotion_id": "PROMOTION01",
         "id": "COUPON00"
       },
       "COUPON01": {
         "bulk": true,
         "code": "s79",
-        "expire": "s7a",
+        "expires": "s7a",
         "prefix": "s7b",
         "quantity": "s7c",
-        "times_used": "s7d",
+        "times_used": 125,
         "promotion_id": "PROMOTION01",
         "id": "COUPON01"
       },
       "COUPON02": {
         "bulk": true,
         "code": "sb5",
-        "expire": "sb6",
+        "expires": "sb6",
         "prefix": "sb7",
         "quantity": "sb8",
-        "times_used": "sb9",
+        "times_used": 185,
         "promotion_id": "PROMOTION01",
         "id": "COUPON02"
       }
@@ -38,10 +38,341 @@
       "coupon_ref01": {
         "bulk": true,
         "code": "sf1",
-        "expire": "sf2",
+        "expires": "sf2",
         "prefix": "sf3",
         "quantity": "sf4",
-        "times_used": "sf5"
+        "times_used": 245
+      }
+    }
+  },
+  "requests": {
+    "POST /v2/promotions/{pid}/coupons": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "post-promotions-pid-coupons",
+        "parameters": [
+          {
+            "description": "Promotion Id",
+            "in": "path",
+            "name": "pid",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "application/json",
+            "in": "header",
+            "name": "Content-Type",
+            "required": true,
+            "schema": {
+              "example": "application/json",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "Example": {
+                  "value": {
+                    "code": "coup-ZFPVOG",
+                    "expires": "2020-10-28",
+                    "quantity": 4
+                  }
+                }
+              },
+              "schema": {
+                "description": "",
+                "properties": {
+                  "code": {
+                    "description": "Coupon code",
+                    "type": "string"
+                  },
+                  "expires": {
+                    "description": "Coupon expiration date in yyyy-mm-dd format",
+                    "format": "date",
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "description": "Coupon quantity greater than 0",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "code"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "bulk": false,
+                      "code": "coup-ZFPVOG",
+                      "expires": "2020-10-28",
+                      "prefix": null,
+                      "quantity": 4,
+                      "times_used": 0
+                    }
+                  }
+                },
+                "schema": {
+                  "description": "",
+                  "examples": [
+                    {
+                      "bulk": true,
+                      "code": "coup-ZFPVOG",
+                      "expires": "2020-10-28",
+                      "prefix": "coup",
+                      "quantity": 1,
+                      "times_used": 12
+                    }
+                  ],
+                  "properties": {
+                    "bulk": {
+                      "description": "Indication about whether there's a bulk set of codes created for this coupon.",
+                      "type": "boolean"
+                    },
+                    "code": {
+                      "description": "Coupon code",
+                      "type": "string"
+                    },
+                    "expires": {
+                      "description": "Coupon expiration date, in YYYY-MM-DD format",
+                      "example": "2021-06-17",
+                      "format": "date",
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "prefix": {
+                      "description": "Coupon prefix",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "quantity": {
+                      "description": "Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)",
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "times_used": {
+                      "description": "Coupon number of times used.",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
+      }
+    },
+    "POST /v2/promotions/{id}/coupons-bulk": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "post-promotions-:id-coupons-bulk",
+        "parameters": [
+          {
+            "description": "Promotion id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The Bearer token",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The school Client ID",
+            "in": "header",
+            "name": "Lw-Client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "examples": {
+                "Example": {
+                  "value": {
+                    "expires": "2023-09-08",
+                    "prefix": "bulk_prono",
+                    "quantity": 3
+                  }
+                }
+              },
+              "schema": {
+                "description": "",
+                "properties": {
+                  "expires": {
+                    "description": "Coupon expiration date, in YYYY-MM-DD format",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "prefix": {
+                    "description": "Coupon prefix",
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "description": "Coupon quantity greater than 0",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "prefix",
+                  "quantity"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "description": ""
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": [
+                      {
+                        "bulk": true,
+                        "code": "bulk_prono-DOALLL",
+                        "expires": "2023-09-08",
+                        "prefix": "bulk_prono",
+                        "quantity": 1,
+                        "times_used": 0
+                      },
+                      {
+                        "bulk": true,
+                        "code": "bulk_prono-AYQOFJ",
+                        "expires": "2023-09-08",
+                        "prefix": "bulk_prono",
+                        "quantity": 1,
+                        "times_used": 0
+                      },
+                      {
+                        "bulk": true,
+                        "code": "bulk_prono-YSBKSU",
+                        "expires": "2023-09-08",
+                        "prefix": "bulk_prono",
+                        "quantity": 1,
+                        "times_used": 0
+                      }
+                    ]
+                  }
+                },
+                "schema": {
+                  "items": {
+                    "description": "",
+                    "examples": [
+                      {
+                        "bulk": true,
+                        "code": "coup-ZFPVOG",
+                        "expires": "2020-10-28",
+                        "prefix": "coup",
+                        "quantity": 1,
+                        "times_used": 12
+                      }
+                    ],
+                    "properties": {
+                      "bulk": {
+                        "description": "Indication about whether there's a bulk set of codes created for this coupon.",
+                        "type": "boolean"
+                      },
+                      "code": {
+                        "description": "Coupon code",
+                        "type": "string"
+                      },
+                      "expires": {
+                        "description": "Coupon expiration date, in YYYY-MM-DD format",
+                        "example": "2021-06-17",
+                        "format": "date",
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "prefix": {
+                        "description": "Coupon prefix",
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "quantity": {
+                        "description": "Number of redemptions that are allowed for this coupon (null as a value means that there is no limit in how many times a coupon can be redeemed)",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "times_used": {
+                        "description": "Coupon number of times used.",
+                        "type": "integer"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "securitySchemes": {},
+        "securitySource": "unspecified"
       }
     }
   }
